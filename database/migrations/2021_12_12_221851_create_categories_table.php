@@ -18,6 +18,12 @@ class CreateCategoriesTable extends Migration
             $table->id();
             $table->string("name");
             $table->string("slug")->unique();
+            $table->boolean("visible_in_menu")->default(1);
+            $table->bigIncrements("position");
+            $table->string("promotion_label")->nullable();
+            $table->text("meta_title")->nullable();
+            $table->text("meta_description")->nullable();
+            $table->text("meta_keywords")->nullable();
             $table->bigInteger("parent_id");
             $table->foreign("parent_id")->references("id")->on("categories")->onDelete("cascade")->onUpdate("cascade");
             $table->timestamps();
