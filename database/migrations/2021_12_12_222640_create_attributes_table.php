@@ -17,7 +17,6 @@ class CreateAttributesTable extends Migration
             $table->id();
             $table->string("name")->unique();
             $table->string("label");
-            $table->boolean("has_options")->default(0);
             $table->json("options")->nullable();
             $table->timestamps();
         });
