@@ -30,6 +30,7 @@ class CreateProductsTable extends Migration
             $table->text("meta_description")->nullable();
             $table->text("meta_keywords")->nullable();
             $table->foreignId("category_id")->nullable()->constrained()->onDelete("set null")->onUpdate("cascade");
+            $table->text("images")->nullable();
             $table->timestamps();
         });
     }
