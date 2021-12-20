@@ -3,19 +3,31 @@ require("../bootstrap");
 window.Vue = require("vue").default;
 import { createApp } from "vue";
 
-/**
- * Vue and packages Config
- */
-const attributeOptions = createApp({});
+if (document.querySelector("#product-attributes")) {
+    const productAttributes = createApp({
 
-/**
- * Component global registration_
- */
-attributeOptions.component(
-    "options-form",
-    require("./components/OptionsForm.vue").default
-);
+    });
+
+    productAttributes.component(
+        "attributes-form",
+        require("./components/AttributesForm.vue").default
+    );
+    productAttributes.component(
+        "options-form",
+        require("./components/OptionsForm.vue").default
+    );
+
+    productAttributes.mount("#product-attributes");
+}
 
 if (document.querySelector("#attribute-options")) {
+    const attributeOptions = createApp({});
+
+    attributeOptions.component(
+        "options-form",
+        require("./components/OptionsForm.vue").default
+    );
+
     attributeOptions.mount("#attribute-options");
 }
+

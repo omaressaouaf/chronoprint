@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\AttributeProduct;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Attribute extends Model
 {
@@ -12,4 +13,10 @@ class Attribute extends Model
     protected $casts = [
         'options' => 'array',
     ];
+
+    public function products()
+    {
+        return $this->belongsToMany(Product::class)->withPivot(['options'])->using(AttributeProduct::class);
+    }
+
 }

@@ -1,5 +1,5 @@
 <template>
-  <input type="hidden" name="options" :value="options" />
+  <input v-if="!emitOptions" type="hidden" name="options" :value="options" />
   <div class="panel-body">
     <div class="row col-md-12">
       <h4 class="col-md-12">{{ formTitle }}</h4>
@@ -77,6 +77,10 @@ export default {
       type: String,
       default: "Les options",
     },
+    emitOptions: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -87,7 +91,7 @@ export default {
       error: null,
       editMode: false,
       currentIndex: null,
-      optionsList: this.attributeOptions || [],
+      optionsList: [],
     };
   },
   computed: {
@@ -95,12 +99,30 @@ export default {
       return JSON.stringify(this.optionsList);
     },
   },
+  emits: ["optionsChanged"],
+  watch: {
+    optionsList: {
+      handler(options) {
+        if (this.emitOptions) {
+          this.$emit("optionsChanged", options);
+        }
+      },
+      deep: true,
+    },
+    attributeOptions: {
+      handler(attributeOptions) {
+        this.optionsList = attributeOptions || [];
+      },
+      deep: true,
+      immediate: true,
+    },
+  },
   methods: {
     validateForm() {
       this.error = null;
 
       if (this.form.name === "" || this.form.price == "") {
-        this.error = "le nom et le prix sont requis";
+        this.error = "Le nom et le prix sont requis";
 
         return false;
       }

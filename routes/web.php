@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Voyager\ProductController;
+use TCG\Voyager\Facades\Voyager;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,6 +22,7 @@ Route::get('/', function () {
 
 
 Route::group(['prefix' => 'admin'], function () {
+    Route::put("/products/{product}/attributes", [ProductController::class , "syncAttributes"]);
     Voyager::routes();
 });
 
