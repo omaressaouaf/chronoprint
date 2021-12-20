@@ -21,7 +21,7 @@ class CreateProductsTable extends Migration
             $table->longText("description")->nullable();
             $table->float("price");
             $table->integer("stock");
-            $table->json("required_media_options")->nullable();
+            $table->json("allowed_quantities");
             $table->boolean("featured")->default(0);
             $table->boolean("popular")->default(0);
             $table->boolean("active")->default(0);

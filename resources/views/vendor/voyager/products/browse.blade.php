@@ -300,7 +300,7 @@
                                         @can('edit', $data)
                                         <button onclick="window.product = {{$data->load('attributes')}}" type="button"
                                             class="btn btn-sm btn-success float-right" data-toggle="modal"
-                                            data-target="#attributes-form-modal" style="margin-right: 3px">
+                                            data-target="#attributes-form-modal" style="margin-right: 5px">
                                             <i class="voyager-params"></i> Attributs
                                         </button>
                                         @endcan

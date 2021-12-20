@@ -10,6 +10,10 @@ class Product extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'allowed_quantities' => 'array',
+    ];
+
     public function attributes()
     {
         return $this->belongsToMany(Attribute::class)->withPivot(['options'])->using(AttributeProduct::class);

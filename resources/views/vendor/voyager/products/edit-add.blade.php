@@ -95,14 +95,16 @@ $add = is_null($dataTypeContent->getKey());
                             @endforeach
                             @endif
                         </div>
+                        @if($row->field === "stock")
+                        <div id="product-allowed-quantities">
+                            <quantities-form :product-allowed-quantities="{{json_encode($product_allowed_quantities) }}">
+                            </quantities-form>
+                        </div>
+                        @endif
                         @endforeach
 
                     </div><!-- panel-body -->
-                    <div id="attribute-options">
-                        <options-form :attribute-options="{{json_encode($attribute_options) }}"
-                            form-title="Vous souhaitez définir des options à utiliser dans la fiche produit ?">
-                        </options-form>
-                    </div>
+
                     <div class="panel-footer">
                         @section('submit-buttons')
                         <button type="submit" class="btn btn-primary save">{{ __('voyager::generic.save') }}</button>

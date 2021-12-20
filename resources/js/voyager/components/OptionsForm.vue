@@ -1,11 +1,11 @@
 <template>
   <input v-if="!emitOptions" type="hidden" name="options" :value="options" />
   <div class="panel-body">
-    <div class="row col-md-12">
+    <div class="form-title row col-md-12">
       <h4 class="col-md-12">{{ formTitle }}</h4>
     </div>
-    <div class="row col-md-12">
-      <div v-if="error" class="alert alert-danger">{{ error }}</div>
+    <div class="form-inputs row col-md-12">
+      <div v-if="formError" class="alert alert-danger">{{ formError }}</div>
       <div class="form-group col-md-6">
         <label class="control-label">Nom</label>
         <input
@@ -15,7 +15,7 @@
           placeholder="Nom d'option"
         />
       </div>
-      <div class="form-group col-md-3">
+      <div class="form-group col-md-6">
         <label class="control-label">Prix</label>
         <input
           v-model="form.price"
@@ -24,6 +24,86 @@
           placeholder="Prix d'option"
         />
       </div>
+    </div>
+    <div
+      class="required-files-properties row col-md-12"
+      style="padding: 0px 40px"
+    >
+      <h5
+        style="margin-bottom: 30px"
+        data-toggle="collapse"
+        data-target="#required-files-properties-container"
+      >
+        <i class="voyager-angle-down"></i> Les propriétés des fichiers requis
+        pour cette option
+      </h5>
+      <div id="required-files-properties-container" class="collapse">
+        <div class="required-files-properties-form">
+          <div
+            v-if="requiredFilesPropertiesFormError"
+            class="alert alert-danger"
+          >
+            {{ requiredFilesPropertiesFormError }}
+          </div>
+          <div class="form-group col-md-4">
+            <label class="control-label">Nom de fichier</label>
+            <input
+              ref="requiredFileName"
+              type="text"
+              class="form-control"
+              placeholder="Nom de fichier"
+            />
+          </div>
+          <div class="form-group col-md-3">
+            <label class="control-label">Titre de ficher</label>
+            <input
+              ref="requiredFileTitle"
+              type="text"
+              class="form-control"
+              placeholder="Titre de ficher"
+            />
+          </div>
+          <div class="form-group col-md-2 form-actions">
+            <button
+              @click="addFilePropertiesToForm"
+              type="button"
+              class="btn btn-primary"
+            >
+              Ajouter les propriétés de fichier
+            </button>
+          </div>
+        </div>
+        <div
+          v-if="this.form.requiredFilesProperties.length"
+          class="required-files-properties-list-container row col-md-12"
+        >
+          <ul
+            class="required-files-properties-list"
+            style="margin-left: 20px; padding-inline-start: 5px"
+          >
+            <li
+              style="display: flex; align-items: center; gap: 10px"
+              v-for="(fileProperties, index) in this.form
+                .requiredFilesProperties"
+              :key="index"
+            >
+              <div class="actions">
+                <a href="#" @click.prevent="deleteFilePropertiesFromForm(index)"
+                  ><i class="voyager-x text-danger"></i
+                ></a>
+              </div>
+              <h5 class="text-capitalize font-weight-bold">
+                {{ fileProperties.name }} :
+                <span class="font-weight-light ml-5"
+                  >{{ fileProperties.title }}
+                </span>
+              </h5>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="form-actions row col-md-12">
       <div class="form-group col-md-3 form-actions">
         <div class="actions" v-if="editMode">
           <button @click="updateOption" type="button" class="btn btn-success">
@@ -38,12 +118,12 @@
           </button>
         </div>
         <button v-else @click="addOption" type="button" class="btn btn-primary">
-          Ajouter
+          Ajouter l'option
         </button>
       </div>
     </div>
-    <div class="row col-md-12">
-      <ul>
+    <div class="options-list-container row col-md-12">
+      <ul class="options-list">
         <li
           class="options-row"
           v-for="(option, index) in this.optionsList"
@@ -87,8 +167,10 @@ export default {
       form: {
         name: "",
         price: "",
+        requiredFilesProperties: [],
       },
-      error: null,
+      formError: null,
+      requiredFilesPropertiesFormError: null,
       editMode: false,
       currentIndex: null,
       optionsList: [],
@@ -119,10 +201,28 @@ export default {
   },
   methods: {
     validateForm() {
-      this.error = null;
+      this.formError = null;
 
-      if (this.form.name === "" || this.form.price == "") {
-        this.error = "Le nom et le prix sont requis";
+      if (
+        this.form.name.trim() === "" ||
+        (typeof this.form.price === "string" && this.form.price.trim() == "")
+      ) {
+        this.formError = "Le nom et le prix sont requis";
+
+        return false;
+      }
+
+      return true;
+    },
+    validateRequiredFilesPropertiesForm() {
+      this.requiredFilesPropertiesFormError = null;
+
+      if (
+        this.$refs.requiredFileName.value.trim() === "" ||
+        this.$refs.requiredFileTitle.value.trim() === ""
+      ) {
+        this.requiredFilesPropertiesFormError =
+          "Les propriétés de fichier sont obligatoires";
 
         return false;
       }
@@ -136,10 +236,7 @@ export default {
 
       this.optionsList.push(this.form);
 
-      this.form = {
-        name: "",
-        price: "",
-      };
+      this.resetForm();
     },
     deleteOption(index) {
       if (confirm("Es-tu sûr ?")) {
@@ -156,10 +253,7 @@ export default {
     cancelEditOption() {
       this.editMode = false;
 
-      this.form = {
-        name: "",
-        price: "",
-      };
+      this.resetForm();
     },
     updateOption() {
       if (!this.validateForm()) {
@@ -170,17 +264,38 @@ export default {
 
       this.editMode = false;
 
+      this.resetForm();
+    },
+    resetForm() {
       this.form = {
         name: "",
         price: "",
+        requiredFilesProperties: [],
       };
+    },
+    /**required file properties */
+    addFilePropertiesToForm() {
+      if (!this.validateRequiredFilesPropertiesForm()) {
+        return;
+      }
+
+      this.form.requiredFilesProperties.push({
+        name: this.$refs.requiredFileName.value,
+        title: this.$refs.requiredFileTitle.value,
+      });
+
+      this.$refs.requiredFileName.value = "";
+      this.$refs.requiredFileTitle.value = "";
+    },
+    deleteFilePropertiesFromForm(index) {
+      this.form.requiredFilesProperties.splice(index, 1);
     },
   },
 };
 </script>
 
 <style scoped>
-ul {
+.options-list {
   padding-inline-start: 20px !important;
   display: flex;
   flex-wrap: wrap;

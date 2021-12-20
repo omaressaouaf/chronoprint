@@ -20,6 +20,19 @@ if (document.querySelector("#product-attributes")) {
     productAttributes.mount("#product-attributes");
 }
 
+if (document.querySelector("#product-allowed-quantities")) {
+    const productAllowedQuantities = createApp({
+
+    });
+
+    productAllowedQuantities.component(
+        "quantities-form",
+        require("./components/QuantitiesForm.vue").default
+    );
+
+    productAllowedQuantities.mount("#product-allowed-quantities");
+}
+
 if (document.querySelector("#attribute-options")) {
     const attributeOptions = createApp({});
 
