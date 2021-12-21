@@ -32,12 +32,15 @@
       <h5
         style="margin-bottom: 30px"
         data-toggle="collapse"
-        data-target="#required-files-properties-container"
+        :data-target="`#required-files-properties-container-${componentId}`"
       >
         <i class="voyager-angle-down"></i> Les propriétés des fichiers requis
         pour cette option
       </h5>
-      <div id="required-files-properties-container" class="collapse">
+      <div
+        :id="`required-files-properties-container-${componentId}`"
+        class="collapse"
+      >
         <div class="required-files-properties-form">
           <div
             v-if="requiredFilesPropertiesFormError"
@@ -148,6 +151,7 @@
 </template>
 
 <script>
+import { uniqueId } from "lodash";
 export default {
   props: {
     attributeOptions: {
@@ -164,6 +168,7 @@ export default {
   },
   data() {
     return {
+      componentId: uniqueId(),
       form: {
         name: "",
         price: "",
