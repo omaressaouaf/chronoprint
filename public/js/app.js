@@ -1,6 +1,950 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./node_modules/@juggle/resize-observer/lib/DOMRectReadOnly.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/@juggle/resize-observer/lib/DOMRectReadOnly.js ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "DOMRectReadOnly": () => (/* binding */ DOMRectReadOnly)
+/* harmony export */ });
+/* harmony import */ var _utils_freeze__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utils/freeze */ "./node_modules/@juggle/resize-observer/lib/utils/freeze.js");
+
+var DOMRectReadOnly = (function () {
+    function DOMRectReadOnly(x, y, width, height) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        this.top = this.y;
+        this.left = this.x;
+        this.bottom = this.top + this.height;
+        this.right = this.left + this.width;
+        return (0,_utils_freeze__WEBPACK_IMPORTED_MODULE_0__.freeze)(this);
+    }
+    DOMRectReadOnly.prototype.toJSON = function () {
+        var _a = this, x = _a.x, y = _a.y, top = _a.top, right = _a.right, bottom = _a.bottom, left = _a.left, width = _a.width, height = _a.height;
+        return { x: x, y: y, top: top, right: right, bottom: bottom, left: left, width: width, height: height };
+    };
+    DOMRectReadOnly.fromRect = function (rectangle) {
+        return new DOMRectReadOnly(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
+    };
+    return DOMRectReadOnly;
+}());
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@juggle/resize-observer/lib/ResizeObservation.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/@juggle/resize-observer/lib/ResizeObservation.js ***!
+  \***********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "ResizeObservation": () => (/* binding */ ResizeObservation)
+/* harmony export */ });
+/* harmony import */ var _ResizeObserverBoxOptions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ResizeObserverBoxOptions */ "./node_modules/@juggle/resize-observer/lib/ResizeObserverBoxOptions.js");
+/* harmony import */ var _algorithms_calculateBoxSize__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./algorithms/calculateBoxSize */ "./node_modules/@juggle/resize-observer/lib/algorithms/calculateBoxSize.js");
+/* harmony import */ var _utils_element__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./utils/element */ "./node_modules/@juggle/resize-observer/lib/utils/element.js");
+
+
+
+var skipNotifyOnElement = function (target) {
+    return !(0,_utils_element__WEBPACK_IMPORTED_MODULE_2__.isSVG)(target)
+        && !(0,_utils_element__WEBPACK_IMPORTED_MODULE_2__.isReplacedElement)(target)
+        && getComputedStyle(target).display === 'inline';
+};
+var ResizeObservation = (function () {
+    function ResizeObservation(target, observedBox) {
+        this.target = target;
+        this.observedBox = observedBox || _ResizeObserverBoxOptions__WEBPACK_IMPORTED_MODULE_0__.ResizeObserverBoxOptions.CONTENT_BOX;
+        this.lastReportedSize = {
+            inlineSize: 0,
+            blockSize: 0
+        };
+    }
+    ResizeObservation.prototype.isActive = function () {
+        var size = (0,_algorithms_calculateBoxSize__WEBPACK_IMPORTED_MODULE_1__.calculateBoxSize)(this.target, this.observedBox, true);
+        if (skipNotifyOnElement(this.target)) {
+            this.lastReportedSize = size;
+        }
+        if (this.lastReportedSize.inlineSize !== size.inlineSize
+            || this.lastReportedSize.blockSize !== size.blockSize) {
+            return true;
+        }
+        return false;
+    };
+    return ResizeObservation;
+}());
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@juggle/resize-observer/lib/ResizeObserver.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/@juggle/resize-observer/lib/ResizeObserver.js ***!
+  \********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "ResizeObserver": () => (/* binding */ ResizeObserver)
+/* harmony export */ });
+/* harmony import */ var _ResizeObserverController__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ResizeObserverController */ "./node_modules/@juggle/resize-observer/lib/ResizeObserverController.js");
+/* harmony import */ var _utils_element__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utils/element */ "./node_modules/@juggle/resize-observer/lib/utils/element.js");
+
+
+var ResizeObserver = (function () {
+    function ResizeObserver(callback) {
+        if (arguments.length === 0) {
+            throw new TypeError("Failed to construct 'ResizeObserver': 1 argument required, but only 0 present.");
+        }
+        if (typeof callback !== 'function') {
+            throw new TypeError("Failed to construct 'ResizeObserver': The callback provided as parameter 1 is not a function.");
+        }
+        _ResizeObserverController__WEBPACK_IMPORTED_MODULE_0__.ResizeObserverController.connect(this, callback);
+    }
+    ResizeObserver.prototype.observe = function (target, options) {
+        if (arguments.length === 0) {
+            throw new TypeError("Failed to execute 'observe' on 'ResizeObserver': 1 argument required, but only 0 present.");
+        }
+        if (!(0,_utils_element__WEBPACK_IMPORTED_MODULE_1__.isElement)(target)) {
+            throw new TypeError("Failed to execute 'observe' on 'ResizeObserver': parameter 1 is not of type 'Element");
+        }
+        _ResizeObserverController__WEBPACK_IMPORTED_MODULE_0__.ResizeObserverController.observe(this, target, options);
+    };
+    ResizeObserver.prototype.unobserve = function (target) {
+        if (arguments.length === 0) {
+            throw new TypeError("Failed to execute 'unobserve' on 'ResizeObserver': 1 argument required, but only 0 present.");
+        }
+        if (!(0,_utils_element__WEBPACK_IMPORTED_MODULE_1__.isElement)(target)) {
+            throw new TypeError("Failed to execute 'unobserve' on 'ResizeObserver': parameter 1 is not of type 'Element");
+        }
+        _ResizeObserverController__WEBPACK_IMPORTED_MODULE_0__.ResizeObserverController.unobserve(this, target);
+    };
+    ResizeObserver.prototype.disconnect = function () {
+        _ResizeObserverController__WEBPACK_IMPORTED_MODULE_0__.ResizeObserverController.disconnect(this);
+    };
+    ResizeObserver.toString = function () {
+        return 'function ResizeObserver () { [polyfill code] }';
+    };
+    return ResizeObserver;
+}());
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@juggle/resize-observer/lib/ResizeObserverBoxOptions.js":
+/*!******************************************************************************!*\
+  !*** ./node_modules/@juggle/resize-observer/lib/ResizeObserverBoxOptions.js ***!
+  \******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "ResizeObserverBoxOptions": () => (/* binding */ ResizeObserverBoxOptions)
+/* harmony export */ });
+var ResizeObserverBoxOptions;
+(function (ResizeObserverBoxOptions) {
+    ResizeObserverBoxOptions["BORDER_BOX"] = "border-box";
+    ResizeObserverBoxOptions["CONTENT_BOX"] = "content-box";
+    ResizeObserverBoxOptions["DEVICE_PIXEL_CONTENT_BOX"] = "device-pixel-content-box";
+})(ResizeObserverBoxOptions || (ResizeObserverBoxOptions = {}));
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@juggle/resize-observer/lib/ResizeObserverController.js":
+/*!******************************************************************************!*\
+  !*** ./node_modules/@juggle/resize-observer/lib/ResizeObserverController.js ***!
+  \******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "ResizeObserverController": () => (/* binding */ ResizeObserverController)
+/* harmony export */ });
+/* harmony import */ var _utils_scheduler__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utils/scheduler */ "./node_modules/@juggle/resize-observer/lib/utils/scheduler.js");
+/* harmony import */ var _ResizeObservation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ResizeObservation */ "./node_modules/@juggle/resize-observer/lib/ResizeObservation.js");
+/* harmony import */ var _ResizeObserverDetail__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ResizeObserverDetail */ "./node_modules/@juggle/resize-observer/lib/ResizeObserverDetail.js");
+/* harmony import */ var _utils_resizeObservers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./utils/resizeObservers */ "./node_modules/@juggle/resize-observer/lib/utils/resizeObservers.js");
+
+
+
+
+var observerMap = new WeakMap();
+var getObservationIndex = function (observationTargets, target) {
+    for (var i = 0; i < observationTargets.length; i += 1) {
+        if (observationTargets[i].target === target) {
+            return i;
+        }
+    }
+    return -1;
+};
+var ResizeObserverController = (function () {
+    function ResizeObserverController() {
+    }
+    ResizeObserverController.connect = function (resizeObserver, callback) {
+        var detail = new _ResizeObserverDetail__WEBPACK_IMPORTED_MODULE_2__.ResizeObserverDetail(resizeObserver, callback);
+        observerMap.set(resizeObserver, detail);
+    };
+    ResizeObserverController.observe = function (resizeObserver, target, options) {
+        var detail = observerMap.get(resizeObserver);
+        var firstObservation = detail.observationTargets.length === 0;
+        if (getObservationIndex(detail.observationTargets, target) < 0) {
+            firstObservation && _utils_resizeObservers__WEBPACK_IMPORTED_MODULE_3__.resizeObservers.push(detail);
+            detail.observationTargets.push(new _ResizeObservation__WEBPACK_IMPORTED_MODULE_1__.ResizeObservation(target, options && options.box));
+            (0,_utils_scheduler__WEBPACK_IMPORTED_MODULE_0__.updateCount)(1);
+            _utils_scheduler__WEBPACK_IMPORTED_MODULE_0__.scheduler.schedule();
+        }
+    };
+    ResizeObserverController.unobserve = function (resizeObserver, target) {
+        var detail = observerMap.get(resizeObserver);
+        var index = getObservationIndex(detail.observationTargets, target);
+        var lastObservation = detail.observationTargets.length === 1;
+        if (index >= 0) {
+            lastObservation && _utils_resizeObservers__WEBPACK_IMPORTED_MODULE_3__.resizeObservers.splice(_utils_resizeObservers__WEBPACK_IMPORTED_MODULE_3__.resizeObservers.indexOf(detail), 1);
+            detail.observationTargets.splice(index, 1);
+            (0,_utils_scheduler__WEBPACK_IMPORTED_MODULE_0__.updateCount)(-1);
+        }
+    };
+    ResizeObserverController.disconnect = function (resizeObserver) {
+        var _this = this;
+        var detail = observerMap.get(resizeObserver);
+        detail.observationTargets.slice().forEach(function (ot) { return _this.unobserve(resizeObserver, ot.target); });
+        detail.activeTargets.splice(0, detail.activeTargets.length);
+    };
+    return ResizeObserverController;
+}());
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@juggle/resize-observer/lib/ResizeObserverDetail.js":
+/*!**************************************************************************!*\
+  !*** ./node_modules/@juggle/resize-observer/lib/ResizeObserverDetail.js ***!
+  \**************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "ResizeObserverDetail": () => (/* binding */ ResizeObserverDetail)
+/* harmony export */ });
+var ResizeObserverDetail = (function () {
+    function ResizeObserverDetail(resizeObserver, callback) {
+        this.activeTargets = [];
+        this.skippedTargets = [];
+        this.observationTargets = [];
+        this.observer = resizeObserver;
+        this.callback = callback;
+    }
+    return ResizeObserverDetail;
+}());
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@juggle/resize-observer/lib/ResizeObserverEntry.js":
+/*!*************************************************************************!*\
+  !*** ./node_modules/@juggle/resize-observer/lib/ResizeObserverEntry.js ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "ResizeObserverEntry": () => (/* binding */ ResizeObserverEntry)
+/* harmony export */ });
+/* harmony import */ var _algorithms_calculateBoxSize__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./algorithms/calculateBoxSize */ "./node_modules/@juggle/resize-observer/lib/algorithms/calculateBoxSize.js");
+/* harmony import */ var _utils_freeze__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utils/freeze */ "./node_modules/@juggle/resize-observer/lib/utils/freeze.js");
+
+
+var ResizeObserverEntry = (function () {
+    function ResizeObserverEntry(target) {
+        var boxes = (0,_algorithms_calculateBoxSize__WEBPACK_IMPORTED_MODULE_0__.calculateBoxSizes)(target);
+        this.target = target;
+        this.contentRect = boxes.contentRect;
+        this.borderBoxSize = (0,_utils_freeze__WEBPACK_IMPORTED_MODULE_1__.freeze)([boxes.borderBoxSize]);
+        this.contentBoxSize = (0,_utils_freeze__WEBPACK_IMPORTED_MODULE_1__.freeze)([boxes.contentBoxSize]);
+        this.devicePixelContentBoxSize = (0,_utils_freeze__WEBPACK_IMPORTED_MODULE_1__.freeze)([boxes.devicePixelContentBoxSize]);
+    }
+    return ResizeObserverEntry;
+}());
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@juggle/resize-observer/lib/ResizeObserverSize.js":
+/*!************************************************************************!*\
+  !*** ./node_modules/@juggle/resize-observer/lib/ResizeObserverSize.js ***!
+  \************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "ResizeObserverSize": () => (/* binding */ ResizeObserverSize)
+/* harmony export */ });
+/* harmony import */ var _utils_freeze__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utils/freeze */ "./node_modules/@juggle/resize-observer/lib/utils/freeze.js");
+
+var ResizeObserverSize = (function () {
+    function ResizeObserverSize(inlineSize, blockSize) {
+        this.inlineSize = inlineSize;
+        this.blockSize = blockSize;
+        (0,_utils_freeze__WEBPACK_IMPORTED_MODULE_0__.freeze)(this);
+    }
+    return ResizeObserverSize;
+}());
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@juggle/resize-observer/lib/algorithms/broadcastActiveObservations.js":
+/*!********************************************************************************************!*\
+  !*** ./node_modules/@juggle/resize-observer/lib/algorithms/broadcastActiveObservations.js ***!
+  \********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "broadcastActiveObservations": () => (/* binding */ broadcastActiveObservations)
+/* harmony export */ });
+/* harmony import */ var _utils_resizeObservers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/resizeObservers */ "./node_modules/@juggle/resize-observer/lib/utils/resizeObservers.js");
+/* harmony import */ var _ResizeObserverEntry__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../ResizeObserverEntry */ "./node_modules/@juggle/resize-observer/lib/ResizeObserverEntry.js");
+/* harmony import */ var _calculateDepthForNode__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./calculateDepthForNode */ "./node_modules/@juggle/resize-observer/lib/algorithms/calculateDepthForNode.js");
+/* harmony import */ var _calculateBoxSize__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./calculateBoxSize */ "./node_modules/@juggle/resize-observer/lib/algorithms/calculateBoxSize.js");
+
+
+
+
+var broadcastActiveObservations = function () {
+    var shallowestDepth = Infinity;
+    var callbacks = [];
+    _utils_resizeObservers__WEBPACK_IMPORTED_MODULE_0__.resizeObservers.forEach(function processObserver(ro) {
+        if (ro.activeTargets.length === 0) {
+            return;
+        }
+        var entries = [];
+        ro.activeTargets.forEach(function processTarget(ot) {
+            var entry = new _ResizeObserverEntry__WEBPACK_IMPORTED_MODULE_1__.ResizeObserverEntry(ot.target);
+            var targetDepth = (0,_calculateDepthForNode__WEBPACK_IMPORTED_MODULE_2__.calculateDepthForNode)(ot.target);
+            entries.push(entry);
+            ot.lastReportedSize = (0,_calculateBoxSize__WEBPACK_IMPORTED_MODULE_3__.calculateBoxSize)(ot.target, ot.observedBox);
+            if (targetDepth < shallowestDepth) {
+                shallowestDepth = targetDepth;
+            }
+        });
+        callbacks.push(function resizeObserverCallback() {
+            ro.callback.call(ro.observer, entries, ro.observer);
+        });
+        ro.activeTargets.splice(0, ro.activeTargets.length);
+    });
+    for (var _i = 0, callbacks_1 = callbacks; _i < callbacks_1.length; _i++) {
+        var callback = callbacks_1[_i];
+        callback();
+    }
+    return shallowestDepth;
+};
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@juggle/resize-observer/lib/algorithms/calculateBoxSize.js":
+/*!*********************************************************************************!*\
+  !*** ./node_modules/@juggle/resize-observer/lib/algorithms/calculateBoxSize.js ***!
+  \*********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "calculateBoxSize": () => (/* binding */ calculateBoxSize),
+/* harmony export */   "calculateBoxSizes": () => (/* binding */ calculateBoxSizes)
+/* harmony export */ });
+/* harmony import */ var _ResizeObserverBoxOptions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../ResizeObserverBoxOptions */ "./node_modules/@juggle/resize-observer/lib/ResizeObserverBoxOptions.js");
+/* harmony import */ var _ResizeObserverSize__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../ResizeObserverSize */ "./node_modules/@juggle/resize-observer/lib/ResizeObserverSize.js");
+/* harmony import */ var _DOMRectReadOnly__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../DOMRectReadOnly */ "./node_modules/@juggle/resize-observer/lib/DOMRectReadOnly.js");
+/* harmony import */ var _utils_element__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/element */ "./node_modules/@juggle/resize-observer/lib/utils/element.js");
+/* harmony import */ var _utils_freeze__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/freeze */ "./node_modules/@juggle/resize-observer/lib/utils/freeze.js");
+/* harmony import */ var _utils_global__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/global */ "./node_modules/@juggle/resize-observer/lib/utils/global.js");
+
+
+
+
+
+
+var cache = new WeakMap();
+var scrollRegexp = /auto|scroll/;
+var verticalRegexp = /^tb|vertical/;
+var IE = (/msie|trident/i).test(_utils_global__WEBPACK_IMPORTED_MODULE_5__.global.navigator && _utils_global__WEBPACK_IMPORTED_MODULE_5__.global.navigator.userAgent);
+var parseDimension = function (pixel) { return parseFloat(pixel || '0'); };
+var size = function (inlineSize, blockSize, switchSizes) {
+    if (inlineSize === void 0) { inlineSize = 0; }
+    if (blockSize === void 0) { blockSize = 0; }
+    if (switchSizes === void 0) { switchSizes = false; }
+    return new _ResizeObserverSize__WEBPACK_IMPORTED_MODULE_1__.ResizeObserverSize((switchSizes ? blockSize : inlineSize) || 0, (switchSizes ? inlineSize : blockSize) || 0);
+};
+var zeroBoxes = (0,_utils_freeze__WEBPACK_IMPORTED_MODULE_4__.freeze)({
+    devicePixelContentBoxSize: size(),
+    borderBoxSize: size(),
+    contentBoxSize: size(),
+    contentRect: new _DOMRectReadOnly__WEBPACK_IMPORTED_MODULE_2__.DOMRectReadOnly(0, 0, 0, 0)
+});
+var calculateBoxSizes = function (target, forceRecalculation) {
+    if (forceRecalculation === void 0) { forceRecalculation = false; }
+    if (cache.has(target) && !forceRecalculation) {
+        return cache.get(target);
+    }
+    if ((0,_utils_element__WEBPACK_IMPORTED_MODULE_3__.isHidden)(target)) {
+        cache.set(target, zeroBoxes);
+        return zeroBoxes;
+    }
+    var cs = getComputedStyle(target);
+    var svg = (0,_utils_element__WEBPACK_IMPORTED_MODULE_3__.isSVG)(target) && target.ownerSVGElement && target.getBBox();
+    var removePadding = !IE && cs.boxSizing === 'border-box';
+    var switchSizes = verticalRegexp.test(cs.writingMode || '');
+    var canScrollVertically = !svg && scrollRegexp.test(cs.overflowY || '');
+    var canScrollHorizontally = !svg && scrollRegexp.test(cs.overflowX || '');
+    var paddingTop = svg ? 0 : parseDimension(cs.paddingTop);
+    var paddingRight = svg ? 0 : parseDimension(cs.paddingRight);
+    var paddingBottom = svg ? 0 : parseDimension(cs.paddingBottom);
+    var paddingLeft = svg ? 0 : parseDimension(cs.paddingLeft);
+    var borderTop = svg ? 0 : parseDimension(cs.borderTopWidth);
+    var borderRight = svg ? 0 : parseDimension(cs.borderRightWidth);
+    var borderBottom = svg ? 0 : parseDimension(cs.borderBottomWidth);
+    var borderLeft = svg ? 0 : parseDimension(cs.borderLeftWidth);
+    var horizontalPadding = paddingLeft + paddingRight;
+    var verticalPadding = paddingTop + paddingBottom;
+    var horizontalBorderArea = borderLeft + borderRight;
+    var verticalBorderArea = borderTop + borderBottom;
+    var horizontalScrollbarThickness = !canScrollHorizontally ? 0 : target.offsetHeight - verticalBorderArea - target.clientHeight;
+    var verticalScrollbarThickness = !canScrollVertically ? 0 : target.offsetWidth - horizontalBorderArea - target.clientWidth;
+    var widthReduction = removePadding ? horizontalPadding + horizontalBorderArea : 0;
+    var heightReduction = removePadding ? verticalPadding + verticalBorderArea : 0;
+    var contentWidth = svg ? svg.width : parseDimension(cs.width) - widthReduction - verticalScrollbarThickness;
+    var contentHeight = svg ? svg.height : parseDimension(cs.height) - heightReduction - horizontalScrollbarThickness;
+    var borderBoxWidth = contentWidth + horizontalPadding + verticalScrollbarThickness + horizontalBorderArea;
+    var borderBoxHeight = contentHeight + verticalPadding + horizontalScrollbarThickness + verticalBorderArea;
+    var boxes = (0,_utils_freeze__WEBPACK_IMPORTED_MODULE_4__.freeze)({
+        devicePixelContentBoxSize: size(Math.round(contentWidth * devicePixelRatio), Math.round(contentHeight * devicePixelRatio), switchSizes),
+        borderBoxSize: size(borderBoxWidth, borderBoxHeight, switchSizes),
+        contentBoxSize: size(contentWidth, contentHeight, switchSizes),
+        contentRect: new _DOMRectReadOnly__WEBPACK_IMPORTED_MODULE_2__.DOMRectReadOnly(paddingLeft, paddingTop, contentWidth, contentHeight)
+    });
+    cache.set(target, boxes);
+    return boxes;
+};
+var calculateBoxSize = function (target, observedBox, forceRecalculation) {
+    var _a = calculateBoxSizes(target, forceRecalculation), borderBoxSize = _a.borderBoxSize, contentBoxSize = _a.contentBoxSize, devicePixelContentBoxSize = _a.devicePixelContentBoxSize;
+    switch (observedBox) {
+        case _ResizeObserverBoxOptions__WEBPACK_IMPORTED_MODULE_0__.ResizeObserverBoxOptions.DEVICE_PIXEL_CONTENT_BOX:
+            return devicePixelContentBoxSize;
+        case _ResizeObserverBoxOptions__WEBPACK_IMPORTED_MODULE_0__.ResizeObserverBoxOptions.BORDER_BOX:
+            return borderBoxSize;
+        default:
+            return contentBoxSize;
+    }
+};
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@juggle/resize-observer/lib/algorithms/calculateDepthForNode.js":
+/*!**************************************************************************************!*\
+  !*** ./node_modules/@juggle/resize-observer/lib/algorithms/calculateDepthForNode.js ***!
+  \**************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "calculateDepthForNode": () => (/* binding */ calculateDepthForNode)
+/* harmony export */ });
+/* harmony import */ var _utils_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/element */ "./node_modules/@juggle/resize-observer/lib/utils/element.js");
+
+var calculateDepthForNode = function (node) {
+    if ((0,_utils_element__WEBPACK_IMPORTED_MODULE_0__.isHidden)(node)) {
+        return Infinity;
+    }
+    var depth = 0;
+    var parent = node.parentNode;
+    while (parent) {
+        depth += 1;
+        parent = parent.parentNode;
+    }
+    return depth;
+};
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@juggle/resize-observer/lib/algorithms/deliverResizeLoopError.js":
+/*!***************************************************************************************!*\
+  !*** ./node_modules/@juggle/resize-observer/lib/algorithms/deliverResizeLoopError.js ***!
+  \***************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "deliverResizeLoopError": () => (/* binding */ deliverResizeLoopError)
+/* harmony export */ });
+var msg = 'ResizeObserver loop completed with undelivered notifications.';
+var deliverResizeLoopError = function () {
+    var event;
+    if (typeof ErrorEvent === 'function') {
+        event = new ErrorEvent('error', {
+            message: msg
+        });
+    }
+    else {
+        event = document.createEvent('Event');
+        event.initEvent('error', false, false);
+        event.message = msg;
+    }
+    window.dispatchEvent(event);
+};
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@juggle/resize-observer/lib/algorithms/gatherActiveObservationsAtDepth.js":
+/*!************************************************************************************************!*\
+  !*** ./node_modules/@juggle/resize-observer/lib/algorithms/gatherActiveObservationsAtDepth.js ***!
+  \************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "gatherActiveObservationsAtDepth": () => (/* binding */ gatherActiveObservationsAtDepth)
+/* harmony export */ });
+/* harmony import */ var _utils_resizeObservers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/resizeObservers */ "./node_modules/@juggle/resize-observer/lib/utils/resizeObservers.js");
+/* harmony import */ var _calculateDepthForNode__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./calculateDepthForNode */ "./node_modules/@juggle/resize-observer/lib/algorithms/calculateDepthForNode.js");
+
+
+var gatherActiveObservationsAtDepth = function (depth) {
+    _utils_resizeObservers__WEBPACK_IMPORTED_MODULE_0__.resizeObservers.forEach(function processObserver(ro) {
+        ro.activeTargets.splice(0, ro.activeTargets.length);
+        ro.skippedTargets.splice(0, ro.skippedTargets.length);
+        ro.observationTargets.forEach(function processTarget(ot) {
+            if (ot.isActive()) {
+                if ((0,_calculateDepthForNode__WEBPACK_IMPORTED_MODULE_1__.calculateDepthForNode)(ot.target) > depth) {
+                    ro.activeTargets.push(ot);
+                }
+                else {
+                    ro.skippedTargets.push(ot);
+                }
+            }
+        });
+    });
+};
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@juggle/resize-observer/lib/algorithms/hasActiveObservations.js":
+/*!**************************************************************************************!*\
+  !*** ./node_modules/@juggle/resize-observer/lib/algorithms/hasActiveObservations.js ***!
+  \**************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "hasActiveObservations": () => (/* binding */ hasActiveObservations)
+/* harmony export */ });
+/* harmony import */ var _utils_resizeObservers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/resizeObservers */ "./node_modules/@juggle/resize-observer/lib/utils/resizeObservers.js");
+
+var hasActiveObservations = function () {
+    return _utils_resizeObservers__WEBPACK_IMPORTED_MODULE_0__.resizeObservers.some(function (ro) { return ro.activeTargets.length > 0; });
+};
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@juggle/resize-observer/lib/algorithms/hasSkippedObservations.js":
+/*!***************************************************************************************!*\
+  !*** ./node_modules/@juggle/resize-observer/lib/algorithms/hasSkippedObservations.js ***!
+  \***************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "hasSkippedObservations": () => (/* binding */ hasSkippedObservations)
+/* harmony export */ });
+/* harmony import */ var _utils_resizeObservers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/resizeObservers */ "./node_modules/@juggle/resize-observer/lib/utils/resizeObservers.js");
+
+var hasSkippedObservations = function () {
+    return _utils_resizeObservers__WEBPACK_IMPORTED_MODULE_0__.resizeObservers.some(function (ro) { return ro.skippedTargets.length > 0; });
+};
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@juggle/resize-observer/lib/exports/resize-observer.js":
+/*!*****************************************************************************!*\
+  !*** ./node_modules/@juggle/resize-observer/lib/exports/resize-observer.js ***!
+  \*****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "ResizeObserver": () => (/* reexport safe */ _ResizeObserver__WEBPACK_IMPORTED_MODULE_0__.ResizeObserver),
+/* harmony export */   "ResizeObserverEntry": () => (/* reexport safe */ _ResizeObserverEntry__WEBPACK_IMPORTED_MODULE_1__.ResizeObserverEntry),
+/* harmony export */   "ResizeObserverSize": () => (/* reexport safe */ _ResizeObserverSize__WEBPACK_IMPORTED_MODULE_2__.ResizeObserverSize)
+/* harmony export */ });
+/* harmony import */ var _ResizeObserver__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../ResizeObserver */ "./node_modules/@juggle/resize-observer/lib/ResizeObserver.js");
+/* harmony import */ var _ResizeObserverEntry__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../ResizeObserverEntry */ "./node_modules/@juggle/resize-observer/lib/ResizeObserverEntry.js");
+/* harmony import */ var _ResizeObserverSize__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../ResizeObserverSize */ "./node_modules/@juggle/resize-observer/lib/ResizeObserverSize.js");
+
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@juggle/resize-observer/lib/utils/element.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/@juggle/resize-observer/lib/utils/element.js ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "isSVG": () => (/* binding */ isSVG),
+/* harmony export */   "isHidden": () => (/* binding */ isHidden),
+/* harmony export */   "isElement": () => (/* binding */ isElement),
+/* harmony export */   "isReplacedElement": () => (/* binding */ isReplacedElement)
+/* harmony export */ });
+var isSVG = function (target) { return target instanceof SVGElement && 'getBBox' in target; };
+var isHidden = function (target) {
+    if (isSVG(target)) {
+        var _a = target.getBBox(), width = _a.width, height = _a.height;
+        return !width && !height;
+    }
+    var _b = target, offsetWidth = _b.offsetWidth, offsetHeight = _b.offsetHeight;
+    return !(offsetWidth || offsetHeight || target.getClientRects().length);
+};
+var isElement = function (obj) {
+    var _a, _b;
+    if (obj instanceof Element) {
+        return true;
+    }
+    var scope = (_b = (_a = obj) === null || _a === void 0 ? void 0 : _a.ownerDocument) === null || _b === void 0 ? void 0 : _b.defaultView;
+    return !!(scope && obj instanceof scope.Element);
+};
+var isReplacedElement = function (target) {
+    switch (target.tagName) {
+        case 'INPUT':
+            if (target.type !== 'image') {
+                break;
+            }
+        case 'VIDEO':
+        case 'AUDIO':
+        case 'EMBED':
+        case 'OBJECT':
+        case 'CANVAS':
+        case 'IFRAME':
+        case 'IMG':
+            return true;
+    }
+    return false;
+};
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@juggle/resize-observer/lib/utils/freeze.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/@juggle/resize-observer/lib/utils/freeze.js ***!
+  \******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "freeze": () => (/* binding */ freeze)
+/* harmony export */ });
+var freeze = function (obj) { return Object.freeze(obj); };
+
+
+/***/ }),
+
+/***/ "./node_modules/@juggle/resize-observer/lib/utils/global.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/@juggle/resize-observer/lib/utils/global.js ***!
+  \******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "global": () => (/* binding */ global)
+/* harmony export */ });
+var global = typeof window !== 'undefined' ? window : {};
+
+
+/***/ }),
+
+/***/ "./node_modules/@juggle/resize-observer/lib/utils/process.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/@juggle/resize-observer/lib/utils/process.js ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "process": () => (/* binding */ process)
+/* harmony export */ });
+/* harmony import */ var _algorithms_hasActiveObservations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../algorithms/hasActiveObservations */ "./node_modules/@juggle/resize-observer/lib/algorithms/hasActiveObservations.js");
+/* harmony import */ var _algorithms_hasSkippedObservations__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../algorithms/hasSkippedObservations */ "./node_modules/@juggle/resize-observer/lib/algorithms/hasSkippedObservations.js");
+/* harmony import */ var _algorithms_deliverResizeLoopError__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../algorithms/deliverResizeLoopError */ "./node_modules/@juggle/resize-observer/lib/algorithms/deliverResizeLoopError.js");
+/* harmony import */ var _algorithms_broadcastActiveObservations__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../algorithms/broadcastActiveObservations */ "./node_modules/@juggle/resize-observer/lib/algorithms/broadcastActiveObservations.js");
+/* harmony import */ var _algorithms_gatherActiveObservationsAtDepth__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../algorithms/gatherActiveObservationsAtDepth */ "./node_modules/@juggle/resize-observer/lib/algorithms/gatherActiveObservationsAtDepth.js");
+
+
+
+
+
+var process = function () {
+    var depth = 0;
+    (0,_algorithms_gatherActiveObservationsAtDepth__WEBPACK_IMPORTED_MODULE_4__.gatherActiveObservationsAtDepth)(depth);
+    while ((0,_algorithms_hasActiveObservations__WEBPACK_IMPORTED_MODULE_0__.hasActiveObservations)()) {
+        depth = (0,_algorithms_broadcastActiveObservations__WEBPACK_IMPORTED_MODULE_3__.broadcastActiveObservations)();
+        (0,_algorithms_gatherActiveObservationsAtDepth__WEBPACK_IMPORTED_MODULE_4__.gatherActiveObservationsAtDepth)(depth);
+    }
+    if ((0,_algorithms_hasSkippedObservations__WEBPACK_IMPORTED_MODULE_1__.hasSkippedObservations)()) {
+        (0,_algorithms_deliverResizeLoopError__WEBPACK_IMPORTED_MODULE_2__.deliverResizeLoopError)();
+    }
+    return depth > 0;
+};
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@juggle/resize-observer/lib/utils/queueMicroTask.js":
+/*!**************************************************************************!*\
+  !*** ./node_modules/@juggle/resize-observer/lib/utils/queueMicroTask.js ***!
+  \**************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "queueMicroTask": () => (/* binding */ queueMicroTask)
+/* harmony export */ });
+var trigger;
+var callbacks = [];
+var notify = function () { return callbacks.splice(0).forEach(function (cb) { return cb(); }); };
+var queueMicroTask = function (callback) {
+    if (!trigger) {
+        var toggle_1 = 0;
+        var el_1 = document.createTextNode('');
+        var config = { characterData: true };
+        new MutationObserver(function () { return notify(); }).observe(el_1, config);
+        trigger = function () { el_1.textContent = "" + (toggle_1 ? toggle_1-- : toggle_1++); };
+    }
+    callbacks.push(callback);
+    trigger();
+};
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@juggle/resize-observer/lib/utils/queueResizeObserver.js":
+/*!*******************************************************************************!*\
+  !*** ./node_modules/@juggle/resize-observer/lib/utils/queueResizeObserver.js ***!
+  \*******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "queueResizeObserver": () => (/* binding */ queueResizeObserver)
+/* harmony export */ });
+/* harmony import */ var _queueMicroTask__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./queueMicroTask */ "./node_modules/@juggle/resize-observer/lib/utils/queueMicroTask.js");
+
+var queueResizeObserver = function (cb) {
+    (0,_queueMicroTask__WEBPACK_IMPORTED_MODULE_0__.queueMicroTask)(function ResizeObserver() {
+        requestAnimationFrame(cb);
+    });
+};
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@juggle/resize-observer/lib/utils/resizeObservers.js":
+/*!***************************************************************************!*\
+  !*** ./node_modules/@juggle/resize-observer/lib/utils/resizeObservers.js ***!
+  \***************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "resizeObservers": () => (/* binding */ resizeObservers)
+/* harmony export */ });
+var resizeObservers = [];
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@juggle/resize-observer/lib/utils/scheduler.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/@juggle/resize-observer/lib/utils/scheduler.js ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "scheduler": () => (/* binding */ scheduler),
+/* harmony export */   "updateCount": () => (/* binding */ updateCount)
+/* harmony export */ });
+/* harmony import */ var _process__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./process */ "./node_modules/@juggle/resize-observer/lib/utils/process.js");
+/* harmony import */ var _global__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./global */ "./node_modules/@juggle/resize-observer/lib/utils/global.js");
+/* harmony import */ var _queueResizeObserver__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./queueResizeObserver */ "./node_modules/@juggle/resize-observer/lib/utils/queueResizeObserver.js");
+
+
+
+var watching = 0;
+var isWatching = function () { return !!watching; };
+var CATCH_PERIOD = 250;
+var observerConfig = { attributes: true, characterData: true, childList: true, subtree: true };
+var events = [
+    'resize',
+    'load',
+    'transitionend',
+    'animationend',
+    'animationstart',
+    'animationiteration',
+    'keyup',
+    'keydown',
+    'mouseup',
+    'mousedown',
+    'mouseover',
+    'mouseout',
+    'blur',
+    'focus'
+];
+var time = function (timeout) {
+    if (timeout === void 0) { timeout = 0; }
+    return Date.now() + timeout;
+};
+var scheduled = false;
+var Scheduler = (function () {
+    function Scheduler() {
+        var _this = this;
+        this.stopped = true;
+        this.listener = function () { return _this.schedule(); };
+    }
+    Scheduler.prototype.run = function (timeout) {
+        var _this = this;
+        if (timeout === void 0) { timeout = CATCH_PERIOD; }
+        if (scheduled) {
+            return;
+        }
+        scheduled = true;
+        var until = time(timeout);
+        (0,_queueResizeObserver__WEBPACK_IMPORTED_MODULE_2__.queueResizeObserver)(function () {
+            var elementsHaveResized = false;
+            try {
+                elementsHaveResized = (0,_process__WEBPACK_IMPORTED_MODULE_0__.process)();
+            }
+            finally {
+                scheduled = false;
+                timeout = until - time();
+                if (!isWatching()) {
+                    return;
+                }
+                if (elementsHaveResized) {
+                    _this.run(1000);
+                }
+                else if (timeout > 0) {
+                    _this.run(timeout);
+                }
+                else {
+                    _this.start();
+                }
+            }
+        });
+    };
+    Scheduler.prototype.schedule = function () {
+        this.stop();
+        this.run();
+    };
+    Scheduler.prototype.observe = function () {
+        var _this = this;
+        var cb = function () { return _this.observer && _this.observer.observe(document.body, observerConfig); };
+        document.body ? cb() : _global__WEBPACK_IMPORTED_MODULE_1__.global.addEventListener('DOMContentLoaded', cb);
+    };
+    Scheduler.prototype.start = function () {
+        var _this = this;
+        if (this.stopped) {
+            this.stopped = false;
+            this.observer = new MutationObserver(this.listener);
+            this.observe();
+            events.forEach(function (name) { return _global__WEBPACK_IMPORTED_MODULE_1__.global.addEventListener(name, _this.listener, true); });
+        }
+    };
+    Scheduler.prototype.stop = function () {
+        var _this = this;
+        if (!this.stopped) {
+            this.observer && this.observer.disconnect();
+            events.forEach(function (name) { return _global__WEBPACK_IMPORTED_MODULE_1__.global.removeEventListener(name, _this.listener, true); });
+            this.stopped = true;
+        }
+    };
+    return Scheduler;
+}());
+var scheduler = new Scheduler();
+var updateCount = function (n) {
+    !watching && n > 0 && scheduler.start();
+    watching += n;
+    !watching && scheduler.stop();
+};
+
+
+
+/***/ }),
+
 /***/ "./node_modules/@popperjs/core/lib/createPopper.js":
 /*!*********************************************************!*\
   !*** ./node_modules/@popperjs/core/lib/createPopper.js ***!
@@ -22389,11 +23333,11 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.esm.js");
 
 window.Vue = (__webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js")["default"]);
- // ______________________________________________Component global registration______________________________
-// ______________________________________________Filters______________________________________________
-// ______________________________________________Vue and packages Config___________
+ // createApp({}).mount("#app");
 
-(0,vue__WEBPACK_IMPORTED_MODULE_0__.createApp)({}).mount("#app");
+/**Theme */
+
+__webpack_require__(/*! ./theme */ "./resources/js/theme/index.js");
 
 /***/ }),
 
@@ -22425,6 +23369,1325 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/theme/components/carousel.js":
+/*!***************************************************!*\
+  !*** ./resources/js/theme/components/carousel.js ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var tiny_slider__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tiny-slider */ "./node_modules/tiny-slider/dist/tiny-slider.js");
+/**
+ * Content carousel with extensive options to control behaviour and appearance
+ * @requires https://github.com/ganlanyuan/tiny-slider
+*/
+
+
+var carousel = function () {
+  // forEach function
+  var forEach = function forEach(array, callback, scope) {
+    for (var i = 0; i < array.length; i++) {
+      callback.call(scope, i, array[i]); // passes back stuff we need
+    }
+  }; // Carousel initialisation
+
+
+  var carousels = document.querySelectorAll('.tns-carousel .tns-carousel-inner');
+  forEach(carousels, function (index, value) {
+    var defaults = {
+      container: value,
+      controlsText: ['<i class="ci-arrow-left"></i>', '<i class="ci-arrow-right"></i>'],
+      navPosition: 'bottom',
+      mouseDrag: true,
+      speed: 500,
+      autoplayHoverPause: true,
+      autoplayButtonOutput: false
+    };
+    var userOptions;
+    if (value.dataset.carouselOptions != undefined) userOptions = JSON.parse(value.dataset.carouselOptions);
+    var options = Object.assign({}, defaults, userOptions);
+    var carousel = (0,tiny_slider__WEBPACK_IMPORTED_MODULE_0__.tns)(options);
+  });
+}();
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (carousel);
+
+/***/ }),
+
+/***/ "./resources/js/theme/components/charts.js":
+/*!*************************************************!*\
+  !*** ./resources/js/theme/components/charts.js ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/**
+ * Charts
+ * @requires https://github.com/gionkunz/chartist-js
+*/
+var charts = function () {
+  var lineChart = document.querySelectorAll('[data-line-chart]'),
+      barChart = document.querySelectorAll('[data-bar-chart]'),
+      pieChart = document.querySelectorAll('[data-pie-chart]');
+
+  var sum = function sum(a, b) {
+    return a + b;
+  };
+
+  if (lineChart.length === 0 && barChart.length === 0 && pieChart.length === 0) return; // Create <style> tag and put it to <head> for changing colors of charts via data attributes
+
+  var head = document.head || document.getElementsByTagName('head')[0],
+      style = document.createElement('style'),
+      css;
+  head.appendChild(style); // Line chart
+
+  for (var i = 0; i < lineChart.length; i++) {
+    var data = JSON.parse(lineChart[i].dataset.lineChart),
+        options = lineChart[i].dataset.options != undefined ? JSON.parse(lineChart[i].dataset.options) : '',
+        seriesColor = lineChart[i].dataset.seriesColor,
+        userColors = void 0;
+    lineChart[i].classList.add('line-chart-' + i);
+
+    if (seriesColor != undefined) {
+      userColors = JSON.parse(seriesColor);
+
+      for (var n = 0; n < userColors.colors.length; n++) {
+        css = "\n          .line-chart-".concat(i, " .ct-series:nth-child(").concat(n + 1, ") .ct-line,\n          .line-chart-").concat(i, " .ct-series:nth-child(").concat(n + 1, ") .ct-point {\n            stroke: ").concat(userColors.colors[n], " !important;\n          }\n        ");
+        style.appendChild(document.createTextNode(css));
+      }
+    }
+
+    new Chartist.Line(lineChart[i], data, options);
+  } // Bar chart
+
+
+  for (var _i = 0; _i < barChart.length; _i++) {
+    var _data = JSON.parse(barChart[_i].dataset.barChart),
+        _options = barChart[_i].dataset.options != undefined ? JSON.parse(barChart[_i].dataset.options) : '',
+        _seriesColor = barChart[_i].dataset.seriesColor,
+        _userColors = void 0;
+
+    barChart[_i].classList.add('bar-chart-' + _i);
+
+    if (_seriesColor != undefined) {
+      _userColors = JSON.parse(_seriesColor);
+
+      for (var _n = 0; _n < _userColors.colors.length; _n++) {
+        css = "\n        .bar-chart-".concat(_i, " .ct-series:nth-child(").concat(_n + 1, ") .ct-bar {\n            stroke: ").concat(_userColors.colors[_n], " !important;\n          }\n        ");
+        style.appendChild(document.createTextNode(css));
+      }
+    }
+
+    new Chartist.Bar(barChart[_i], _data, _options);
+  } // Pie chart
+
+
+  var _loop = function _loop(_i2) {
+    var data = JSON.parse(pieChart[_i2].dataset.pieChart),
+        seriesColor = pieChart[_i2].dataset.seriesColor,
+        userColors = void 0;
+
+    pieChart[_i2].classList.add('cz-pie-chart-' + _i2);
+
+    if (seriesColor != undefined) {
+      userColors = JSON.parse(seriesColor);
+
+      for (var _n2 = 0; _n2 < userColors.colors.length; _n2++) {
+        css = "\n        .cz-pie-chart-".concat(_i2, " .ct-series:nth-child(").concat(_n2 + 1, ") .ct-slice-pie {\n            fill: ").concat(userColors.colors[_n2], " !important;\n          }\n        ");
+        style.appendChild(document.createTextNode(css));
+      }
+    }
+
+    new Chartist.Pie(pieChart[_i2], data, {
+      labelInterpolationFnc: function labelInterpolationFnc(value) {
+        return Math.round(value / data.series.reduce(sum) * 100) + '%';
+      }
+    });
+  };
+
+  for (var _i2 = 0; _i2 < pieChart.length; _i2++) {
+    _loop(_i2);
+  }
+}();
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (charts);
+
+/***/ }),
+
+/***/ "./resources/js/theme/components/countdown.js":
+/*!****************************************************!*\
+  !*** ./resources/js/theme/components/countdown.js ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
+/**
+ * Countdown timer
+*/
+var countdown = function () {
+  var coundown = document.querySelectorAll('.countdown');
+  if (coundown == null) return;
+
+  var _loop = function _loop(i) {
+    var endDate = coundown[i].dataset.countdown,
+        daysVal = coundown[i].querySelector('.countdown-days .countdown-value'),
+        hoursVal = coundown[i].querySelector('.countdown-hours .countdown-value'),
+        minutesVal = coundown[i].querySelector('.countdown-minutes .countdown-value'),
+        secondsVal = coundown[i].querySelector('.countdown-seconds .countdown-value'),
+        days = void 0,
+        hours = void 0,
+        minutes = void 0,
+        seconds = void 0;
+    endDate = new Date(endDate).getTime();
+    if (isNaN(endDate)) return {
+      v: void 0
+    };
+    setInterval(calculate, 1000);
+
+    function calculate() {
+      var startDate = new Date().getTime();
+      var timeRemaining = parseInt((endDate - startDate) / 1000);
+
+      if (timeRemaining >= 0) {
+        days = parseInt(timeRemaining / 86400);
+        timeRemaining = timeRemaining % 86400;
+        hours = parseInt(timeRemaining / 3600);
+        timeRemaining = timeRemaining % 3600;
+        minutes = parseInt(timeRemaining / 60);
+        timeRemaining = timeRemaining % 60;
+        seconds = parseInt(timeRemaining);
+
+        if (daysVal != null) {
+          daysVal.innerHTML = parseInt(days, 10);
+        }
+
+        if (hoursVal != null) {
+          hoursVal.innerHTML = hours < 10 ? '0' + hours : hours;
+        }
+
+        if (minutesVal != null) {
+          minutesVal.innerHTML = minutes < 10 ? '0' + minutes : minutes;
+        }
+
+        if (secondsVal != null) {
+          secondsVal.innerHTML = seconds < 10 ? '0' + seconds : seconds;
+        }
+      } else {
+        return;
+      }
+    }
+  };
+
+  for (var i = 0; i < coundown.length; i++) {
+    var _ret = _loop(i);
+
+    if (_typeof(_ret) === "object") return _ret.v;
+  }
+}();
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (countdown);
+
+/***/ }),
+
+/***/ "./resources/js/theme/components/credit-card.js":
+/*!******************************************************!*\
+  !*** ./resources/js/theme/components/credit-card.js ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/**
+ * Change tabs with radio buttons
+*/
+var creditCard = function () {
+  var selector = document.querySelector('.credit-card-form');
+  if (selector === null) return;
+  var card = new Card({
+    form: selector,
+    container: '.credit-card-wrapper'
+  });
+}();
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (creditCard);
+
+/***/ }),
+
+/***/ "./resources/js/theme/components/data-filter.js":
+/*!******************************************************!*\
+  !*** ./resources/js/theme/components/data-filter.js ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/**
+ * Data filtering (Comparison table)
+*/
+var dataFilter = function () {
+  var trigger = document.querySelector('[data-filter-trigger]'),
+      target = document.querySelectorAll('[data-filter-target]');
+  if (trigger === null) return;
+  trigger.addEventListener('change', function () {
+    var selected = this.options[this.selectedIndex].value.toLowerCase();
+
+    if (selected === 'all') {
+      for (var i = 0; i < target.length; i++) {
+        target[i].classList.remove('d-none');
+      }
+    } else {
+      for (var n = 0; n < target.length; n++) {
+        target[n].classList.add('d-none');
+      }
+
+      document.querySelector('#' + selected).classList.remove('d-none');
+    }
+  });
+}();
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (dataFilter);
+
+/***/ }),
+
+/***/ "./resources/js/theme/components/disable-dropdown-autohide.js":
+/*!********************************************************************!*\
+  !*** ./resources/js/theme/components/disable-dropdown-autohide.js ***!
+  \********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/**
+ * Disable dropdown autohide when select is clicked
+*/
+var disableDropdownAutohide = function () {
+  var elements = document.querySelectorAll('.disable-autohide .form-select');
+
+  for (var i = 0; i < elements.length; i++) {
+    elements[i].addEventListener('click', function (e) {
+      e.stopPropagation();
+    });
+  }
+}();
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (disableDropdownAutohide);
+
+/***/ }),
+
+/***/ "./resources/js/theme/components/file-drop-area.js":
+/*!*********************************************************!*\
+  !*** ./resources/js/theme/components/file-drop-area.js ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/**
+ * Custom file drag and drop area
+*/
+var fileDropArea = function () {
+  var fileArea = document.querySelectorAll('.file-drop-area');
+
+  var _loop = function _loop(i) {
+    var input = fileArea[i].querySelector('.file-drop-input'),
+        message = fileArea[i].querySelector('.file-drop-message'),
+        icon = fileArea[i].querySelector('.file-drop-icon'),
+        button = fileArea[i].querySelector('.file-drop-btn');
+    button.addEventListener('click', function () {
+      input.click();
+    });
+    input.addEventListener('change', function () {
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+          var fileData = e.target.result;
+          var fileName = input.files[0].name;
+          message.innerHTML = fileName;
+
+          if (fileData.startsWith('data:image')) {
+            var image = new Image();
+            image.src = fileData;
+
+            image.onload = function () {
+              icon.className = 'file-drop-preview img-thumbnail rounded';
+              icon.innerHTML = '<img src="' + image.src + '" alt="' + fileName + '">';
+            };
+          } else if (fileData.startsWith('data:video')) {
+            icon.innerHTML = '';
+            icon.className = '';
+            icon.className = 'file-drop-icon ci-video';
+          } else {
+            icon.innerHTML = '';
+            icon.className = '';
+            icon.className = 'file-drop-icon ci-document';
+          }
+        };
+
+        reader.readAsDataURL(input.files[0]);
+      }
+    });
+  };
+
+  for (var i = 0; i < fileArea.length; i++) {
+    _loop(i);
+  }
+}();
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (fileDropArea);
+
+/***/ }),
+
+/***/ "./resources/js/theme/components/filter-list.js":
+/*!******************************************************!*\
+  !*** ./resources/js/theme/components/filter-list.js ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/**
+ * Filter list of items by typing in the search field
+*/
+var filterList = function () {
+  var filterListWidget = document.querySelectorAll('.widget-filter');
+
+  var _loop = function _loop(i) {
+    var filterInput = filterListWidget[i].querySelector('.widget-filter-search'),
+        filterList = filterListWidget[i].querySelector('.widget-filter-list'),
+        filterItems = filterList.querySelectorAll('.widget-filter-item');
+
+    if (!filterInput) {
+      return "continue";
+    }
+
+    filterInput.addEventListener('keyup', filterListFunc);
+
+    function filterListFunc() {
+      var filterValue = filterInput.value.toLowerCase();
+
+      for (var _i = 0; _i < filterItems.length; _i++) {
+        var filterText = filterItems[_i].querySelector('.widget-filter-item-text').innerHTML;
+
+        if (filterText.toLowerCase().indexOf(filterValue) > -1) {
+          filterItems[_i].classList.remove('d-none');
+        } else {
+          filterItems[_i].classList.add('d-none');
+        }
+      }
+    }
+  };
+
+  for (var i = 0; i < filterListWidget.length; i++) {
+    var _ret = _loop(i);
+
+    if (_ret === "continue") continue;
+  }
+}();
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (filterList);
+
+/***/ }),
+
+/***/ "./resources/js/theme/components/form-validation.js":
+/*!**********************************************************!*\
+  !*** ./resources/js/theme/components/form-validation.js ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/**
+ * Form validation
+*/
+var formValidation = function () {
+  var selector = 'needs-validation';
+  window.addEventListener('load', function () {
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.getElementsByClassName(selector); // Loop over them and prevent submission
+
+    var validation = Array.prototype.filter.call(forms, function (form) {
+      form.addEventListener('submit', function (e) {
+        if (form.checkValidity() === false) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+
+        form.classList.add('was-validated');
+      }, false);
+    });
+  }, false);
+}();
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (formValidation);
+
+/***/ }),
+
+/***/ "./resources/js/theme/components/gallery.js":
+/*!**************************************************!*\
+  !*** ./resources/js/theme/components/gallery.js ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/**
+ * Lightbox component for presenting various types of media
+ * @requires https://github.com/sachinchoolur/lightgallery.js
+*/
+var gallery = function () {
+  var gallery = document.querySelectorAll('.gallery');
+
+  if (gallery.length) {
+    for (var i = 0; i < gallery.length; i++) {
+      lightGallery(gallery[i], {
+        selector: '.gallery-item',
+        download: false,
+        videojs: true,
+        youtubePlayerParams: {
+          modestbranding: 1,
+          showinfo: 0,
+          rel: 0
+        },
+        vimeoPlayerParams: {
+          byline: 0,
+          portrait: 0,
+          color: 'fe696a'
+        }
+      });
+    }
+  }
+}();
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (gallery);
+
+/***/ }),
+
+/***/ "./resources/js/theme/components/image-zoom.js":
+/*!*****************************************************!*\
+  !*** ./resources/js/theme/components/image-zoom.js ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var drift_zoom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! drift-zoom */ "./node_modules/drift-zoom/es/Drift.js");
+/**
+ * Image zoom on hover (used inside Product Gallery)
+ * @requires https://github.com/imgix/drift
+*/
+
+
+var imageZoom = function () {
+  var images = document.querySelectorAll('.image-zoom');
+
+  for (var i = 0; i < images.length; i++) {
+    new drift_zoom__WEBPACK_IMPORTED_MODULE_0__["default"](images[i], {
+      paneContainer: images[i].parentElement.querySelector('.image-zoom-pane')
+    });
+  }
+}();
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (imageZoom);
+
+/***/ }),
+
+/***/ "./resources/js/theme/components/label-update.js":
+/*!*******************************************************!*\
+  !*** ./resources/js/theme/components/label-update.js ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/**
+ * Updated the text of the label when radio button changes (mainly for color options)
+*/
+var labelUpdate = function () {
+  var radioBtns = document.querySelectorAll('[data-bs-label]');
+
+  for (var i = 0; i < radioBtns.length; i++) {
+    radioBtns[i].addEventListener('change', function () {
+      var target = this.dataset.bsLabel;
+
+      try {
+        document.getElementById(target).textContent = this.value;
+      } catch (err) {
+        if (err.message = "Cannot set property 'textContent' of null") {
+          console.error('Make sure the [data-label] matches with the id of the target element you want to change text of!');
+        }
+      }
+    });
+  }
+}();
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (labelUpdate);
+
+/***/ }),
+
+/***/ "./resources/js/theme/components/masonry-grid.js":
+/*!*******************************************************!*\
+  !*** ./resources/js/theme/components/masonry-grid.js ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/**
+ * Cascading (Masonry) grid layout
+ * 
+ * @requires https://github.com/desandro/imagesloaded
+ * @requires https://github.com/Vestride/Shuffle
+*/
+var masonryGrid = function () {
+  var grid = document.querySelectorAll('.masonry-grid'),
+      masonry;
+  if (grid === null) return;
+
+  for (var i = 0; i < grid.length; i++) {
+    masonry = new Shuffle(grid[i], {
+      itemSelector: '.masonry-grid-item',
+      sizer: '.masonry-grid-item'
+    });
+    imagesLoaded(grid[i]).on('progress', function () {
+      masonry.layout();
+    });
+  }
+}();
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (masonryGrid);
+
+/***/ }),
+
+/***/ "./resources/js/theme/components/master-checkbox.js":
+/*!**********************************************************!*\
+  !*** ./resources/js/theme/components/master-checkbox.js ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/**
+ * Master checkbox that checkes / unchecks all target checkboxes at once
+*/
+var masterCheckbox = function () {
+  var masterCheckbox = document.querySelectorAll('[data-master-checkbox-for]');
+  if (masterCheckbox.length === 0) return;
+
+  for (var i = 0; i < masterCheckbox.length; i++) {
+    masterCheckbox[i].addEventListener('change', function () {
+      var targetWrapper = document.querySelector(this.dataset.masterCheckboxFor),
+          targetCheckboxes = targetWrapper.querySelectorAll('input[type="checkbox"]');
+
+      if (this.checked) {
+        for (var n = 0; n < targetCheckboxes.length; n++) {
+          targetCheckboxes[n].checked = true;
+
+          if (targetCheckboxes[n].dataset.checkboxToggleClass) {
+            document.querySelector(targetCheckboxes[n].dataset.target).classList.add(targetCheckboxes[n].dataset.checkboxToggleClass);
+          }
+        }
+      } else {
+        for (var m = 0; m < targetCheckboxes.length; m++) {
+          targetCheckboxes[m].checked = false;
+
+          if (targetCheckboxes[m].dataset.checkboxToggleClass) {
+            document.querySelector(targetCheckboxes[m].dataset.target).classList.remove(targetCheckboxes[m].dataset.checkboxToggleClass);
+          }
+        }
+      }
+    });
+  }
+}();
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (masterCheckbox);
+
+/***/ }),
+
+/***/ "./resources/js/theme/components/password-visibility-toggle.js":
+/*!*********************************************************************!*\
+  !*** ./resources/js/theme/components/password-visibility-toggle.js ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/**
+ * Toggling password visibility in password input
+*/
+var passwordVisibilityToggle = function () {
+  var elements = document.querySelectorAll('.password-toggle');
+
+  var _loop = function _loop(i) {
+    var passInput = elements[i].querySelector('.form-control'),
+        passToggle = elements[i].querySelector('.password-toggle-btn');
+    passToggle.addEventListener('click', function (e) {
+      if (e.target.type !== 'checkbox') return;
+
+      if (e.target.checked) {
+        passInput.type = 'text';
+      } else {
+        passInput.type = 'password';
+      }
+    }, false);
+  };
+
+  for (var i = 0; i < elements.length; i++) {
+    _loop(i);
+  }
+}();
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (passwordVisibilityToggle);
+
+/***/ }),
+
+/***/ "./resources/js/theme/components/popover.js":
+/*!**************************************************!*\
+  !*** ./resources/js/theme/components/popover.js ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/**
+ * Popover
+ * @requires https://getbootstrap.com
+ * @requires https://popper.js.org/
+*/
+var popover = function () {
+  var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+  var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+    return new bootstrap.Popover(popoverTriggerEl);
+  });
+}();
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (popover);
+
+/***/ }),
+
+/***/ "./resources/js/theme/components/product-gallery.js":
+/*!**********************************************************!*\
+  !*** ./resources/js/theme/components/product-gallery.js ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/**
+ * Shop product page gallery with thumbnails
+ * @requires https://github.com/sachinchoolur/lightgallery.js
+*/
+var productGallery = function () {
+  var gallery = document.querySelectorAll('.product-gallery');
+
+  if (gallery.length) {
+    var _loop = function _loop(i) {
+      var thumbnails = gallery[i].querySelectorAll('.product-gallery-thumblist-item:not(.video-item)'),
+          previews = gallery[i].querySelectorAll('.product-gallery-preview-item'),
+          videos = gallery[i].querySelectorAll('.product-gallery-thumblist-item.video-item');
+
+      for (var n = 0; n < thumbnails.length; n++) {
+        thumbnails[n].addEventListener('click', changePreview);
+      } // Changer preview function
+
+
+      function changePreview(e) {
+        e.preventDefault();
+
+        for (var _i = 0; _i < thumbnails.length; _i++) {
+          previews[_i].classList.remove('active');
+
+          thumbnails[_i].classList.remove('active');
+        }
+
+        this.classList.add('active');
+        gallery[i].querySelector(this.getAttribute('href')).classList.add('active');
+      } // Video thumbnail - open video in lightbox
+
+
+      for (var m = 0; m < videos.length; m++) {
+        lightGallery(videos[m], {
+          selector: 'this',
+          download: false,
+          videojs: true,
+          youtubePlayerParams: {
+            modestbranding: 1,
+            showinfo: 0,
+            rel: 0,
+            controls: 0
+          },
+          vimeoPlayerParams: {
+            byline: 0,
+            portrait: 0,
+            color: 'fe696a'
+          }
+        });
+      }
+    };
+
+    for (var i = 0; i < gallery.length; i++) {
+      _loop(i);
+    }
+  }
+}();
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (productGallery);
+
+/***/ }),
+
+/***/ "./resources/js/theme/components/radio-tab.js":
+/*!****************************************************!*\
+  !*** ./resources/js/theme/components/radio-tab.js ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/**
+ * Change tabs with radio buttons
+*/
+var radioTab = function () {
+  var radioBtns = document.querySelectorAll('[data-bs-toggle="radioTab"]');
+
+  for (var i = 0; i < radioBtns.length; i++) {
+    radioBtns[i].addEventListener('click', function () {
+      var target = this.dataset.bsTarget,
+          parent = document.querySelector(this.dataset.bsParent),
+          children = parent.querySelectorAll('.radio-tab-pane');
+      children.forEach(function (element) {
+        element.classList.remove('active');
+      });
+      document.querySelector(target).classList.add('active');
+    });
+  }
+}();
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (radioTab);
+
+/***/ }),
+
+/***/ "./resources/js/theme/components/range-slider.js":
+/*!*******************************************************!*\
+  !*** ./resources/js/theme/components/range-slider.js ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/**
+ * Range slider
+ * @requires https://github.com/leongersen/noUiSlider
+*/
+var rangeSlider = function () {
+  var rangeSliderWidget = document.querySelectorAll('.range-slider');
+
+  var _loop = function _loop(i) {
+    var rangeSlider = rangeSliderWidget[i].querySelector('.range-slider-ui'),
+        valueMinInput = rangeSliderWidget[i].querySelector('.range-slider-value-min'),
+        valueMaxInput = rangeSliderWidget[i].querySelector('.range-slider-value-max');
+    var options = {
+      dataStartMin: parseInt(rangeSliderWidget[i].dataset.startMin, 10),
+      dataStartMax: parseInt(rangeSliderWidget[i].dataset.startMax, 10),
+      dataMin: parseInt(rangeSliderWidget[i].dataset.min, 10),
+      dataMax: parseInt(rangeSliderWidget[i].dataset.max, 10),
+      dataStep: parseInt(rangeSliderWidget[i].dataset.step, 10)
+    };
+    noUiSlider.create(rangeSlider, {
+      start: [options.dataStartMin, options.dataStartMax],
+      connect: true,
+      step: options.dataStep,
+      pips: {
+        mode: 'count',
+        values: 5
+      },
+      tooltips: true,
+      range: {
+        'min': options.dataMin,
+        'max': options.dataMax
+      },
+      format: {
+        to: function to(value) {
+          return '$' + parseInt(value, 10);
+        },
+        from: function from(value) {
+          return Number(value);
+        }
+      }
+    });
+    rangeSlider.noUiSlider.on('update', function (values, handle) {
+      var value = values[handle];
+      value = value.replace(/\D/g, '');
+
+      if (handle) {
+        valueMaxInput.value = Math.round(value);
+      } else {
+        valueMinInput.value = Math.round(value);
+      }
+    });
+    valueMinInput.addEventListener('change', function () {
+      rangeSlider.noUiSlider.set([this.value, null]);
+    });
+    valueMaxInput.addEventListener('change', function () {
+      rangeSlider.noUiSlider.set([null, this.value]);
+    });
+  };
+
+  for (var i = 0; i < rangeSliderWidget.length; i++) {
+    _loop(i);
+  }
+}();
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (rangeSlider);
+
+/***/ }),
+
+/***/ "./resources/js/theme/components/scroll-top-button.js":
+/*!************************************************************!*\
+  !*** ./resources/js/theme/components/scroll-top-button.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/**
+ * Animate scroll to top button in/off view
+*/
+var scrollTopButton = function () {
+  var element = document.querySelector('.btn-scroll-top'),
+      scrollOffset = 600;
+  if (element == null) return;
+  var offsetFromTop = parseInt(scrollOffset, 10);
+  window.addEventListener('scroll', function (e) {
+    if (e.currentTarget.pageYOffset > offsetFromTop) {
+      element.classList.add('show');
+    } else {
+      element.classList.remove('show');
+    }
+  });
+}();
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (scrollTopButton);
+
+/***/ }),
+
+/***/ "./resources/js/theme/components/smooth-scroll.js":
+/*!********************************************************!*\
+  !*** ./resources/js/theme/components/smooth-scroll.js ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var smooth_scroll__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! smooth-scroll */ "./node_modules/smooth-scroll/dist/smooth-scroll.polyfills.min.js");
+/* harmony import */ var smooth_scroll__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(smooth_scroll__WEBPACK_IMPORTED_MODULE_0__);
+/**
+ * Anchor smooth scrolling
+ * @requires https://github.com/cferdinandi/smooth-scroll/
+*/
+
+
+var smoothScroll = function () {
+  var selector = '[data-scroll]',
+      fixedHeader = '[data-scroll-header]',
+      scroll = new (smooth_scroll__WEBPACK_IMPORTED_MODULE_0___default())(selector, {
+    speed: 800,
+    speedAsDuration: true,
+    offset: 40,
+    header: fixedHeader,
+    updateURL: false
+  });
+}();
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (smoothScroll);
+
+/***/ }),
+
+/***/ "./resources/js/theme/components/sticky-navbar.js":
+/*!********************************************************!*\
+  !*** ./resources/js/theme/components/sticky-navbar.js ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/**
+ * Enable sticky behaviour of navigation bar on page scroll
+*/
+var stickyNavbar = function () {
+  var navbar = document.querySelector('.navbar-sticky');
+  if (navbar == null) return;
+  var navbarClass = navbar.classList,
+      navbarH = navbar.offsetHeight,
+      scrollOffset = 500;
+  window.addEventListener('scroll', function (e) {
+    if (e.currentTarget.pageYOffset > scrollOffset) {
+      document.body.style.paddingTop = navbarH + 'px';
+      navbar.classList.add('navbar-stuck');
+    } else {
+      document.body.style.paddingTop = '';
+      navbar.classList.remove('navbar-stuck');
+    }
+  });
+}();
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (stickyNavbar);
+
+/***/ }),
+
+/***/ "./resources/js/theme/components/stuck-navbar-menu-toggle.js":
+/*!*******************************************************************!*\
+  !*** ./resources/js/theme/components/stuck-navbar-menu-toggle.js ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/**
+ * Menu toggle for 3 level navbar stuck state
+*/
+var stuckNavbarMenuToggle = function () {
+  var toggler = document.querySelector('.navbar-stuck-toggler'),
+      stuckMenu = document.querySelector('.navbar-stuck-menu');
+  if (toggler == null) return;
+  toggler.addEventListener('click', function (e) {
+    stuckMenu.classList.toggle('show');
+    e.preventDefault();
+  });
+}();
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (stuckNavbarMenuToggle);
+
+/***/ }),
+
+/***/ "./resources/js/theme/components/subscription-form.js":
+/*!************************************************************!*\
+  !*** ./resources/js/theme/components/subscription-form.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/**
+ * Ajaxify MailChimp subscription form
+*/
+var subscriptionForm = function () {
+  var form = document.querySelectorAll('.subscription-form');
+  if (form === null) return;
+
+  var _loop = function _loop(i) {
+    var button = form[i].querySelector('button[type="submit"]'),
+        buttonText = button.innerHTML,
+        input = form[i].querySelector('.form-control'),
+        antispam = form[i].querySelector('.subscription-form-antispam'),
+        status = form[i].querySelector('.subscription-status');
+    form[i].addEventListener('submit', function (e) {
+      if (e) e.preventDefault();
+      if (antispam.value !== '') return;
+      register(this, button, input, buttonText, status);
+    });
+  };
+
+  for (var i = 0; i < form.length; i++) {
+    _loop(i);
+  }
+
+  var register = function register(form, button, input, buttonText, status) {
+    button.innerHTML = 'Sending...'; // Get url for MailChimp
+
+    var url = form.action.replace('/post?', '/post-json?'); // Add form data to object
+
+    var data = '&' + input.name + '=' + encodeURIComponent(input.value); // Create and add post script to the DOM
+
+    var script = document.createElement('script');
+    script.src = url + '&c=callback' + data;
+    document.body.appendChild(script); // Callback function
+
+    var callback = 'callback';
+
+    window[callback] = function (response) {
+      // Remove post script from the DOM
+      delete window[callback];
+      document.body.removeChild(script); // Change button text back to initial
+
+      button.innerHTML = buttonText; // Display content and apply styling to response message conditionally
+
+      if (response.result == 'success') {
+        input.classList.remove('is-invalid');
+        input.classList.add('is-valid');
+        status.classList.remove('status-error');
+        status.classList.add('status-success');
+        status.innerHTML = response.msg;
+        setTimeout(function () {
+          input.classList.remove('is-valid');
+          status.innerHTML = '';
+          status.classList.remove('status-success');
+        }, 6000);
+      } else {
+        input.classList.remove('is-valid');
+        input.classList.add('is-invalid');
+        status.classList.remove('status-success');
+        status.classList.add('status-error');
+        status.innerHTML = response.msg.substring(4);
+        setTimeout(function () {
+          input.classList.remove('is-invalid');
+          status.innerHTML = '';
+          status.classList.remove('status-error');
+        }, 6000);
+      }
+    };
+  };
+}();
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (subscriptionForm);
+
+/***/ }),
+
+/***/ "./resources/js/theme/components/toast.js":
+/*!************************************************!*\
+  !*** ./resources/js/theme/components/toast.js ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/**
+ * Toast
+ * @requires https://getbootstrap.com
+*/
+var toast = function () {
+  var toastElList = [].slice.call(document.querySelectorAll('.toast'));
+  var toastList = toastElList.map(function (toastEl) {
+    return new bootstrap.Toast(toastEl);
+  });
+}();
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (toast);
+
+/***/ }),
+
+/***/ "./resources/js/theme/components/tooltip.js":
+/*!**************************************************!*\
+  !*** ./resources/js/theme/components/tooltip.js ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var bootstrap_js_dist_tooltip__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! bootstrap/js/dist/tooltip */ "./node_modules/bootstrap/js/dist/tooltip.js");
+/* harmony import */ var bootstrap_js_dist_tooltip__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(bootstrap_js_dist_tooltip__WEBPACK_IMPORTED_MODULE_0__);
+/**
+ * Tooltip
+ * @requires https://getbootstrap.com
+ * @requires https://popper.js.org/
+*/
+
+
+var tooltip = function () {
+  var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+  var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+    return new (bootstrap_js_dist_tooltip__WEBPACK_IMPORTED_MODULE_0___default())(tooltipTriggerEl, {
+      trigger: 'hover'
+    });
+  });
+}();
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (tooltip);
+
+/***/ }),
+
+/***/ "./resources/js/theme/components/video-button.js":
+/*!*******************************************************!*\
+  !*** ./resources/js/theme/components/video-button.js ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/**
+ * Open YouTube / Vimeo video in lightbox
+ * @requires @requires https://github.com/sachinchoolur/lightgallery.js
+*/
+var videoButton = function () {
+  var button = document.querySelectorAll('[data-bs-toggle="video"]');
+
+  if (button.length) {
+    for (var i = 0; i < button.length; i++) {
+      lightGallery(button[i], {
+        selector: 'this',
+        download: false,
+        videojs: true,
+        youtubePlayerParams: {
+          modestbranding: 1,
+          showinfo: 0,
+          rel: 0
+        },
+        vimeoPlayerParams: {
+          byline: 0,
+          portrait: 0,
+          color: 'fe696a'
+        }
+      });
+    }
+  }
+}();
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (videoButton);
+
+/***/ }),
+
+/***/ "./resources/js/theme/index.js":
+/*!*************************************!*\
+  !*** ./resources/js/theme/index.js ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var simplebar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! simplebar */ "./node_modules/simplebar/dist/simplebar.esm.js");
+/* harmony import */ var _components_sticky_navbar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/sticky-navbar */ "./resources/js/theme/components/sticky-navbar.js");
+/* harmony import */ var _components_stuck_navbar_menu_toggle__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/stuck-navbar-menu-toggle */ "./resources/js/theme/components/stuck-navbar-menu-toggle.js");
+/* harmony import */ var _components_masonry_grid__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/masonry-grid */ "./resources/js/theme/components/masonry-grid.js");
+/* harmony import */ var _components_password_visibility_toggle__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/password-visibility-toggle */ "./resources/js/theme/components/password-visibility-toggle.js");
+/* harmony import */ var _components_file_drop_area__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/file-drop-area */ "./resources/js/theme/components/file-drop-area.js");
+/* harmony import */ var _components_form_validation__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/form-validation */ "./resources/js/theme/components/form-validation.js");
+/* harmony import */ var _components_smooth_scroll__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/smooth-scroll */ "./resources/js/theme/components/smooth-scroll.js");
+/* harmony import */ var _components_scroll_top_button__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/scroll-top-button */ "./resources/js/theme/components/scroll-top-button.js");
+/* harmony import */ var _components_tooltip__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/tooltip */ "./resources/js/theme/components/tooltip.js");
+/* harmony import */ var _components_popover__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/popover */ "./resources/js/theme/components/popover.js");
+/* harmony import */ var _components_toast__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/toast */ "./resources/js/theme/components/toast.js");
+/* harmony import */ var _components_disable_dropdown_autohide__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/disable-dropdown-autohide */ "./resources/js/theme/components/disable-dropdown-autohide.js");
+/* harmony import */ var _components_carousel__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/carousel */ "./resources/js/theme/components/carousel.js");
+/* harmony import */ var _components_gallery__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/gallery */ "./resources/js/theme/components/gallery.js");
+/* harmony import */ var _components_product_gallery__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/product-gallery */ "./resources/js/theme/components/product-gallery.js");
+/* harmony import */ var _components_image_zoom__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/image-zoom */ "./resources/js/theme/components/image-zoom.js");
+/* harmony import */ var _components_countdown__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/countdown */ "./resources/js/theme/components/countdown.js");
+/* harmony import */ var _components_charts__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/charts */ "./resources/js/theme/components/charts.js");
+/* harmony import */ var _components_video_button__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/video-button */ "./resources/js/theme/components/video-button.js");
+/* harmony import */ var _components_subscription_form__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/subscription-form */ "./resources/js/theme/components/subscription-form.js");
+/* harmony import */ var _components_range_slider__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/range-slider */ "./resources/js/theme/components/range-slider.js");
+/* harmony import */ var _components_filter_list__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./components/filter-list */ "./resources/js/theme/components/filter-list.js");
+/* harmony import */ var _components_data_filter__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./components/data-filter */ "./resources/js/theme/components/data-filter.js");
+/* harmony import */ var _components_label_update__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./components/label-update */ "./resources/js/theme/components/label-update.js");
+/* harmony import */ var _components_radio_tab__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./components/radio-tab */ "./resources/js/theme/components/radio-tab.js");
+/* harmony import */ var _components_credit_card__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./components/credit-card */ "./resources/js/theme/components/credit-card.js");
+/* harmony import */ var _components_master_checkbox__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./components/master-checkbox */ "./resources/js/theme/components/master-checkbox.js");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /***/ }),
 
@@ -27451,6 +29714,9014 @@ defineJQueryPlugin(Toast);
 
 
 //# sourceMappingURL=bootstrap.esm.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/bootstrap/js/dist/base-component.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/bootstrap/js/dist/base-component.js ***!
+  \**********************************************************/
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+/*!
+  * Bootstrap base-component.js v5.1.3 (https://getbootstrap.com/)
+  * Copyright 2011-2021 The Bootstrap Authors (https://github.com/twbs/bootstrap/graphs/contributors)
+  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+  */
+(function (global, factory) {
+   true ? module.exports = factory(__webpack_require__(/*! ./dom/data.js */ "./node_modules/bootstrap/js/dist/dom/data.js"), __webpack_require__(/*! ./dom/event-handler.js */ "./node_modules/bootstrap/js/dist/dom/event-handler.js")) :
+  0;
+})(this, (function (Data, EventHandler) { 'use strict';
+
+  const _interopDefaultLegacy = e => e && typeof e === 'object' && 'default' in e ? e : { default: e };
+
+  const Data__default = /*#__PURE__*/_interopDefaultLegacy(Data);
+  const EventHandler__default = /*#__PURE__*/_interopDefaultLegacy(EventHandler);
+
+  /**
+   * --------------------------------------------------------------------------
+   * Bootstrap (v5.1.3): util/index.js
+   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+   * --------------------------------------------------------------------------
+   */
+  const MILLISECONDS_MULTIPLIER = 1000;
+  const TRANSITION_END = 'transitionend'; // Shoutout AngusCroll (https://goo.gl/pxwQGp)
+
+  const getTransitionDurationFromElement = element => {
+    if (!element) {
+      return 0;
+    } // Get transition-duration of the element
+
+
+    let {
+      transitionDuration,
+      transitionDelay
+    } = window.getComputedStyle(element);
+    const floatTransitionDuration = Number.parseFloat(transitionDuration);
+    const floatTransitionDelay = Number.parseFloat(transitionDelay); // Return 0 if element or transition duration is not found
+
+    if (!floatTransitionDuration && !floatTransitionDelay) {
+      return 0;
+    } // If multiple durations are defined, take the first
+
+
+    transitionDuration = transitionDuration.split(',')[0];
+    transitionDelay = transitionDelay.split(',')[0];
+    return (Number.parseFloat(transitionDuration) + Number.parseFloat(transitionDelay)) * MILLISECONDS_MULTIPLIER;
+  };
+
+  const triggerTransitionEnd = element => {
+    element.dispatchEvent(new Event(TRANSITION_END));
+  };
+
+  const isElement = obj => {
+    if (!obj || typeof obj !== 'object') {
+      return false;
+    }
+
+    if (typeof obj.jquery !== 'undefined') {
+      obj = obj[0];
+    }
+
+    return typeof obj.nodeType !== 'undefined';
+  };
+
+  const getElement = obj => {
+    if (isElement(obj)) {
+      // it's a jQuery object or a node element
+      return obj.jquery ? obj[0] : obj;
+    }
+
+    if (typeof obj === 'string' && obj.length > 0) {
+      return document.querySelector(obj);
+    }
+
+    return null;
+  };
+
+  const execute = callback => {
+    if (typeof callback === 'function') {
+      callback();
+    }
+  };
+
+  const executeAfterTransition = (callback, transitionElement, waitForTransition = true) => {
+    if (!waitForTransition) {
+      execute(callback);
+      return;
+    }
+
+    const durationPadding = 5;
+    const emulatedDuration = getTransitionDurationFromElement(transitionElement) + durationPadding;
+    let called = false;
+
+    const handler = ({
+      target
+    }) => {
+      if (target !== transitionElement) {
+        return;
+      }
+
+      called = true;
+      transitionElement.removeEventListener(TRANSITION_END, handler);
+      execute(callback);
+    };
+
+    transitionElement.addEventListener(TRANSITION_END, handler);
+    setTimeout(() => {
+      if (!called) {
+        triggerTransitionEnd(transitionElement);
+      }
+    }, emulatedDuration);
+  };
+
+  /**
+   * --------------------------------------------------------------------------
+   * Bootstrap (v5.1.3): base-component.js
+   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+   * --------------------------------------------------------------------------
+   */
+  /**
+   * ------------------------------------------------------------------------
+   * Constants
+   * ------------------------------------------------------------------------
+   */
+
+  const VERSION = '5.1.3';
+
+  class BaseComponent {
+    constructor(element) {
+      element = getElement(element);
+
+      if (!element) {
+        return;
+      }
+
+      this._element = element;
+      Data__default.default.set(this._element, this.constructor.DATA_KEY, this);
+    }
+
+    dispose() {
+      Data__default.default.remove(this._element, this.constructor.DATA_KEY);
+      EventHandler__default.default.off(this._element, this.constructor.EVENT_KEY);
+      Object.getOwnPropertyNames(this).forEach(propertyName => {
+        this[propertyName] = null;
+      });
+    }
+
+    _queueCallback(callback, element, isAnimated = true) {
+      executeAfterTransition(callback, element, isAnimated);
+    }
+    /** Static */
+
+
+    static getInstance(element) {
+      return Data__default.default.get(getElement(element), this.DATA_KEY);
+    }
+
+    static getOrCreateInstance(element, config = {}) {
+      return this.getInstance(element) || new this(element, typeof config === 'object' ? config : null);
+    }
+
+    static get VERSION() {
+      return VERSION;
+    }
+
+    static get NAME() {
+      throw new Error('You have to implement the static method "NAME", for each component!');
+    }
+
+    static get DATA_KEY() {
+      return `bs.${this.NAME}`;
+    }
+
+    static get EVENT_KEY() {
+      return `.${this.DATA_KEY}`;
+    }
+
+  }
+
+  return BaseComponent;
+
+}));
+//# sourceMappingURL=base-component.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/bootstrap/js/dist/dom/data.js":
+/*!****************************************************!*\
+  !*** ./node_modules/bootstrap/js/dist/dom/data.js ***!
+  \****************************************************/
+/***/ (function(module) {
+
+/*!
+  * Bootstrap data.js v5.1.3 (https://getbootstrap.com/)
+  * Copyright 2011-2021 The Bootstrap Authors (https://github.com/twbs/bootstrap/graphs/contributors)
+  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+  */
+(function (global, factory) {
+   true ? module.exports = factory() :
+  0;
+})(this, (function () { 'use strict';
+
+  /**
+   * --------------------------------------------------------------------------
+   * Bootstrap (v5.1.3): dom/data.js
+   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+   * --------------------------------------------------------------------------
+   */
+
+  /**
+   * ------------------------------------------------------------------------
+   * Constants
+   * ------------------------------------------------------------------------
+   */
+  const elementMap = new Map();
+  const data = {
+    set(element, key, instance) {
+      if (!elementMap.has(element)) {
+        elementMap.set(element, new Map());
+      }
+
+      const instanceMap = elementMap.get(element); // make it clear we only want one instance per element
+      // can be removed later when multiple key/instances are fine to be used
+
+      if (!instanceMap.has(key) && instanceMap.size !== 0) {
+        // eslint-disable-next-line no-console
+        console.error(`Bootstrap doesn't allow more than one instance per element. Bound instance: ${Array.from(instanceMap.keys())[0]}.`);
+        return;
+      }
+
+      instanceMap.set(key, instance);
+    },
+
+    get(element, key) {
+      if (elementMap.has(element)) {
+        return elementMap.get(element).get(key) || null;
+      }
+
+      return null;
+    },
+
+    remove(element, key) {
+      if (!elementMap.has(element)) {
+        return;
+      }
+
+      const instanceMap = elementMap.get(element);
+      instanceMap.delete(key); // free up element references if there are no instances left for an element
+
+      if (instanceMap.size === 0) {
+        elementMap.delete(element);
+      }
+    }
+
+  };
+
+  return data;
+
+}));
+//# sourceMappingURL=data.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/bootstrap/js/dist/dom/event-handler.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/bootstrap/js/dist/dom/event-handler.js ***!
+  \*************************************************************/
+/***/ (function(module) {
+
+/*!
+  * Bootstrap event-handler.js v5.1.3 (https://getbootstrap.com/)
+  * Copyright 2011-2021 The Bootstrap Authors (https://github.com/twbs/bootstrap/graphs/contributors)
+  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+  */
+(function (global, factory) {
+   true ? module.exports = factory() :
+  0;
+})(this, (function () { 'use strict';
+
+  /**
+   * --------------------------------------------------------------------------
+   * Bootstrap (v5.1.3): util/index.js
+   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+   * --------------------------------------------------------------------------
+   */
+
+  const getjQuery = () => {
+    const {
+      jQuery
+    } = window;
+
+    if (jQuery && !document.body.hasAttribute('data-bs-no-jquery')) {
+      return jQuery;
+    }
+
+    return null;
+  };
+
+  /**
+   * --------------------------------------------------------------------------
+   * Bootstrap (v5.1.3): dom/event-handler.js
+   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+   * --------------------------------------------------------------------------
+   */
+  /**
+   * ------------------------------------------------------------------------
+   * Constants
+   * ------------------------------------------------------------------------
+   */
+
+  const namespaceRegex = /[^.]*(?=\..*)\.|.*/;
+  const stripNameRegex = /\..*/;
+  const stripUidRegex = /::\d+$/;
+  const eventRegistry = {}; // Events storage
+
+  let uidEvent = 1;
+  const customEvents = {
+    mouseenter: 'mouseover',
+    mouseleave: 'mouseout'
+  };
+  const customEventsRegex = /^(mouseenter|mouseleave)/i;
+  const nativeEvents = new Set(['click', 'dblclick', 'mouseup', 'mousedown', 'contextmenu', 'mousewheel', 'DOMMouseScroll', 'mouseover', 'mouseout', 'mousemove', 'selectstart', 'selectend', 'keydown', 'keypress', 'keyup', 'orientationchange', 'touchstart', 'touchmove', 'touchend', 'touchcancel', 'pointerdown', 'pointermove', 'pointerup', 'pointerleave', 'pointercancel', 'gesturestart', 'gesturechange', 'gestureend', 'focus', 'blur', 'change', 'reset', 'select', 'submit', 'focusin', 'focusout', 'load', 'unload', 'beforeunload', 'resize', 'move', 'DOMContentLoaded', 'readystatechange', 'error', 'abort', 'scroll']);
+  /**
+   * ------------------------------------------------------------------------
+   * Private methods
+   * ------------------------------------------------------------------------
+   */
+
+  function getUidEvent(element, uid) {
+    return uid && `${uid}::${uidEvent++}` || element.uidEvent || uidEvent++;
+  }
+
+  function getEvent(element) {
+    const uid = getUidEvent(element);
+    element.uidEvent = uid;
+    eventRegistry[uid] = eventRegistry[uid] || {};
+    return eventRegistry[uid];
+  }
+
+  function bootstrapHandler(element, fn) {
+    return function handler(event) {
+      event.delegateTarget = element;
+
+      if (handler.oneOff) {
+        EventHandler.off(element, event.type, fn);
+      }
+
+      return fn.apply(element, [event]);
+    };
+  }
+
+  function bootstrapDelegationHandler(element, selector, fn) {
+    return function handler(event) {
+      const domElements = element.querySelectorAll(selector);
+
+      for (let {
+        target
+      } = event; target && target !== this; target = target.parentNode) {
+        for (let i = domElements.length; i--;) {
+          if (domElements[i] === target) {
+            event.delegateTarget = target;
+
+            if (handler.oneOff) {
+              EventHandler.off(element, event.type, selector, fn);
+            }
+
+            return fn.apply(target, [event]);
+          }
+        }
+      } // To please ESLint
+
+
+      return null;
+    };
+  }
+
+  function findHandler(events, handler, delegationSelector = null) {
+    const uidEventList = Object.keys(events);
+
+    for (let i = 0, len = uidEventList.length; i < len; i++) {
+      const event = events[uidEventList[i]];
+
+      if (event.originalHandler === handler && event.delegationSelector === delegationSelector) {
+        return event;
+      }
+    }
+
+    return null;
+  }
+
+  function normalizeParams(originalTypeEvent, handler, delegationFn) {
+    const delegation = typeof handler === 'string';
+    const originalHandler = delegation ? delegationFn : handler;
+    let typeEvent = getTypeEvent(originalTypeEvent);
+    const isNative = nativeEvents.has(typeEvent);
+
+    if (!isNative) {
+      typeEvent = originalTypeEvent;
+    }
+
+    return [delegation, originalHandler, typeEvent];
+  }
+
+  function addHandler(element, originalTypeEvent, handler, delegationFn, oneOff) {
+    if (typeof originalTypeEvent !== 'string' || !element) {
+      return;
+    }
+
+    if (!handler) {
+      handler = delegationFn;
+      delegationFn = null;
+    } // in case of mouseenter or mouseleave wrap the handler within a function that checks for its DOM position
+    // this prevents the handler from being dispatched the same way as mouseover or mouseout does
+
+
+    if (customEventsRegex.test(originalTypeEvent)) {
+      const wrapFn = fn => {
+        return function (event) {
+          if (!event.relatedTarget || event.relatedTarget !== event.delegateTarget && !event.delegateTarget.contains(event.relatedTarget)) {
+            return fn.call(this, event);
+          }
+        };
+      };
+
+      if (delegationFn) {
+        delegationFn = wrapFn(delegationFn);
+      } else {
+        handler = wrapFn(handler);
+      }
+    }
+
+    const [delegation, originalHandler, typeEvent] = normalizeParams(originalTypeEvent, handler, delegationFn);
+    const events = getEvent(element);
+    const handlers = events[typeEvent] || (events[typeEvent] = {});
+    const previousFn = findHandler(handlers, originalHandler, delegation ? handler : null);
+
+    if (previousFn) {
+      previousFn.oneOff = previousFn.oneOff && oneOff;
+      return;
+    }
+
+    const uid = getUidEvent(originalHandler, originalTypeEvent.replace(namespaceRegex, ''));
+    const fn = delegation ? bootstrapDelegationHandler(element, handler, delegationFn) : bootstrapHandler(element, handler);
+    fn.delegationSelector = delegation ? handler : null;
+    fn.originalHandler = originalHandler;
+    fn.oneOff = oneOff;
+    fn.uidEvent = uid;
+    handlers[uid] = fn;
+    element.addEventListener(typeEvent, fn, delegation);
+  }
+
+  function removeHandler(element, events, typeEvent, handler, delegationSelector) {
+    const fn = findHandler(events[typeEvent], handler, delegationSelector);
+
+    if (!fn) {
+      return;
+    }
+
+    element.removeEventListener(typeEvent, fn, Boolean(delegationSelector));
+    delete events[typeEvent][fn.uidEvent];
+  }
+
+  function removeNamespacedHandlers(element, events, typeEvent, namespace) {
+    const storeElementEvent = events[typeEvent] || {};
+    Object.keys(storeElementEvent).forEach(handlerKey => {
+      if (handlerKey.includes(namespace)) {
+        const event = storeElementEvent[handlerKey];
+        removeHandler(element, events, typeEvent, event.originalHandler, event.delegationSelector);
+      }
+    });
+  }
+
+  function getTypeEvent(event) {
+    // allow to get the native events from namespaced events ('click.bs.button' --> 'click')
+    event = event.replace(stripNameRegex, '');
+    return customEvents[event] || event;
+  }
+
+  const EventHandler = {
+    on(element, event, handler, delegationFn) {
+      addHandler(element, event, handler, delegationFn, false);
+    },
+
+    one(element, event, handler, delegationFn) {
+      addHandler(element, event, handler, delegationFn, true);
+    },
+
+    off(element, originalTypeEvent, handler, delegationFn) {
+      if (typeof originalTypeEvent !== 'string' || !element) {
+        return;
+      }
+
+      const [delegation, originalHandler, typeEvent] = normalizeParams(originalTypeEvent, handler, delegationFn);
+      const inNamespace = typeEvent !== originalTypeEvent;
+      const events = getEvent(element);
+      const isNamespace = originalTypeEvent.startsWith('.');
+
+      if (typeof originalHandler !== 'undefined') {
+        // Simplest case: handler is passed, remove that listener ONLY.
+        if (!events || !events[typeEvent]) {
+          return;
+        }
+
+        removeHandler(element, events, typeEvent, originalHandler, delegation ? handler : null);
+        return;
+      }
+
+      if (isNamespace) {
+        Object.keys(events).forEach(elementEvent => {
+          removeNamespacedHandlers(element, events, elementEvent, originalTypeEvent.slice(1));
+        });
+      }
+
+      const storeElementEvent = events[typeEvent] || {};
+      Object.keys(storeElementEvent).forEach(keyHandlers => {
+        const handlerKey = keyHandlers.replace(stripUidRegex, '');
+
+        if (!inNamespace || originalTypeEvent.includes(handlerKey)) {
+          const event = storeElementEvent[keyHandlers];
+          removeHandler(element, events, typeEvent, event.originalHandler, event.delegationSelector);
+        }
+      });
+    },
+
+    trigger(element, event, args) {
+      if (typeof event !== 'string' || !element) {
+        return null;
+      }
+
+      const $ = getjQuery();
+      const typeEvent = getTypeEvent(event);
+      const inNamespace = event !== typeEvent;
+      const isNative = nativeEvents.has(typeEvent);
+      let jQueryEvent;
+      let bubbles = true;
+      let nativeDispatch = true;
+      let defaultPrevented = false;
+      let evt = null;
+
+      if (inNamespace && $) {
+        jQueryEvent = $.Event(event, args);
+        $(element).trigger(jQueryEvent);
+        bubbles = !jQueryEvent.isPropagationStopped();
+        nativeDispatch = !jQueryEvent.isImmediatePropagationStopped();
+        defaultPrevented = jQueryEvent.isDefaultPrevented();
+      }
+
+      if (isNative) {
+        evt = document.createEvent('HTMLEvents');
+        evt.initEvent(typeEvent, bubbles, true);
+      } else {
+        evt = new CustomEvent(event, {
+          bubbles,
+          cancelable: true
+        });
+      } // merge custom information in our event
+
+
+      if (typeof args !== 'undefined') {
+        Object.keys(args).forEach(key => {
+          Object.defineProperty(evt, key, {
+            get() {
+              return args[key];
+            }
+
+          });
+        });
+      }
+
+      if (defaultPrevented) {
+        evt.preventDefault();
+      }
+
+      if (nativeDispatch) {
+        element.dispatchEvent(evt);
+      }
+
+      if (evt.defaultPrevented && typeof jQueryEvent !== 'undefined') {
+        jQueryEvent.preventDefault();
+      }
+
+      return evt;
+    }
+
+  };
+
+  return EventHandler;
+
+}));
+//# sourceMappingURL=event-handler.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/bootstrap/js/dist/dom/manipulator.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/bootstrap/js/dist/dom/manipulator.js ***!
+  \***********************************************************/
+/***/ (function(module) {
+
+/*!
+  * Bootstrap manipulator.js v5.1.3 (https://getbootstrap.com/)
+  * Copyright 2011-2021 The Bootstrap Authors (https://github.com/twbs/bootstrap/graphs/contributors)
+  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+  */
+(function (global, factory) {
+   true ? module.exports = factory() :
+  0;
+})(this, (function () { 'use strict';
+
+  /**
+   * --------------------------------------------------------------------------
+   * Bootstrap (v5.1.3): dom/manipulator.js
+   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+   * --------------------------------------------------------------------------
+   */
+  function normalizeData(val) {
+    if (val === 'true') {
+      return true;
+    }
+
+    if (val === 'false') {
+      return false;
+    }
+
+    if (val === Number(val).toString()) {
+      return Number(val);
+    }
+
+    if (val === '' || val === 'null') {
+      return null;
+    }
+
+    return val;
+  }
+
+  function normalizeDataKey(key) {
+    return key.replace(/[A-Z]/g, chr => `-${chr.toLowerCase()}`);
+  }
+
+  const Manipulator = {
+    setDataAttribute(element, key, value) {
+      element.setAttribute(`data-bs-${normalizeDataKey(key)}`, value);
+    },
+
+    removeDataAttribute(element, key) {
+      element.removeAttribute(`data-bs-${normalizeDataKey(key)}`);
+    },
+
+    getDataAttributes(element) {
+      if (!element) {
+        return {};
+      }
+
+      const attributes = {};
+      Object.keys(element.dataset).filter(key => key.startsWith('bs')).forEach(key => {
+        let pureKey = key.replace(/^bs/, '');
+        pureKey = pureKey.charAt(0).toLowerCase() + pureKey.slice(1, pureKey.length);
+        attributes[pureKey] = normalizeData(element.dataset[key]);
+      });
+      return attributes;
+    },
+
+    getDataAttribute(element, key) {
+      return normalizeData(element.getAttribute(`data-bs-${normalizeDataKey(key)}`));
+    },
+
+    offset(element) {
+      const rect = element.getBoundingClientRect();
+      return {
+        top: rect.top + window.pageYOffset,
+        left: rect.left + window.pageXOffset
+      };
+    },
+
+    position(element) {
+      return {
+        top: element.offsetTop,
+        left: element.offsetLeft
+      };
+    }
+
+  };
+
+  return Manipulator;
+
+}));
+//# sourceMappingURL=manipulator.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/bootstrap/js/dist/dom/selector-engine.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/bootstrap/js/dist/dom/selector-engine.js ***!
+  \***************************************************************/
+/***/ (function(module) {
+
+/*!
+  * Bootstrap selector-engine.js v5.1.3 (https://getbootstrap.com/)
+  * Copyright 2011-2021 The Bootstrap Authors (https://github.com/twbs/bootstrap/graphs/contributors)
+  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+  */
+(function (global, factory) {
+   true ? module.exports = factory() :
+  0;
+})(this, (function () { 'use strict';
+
+  /**
+   * --------------------------------------------------------------------------
+   * Bootstrap (v5.1.3): util/index.js
+   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+   * --------------------------------------------------------------------------
+   */
+
+  const isElement = obj => {
+    if (!obj || typeof obj !== 'object') {
+      return false;
+    }
+
+    if (typeof obj.jquery !== 'undefined') {
+      obj = obj[0];
+    }
+
+    return typeof obj.nodeType !== 'undefined';
+  };
+
+  const isVisible = element => {
+    if (!isElement(element) || element.getClientRects().length === 0) {
+      return false;
+    }
+
+    return getComputedStyle(element).getPropertyValue('visibility') === 'visible';
+  };
+
+  const isDisabled = element => {
+    if (!element || element.nodeType !== Node.ELEMENT_NODE) {
+      return true;
+    }
+
+    if (element.classList.contains('disabled')) {
+      return true;
+    }
+
+    if (typeof element.disabled !== 'undefined') {
+      return element.disabled;
+    }
+
+    return element.hasAttribute('disabled') && element.getAttribute('disabled') !== 'false';
+  };
+
+  /**
+   * --------------------------------------------------------------------------
+   * Bootstrap (v5.1.3): dom/selector-engine.js
+   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+   * --------------------------------------------------------------------------
+   */
+  const NODE_TEXT = 3;
+  const SelectorEngine = {
+    find(selector, element = document.documentElement) {
+      return [].concat(...Element.prototype.querySelectorAll.call(element, selector));
+    },
+
+    findOne(selector, element = document.documentElement) {
+      return Element.prototype.querySelector.call(element, selector);
+    },
+
+    children(element, selector) {
+      return [].concat(...element.children).filter(child => child.matches(selector));
+    },
+
+    parents(element, selector) {
+      const parents = [];
+      let ancestor = element.parentNode;
+
+      while (ancestor && ancestor.nodeType === Node.ELEMENT_NODE && ancestor.nodeType !== NODE_TEXT) {
+        if (ancestor.matches(selector)) {
+          parents.push(ancestor);
+        }
+
+        ancestor = ancestor.parentNode;
+      }
+
+      return parents;
+    },
+
+    prev(element, selector) {
+      let previous = element.previousElementSibling;
+
+      while (previous) {
+        if (previous.matches(selector)) {
+          return [previous];
+        }
+
+        previous = previous.previousElementSibling;
+      }
+
+      return [];
+    },
+
+    next(element, selector) {
+      let next = element.nextElementSibling;
+
+      while (next) {
+        if (next.matches(selector)) {
+          return [next];
+        }
+
+        next = next.nextElementSibling;
+      }
+
+      return [];
+    },
+
+    focusableChildren(element) {
+      const focusables = ['a', 'button', 'input', 'textarea', 'select', 'details', '[tabindex]', '[contenteditable="true"]'].map(selector => `${selector}:not([tabindex^="-"])`).join(', ');
+      return this.find(focusables, element).filter(el => !isDisabled(el) && isVisible(el));
+    }
+
+  };
+
+  return SelectorEngine;
+
+}));
+//# sourceMappingURL=selector-engine.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/bootstrap/js/dist/tooltip.js":
+/*!***************************************************!*\
+  !*** ./node_modules/bootstrap/js/dist/tooltip.js ***!
+  \***************************************************/
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+/*!
+  * Bootstrap tooltip.js v5.1.3 (https://getbootstrap.com/)
+  * Copyright 2011-2021 The Bootstrap Authors (https://github.com/twbs/bootstrap/graphs/contributors)
+  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+  */
+(function (global, factory) {
+   true ? module.exports = factory(__webpack_require__(/*! @popperjs/core */ "./node_modules/@popperjs/core/lib/index.js"), __webpack_require__(/*! ./dom/data.js */ "./node_modules/bootstrap/js/dist/dom/data.js"), __webpack_require__(/*! ./dom/event-handler.js */ "./node_modules/bootstrap/js/dist/dom/event-handler.js"), __webpack_require__(/*! ./dom/manipulator.js */ "./node_modules/bootstrap/js/dist/dom/manipulator.js"), __webpack_require__(/*! ./dom/selector-engine.js */ "./node_modules/bootstrap/js/dist/dom/selector-engine.js"), __webpack_require__(/*! ./base-component.js */ "./node_modules/bootstrap/js/dist/base-component.js")) :
+  0;
+})(this, (function (Popper, Data, EventHandler, Manipulator, SelectorEngine, BaseComponent) { 'use strict';
+
+  const _interopDefaultLegacy = e => e && typeof e === 'object' && 'default' in e ? e : { default: e };
+
+  function _interopNamespace(e) {
+    if (e && e.__esModule) return e;
+    const n = Object.create(null);
+    if (e) {
+      for (const k in e) {
+        if (k !== 'default') {
+          const d = Object.getOwnPropertyDescriptor(e, k);
+          Object.defineProperty(n, k, d.get ? d : {
+            enumerable: true,
+            get: () => e[k]
+          });
+        }
+      }
+    }
+    n.default = e;
+    return Object.freeze(n);
+  }
+
+  const Popper__namespace = /*#__PURE__*/_interopNamespace(Popper);
+  const Data__default = /*#__PURE__*/_interopDefaultLegacy(Data);
+  const EventHandler__default = /*#__PURE__*/_interopDefaultLegacy(EventHandler);
+  const Manipulator__default = /*#__PURE__*/_interopDefaultLegacy(Manipulator);
+  const SelectorEngine__default = /*#__PURE__*/_interopDefaultLegacy(SelectorEngine);
+  const BaseComponent__default = /*#__PURE__*/_interopDefaultLegacy(BaseComponent);
+
+  /**
+   * --------------------------------------------------------------------------
+   * Bootstrap (v5.1.3): util/index.js
+   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+   * --------------------------------------------------------------------------
+   */
+  const MAX_UID = 1000000;
+
+  const toType = obj => {
+    if (obj === null || obj === undefined) {
+      return `${obj}`;
+    }
+
+    return {}.toString.call(obj).match(/\s([a-z]+)/i)[1].toLowerCase();
+  };
+  /**
+   * --------------------------------------------------------------------------
+   * Public Util Api
+   * --------------------------------------------------------------------------
+   */
+
+
+  const getUID = prefix => {
+    do {
+      prefix += Math.floor(Math.random() * MAX_UID);
+    } while (document.getElementById(prefix));
+
+    return prefix;
+  };
+
+  const isElement = obj => {
+    if (!obj || typeof obj !== 'object') {
+      return false;
+    }
+
+    if (typeof obj.jquery !== 'undefined') {
+      obj = obj[0];
+    }
+
+    return typeof obj.nodeType !== 'undefined';
+  };
+
+  const getElement = obj => {
+    if (isElement(obj)) {
+      // it's a jQuery object or a node element
+      return obj.jquery ? obj[0] : obj;
+    }
+
+    if (typeof obj === 'string' && obj.length > 0) {
+      return document.querySelector(obj);
+    }
+
+    return null;
+  };
+
+  const typeCheckConfig = (componentName, config, configTypes) => {
+    Object.keys(configTypes).forEach(property => {
+      const expectedTypes = configTypes[property];
+      const value = config[property];
+      const valueType = value && isElement(value) ? 'element' : toType(value);
+
+      if (!new RegExp(expectedTypes).test(valueType)) {
+        throw new TypeError(`${componentName.toUpperCase()}: Option "${property}" provided type "${valueType}" but expected type "${expectedTypes}".`);
+      }
+    });
+  };
+
+  const findShadowRoot = element => {
+    if (!document.documentElement.attachShadow) {
+      return null;
+    } // Can find the shadow root otherwise it'll return the document
+
+
+    if (typeof element.getRootNode === 'function') {
+      const root = element.getRootNode();
+      return root instanceof ShadowRoot ? root : null;
+    }
+
+    if (element instanceof ShadowRoot) {
+      return element;
+    } // when we don't find a shadow root
+
+
+    if (!element.parentNode) {
+      return null;
+    }
+
+    return findShadowRoot(element.parentNode);
+  };
+
+  const noop = () => {};
+
+  const getjQuery = () => {
+    const {
+      jQuery
+    } = window;
+
+    if (jQuery && !document.body.hasAttribute('data-bs-no-jquery')) {
+      return jQuery;
+    }
+
+    return null;
+  };
+
+  const DOMContentLoadedCallbacks = [];
+
+  const onDOMContentLoaded = callback => {
+    if (document.readyState === 'loading') {
+      // add listener on the first call when the document is in loading state
+      if (!DOMContentLoadedCallbacks.length) {
+        document.addEventListener('DOMContentLoaded', () => {
+          DOMContentLoadedCallbacks.forEach(callback => callback());
+        });
+      }
+
+      DOMContentLoadedCallbacks.push(callback);
+    } else {
+      callback();
+    }
+  };
+
+  const isRTL = () => document.documentElement.dir === 'rtl';
+
+  const defineJQueryPlugin = plugin => {
+    onDOMContentLoaded(() => {
+      const $ = getjQuery();
+      /* istanbul ignore if */
+
+      if ($) {
+        const name = plugin.NAME;
+        const JQUERY_NO_CONFLICT = $.fn[name];
+        $.fn[name] = plugin.jQueryInterface;
+        $.fn[name].Constructor = plugin;
+
+        $.fn[name].noConflict = () => {
+          $.fn[name] = JQUERY_NO_CONFLICT;
+          return plugin.jQueryInterface;
+        };
+      }
+    });
+  };
+
+  /**
+   * --------------------------------------------------------------------------
+   * Bootstrap (v5.1.3): util/sanitizer.js
+   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+   * --------------------------------------------------------------------------
+   */
+  const uriAttributes = new Set(['background', 'cite', 'href', 'itemtype', 'longdesc', 'poster', 'src', 'xlink:href']);
+  const ARIA_ATTRIBUTE_PATTERN = /^aria-[\w-]*$/i;
+  /**
+   * A pattern that recognizes a commonly useful subset of URLs that are safe.
+   *
+   * Shoutout to Angular https://github.com/angular/angular/blob/12.2.x/packages/core/src/sanitization/url_sanitizer.ts
+   */
+
+  const SAFE_URL_PATTERN = /^(?:(?:https?|mailto|ftp|tel|file|sms):|[^#&/:?]*(?:[#/?]|$))/i;
+  /**
+   * A pattern that matches safe data URLs. Only matches image, video and audio types.
+   *
+   * Shoutout to Angular https://github.com/angular/angular/blob/12.2.x/packages/core/src/sanitization/url_sanitizer.ts
+   */
+
+  const DATA_URL_PATTERN = /^data:(?:image\/(?:bmp|gif|jpeg|jpg|png|tiff|webp)|video\/(?:mpeg|mp4|ogg|webm)|audio\/(?:mp3|oga|ogg|opus));base64,[\d+/a-z]+=*$/i;
+
+  const allowedAttribute = (attribute, allowedAttributeList) => {
+    const attributeName = attribute.nodeName.toLowerCase();
+
+    if (allowedAttributeList.includes(attributeName)) {
+      if (uriAttributes.has(attributeName)) {
+        return Boolean(SAFE_URL_PATTERN.test(attribute.nodeValue) || DATA_URL_PATTERN.test(attribute.nodeValue));
+      }
+
+      return true;
+    }
+
+    const regExp = allowedAttributeList.filter(attributeRegex => attributeRegex instanceof RegExp); // Check if a regular expression validates the attribute.
+
+    for (let i = 0, len = regExp.length; i < len; i++) {
+      if (regExp[i].test(attributeName)) {
+        return true;
+      }
+    }
+
+    return false;
+  };
+
+  const DefaultAllowlist = {
+    // Global attributes allowed on any supplied element below.
+    '*': ['class', 'dir', 'id', 'lang', 'role', ARIA_ATTRIBUTE_PATTERN],
+    a: ['target', 'href', 'title', 'rel'],
+    area: [],
+    b: [],
+    br: [],
+    col: [],
+    code: [],
+    div: [],
+    em: [],
+    hr: [],
+    h1: [],
+    h2: [],
+    h3: [],
+    h4: [],
+    h5: [],
+    h6: [],
+    i: [],
+    img: ['src', 'srcset', 'alt', 'title', 'width', 'height'],
+    li: [],
+    ol: [],
+    p: [],
+    pre: [],
+    s: [],
+    small: [],
+    span: [],
+    sub: [],
+    sup: [],
+    strong: [],
+    u: [],
+    ul: []
+  };
+  function sanitizeHtml(unsafeHtml, allowList, sanitizeFn) {
+    if (!unsafeHtml.length) {
+      return unsafeHtml;
+    }
+
+    if (sanitizeFn && typeof sanitizeFn === 'function') {
+      return sanitizeFn(unsafeHtml);
+    }
+
+    const domParser = new window.DOMParser();
+    const createdDocument = domParser.parseFromString(unsafeHtml, 'text/html');
+    const elements = [].concat(...createdDocument.body.querySelectorAll('*'));
+
+    for (let i = 0, len = elements.length; i < len; i++) {
+      const element = elements[i];
+      const elementName = element.nodeName.toLowerCase();
+
+      if (!Object.keys(allowList).includes(elementName)) {
+        element.remove();
+        continue;
+      }
+
+      const attributeList = [].concat(...element.attributes);
+      const allowedAttributes = [].concat(allowList['*'] || [], allowList[elementName] || []);
+      attributeList.forEach(attribute => {
+        if (!allowedAttribute(attribute, allowedAttributes)) {
+          element.removeAttribute(attribute.nodeName);
+        }
+      });
+    }
+
+    return createdDocument.body.innerHTML;
+  }
+
+  /**
+   * --------------------------------------------------------------------------
+   * Bootstrap (v5.1.3): tooltip.js
+   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+   * --------------------------------------------------------------------------
+   */
+  /**
+   * ------------------------------------------------------------------------
+   * Constants
+   * ------------------------------------------------------------------------
+   */
+
+  const NAME = 'tooltip';
+  const DATA_KEY = 'bs.tooltip';
+  const EVENT_KEY = `.${DATA_KEY}`;
+  const CLASS_PREFIX = 'bs-tooltip';
+  const DISALLOWED_ATTRIBUTES = new Set(['sanitize', 'allowList', 'sanitizeFn']);
+  const DefaultType = {
+    animation: 'boolean',
+    template: 'string',
+    title: '(string|element|function)',
+    trigger: 'string',
+    delay: '(number|object)',
+    html: 'boolean',
+    selector: '(string|boolean)',
+    placement: '(string|function)',
+    offset: '(array|string|function)',
+    container: '(string|element|boolean)',
+    fallbackPlacements: 'array',
+    boundary: '(string|element)',
+    customClass: '(string|function)',
+    sanitize: 'boolean',
+    sanitizeFn: '(null|function)',
+    allowList: 'object',
+    popperConfig: '(null|object|function)'
+  };
+  const AttachmentMap = {
+    AUTO: 'auto',
+    TOP: 'top',
+    RIGHT: isRTL() ? 'left' : 'right',
+    BOTTOM: 'bottom',
+    LEFT: isRTL() ? 'right' : 'left'
+  };
+  const Default = {
+    animation: true,
+    template: '<div class="tooltip" role="tooltip">' + '<div class="tooltip-arrow"></div>' + '<div class="tooltip-inner"></div>' + '</div>',
+    trigger: 'hover focus',
+    title: '',
+    delay: 0,
+    html: false,
+    selector: false,
+    placement: 'top',
+    offset: [0, 0],
+    container: false,
+    fallbackPlacements: ['top', 'right', 'bottom', 'left'],
+    boundary: 'clippingParents',
+    customClass: '',
+    sanitize: true,
+    sanitizeFn: null,
+    allowList: DefaultAllowlist,
+    popperConfig: null
+  };
+  const Event = {
+    HIDE: `hide${EVENT_KEY}`,
+    HIDDEN: `hidden${EVENT_KEY}`,
+    SHOW: `show${EVENT_KEY}`,
+    SHOWN: `shown${EVENT_KEY}`,
+    INSERTED: `inserted${EVENT_KEY}`,
+    CLICK: `click${EVENT_KEY}`,
+    FOCUSIN: `focusin${EVENT_KEY}`,
+    FOCUSOUT: `focusout${EVENT_KEY}`,
+    MOUSEENTER: `mouseenter${EVENT_KEY}`,
+    MOUSELEAVE: `mouseleave${EVENT_KEY}`
+  };
+  const CLASS_NAME_FADE = 'fade';
+  const CLASS_NAME_MODAL = 'modal';
+  const CLASS_NAME_SHOW = 'show';
+  const HOVER_STATE_SHOW = 'show';
+  const HOVER_STATE_OUT = 'out';
+  const SELECTOR_TOOLTIP_INNER = '.tooltip-inner';
+  const SELECTOR_MODAL = `.${CLASS_NAME_MODAL}`;
+  const EVENT_MODAL_HIDE = 'hide.bs.modal';
+  const TRIGGER_HOVER = 'hover';
+  const TRIGGER_FOCUS = 'focus';
+  const TRIGGER_CLICK = 'click';
+  const TRIGGER_MANUAL = 'manual';
+  /**
+   * ------------------------------------------------------------------------
+   * Class Definition
+   * ------------------------------------------------------------------------
+   */
+
+  class Tooltip extends BaseComponent__default.default {
+    constructor(element, config) {
+      if (typeof Popper__namespace === 'undefined') {
+        throw new TypeError('Bootstrap\'s tooltips require Popper (https://popper.js.org)');
+      }
+
+      super(element); // private
+
+      this._isEnabled = true;
+      this._timeout = 0;
+      this._hoverState = '';
+      this._activeTrigger = {};
+      this._popper = null; // Protected
+
+      this._config = this._getConfig(config);
+      this.tip = null;
+
+      this._setListeners();
+    } // Getters
+
+
+    static get Default() {
+      return Default;
+    }
+
+    static get NAME() {
+      return NAME;
+    }
+
+    static get Event() {
+      return Event;
+    }
+
+    static get DefaultType() {
+      return DefaultType;
+    } // Public
+
+
+    enable() {
+      this._isEnabled = true;
+    }
+
+    disable() {
+      this._isEnabled = false;
+    }
+
+    toggleEnabled() {
+      this._isEnabled = !this._isEnabled;
+    }
+
+    toggle(event) {
+      if (!this._isEnabled) {
+        return;
+      }
+
+      if (event) {
+        const context = this._initializeOnDelegatedTarget(event);
+
+        context._activeTrigger.click = !context._activeTrigger.click;
+
+        if (context._isWithActiveTrigger()) {
+          context._enter(null, context);
+        } else {
+          context._leave(null, context);
+        }
+      } else {
+        if (this.getTipElement().classList.contains(CLASS_NAME_SHOW)) {
+          this._leave(null, this);
+
+          return;
+        }
+
+        this._enter(null, this);
+      }
+    }
+
+    dispose() {
+      clearTimeout(this._timeout);
+      EventHandler__default.default.off(this._element.closest(SELECTOR_MODAL), EVENT_MODAL_HIDE, this._hideModalHandler);
+
+      if (this.tip) {
+        this.tip.remove();
+      }
+
+      this._disposePopper();
+
+      super.dispose();
+    }
+
+    show() {
+      if (this._element.style.display === 'none') {
+        throw new Error('Please use show on visible elements');
+      }
+
+      if (!(this.isWithContent() && this._isEnabled)) {
+        return;
+      }
+
+      const showEvent = EventHandler__default.default.trigger(this._element, this.constructor.Event.SHOW);
+      const shadowRoot = findShadowRoot(this._element);
+      const isInTheDom = shadowRoot === null ? this._element.ownerDocument.documentElement.contains(this._element) : shadowRoot.contains(this._element);
+
+      if (showEvent.defaultPrevented || !isInTheDom) {
+        return;
+      } // A trick to recreate a tooltip in case a new title is given by using the NOT documented `data-bs-original-title`
+      // This will be removed later in favor of a `setContent` method
+
+
+      if (this.constructor.NAME === 'tooltip' && this.tip && this.getTitle() !== this.tip.querySelector(SELECTOR_TOOLTIP_INNER).innerHTML) {
+        this._disposePopper();
+
+        this.tip.remove();
+        this.tip = null;
+      }
+
+      const tip = this.getTipElement();
+      const tipId = getUID(this.constructor.NAME);
+      tip.setAttribute('id', tipId);
+
+      this._element.setAttribute('aria-describedby', tipId);
+
+      if (this._config.animation) {
+        tip.classList.add(CLASS_NAME_FADE);
+      }
+
+      const placement = typeof this._config.placement === 'function' ? this._config.placement.call(this, tip, this._element) : this._config.placement;
+
+      const attachment = this._getAttachment(placement);
+
+      this._addAttachmentClass(attachment);
+
+      const {
+        container
+      } = this._config;
+      Data__default.default.set(tip, this.constructor.DATA_KEY, this);
+
+      if (!this._element.ownerDocument.documentElement.contains(this.tip)) {
+        container.append(tip);
+        EventHandler__default.default.trigger(this._element, this.constructor.Event.INSERTED);
+      }
+
+      if (this._popper) {
+        this._popper.update();
+      } else {
+        this._popper = Popper__namespace.createPopper(this._element, tip, this._getPopperConfig(attachment));
+      }
+
+      tip.classList.add(CLASS_NAME_SHOW);
+
+      const customClass = this._resolvePossibleFunction(this._config.customClass);
+
+      if (customClass) {
+        tip.classList.add(...customClass.split(' '));
+      } // If this is a touch-enabled device we add extra
+      // empty mouseover listeners to the body's immediate children;
+      // only needed because of broken event delegation on iOS
+      // https://www.quirksmode.org/blog/archives/2014/02/mouse_event_bub.html
+
+
+      if ('ontouchstart' in document.documentElement) {
+        [].concat(...document.body.children).forEach(element => {
+          EventHandler__default.default.on(element, 'mouseover', noop);
+        });
+      }
+
+      const complete = () => {
+        const prevHoverState = this._hoverState;
+        this._hoverState = null;
+        EventHandler__default.default.trigger(this._element, this.constructor.Event.SHOWN);
+
+        if (prevHoverState === HOVER_STATE_OUT) {
+          this._leave(null, this);
+        }
+      };
+
+      const isAnimated = this.tip.classList.contains(CLASS_NAME_FADE);
+
+      this._queueCallback(complete, this.tip, isAnimated);
+    }
+
+    hide() {
+      if (!this._popper) {
+        return;
+      }
+
+      const tip = this.getTipElement();
+
+      const complete = () => {
+        if (this._isWithActiveTrigger()) {
+          return;
+        }
+
+        if (this._hoverState !== HOVER_STATE_SHOW) {
+          tip.remove();
+        }
+
+        this._cleanTipClass();
+
+        this._element.removeAttribute('aria-describedby');
+
+        EventHandler__default.default.trigger(this._element, this.constructor.Event.HIDDEN);
+
+        this._disposePopper();
+      };
+
+      const hideEvent = EventHandler__default.default.trigger(this._element, this.constructor.Event.HIDE);
+
+      if (hideEvent.defaultPrevented) {
+        return;
+      }
+
+      tip.classList.remove(CLASS_NAME_SHOW); // If this is a touch-enabled device we remove the extra
+      // empty mouseover listeners we added for iOS support
+
+      if ('ontouchstart' in document.documentElement) {
+        [].concat(...document.body.children).forEach(element => EventHandler__default.default.off(element, 'mouseover', noop));
+      }
+
+      this._activeTrigger[TRIGGER_CLICK] = false;
+      this._activeTrigger[TRIGGER_FOCUS] = false;
+      this._activeTrigger[TRIGGER_HOVER] = false;
+      const isAnimated = this.tip.classList.contains(CLASS_NAME_FADE);
+
+      this._queueCallback(complete, this.tip, isAnimated);
+
+      this._hoverState = '';
+    }
+
+    update() {
+      if (this._popper !== null) {
+        this._popper.update();
+      }
+    } // Protected
+
+
+    isWithContent() {
+      return Boolean(this.getTitle());
+    }
+
+    getTipElement() {
+      if (this.tip) {
+        return this.tip;
+      }
+
+      const element = document.createElement('div');
+      element.innerHTML = this._config.template;
+      const tip = element.children[0];
+      this.setContent(tip);
+      tip.classList.remove(CLASS_NAME_FADE, CLASS_NAME_SHOW);
+      this.tip = tip;
+      return this.tip;
+    }
+
+    setContent(tip) {
+      this._sanitizeAndSetContent(tip, this.getTitle(), SELECTOR_TOOLTIP_INNER);
+    }
+
+    _sanitizeAndSetContent(template, content, selector) {
+      const templateElement = SelectorEngine__default.default.findOne(selector, template);
+
+      if (!content && templateElement) {
+        templateElement.remove();
+        return;
+      } // we use append for html objects to maintain js events
+
+
+      this.setElementContent(templateElement, content);
+    }
+
+    setElementContent(element, content) {
+      if (element === null) {
+        return;
+      }
+
+      if (isElement(content)) {
+        content = getElement(content); // content is a DOM node or a jQuery
+
+        if (this._config.html) {
+          if (content.parentNode !== element) {
+            element.innerHTML = '';
+            element.append(content);
+          }
+        } else {
+          element.textContent = content.textContent;
+        }
+
+        return;
+      }
+
+      if (this._config.html) {
+        if (this._config.sanitize) {
+          content = sanitizeHtml(content, this._config.allowList, this._config.sanitizeFn);
+        }
+
+        element.innerHTML = content;
+      } else {
+        element.textContent = content;
+      }
+    }
+
+    getTitle() {
+      const title = this._element.getAttribute('data-bs-original-title') || this._config.title;
+
+      return this._resolvePossibleFunction(title);
+    }
+
+    updateAttachment(attachment) {
+      if (attachment === 'right') {
+        return 'end';
+      }
+
+      if (attachment === 'left') {
+        return 'start';
+      }
+
+      return attachment;
+    } // Private
+
+
+    _initializeOnDelegatedTarget(event, context) {
+      return context || this.constructor.getOrCreateInstance(event.delegateTarget, this._getDelegateConfig());
+    }
+
+    _getOffset() {
+      const {
+        offset
+      } = this._config;
+
+      if (typeof offset === 'string') {
+        return offset.split(',').map(val => Number.parseInt(val, 10));
+      }
+
+      if (typeof offset === 'function') {
+        return popperData => offset(popperData, this._element);
+      }
+
+      return offset;
+    }
+
+    _resolvePossibleFunction(content) {
+      return typeof content === 'function' ? content.call(this._element) : content;
+    }
+
+    _getPopperConfig(attachment) {
+      const defaultBsPopperConfig = {
+        placement: attachment,
+        modifiers: [{
+          name: 'flip',
+          options: {
+            fallbackPlacements: this._config.fallbackPlacements
+          }
+        }, {
+          name: 'offset',
+          options: {
+            offset: this._getOffset()
+          }
+        }, {
+          name: 'preventOverflow',
+          options: {
+            boundary: this._config.boundary
+          }
+        }, {
+          name: 'arrow',
+          options: {
+            element: `.${this.constructor.NAME}-arrow`
+          }
+        }, {
+          name: 'onChange',
+          enabled: true,
+          phase: 'afterWrite',
+          fn: data => this._handlePopperPlacementChange(data)
+        }],
+        onFirstUpdate: data => {
+          if (data.options.placement !== data.placement) {
+            this._handlePopperPlacementChange(data);
+          }
+        }
+      };
+      return { ...defaultBsPopperConfig,
+        ...(typeof this._config.popperConfig === 'function' ? this._config.popperConfig(defaultBsPopperConfig) : this._config.popperConfig)
+      };
+    }
+
+    _addAttachmentClass(attachment) {
+      this.getTipElement().classList.add(`${this._getBasicClassPrefix()}-${this.updateAttachment(attachment)}`);
+    }
+
+    _getAttachment(placement) {
+      return AttachmentMap[placement.toUpperCase()];
+    }
+
+    _setListeners() {
+      const triggers = this._config.trigger.split(' ');
+
+      triggers.forEach(trigger => {
+        if (trigger === 'click') {
+          EventHandler__default.default.on(this._element, this.constructor.Event.CLICK, this._config.selector, event => this.toggle(event));
+        } else if (trigger !== TRIGGER_MANUAL) {
+          const eventIn = trigger === TRIGGER_HOVER ? this.constructor.Event.MOUSEENTER : this.constructor.Event.FOCUSIN;
+          const eventOut = trigger === TRIGGER_HOVER ? this.constructor.Event.MOUSELEAVE : this.constructor.Event.FOCUSOUT;
+          EventHandler__default.default.on(this._element, eventIn, this._config.selector, event => this._enter(event));
+          EventHandler__default.default.on(this._element, eventOut, this._config.selector, event => this._leave(event));
+        }
+      });
+
+      this._hideModalHandler = () => {
+        if (this._element) {
+          this.hide();
+        }
+      };
+
+      EventHandler__default.default.on(this._element.closest(SELECTOR_MODAL), EVENT_MODAL_HIDE, this._hideModalHandler);
+
+      if (this._config.selector) {
+        this._config = { ...this._config,
+          trigger: 'manual',
+          selector: ''
+        };
+      } else {
+        this._fixTitle();
+      }
+    }
+
+    _fixTitle() {
+      const title = this._element.getAttribute('title');
+
+      const originalTitleType = typeof this._element.getAttribute('data-bs-original-title');
+
+      if (title || originalTitleType !== 'string') {
+        this._element.setAttribute('data-bs-original-title', title || '');
+
+        if (title && !this._element.getAttribute('aria-label') && !this._element.textContent) {
+          this._element.setAttribute('aria-label', title);
+        }
+
+        this._element.setAttribute('title', '');
+      }
+    }
+
+    _enter(event, context) {
+      context = this._initializeOnDelegatedTarget(event, context);
+
+      if (event) {
+        context._activeTrigger[event.type === 'focusin' ? TRIGGER_FOCUS : TRIGGER_HOVER] = true;
+      }
+
+      if (context.getTipElement().classList.contains(CLASS_NAME_SHOW) || context._hoverState === HOVER_STATE_SHOW) {
+        context._hoverState = HOVER_STATE_SHOW;
+        return;
+      }
+
+      clearTimeout(context._timeout);
+      context._hoverState = HOVER_STATE_SHOW;
+
+      if (!context._config.delay || !context._config.delay.show) {
+        context.show();
+        return;
+      }
+
+      context._timeout = setTimeout(() => {
+        if (context._hoverState === HOVER_STATE_SHOW) {
+          context.show();
+        }
+      }, context._config.delay.show);
+    }
+
+    _leave(event, context) {
+      context = this._initializeOnDelegatedTarget(event, context);
+
+      if (event) {
+        context._activeTrigger[event.type === 'focusout' ? TRIGGER_FOCUS : TRIGGER_HOVER] = context._element.contains(event.relatedTarget);
+      }
+
+      if (context._isWithActiveTrigger()) {
+        return;
+      }
+
+      clearTimeout(context._timeout);
+      context._hoverState = HOVER_STATE_OUT;
+
+      if (!context._config.delay || !context._config.delay.hide) {
+        context.hide();
+        return;
+      }
+
+      context._timeout = setTimeout(() => {
+        if (context._hoverState === HOVER_STATE_OUT) {
+          context.hide();
+        }
+      }, context._config.delay.hide);
+    }
+
+    _isWithActiveTrigger() {
+      for (const trigger in this._activeTrigger) {
+        if (this._activeTrigger[trigger]) {
+          return true;
+        }
+      }
+
+      return false;
+    }
+
+    _getConfig(config) {
+      const dataAttributes = Manipulator__default.default.getDataAttributes(this._element);
+      Object.keys(dataAttributes).forEach(dataAttr => {
+        if (DISALLOWED_ATTRIBUTES.has(dataAttr)) {
+          delete dataAttributes[dataAttr];
+        }
+      });
+      config = { ...this.constructor.Default,
+        ...dataAttributes,
+        ...(typeof config === 'object' && config ? config : {})
+      };
+      config.container = config.container === false ? document.body : getElement(config.container);
+
+      if (typeof config.delay === 'number') {
+        config.delay = {
+          show: config.delay,
+          hide: config.delay
+        };
+      }
+
+      if (typeof config.title === 'number') {
+        config.title = config.title.toString();
+      }
+
+      if (typeof config.content === 'number') {
+        config.content = config.content.toString();
+      }
+
+      typeCheckConfig(NAME, config, this.constructor.DefaultType);
+
+      if (config.sanitize) {
+        config.template = sanitizeHtml(config.template, config.allowList, config.sanitizeFn);
+      }
+
+      return config;
+    }
+
+    _getDelegateConfig() {
+      const config = {};
+
+      for (const key in this._config) {
+        if (this.constructor.Default[key] !== this._config[key]) {
+          config[key] = this._config[key];
+        }
+      } // In the future can be replaced with:
+      // const keysWithDifferentValues = Object.entries(this._config).filter(entry => this.constructor.Default[entry[0]] !== this._config[entry[0]])
+      // `Object.fromEntries(keysWithDifferentValues)`
+
+
+      return config;
+    }
+
+    _cleanTipClass() {
+      const tip = this.getTipElement();
+      const basicClassPrefixRegex = new RegExp(`(^|\\s)${this._getBasicClassPrefix()}\\S+`, 'g');
+      const tabClass = tip.getAttribute('class').match(basicClassPrefixRegex);
+
+      if (tabClass !== null && tabClass.length > 0) {
+        tabClass.map(token => token.trim()).forEach(tClass => tip.classList.remove(tClass));
+      }
+    }
+
+    _getBasicClassPrefix() {
+      return CLASS_PREFIX;
+    }
+
+    _handlePopperPlacementChange(popperData) {
+      const {
+        state
+      } = popperData;
+
+      if (!state) {
+        return;
+      }
+
+      this.tip = state.elements.popper;
+
+      this._cleanTipClass();
+
+      this._addAttachmentClass(this._getAttachment(state.placement));
+    }
+
+    _disposePopper() {
+      if (this._popper) {
+        this._popper.destroy();
+
+        this._popper = null;
+      }
+    } // Static
+
+
+    static jQueryInterface(config) {
+      return this.each(function () {
+        const data = Tooltip.getOrCreateInstance(this, config);
+
+        if (typeof config === 'string') {
+          if (typeof data[config] === 'undefined') {
+            throw new TypeError(`No method named "${config}"`);
+          }
+
+          data[config]();
+        }
+      });
+    }
+
+  }
+  /**
+   * ------------------------------------------------------------------------
+   * jQuery
+   * ------------------------------------------------------------------------
+   * add .Tooltip to jQuery only if jQuery is present
+   */
+
+
+  defineJQueryPlugin(Tooltip);
+
+  return Tooltip;
+
+}));
+//# sourceMappingURL=tooltip.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/can-use-dom/index.js":
+/*!*******************************************!*\
+  !*** ./node_modules/can-use-dom/index.js ***!
+  \*******************************************/
+/***/ ((module) => {
+
+var canUseDOM = !!(
+  typeof window !== 'undefined' &&
+  window.document &&
+  window.document.createElement
+);
+
+module.exports = canUseDOM;
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/a-callable.js":
+/*!******************************************************!*\
+  !*** ./node_modules/core-js/internals/a-callable.js ***!
+  \******************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var global = __webpack_require__(/*! ../internals/global */ "./node_modules/core-js/internals/global.js");
+var isCallable = __webpack_require__(/*! ../internals/is-callable */ "./node_modules/core-js/internals/is-callable.js");
+var tryToString = __webpack_require__(/*! ../internals/try-to-string */ "./node_modules/core-js/internals/try-to-string.js");
+
+var TypeError = global.TypeError;
+
+// `Assert: IsCallable(argument) is true`
+module.exports = function (argument) {
+  if (isCallable(argument)) return argument;
+  throw TypeError(tryToString(argument) + ' is not a function');
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/a-possible-prototype.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/core-js/internals/a-possible-prototype.js ***!
+  \****************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var global = __webpack_require__(/*! ../internals/global */ "./node_modules/core-js/internals/global.js");
+var isCallable = __webpack_require__(/*! ../internals/is-callable */ "./node_modules/core-js/internals/is-callable.js");
+
+var String = global.String;
+var TypeError = global.TypeError;
+
+module.exports = function (argument) {
+  if (typeof argument == 'object' || isCallable(argument)) return argument;
+  throw TypeError("Can't set " + String(argument) + ' as a prototype');
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/add-to-unscopables.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/core-js/internals/add-to-unscopables.js ***!
+  \**************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var wellKnownSymbol = __webpack_require__(/*! ../internals/well-known-symbol */ "./node_modules/core-js/internals/well-known-symbol.js");
+var create = __webpack_require__(/*! ../internals/object-create */ "./node_modules/core-js/internals/object-create.js");
+var definePropertyModule = __webpack_require__(/*! ../internals/object-define-property */ "./node_modules/core-js/internals/object-define-property.js");
+
+var UNSCOPABLES = wellKnownSymbol('unscopables');
+var ArrayPrototype = Array.prototype;
+
+// Array.prototype[@@unscopables]
+// https://tc39.es/ecma262/#sec-array.prototype-@@unscopables
+if (ArrayPrototype[UNSCOPABLES] == undefined) {
+  definePropertyModule.f(ArrayPrototype, UNSCOPABLES, {
+    configurable: true,
+    value: create(null)
+  });
+}
+
+// add a key to Array.prototype[@@unscopables]
+module.exports = function (key) {
+  ArrayPrototype[UNSCOPABLES][key] = true;
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/advance-string-index.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/core-js/internals/advance-string-index.js ***!
+  \****************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+var charAt = (__webpack_require__(/*! ../internals/string-multibyte */ "./node_modules/core-js/internals/string-multibyte.js").charAt);
+
+// `AdvanceStringIndex` abstract operation
+// https://tc39.es/ecma262/#sec-advancestringindex
+module.exports = function (S, index, unicode) {
+  return index + (unicode ? charAt(S, index).length : 1);
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/an-instance.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/core-js/internals/an-instance.js ***!
+  \*******************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var global = __webpack_require__(/*! ../internals/global */ "./node_modules/core-js/internals/global.js");
+var isPrototypeOf = __webpack_require__(/*! ../internals/object-is-prototype-of */ "./node_modules/core-js/internals/object-is-prototype-of.js");
+
+var TypeError = global.TypeError;
+
+module.exports = function (it, Prototype) {
+  if (isPrototypeOf(Prototype, it)) return it;
+  throw TypeError('Incorrect invocation');
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/an-object.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/core-js/internals/an-object.js ***!
+  \*****************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var global = __webpack_require__(/*! ../internals/global */ "./node_modules/core-js/internals/global.js");
+var isObject = __webpack_require__(/*! ../internals/is-object */ "./node_modules/core-js/internals/is-object.js");
+
+var String = global.String;
+var TypeError = global.TypeError;
+
+// `Assert: Type(argument) is Object`
+module.exports = function (argument) {
+  if (isObject(argument)) return argument;
+  throw TypeError(String(argument) + ' is not an object');
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/array-buffer-non-extensible.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/core-js/internals/array-buffer-non-extensible.js ***!
+  \***********************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+// FF26- bug: ArrayBuffers are non-extensible, but Object.isExtensible does not report it
+var fails = __webpack_require__(/*! ../internals/fails */ "./node_modules/core-js/internals/fails.js");
+
+module.exports = fails(function () {
+  if (typeof ArrayBuffer == 'function') {
+    var buffer = new ArrayBuffer(8);
+    // eslint-disable-next-line es/no-object-isextensible, es/no-object-defineproperty -- safe
+    if (Object.isExtensible(buffer)) Object.defineProperty(buffer, 'a', { value: 8 });
+  }
+});
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/array-for-each.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/core-js/internals/array-for-each.js ***!
+  \**********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+var $forEach = (__webpack_require__(/*! ../internals/array-iteration */ "./node_modules/core-js/internals/array-iteration.js").forEach);
+var arrayMethodIsStrict = __webpack_require__(/*! ../internals/array-method-is-strict */ "./node_modules/core-js/internals/array-method-is-strict.js");
+
+var STRICT_METHOD = arrayMethodIsStrict('forEach');
+
+// `Array.prototype.forEach` method implementation
+// https://tc39.es/ecma262/#sec-array.prototype.foreach
+module.exports = !STRICT_METHOD ? function forEach(callbackfn /* , thisArg */) {
+  return $forEach(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
+// eslint-disable-next-line es/no-array-prototype-foreach -- safe
+} : [].forEach;
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/array-includes.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/core-js/internals/array-includes.js ***!
+  \**********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var toIndexedObject = __webpack_require__(/*! ../internals/to-indexed-object */ "./node_modules/core-js/internals/to-indexed-object.js");
+var toAbsoluteIndex = __webpack_require__(/*! ../internals/to-absolute-index */ "./node_modules/core-js/internals/to-absolute-index.js");
+var lengthOfArrayLike = __webpack_require__(/*! ../internals/length-of-array-like */ "./node_modules/core-js/internals/length-of-array-like.js");
+
+// `Array.prototype.{ indexOf, includes }` methods implementation
+var createMethod = function (IS_INCLUDES) {
+  return function ($this, el, fromIndex) {
+    var O = toIndexedObject($this);
+    var length = lengthOfArrayLike(O);
+    var index = toAbsoluteIndex(fromIndex, length);
+    var value;
+    // Array#includes uses SameValueZero equality algorithm
+    // eslint-disable-next-line no-self-compare -- NaN check
+    if (IS_INCLUDES && el != el) while (length > index) {
+      value = O[index++];
+      // eslint-disable-next-line no-self-compare -- NaN check
+      if (value != value) return true;
+    // Array#indexOf ignores holes, Array#includes - not
+    } else for (;length > index; index++) {
+      if ((IS_INCLUDES || index in O) && O[index] === el) return IS_INCLUDES || index || 0;
+    } return !IS_INCLUDES && -1;
+  };
+};
+
+module.exports = {
+  // `Array.prototype.includes` method
+  // https://tc39.es/ecma262/#sec-array.prototype.includes
+  includes: createMethod(true),
+  // `Array.prototype.indexOf` method
+  // https://tc39.es/ecma262/#sec-array.prototype.indexof
+  indexOf: createMethod(false)
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/array-iteration.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/core-js/internals/array-iteration.js ***!
+  \***********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var bind = __webpack_require__(/*! ../internals/function-bind-context */ "./node_modules/core-js/internals/function-bind-context.js");
+var uncurryThis = __webpack_require__(/*! ../internals/function-uncurry-this */ "./node_modules/core-js/internals/function-uncurry-this.js");
+var IndexedObject = __webpack_require__(/*! ../internals/indexed-object */ "./node_modules/core-js/internals/indexed-object.js");
+var toObject = __webpack_require__(/*! ../internals/to-object */ "./node_modules/core-js/internals/to-object.js");
+var lengthOfArrayLike = __webpack_require__(/*! ../internals/length-of-array-like */ "./node_modules/core-js/internals/length-of-array-like.js");
+var arraySpeciesCreate = __webpack_require__(/*! ../internals/array-species-create */ "./node_modules/core-js/internals/array-species-create.js");
+
+var push = uncurryThis([].push);
+
+// `Array.prototype.{ forEach, map, filter, some, every, find, findIndex, filterReject }` methods implementation
+var createMethod = function (TYPE) {
+  var IS_MAP = TYPE == 1;
+  var IS_FILTER = TYPE == 2;
+  var IS_SOME = TYPE == 3;
+  var IS_EVERY = TYPE == 4;
+  var IS_FIND_INDEX = TYPE == 6;
+  var IS_FILTER_REJECT = TYPE == 7;
+  var NO_HOLES = TYPE == 5 || IS_FIND_INDEX;
+  return function ($this, callbackfn, that, specificCreate) {
+    var O = toObject($this);
+    var self = IndexedObject(O);
+    var boundFunction = bind(callbackfn, that);
+    var length = lengthOfArrayLike(self);
+    var index = 0;
+    var create = specificCreate || arraySpeciesCreate;
+    var target = IS_MAP ? create($this, length) : IS_FILTER || IS_FILTER_REJECT ? create($this, 0) : undefined;
+    var value, result;
+    for (;length > index; index++) if (NO_HOLES || index in self) {
+      value = self[index];
+      result = boundFunction(value, index, O);
+      if (TYPE) {
+        if (IS_MAP) target[index] = result; // map
+        else if (result) switch (TYPE) {
+          case 3: return true;              // some
+          case 5: return value;             // find
+          case 6: return index;             // findIndex
+          case 2: push(target, value);      // filter
+        } else switch (TYPE) {
+          case 4: return false;             // every
+          case 7: push(target, value);      // filterReject
+        }
+      }
+    }
+    return IS_FIND_INDEX ? -1 : IS_SOME || IS_EVERY ? IS_EVERY : target;
+  };
+};
+
+module.exports = {
+  // `Array.prototype.forEach` method
+  // https://tc39.es/ecma262/#sec-array.prototype.foreach
+  forEach: createMethod(0),
+  // `Array.prototype.map` method
+  // https://tc39.es/ecma262/#sec-array.prototype.map
+  map: createMethod(1),
+  // `Array.prototype.filter` method
+  // https://tc39.es/ecma262/#sec-array.prototype.filter
+  filter: createMethod(2),
+  // `Array.prototype.some` method
+  // https://tc39.es/ecma262/#sec-array.prototype.some
+  some: createMethod(3),
+  // `Array.prototype.every` method
+  // https://tc39.es/ecma262/#sec-array.prototype.every
+  every: createMethod(4),
+  // `Array.prototype.find` method
+  // https://tc39.es/ecma262/#sec-array.prototype.find
+  find: createMethod(5),
+  // `Array.prototype.findIndex` method
+  // https://tc39.es/ecma262/#sec-array.prototype.findIndex
+  findIndex: createMethod(6),
+  // `Array.prototype.filterReject` method
+  // https://github.com/tc39/proposal-array-filtering
+  filterReject: createMethod(7)
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/array-method-has-species-support.js":
+/*!****************************************************************************!*\
+  !*** ./node_modules/core-js/internals/array-method-has-species-support.js ***!
+  \****************************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var fails = __webpack_require__(/*! ../internals/fails */ "./node_modules/core-js/internals/fails.js");
+var wellKnownSymbol = __webpack_require__(/*! ../internals/well-known-symbol */ "./node_modules/core-js/internals/well-known-symbol.js");
+var V8_VERSION = __webpack_require__(/*! ../internals/engine-v8-version */ "./node_modules/core-js/internals/engine-v8-version.js");
+
+var SPECIES = wellKnownSymbol('species');
+
+module.exports = function (METHOD_NAME) {
+  // We can't use this feature detection in V8 since it causes
+  // deoptimization and serious performance degradation
+  // https://github.com/zloirock/core-js/issues/677
+  return V8_VERSION >= 51 || !fails(function () {
+    var array = [];
+    var constructor = array.constructor = {};
+    constructor[SPECIES] = function () {
+      return { foo: 1 };
+    };
+    return array[METHOD_NAME](Boolean).foo !== 1;
+  });
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/array-method-is-strict.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/core-js/internals/array-method-is-strict.js ***!
+  \******************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+var fails = __webpack_require__(/*! ../internals/fails */ "./node_modules/core-js/internals/fails.js");
+
+module.exports = function (METHOD_NAME, argument) {
+  var method = [][METHOD_NAME];
+  return !!method && fails(function () {
+    // eslint-disable-next-line no-useless-call,no-throw-literal -- required for testing
+    method.call(null, argument || function () { throw 1; }, 1);
+  });
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/array-reduce.js":
+/*!********************************************************!*\
+  !*** ./node_modules/core-js/internals/array-reduce.js ***!
+  \********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var global = __webpack_require__(/*! ../internals/global */ "./node_modules/core-js/internals/global.js");
+var aCallable = __webpack_require__(/*! ../internals/a-callable */ "./node_modules/core-js/internals/a-callable.js");
+var toObject = __webpack_require__(/*! ../internals/to-object */ "./node_modules/core-js/internals/to-object.js");
+var IndexedObject = __webpack_require__(/*! ../internals/indexed-object */ "./node_modules/core-js/internals/indexed-object.js");
+var lengthOfArrayLike = __webpack_require__(/*! ../internals/length-of-array-like */ "./node_modules/core-js/internals/length-of-array-like.js");
+
+var TypeError = global.TypeError;
+
+// `Array.prototype.{ reduce, reduceRight }` methods implementation
+var createMethod = function (IS_RIGHT) {
+  return function (that, callbackfn, argumentsLength, memo) {
+    aCallable(callbackfn);
+    var O = toObject(that);
+    var self = IndexedObject(O);
+    var length = lengthOfArrayLike(O);
+    var index = IS_RIGHT ? length - 1 : 0;
+    var i = IS_RIGHT ? -1 : 1;
+    if (argumentsLength < 2) while (true) {
+      if (index in self) {
+        memo = self[index];
+        index += i;
+        break;
+      }
+      index += i;
+      if (IS_RIGHT ? index < 0 : length <= index) {
+        throw TypeError('Reduce of empty array with no initial value');
+      }
+    }
+    for (;IS_RIGHT ? index >= 0 : length > index; index += i) if (index in self) {
+      memo = callbackfn(memo, self[index], index, O);
+    }
+    return memo;
+  };
+};
+
+module.exports = {
+  // `Array.prototype.reduce` method
+  // https://tc39.es/ecma262/#sec-array.prototype.reduce
+  left: createMethod(false),
+  // `Array.prototype.reduceRight` method
+  // https://tc39.es/ecma262/#sec-array.prototype.reduceright
+  right: createMethod(true)
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/array-slice-simple.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/core-js/internals/array-slice-simple.js ***!
+  \**************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var global = __webpack_require__(/*! ../internals/global */ "./node_modules/core-js/internals/global.js");
+var toAbsoluteIndex = __webpack_require__(/*! ../internals/to-absolute-index */ "./node_modules/core-js/internals/to-absolute-index.js");
+var lengthOfArrayLike = __webpack_require__(/*! ../internals/length-of-array-like */ "./node_modules/core-js/internals/length-of-array-like.js");
+var createProperty = __webpack_require__(/*! ../internals/create-property */ "./node_modules/core-js/internals/create-property.js");
+
+var Array = global.Array;
+var max = Math.max;
+
+module.exports = function (O, start, end) {
+  var length = lengthOfArrayLike(O);
+  var k = toAbsoluteIndex(start, length);
+  var fin = toAbsoluteIndex(end === undefined ? length : end, length);
+  var result = Array(max(fin - k, 0));
+  for (var n = 0; k < fin; k++, n++) createProperty(result, n, O[k]);
+  result.length = n;
+  return result;
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/array-species-constructor.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/core-js/internals/array-species-constructor.js ***!
+  \*********************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var global = __webpack_require__(/*! ../internals/global */ "./node_modules/core-js/internals/global.js");
+var isArray = __webpack_require__(/*! ../internals/is-array */ "./node_modules/core-js/internals/is-array.js");
+var isConstructor = __webpack_require__(/*! ../internals/is-constructor */ "./node_modules/core-js/internals/is-constructor.js");
+var isObject = __webpack_require__(/*! ../internals/is-object */ "./node_modules/core-js/internals/is-object.js");
+var wellKnownSymbol = __webpack_require__(/*! ../internals/well-known-symbol */ "./node_modules/core-js/internals/well-known-symbol.js");
+
+var SPECIES = wellKnownSymbol('species');
+var Array = global.Array;
+
+// a part of `ArraySpeciesCreate` abstract operation
+// https://tc39.es/ecma262/#sec-arrayspeciescreate
+module.exports = function (originalArray) {
+  var C;
+  if (isArray(originalArray)) {
+    C = originalArray.constructor;
+    // cross-realm fallback
+    if (isConstructor(C) && (C === Array || isArray(C.prototype))) C = undefined;
+    else if (isObject(C)) {
+      C = C[SPECIES];
+      if (C === null) C = undefined;
+    }
+  } return C === undefined ? Array : C;
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/array-species-create.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/core-js/internals/array-species-create.js ***!
+  \****************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var arraySpeciesConstructor = __webpack_require__(/*! ../internals/array-species-constructor */ "./node_modules/core-js/internals/array-species-constructor.js");
+
+// `ArraySpeciesCreate` abstract operation
+// https://tc39.es/ecma262/#sec-arrayspeciescreate
+module.exports = function (originalArray, length) {
+  return new (arraySpeciesConstructor(originalArray))(length === 0 ? 0 : length);
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/check-correctness-of-iteration.js":
+/*!**************************************************************************!*\
+  !*** ./node_modules/core-js/internals/check-correctness-of-iteration.js ***!
+  \**************************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var wellKnownSymbol = __webpack_require__(/*! ../internals/well-known-symbol */ "./node_modules/core-js/internals/well-known-symbol.js");
+
+var ITERATOR = wellKnownSymbol('iterator');
+var SAFE_CLOSING = false;
+
+try {
+  var called = 0;
+  var iteratorWithReturn = {
+    next: function () {
+      return { done: !!called++ };
+    },
+    'return': function () {
+      SAFE_CLOSING = true;
+    }
+  };
+  iteratorWithReturn[ITERATOR] = function () {
+    return this;
+  };
+  // eslint-disable-next-line es/no-array-from, no-throw-literal -- required for testing
+  Array.from(iteratorWithReturn, function () { throw 2; });
+} catch (error) { /* empty */ }
+
+module.exports = function (exec, SKIP_CLOSING) {
+  if (!SKIP_CLOSING && !SAFE_CLOSING) return false;
+  var ITERATION_SUPPORT = false;
+  try {
+    var object = {};
+    object[ITERATOR] = function () {
+      return {
+        next: function () {
+          return { done: ITERATION_SUPPORT = true };
+        }
+      };
+    };
+    exec(object);
+  } catch (error) { /* empty */ }
+  return ITERATION_SUPPORT;
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/classof-raw.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/core-js/internals/classof-raw.js ***!
+  \*******************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var uncurryThis = __webpack_require__(/*! ../internals/function-uncurry-this */ "./node_modules/core-js/internals/function-uncurry-this.js");
+
+var toString = uncurryThis({}.toString);
+var stringSlice = uncurryThis(''.slice);
+
+module.exports = function (it) {
+  return stringSlice(toString(it), 8, -1);
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/classof.js":
+/*!***************************************************!*\
+  !*** ./node_modules/core-js/internals/classof.js ***!
+  \***************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var global = __webpack_require__(/*! ../internals/global */ "./node_modules/core-js/internals/global.js");
+var TO_STRING_TAG_SUPPORT = __webpack_require__(/*! ../internals/to-string-tag-support */ "./node_modules/core-js/internals/to-string-tag-support.js");
+var isCallable = __webpack_require__(/*! ../internals/is-callable */ "./node_modules/core-js/internals/is-callable.js");
+var classofRaw = __webpack_require__(/*! ../internals/classof-raw */ "./node_modules/core-js/internals/classof-raw.js");
+var wellKnownSymbol = __webpack_require__(/*! ../internals/well-known-symbol */ "./node_modules/core-js/internals/well-known-symbol.js");
+
+var TO_STRING_TAG = wellKnownSymbol('toStringTag');
+var Object = global.Object;
+
+// ES3 wrong here
+var CORRECT_ARGUMENTS = classofRaw(function () { return arguments; }()) == 'Arguments';
+
+// fallback for IE11 Script Access Denied error
+var tryGet = function (it, key) {
+  try {
+    return it[key];
+  } catch (error) { /* empty */ }
+};
+
+// getting tag from ES6+ `Object.prototype.toString`
+module.exports = TO_STRING_TAG_SUPPORT ? classofRaw : function (it) {
+  var O, tag, result;
+  return it === undefined ? 'Undefined' : it === null ? 'Null'
+    // @@toStringTag case
+    : typeof (tag = tryGet(O = Object(it), TO_STRING_TAG)) == 'string' ? tag
+    // builtinTag case
+    : CORRECT_ARGUMENTS ? classofRaw(O)
+    // ES3 arguments fallback
+    : (result = classofRaw(O)) == 'Object' && isCallable(O.callee) ? 'Arguments' : result;
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/collection-weak.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/core-js/internals/collection-weak.js ***!
+  \***********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+var uncurryThis = __webpack_require__(/*! ../internals/function-uncurry-this */ "./node_modules/core-js/internals/function-uncurry-this.js");
+var redefineAll = __webpack_require__(/*! ../internals/redefine-all */ "./node_modules/core-js/internals/redefine-all.js");
+var getWeakData = (__webpack_require__(/*! ../internals/internal-metadata */ "./node_modules/core-js/internals/internal-metadata.js").getWeakData);
+var anObject = __webpack_require__(/*! ../internals/an-object */ "./node_modules/core-js/internals/an-object.js");
+var isObject = __webpack_require__(/*! ../internals/is-object */ "./node_modules/core-js/internals/is-object.js");
+var anInstance = __webpack_require__(/*! ../internals/an-instance */ "./node_modules/core-js/internals/an-instance.js");
+var iterate = __webpack_require__(/*! ../internals/iterate */ "./node_modules/core-js/internals/iterate.js");
+var ArrayIterationModule = __webpack_require__(/*! ../internals/array-iteration */ "./node_modules/core-js/internals/array-iteration.js");
+var hasOwn = __webpack_require__(/*! ../internals/has-own-property */ "./node_modules/core-js/internals/has-own-property.js");
+var InternalStateModule = __webpack_require__(/*! ../internals/internal-state */ "./node_modules/core-js/internals/internal-state.js");
+
+var setInternalState = InternalStateModule.set;
+var internalStateGetterFor = InternalStateModule.getterFor;
+var find = ArrayIterationModule.find;
+var findIndex = ArrayIterationModule.findIndex;
+var splice = uncurryThis([].splice);
+var id = 0;
+
+// fallback for uncaught frozen keys
+var uncaughtFrozenStore = function (store) {
+  return store.frozen || (store.frozen = new UncaughtFrozenStore());
+};
+
+var UncaughtFrozenStore = function () {
+  this.entries = [];
+};
+
+var findUncaughtFrozen = function (store, key) {
+  return find(store.entries, function (it) {
+    return it[0] === key;
+  });
+};
+
+UncaughtFrozenStore.prototype = {
+  get: function (key) {
+    var entry = findUncaughtFrozen(this, key);
+    if (entry) return entry[1];
+  },
+  has: function (key) {
+    return !!findUncaughtFrozen(this, key);
+  },
+  set: function (key, value) {
+    var entry = findUncaughtFrozen(this, key);
+    if (entry) entry[1] = value;
+    else this.entries.push([key, value]);
+  },
+  'delete': function (key) {
+    var index = findIndex(this.entries, function (it) {
+      return it[0] === key;
+    });
+    if (~index) splice(this.entries, index, 1);
+    return !!~index;
+  }
+};
+
+module.exports = {
+  getConstructor: function (wrapper, CONSTRUCTOR_NAME, IS_MAP, ADDER) {
+    var Constructor = wrapper(function (that, iterable) {
+      anInstance(that, Prototype);
+      setInternalState(that, {
+        type: CONSTRUCTOR_NAME,
+        id: id++,
+        frozen: undefined
+      });
+      if (iterable != undefined) iterate(iterable, that[ADDER], { that: that, AS_ENTRIES: IS_MAP });
+    });
+
+    var Prototype = Constructor.prototype;
+
+    var getInternalState = internalStateGetterFor(CONSTRUCTOR_NAME);
+
+    var define = function (that, key, value) {
+      var state = getInternalState(that);
+      var data = getWeakData(anObject(key), true);
+      if (data === true) uncaughtFrozenStore(state).set(key, value);
+      else data[state.id] = value;
+      return that;
+    };
+
+    redefineAll(Prototype, {
+      // `{ WeakMap, WeakSet }.prototype.delete(key)` methods
+      // https://tc39.es/ecma262/#sec-weakmap.prototype.delete
+      // https://tc39.es/ecma262/#sec-weakset.prototype.delete
+      'delete': function (key) {
+        var state = getInternalState(this);
+        if (!isObject(key)) return false;
+        var data = getWeakData(key);
+        if (data === true) return uncaughtFrozenStore(state)['delete'](key);
+        return data && hasOwn(data, state.id) && delete data[state.id];
+      },
+      // `{ WeakMap, WeakSet }.prototype.has(key)` methods
+      // https://tc39.es/ecma262/#sec-weakmap.prototype.has
+      // https://tc39.es/ecma262/#sec-weakset.prototype.has
+      has: function has(key) {
+        var state = getInternalState(this);
+        if (!isObject(key)) return false;
+        var data = getWeakData(key);
+        if (data === true) return uncaughtFrozenStore(state).has(key);
+        return data && hasOwn(data, state.id);
+      }
+    });
+
+    redefineAll(Prototype, IS_MAP ? {
+      // `WeakMap.prototype.get(key)` method
+      // https://tc39.es/ecma262/#sec-weakmap.prototype.get
+      get: function get(key) {
+        var state = getInternalState(this);
+        if (isObject(key)) {
+          var data = getWeakData(key);
+          if (data === true) return uncaughtFrozenStore(state).get(key);
+          return data ? data[state.id] : undefined;
+        }
+      },
+      // `WeakMap.prototype.set(key, value)` method
+      // https://tc39.es/ecma262/#sec-weakmap.prototype.set
+      set: function set(key, value) {
+        return define(this, key, value);
+      }
+    } : {
+      // `WeakSet.prototype.add(value)` method
+      // https://tc39.es/ecma262/#sec-weakset.prototype.add
+      add: function add(value) {
+        return define(this, value, true);
+      }
+    });
+
+    return Constructor;
+  }
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/collection.js":
+/*!******************************************************!*\
+  !*** ./node_modules/core-js/internals/collection.js ***!
+  \******************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+var $ = __webpack_require__(/*! ../internals/export */ "./node_modules/core-js/internals/export.js");
+var global = __webpack_require__(/*! ../internals/global */ "./node_modules/core-js/internals/global.js");
+var uncurryThis = __webpack_require__(/*! ../internals/function-uncurry-this */ "./node_modules/core-js/internals/function-uncurry-this.js");
+var isForced = __webpack_require__(/*! ../internals/is-forced */ "./node_modules/core-js/internals/is-forced.js");
+var redefine = __webpack_require__(/*! ../internals/redefine */ "./node_modules/core-js/internals/redefine.js");
+var InternalMetadataModule = __webpack_require__(/*! ../internals/internal-metadata */ "./node_modules/core-js/internals/internal-metadata.js");
+var iterate = __webpack_require__(/*! ../internals/iterate */ "./node_modules/core-js/internals/iterate.js");
+var anInstance = __webpack_require__(/*! ../internals/an-instance */ "./node_modules/core-js/internals/an-instance.js");
+var isCallable = __webpack_require__(/*! ../internals/is-callable */ "./node_modules/core-js/internals/is-callable.js");
+var isObject = __webpack_require__(/*! ../internals/is-object */ "./node_modules/core-js/internals/is-object.js");
+var fails = __webpack_require__(/*! ../internals/fails */ "./node_modules/core-js/internals/fails.js");
+var checkCorrectnessOfIteration = __webpack_require__(/*! ../internals/check-correctness-of-iteration */ "./node_modules/core-js/internals/check-correctness-of-iteration.js");
+var setToStringTag = __webpack_require__(/*! ../internals/set-to-string-tag */ "./node_modules/core-js/internals/set-to-string-tag.js");
+var inheritIfRequired = __webpack_require__(/*! ../internals/inherit-if-required */ "./node_modules/core-js/internals/inherit-if-required.js");
+
+module.exports = function (CONSTRUCTOR_NAME, wrapper, common) {
+  var IS_MAP = CONSTRUCTOR_NAME.indexOf('Map') !== -1;
+  var IS_WEAK = CONSTRUCTOR_NAME.indexOf('Weak') !== -1;
+  var ADDER = IS_MAP ? 'set' : 'add';
+  var NativeConstructor = global[CONSTRUCTOR_NAME];
+  var NativePrototype = NativeConstructor && NativeConstructor.prototype;
+  var Constructor = NativeConstructor;
+  var exported = {};
+
+  var fixMethod = function (KEY) {
+    var uncurriedNativeMethod = uncurryThis(NativePrototype[KEY]);
+    redefine(NativePrototype, KEY,
+      KEY == 'add' ? function add(value) {
+        uncurriedNativeMethod(this, value === 0 ? 0 : value);
+        return this;
+      } : KEY == 'delete' ? function (key) {
+        return IS_WEAK && !isObject(key) ? false : uncurriedNativeMethod(this, key === 0 ? 0 : key);
+      } : KEY == 'get' ? function get(key) {
+        return IS_WEAK && !isObject(key) ? undefined : uncurriedNativeMethod(this, key === 0 ? 0 : key);
+      } : KEY == 'has' ? function has(key) {
+        return IS_WEAK && !isObject(key) ? false : uncurriedNativeMethod(this, key === 0 ? 0 : key);
+      } : function set(key, value) {
+        uncurriedNativeMethod(this, key === 0 ? 0 : key, value);
+        return this;
+      }
+    );
+  };
+
+  var REPLACE = isForced(
+    CONSTRUCTOR_NAME,
+    !isCallable(NativeConstructor) || !(IS_WEAK || NativePrototype.forEach && !fails(function () {
+      new NativeConstructor().entries().next();
+    }))
+  );
+
+  if (REPLACE) {
+    // create collection constructor
+    Constructor = common.getConstructor(wrapper, CONSTRUCTOR_NAME, IS_MAP, ADDER);
+    InternalMetadataModule.enable();
+  } else if (isForced(CONSTRUCTOR_NAME, true)) {
+    var instance = new Constructor();
+    // early implementations not supports chaining
+    var HASNT_CHAINING = instance[ADDER](IS_WEAK ? {} : -0, 1) != instance;
+    // V8 ~ Chromium 40- weak-collections throws on primitives, but should return false
+    var THROWS_ON_PRIMITIVES = fails(function () { instance.has(1); });
+    // most early implementations doesn't supports iterables, most modern - not close it correctly
+    // eslint-disable-next-line no-new -- required for testing
+    var ACCEPT_ITERABLES = checkCorrectnessOfIteration(function (iterable) { new NativeConstructor(iterable); });
+    // for early implementations -0 and +0 not the same
+    var BUGGY_ZERO = !IS_WEAK && fails(function () {
+      // V8 ~ Chromium 42- fails only with 5+ elements
+      var $instance = new NativeConstructor();
+      var index = 5;
+      while (index--) $instance[ADDER](index, index);
+      return !$instance.has(-0);
+    });
+
+    if (!ACCEPT_ITERABLES) {
+      Constructor = wrapper(function (dummy, iterable) {
+        anInstance(dummy, NativePrototype);
+        var that = inheritIfRequired(new NativeConstructor(), dummy, Constructor);
+        if (iterable != undefined) iterate(iterable, that[ADDER], { that: that, AS_ENTRIES: IS_MAP });
+        return that;
+      });
+      Constructor.prototype = NativePrototype;
+      NativePrototype.constructor = Constructor;
+    }
+
+    if (THROWS_ON_PRIMITIVES || BUGGY_ZERO) {
+      fixMethod('delete');
+      fixMethod('has');
+      IS_MAP && fixMethod('get');
+    }
+
+    if (BUGGY_ZERO || HASNT_CHAINING) fixMethod(ADDER);
+
+    // weak collections should not contains .clear method
+    if (IS_WEAK && NativePrototype.clear) delete NativePrototype.clear;
+  }
+
+  exported[CONSTRUCTOR_NAME] = Constructor;
+  $({ global: true, forced: Constructor != NativeConstructor }, exported);
+
+  setToStringTag(Constructor, CONSTRUCTOR_NAME);
+
+  if (!IS_WEAK) common.setStrong(Constructor, CONSTRUCTOR_NAME, IS_MAP);
+
+  return Constructor;
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/copy-constructor-properties.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/core-js/internals/copy-constructor-properties.js ***!
+  \***********************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var hasOwn = __webpack_require__(/*! ../internals/has-own-property */ "./node_modules/core-js/internals/has-own-property.js");
+var ownKeys = __webpack_require__(/*! ../internals/own-keys */ "./node_modules/core-js/internals/own-keys.js");
+var getOwnPropertyDescriptorModule = __webpack_require__(/*! ../internals/object-get-own-property-descriptor */ "./node_modules/core-js/internals/object-get-own-property-descriptor.js");
+var definePropertyModule = __webpack_require__(/*! ../internals/object-define-property */ "./node_modules/core-js/internals/object-define-property.js");
+
+module.exports = function (target, source, exceptions) {
+  var keys = ownKeys(source);
+  var defineProperty = definePropertyModule.f;
+  var getOwnPropertyDescriptor = getOwnPropertyDescriptorModule.f;
+  for (var i = 0; i < keys.length; i++) {
+    var key = keys[i];
+    if (!hasOwn(target, key) && !(exceptions && hasOwn(exceptions, key))) {
+      defineProperty(target, key, getOwnPropertyDescriptor(source, key));
+    }
+  }
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/correct-prototype-getter.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/core-js/internals/correct-prototype-getter.js ***!
+  \********************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var fails = __webpack_require__(/*! ../internals/fails */ "./node_modules/core-js/internals/fails.js");
+
+module.exports = !fails(function () {
+  function F() { /* empty */ }
+  F.prototype.constructor = null;
+  // eslint-disable-next-line es/no-object-getprototypeof -- required for testing
+  return Object.getPrototypeOf(new F()) !== F.prototype;
+});
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/create-iterator-constructor.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/core-js/internals/create-iterator-constructor.js ***!
+  \***********************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+var IteratorPrototype = (__webpack_require__(/*! ../internals/iterators-core */ "./node_modules/core-js/internals/iterators-core.js").IteratorPrototype);
+var create = __webpack_require__(/*! ../internals/object-create */ "./node_modules/core-js/internals/object-create.js");
+var createPropertyDescriptor = __webpack_require__(/*! ../internals/create-property-descriptor */ "./node_modules/core-js/internals/create-property-descriptor.js");
+var setToStringTag = __webpack_require__(/*! ../internals/set-to-string-tag */ "./node_modules/core-js/internals/set-to-string-tag.js");
+var Iterators = __webpack_require__(/*! ../internals/iterators */ "./node_modules/core-js/internals/iterators.js");
+
+var returnThis = function () { return this; };
+
+module.exports = function (IteratorConstructor, NAME, next, ENUMERABLE_NEXT) {
+  var TO_STRING_TAG = NAME + ' Iterator';
+  IteratorConstructor.prototype = create(IteratorPrototype, { next: createPropertyDescriptor(+!ENUMERABLE_NEXT, next) });
+  setToStringTag(IteratorConstructor, TO_STRING_TAG, false, true);
+  Iterators[TO_STRING_TAG] = returnThis;
+  return IteratorConstructor;
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/create-non-enumerable-property.js":
+/*!**************************************************************************!*\
+  !*** ./node_modules/core-js/internals/create-non-enumerable-property.js ***!
+  \**************************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var DESCRIPTORS = __webpack_require__(/*! ../internals/descriptors */ "./node_modules/core-js/internals/descriptors.js");
+var definePropertyModule = __webpack_require__(/*! ../internals/object-define-property */ "./node_modules/core-js/internals/object-define-property.js");
+var createPropertyDescriptor = __webpack_require__(/*! ../internals/create-property-descriptor */ "./node_modules/core-js/internals/create-property-descriptor.js");
+
+module.exports = DESCRIPTORS ? function (object, key, value) {
+  return definePropertyModule.f(object, key, createPropertyDescriptor(1, value));
+} : function (object, key, value) {
+  object[key] = value;
+  return object;
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/create-property-descriptor.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/core-js/internals/create-property-descriptor.js ***!
+  \**********************************************************************/
+/***/ ((module) => {
+
+module.exports = function (bitmap, value) {
+  return {
+    enumerable: !(bitmap & 1),
+    configurable: !(bitmap & 2),
+    writable: !(bitmap & 4),
+    value: value
+  };
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/create-property.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/core-js/internals/create-property.js ***!
+  \***********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+var toPropertyKey = __webpack_require__(/*! ../internals/to-property-key */ "./node_modules/core-js/internals/to-property-key.js");
+var definePropertyModule = __webpack_require__(/*! ../internals/object-define-property */ "./node_modules/core-js/internals/object-define-property.js");
+var createPropertyDescriptor = __webpack_require__(/*! ../internals/create-property-descriptor */ "./node_modules/core-js/internals/create-property-descriptor.js");
+
+module.exports = function (object, key, value) {
+  var propertyKey = toPropertyKey(key);
+  if (propertyKey in object) definePropertyModule.f(object, propertyKey, createPropertyDescriptor(0, value));
+  else object[propertyKey] = value;
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/define-iterator.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/core-js/internals/define-iterator.js ***!
+  \***********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+var $ = __webpack_require__(/*! ../internals/export */ "./node_modules/core-js/internals/export.js");
+var call = __webpack_require__(/*! ../internals/function-call */ "./node_modules/core-js/internals/function-call.js");
+var IS_PURE = __webpack_require__(/*! ../internals/is-pure */ "./node_modules/core-js/internals/is-pure.js");
+var FunctionName = __webpack_require__(/*! ../internals/function-name */ "./node_modules/core-js/internals/function-name.js");
+var isCallable = __webpack_require__(/*! ../internals/is-callable */ "./node_modules/core-js/internals/is-callable.js");
+var createIteratorConstructor = __webpack_require__(/*! ../internals/create-iterator-constructor */ "./node_modules/core-js/internals/create-iterator-constructor.js");
+var getPrototypeOf = __webpack_require__(/*! ../internals/object-get-prototype-of */ "./node_modules/core-js/internals/object-get-prototype-of.js");
+var setPrototypeOf = __webpack_require__(/*! ../internals/object-set-prototype-of */ "./node_modules/core-js/internals/object-set-prototype-of.js");
+var setToStringTag = __webpack_require__(/*! ../internals/set-to-string-tag */ "./node_modules/core-js/internals/set-to-string-tag.js");
+var createNonEnumerableProperty = __webpack_require__(/*! ../internals/create-non-enumerable-property */ "./node_modules/core-js/internals/create-non-enumerable-property.js");
+var redefine = __webpack_require__(/*! ../internals/redefine */ "./node_modules/core-js/internals/redefine.js");
+var wellKnownSymbol = __webpack_require__(/*! ../internals/well-known-symbol */ "./node_modules/core-js/internals/well-known-symbol.js");
+var Iterators = __webpack_require__(/*! ../internals/iterators */ "./node_modules/core-js/internals/iterators.js");
+var IteratorsCore = __webpack_require__(/*! ../internals/iterators-core */ "./node_modules/core-js/internals/iterators-core.js");
+
+var PROPER_FUNCTION_NAME = FunctionName.PROPER;
+var CONFIGURABLE_FUNCTION_NAME = FunctionName.CONFIGURABLE;
+var IteratorPrototype = IteratorsCore.IteratorPrototype;
+var BUGGY_SAFARI_ITERATORS = IteratorsCore.BUGGY_SAFARI_ITERATORS;
+var ITERATOR = wellKnownSymbol('iterator');
+var KEYS = 'keys';
+var VALUES = 'values';
+var ENTRIES = 'entries';
+
+var returnThis = function () { return this; };
+
+module.exports = function (Iterable, NAME, IteratorConstructor, next, DEFAULT, IS_SET, FORCED) {
+  createIteratorConstructor(IteratorConstructor, NAME, next);
+
+  var getIterationMethod = function (KIND) {
+    if (KIND === DEFAULT && defaultIterator) return defaultIterator;
+    if (!BUGGY_SAFARI_ITERATORS && KIND in IterablePrototype) return IterablePrototype[KIND];
+    switch (KIND) {
+      case KEYS: return function keys() { return new IteratorConstructor(this, KIND); };
+      case VALUES: return function values() { return new IteratorConstructor(this, KIND); };
+      case ENTRIES: return function entries() { return new IteratorConstructor(this, KIND); };
+    } return function () { return new IteratorConstructor(this); };
+  };
+
+  var TO_STRING_TAG = NAME + ' Iterator';
+  var INCORRECT_VALUES_NAME = false;
+  var IterablePrototype = Iterable.prototype;
+  var nativeIterator = IterablePrototype[ITERATOR]
+    || IterablePrototype['@@iterator']
+    || DEFAULT && IterablePrototype[DEFAULT];
+  var defaultIterator = !BUGGY_SAFARI_ITERATORS && nativeIterator || getIterationMethod(DEFAULT);
+  var anyNativeIterator = NAME == 'Array' ? IterablePrototype.entries || nativeIterator : nativeIterator;
+  var CurrentIteratorPrototype, methods, KEY;
+
+  // fix native
+  if (anyNativeIterator) {
+    CurrentIteratorPrototype = getPrototypeOf(anyNativeIterator.call(new Iterable()));
+    if (CurrentIteratorPrototype !== Object.prototype && CurrentIteratorPrototype.next) {
+      if (!IS_PURE && getPrototypeOf(CurrentIteratorPrototype) !== IteratorPrototype) {
+        if (setPrototypeOf) {
+          setPrototypeOf(CurrentIteratorPrototype, IteratorPrototype);
+        } else if (!isCallable(CurrentIteratorPrototype[ITERATOR])) {
+          redefine(CurrentIteratorPrototype, ITERATOR, returnThis);
+        }
+      }
+      // Set @@toStringTag to native iterators
+      setToStringTag(CurrentIteratorPrototype, TO_STRING_TAG, true, true);
+      if (IS_PURE) Iterators[TO_STRING_TAG] = returnThis;
+    }
+  }
+
+  // fix Array.prototype.{ values, @@iterator }.name in V8 / FF
+  if (PROPER_FUNCTION_NAME && DEFAULT == VALUES && nativeIterator && nativeIterator.name !== VALUES) {
+    if (!IS_PURE && CONFIGURABLE_FUNCTION_NAME) {
+      createNonEnumerableProperty(IterablePrototype, 'name', VALUES);
+    } else {
+      INCORRECT_VALUES_NAME = true;
+      defaultIterator = function values() { return call(nativeIterator, this); };
+    }
+  }
+
+  // export additional methods
+  if (DEFAULT) {
+    methods = {
+      values: getIterationMethod(VALUES),
+      keys: IS_SET ? defaultIterator : getIterationMethod(KEYS),
+      entries: getIterationMethod(ENTRIES)
+    };
+    if (FORCED) for (KEY in methods) {
+      if (BUGGY_SAFARI_ITERATORS || INCORRECT_VALUES_NAME || !(KEY in IterablePrototype)) {
+        redefine(IterablePrototype, KEY, methods[KEY]);
+      }
+    } else $({ target: NAME, proto: true, forced: BUGGY_SAFARI_ITERATORS || INCORRECT_VALUES_NAME }, methods);
+  }
+
+  // define iterator
+  if ((!IS_PURE || FORCED) && IterablePrototype[ITERATOR] !== defaultIterator) {
+    redefine(IterablePrototype, ITERATOR, defaultIterator, { name: DEFAULT });
+  }
+  Iterators[NAME] = defaultIterator;
+
+  return methods;
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/descriptors.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/core-js/internals/descriptors.js ***!
+  \*******************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var fails = __webpack_require__(/*! ../internals/fails */ "./node_modules/core-js/internals/fails.js");
+
+// Detect IE8's incomplete defineProperty implementation
+module.exports = !fails(function () {
+  // eslint-disable-next-line es/no-object-defineproperty -- required for testing
+  return Object.defineProperty({}, 1, { get: function () { return 7; } })[1] != 7;
+});
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/document-create-element.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/core-js/internals/document-create-element.js ***!
+  \*******************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var global = __webpack_require__(/*! ../internals/global */ "./node_modules/core-js/internals/global.js");
+var isObject = __webpack_require__(/*! ../internals/is-object */ "./node_modules/core-js/internals/is-object.js");
+
+var document = global.document;
+// typeof document.createElement is 'object' in old IE
+var EXISTS = isObject(document) && isObject(document.createElement);
+
+module.exports = function (it) {
+  return EXISTS ? document.createElement(it) : {};
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/dom-iterables.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/core-js/internals/dom-iterables.js ***!
+  \*********************************************************/
+/***/ ((module) => {
+
+// iterable DOM collections
+// flag - `iterable` interface - 'entries', 'keys', 'values', 'forEach' methods
+module.exports = {
+  CSSRuleList: 0,
+  CSSStyleDeclaration: 0,
+  CSSValueList: 0,
+  ClientRectList: 0,
+  DOMRectList: 0,
+  DOMStringList: 0,
+  DOMTokenList: 1,
+  DataTransferItemList: 0,
+  FileList: 0,
+  HTMLAllCollection: 0,
+  HTMLCollection: 0,
+  HTMLFormElement: 0,
+  HTMLSelectElement: 0,
+  MediaList: 0,
+  MimeTypeArray: 0,
+  NamedNodeMap: 0,
+  NodeList: 1,
+  PaintRequestList: 0,
+  Plugin: 0,
+  PluginArray: 0,
+  SVGLengthList: 0,
+  SVGNumberList: 0,
+  SVGPathSegList: 0,
+  SVGPointList: 0,
+  SVGStringList: 0,
+  SVGTransformList: 0,
+  SourceBufferList: 0,
+  StyleSheetList: 0,
+  TextTrackCueList: 0,
+  TextTrackList: 0,
+  TouchList: 0
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/dom-token-list-prototype.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/core-js/internals/dom-token-list-prototype.js ***!
+  \********************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+// in old WebKit versions, `element.classList` is not an instance of global `DOMTokenList`
+var documentCreateElement = __webpack_require__(/*! ../internals/document-create-element */ "./node_modules/core-js/internals/document-create-element.js");
+
+var classList = documentCreateElement('span').classList;
+var DOMTokenListPrototype = classList && classList.constructor && classList.constructor.prototype;
+
+module.exports = DOMTokenListPrototype === Object.prototype ? undefined : DOMTokenListPrototype;
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/engine-is-node.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/core-js/internals/engine-is-node.js ***!
+  \**********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var classof = __webpack_require__(/*! ../internals/classof-raw */ "./node_modules/core-js/internals/classof-raw.js");
+var global = __webpack_require__(/*! ../internals/global */ "./node_modules/core-js/internals/global.js");
+
+module.exports = classof(global.process) == 'process';
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/engine-user-agent.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/core-js/internals/engine-user-agent.js ***!
+  \*************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var getBuiltIn = __webpack_require__(/*! ../internals/get-built-in */ "./node_modules/core-js/internals/get-built-in.js");
+
+module.exports = getBuiltIn('navigator', 'userAgent') || '';
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/engine-v8-version.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/core-js/internals/engine-v8-version.js ***!
+  \*************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var global = __webpack_require__(/*! ../internals/global */ "./node_modules/core-js/internals/global.js");
+var userAgent = __webpack_require__(/*! ../internals/engine-user-agent */ "./node_modules/core-js/internals/engine-user-agent.js");
+
+var process = global.process;
+var Deno = global.Deno;
+var versions = process && process.versions || Deno && Deno.version;
+var v8 = versions && versions.v8;
+var match, version;
+
+if (v8) {
+  match = v8.split('.');
+  // in old Chrome, versions of V8 isn't V8 = Chrome / 10
+  // but their correct versions are not interesting for us
+  version = match[0] > 0 && match[0] < 4 ? 1 : +(match[0] + match[1]);
+}
+
+// BrowserFS NodeJS `process` polyfill incorrectly set `.v8` to `0.0`
+// so check `userAgent` even if `.v8` exists, but 0
+if (!version && userAgent) {
+  match = userAgent.match(/Edge\/(\d+)/);
+  if (!match || match[1] >= 74) {
+    match = userAgent.match(/Chrome\/(\d+)/);
+    if (match) version = +match[1];
+  }
+}
+
+module.exports = version;
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/enum-bug-keys.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/core-js/internals/enum-bug-keys.js ***!
+  \*********************************************************/
+/***/ ((module) => {
+
+// IE8- don't enum bug keys
+module.exports = [
+  'constructor',
+  'hasOwnProperty',
+  'isPrototypeOf',
+  'propertyIsEnumerable',
+  'toLocaleString',
+  'toString',
+  'valueOf'
+];
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/export.js":
+/*!**************************************************!*\
+  !*** ./node_modules/core-js/internals/export.js ***!
+  \**************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var global = __webpack_require__(/*! ../internals/global */ "./node_modules/core-js/internals/global.js");
+var getOwnPropertyDescriptor = (__webpack_require__(/*! ../internals/object-get-own-property-descriptor */ "./node_modules/core-js/internals/object-get-own-property-descriptor.js").f);
+var createNonEnumerableProperty = __webpack_require__(/*! ../internals/create-non-enumerable-property */ "./node_modules/core-js/internals/create-non-enumerable-property.js");
+var redefine = __webpack_require__(/*! ../internals/redefine */ "./node_modules/core-js/internals/redefine.js");
+var setGlobal = __webpack_require__(/*! ../internals/set-global */ "./node_modules/core-js/internals/set-global.js");
+var copyConstructorProperties = __webpack_require__(/*! ../internals/copy-constructor-properties */ "./node_modules/core-js/internals/copy-constructor-properties.js");
+var isForced = __webpack_require__(/*! ../internals/is-forced */ "./node_modules/core-js/internals/is-forced.js");
+
+/*
+  options.target      - name of the target object
+  options.global      - target is the global object
+  options.stat        - export as static methods of target
+  options.proto       - export as prototype methods of target
+  options.real        - real prototype method for the `pure` version
+  options.forced      - export even if the native feature is available
+  options.bind        - bind methods to the target, required for the `pure` version
+  options.wrap        - wrap constructors to preventing global pollution, required for the `pure` version
+  options.unsafe      - use the simple assignment of property instead of delete + defineProperty
+  options.sham        - add a flag to not completely full polyfills
+  options.enumerable  - export as enumerable property
+  options.noTargetGet - prevent calling a getter on target
+  options.name        - the .name of the function if it does not match the key
+*/
+module.exports = function (options, source) {
+  var TARGET = options.target;
+  var GLOBAL = options.global;
+  var STATIC = options.stat;
+  var FORCED, target, key, targetProperty, sourceProperty, descriptor;
+  if (GLOBAL) {
+    target = global;
+  } else if (STATIC) {
+    target = global[TARGET] || setGlobal(TARGET, {});
+  } else {
+    target = (global[TARGET] || {}).prototype;
+  }
+  if (target) for (key in source) {
+    sourceProperty = source[key];
+    if (options.noTargetGet) {
+      descriptor = getOwnPropertyDescriptor(target, key);
+      targetProperty = descriptor && descriptor.value;
+    } else targetProperty = target[key];
+    FORCED = isForced(GLOBAL ? key : TARGET + (STATIC ? '.' : '#') + key, options.forced);
+    // contained in target
+    if (!FORCED && targetProperty !== undefined) {
+      if (typeof sourceProperty == typeof targetProperty) continue;
+      copyConstructorProperties(sourceProperty, targetProperty);
+    }
+    // add a flag to not completely full polyfills
+    if (options.sham || (targetProperty && targetProperty.sham)) {
+      createNonEnumerableProperty(sourceProperty, 'sham', true);
+    }
+    // extend global
+    redefine(target, key, sourceProperty, options);
+  }
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/fails.js":
+/*!*************************************************!*\
+  !*** ./node_modules/core-js/internals/fails.js ***!
+  \*************************************************/
+/***/ ((module) => {
+
+module.exports = function (exec) {
+  try {
+    return !!exec();
+  } catch (error) {
+    return true;
+  }
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/fix-regexp-well-known-symbol-logic.js":
+/*!******************************************************************************!*\
+  !*** ./node_modules/core-js/internals/fix-regexp-well-known-symbol-logic.js ***!
+  \******************************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+// TODO: Remove from `core-js@4` since it's moved to entry points
+__webpack_require__(/*! ../modules/es.regexp.exec */ "./node_modules/core-js/modules/es.regexp.exec.js");
+var uncurryThis = __webpack_require__(/*! ../internals/function-uncurry-this */ "./node_modules/core-js/internals/function-uncurry-this.js");
+var redefine = __webpack_require__(/*! ../internals/redefine */ "./node_modules/core-js/internals/redefine.js");
+var regexpExec = __webpack_require__(/*! ../internals/regexp-exec */ "./node_modules/core-js/internals/regexp-exec.js");
+var fails = __webpack_require__(/*! ../internals/fails */ "./node_modules/core-js/internals/fails.js");
+var wellKnownSymbol = __webpack_require__(/*! ../internals/well-known-symbol */ "./node_modules/core-js/internals/well-known-symbol.js");
+var createNonEnumerableProperty = __webpack_require__(/*! ../internals/create-non-enumerable-property */ "./node_modules/core-js/internals/create-non-enumerable-property.js");
+
+var SPECIES = wellKnownSymbol('species');
+var RegExpPrototype = RegExp.prototype;
+
+module.exports = function (KEY, exec, FORCED, SHAM) {
+  var SYMBOL = wellKnownSymbol(KEY);
+
+  var DELEGATES_TO_SYMBOL = !fails(function () {
+    // String methods call symbol-named RegEp methods
+    var O = {};
+    O[SYMBOL] = function () { return 7; };
+    return ''[KEY](O) != 7;
+  });
+
+  var DELEGATES_TO_EXEC = DELEGATES_TO_SYMBOL && !fails(function () {
+    // Symbol-named RegExp methods call .exec
+    var execCalled = false;
+    var re = /a/;
+
+    if (KEY === 'split') {
+      // We can't use real regex here since it causes deoptimization
+      // and serious performance degradation in V8
+      // https://github.com/zloirock/core-js/issues/306
+      re = {};
+      // RegExp[@@split] doesn't call the regex's exec method, but first creates
+      // a new one. We need to return the patched regex when creating the new one.
+      re.constructor = {};
+      re.constructor[SPECIES] = function () { return re; };
+      re.flags = '';
+      re[SYMBOL] = /./[SYMBOL];
+    }
+
+    re.exec = function () { execCalled = true; return null; };
+
+    re[SYMBOL]('');
+    return !execCalled;
+  });
+
+  if (
+    !DELEGATES_TO_SYMBOL ||
+    !DELEGATES_TO_EXEC ||
+    FORCED
+  ) {
+    var uncurriedNativeRegExpMethod = uncurryThis(/./[SYMBOL]);
+    var methods = exec(SYMBOL, ''[KEY], function (nativeMethod, regexp, str, arg2, forceStringMethod) {
+      var uncurriedNativeMethod = uncurryThis(nativeMethod);
+      var $exec = regexp.exec;
+      if ($exec === regexpExec || $exec === RegExpPrototype.exec) {
+        if (DELEGATES_TO_SYMBOL && !forceStringMethod) {
+          // The native String method already delegates to @@method (this
+          // polyfilled function), leasing to infinite recursion.
+          // We avoid it by directly calling the native @@method method.
+          return { done: true, value: uncurriedNativeRegExpMethod(regexp, str, arg2) };
+        }
+        return { done: true, value: uncurriedNativeMethod(str, regexp, arg2) };
+      }
+      return { done: false };
+    });
+
+    redefine(String.prototype, KEY, methods[0]);
+    redefine(RegExpPrototype, SYMBOL, methods[1]);
+  }
+
+  if (SHAM) createNonEnumerableProperty(RegExpPrototype[SYMBOL], 'sham', true);
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/freezing.js":
+/*!****************************************************!*\
+  !*** ./node_modules/core-js/internals/freezing.js ***!
+  \****************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var fails = __webpack_require__(/*! ../internals/fails */ "./node_modules/core-js/internals/fails.js");
+
+module.exports = !fails(function () {
+  // eslint-disable-next-line es/no-object-isextensible, es/no-object-preventextensions -- required for testing
+  return Object.isExtensible(Object.preventExtensions({}));
+});
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/function-apply.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/core-js/internals/function-apply.js ***!
+  \**********************************************************/
+/***/ ((module) => {
+
+var FunctionPrototype = Function.prototype;
+var apply = FunctionPrototype.apply;
+var bind = FunctionPrototype.bind;
+var call = FunctionPrototype.call;
+
+// eslint-disable-next-line es/no-reflect -- safe
+module.exports = typeof Reflect == 'object' && Reflect.apply || (bind ? call.bind(apply) : function () {
+  return call.apply(apply, arguments);
+});
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/function-bind-context.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/core-js/internals/function-bind-context.js ***!
+  \*****************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var uncurryThis = __webpack_require__(/*! ../internals/function-uncurry-this */ "./node_modules/core-js/internals/function-uncurry-this.js");
+var aCallable = __webpack_require__(/*! ../internals/a-callable */ "./node_modules/core-js/internals/a-callable.js");
+
+var bind = uncurryThis(uncurryThis.bind);
+
+// optional / simple context binding
+module.exports = function (fn, that) {
+  aCallable(fn);
+  return that === undefined ? fn : bind ? bind(fn, that) : function (/* ...args */) {
+    return fn.apply(that, arguments);
+  };
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/function-call.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/core-js/internals/function-call.js ***!
+  \*********************************************************/
+/***/ ((module) => {
+
+var call = Function.prototype.call;
+
+module.exports = call.bind ? call.bind(call) : function () {
+  return call.apply(call, arguments);
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/function-name.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/core-js/internals/function-name.js ***!
+  \*********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var DESCRIPTORS = __webpack_require__(/*! ../internals/descriptors */ "./node_modules/core-js/internals/descriptors.js");
+var hasOwn = __webpack_require__(/*! ../internals/has-own-property */ "./node_modules/core-js/internals/has-own-property.js");
+
+var FunctionPrototype = Function.prototype;
+// eslint-disable-next-line es/no-object-getownpropertydescriptor -- safe
+var getDescriptor = DESCRIPTORS && Object.getOwnPropertyDescriptor;
+
+var EXISTS = hasOwn(FunctionPrototype, 'name');
+// additional protection from minified / mangled / dropped function names
+var PROPER = EXISTS && (function something() { /* empty */ }).name === 'something';
+var CONFIGURABLE = EXISTS && (!DESCRIPTORS || (DESCRIPTORS && getDescriptor(FunctionPrototype, 'name').configurable));
+
+module.exports = {
+  EXISTS: EXISTS,
+  PROPER: PROPER,
+  CONFIGURABLE: CONFIGURABLE
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/function-uncurry-this.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/core-js/internals/function-uncurry-this.js ***!
+  \*****************************************************************/
+/***/ ((module) => {
+
+var FunctionPrototype = Function.prototype;
+var bind = FunctionPrototype.bind;
+var call = FunctionPrototype.call;
+var callBind = bind && bind.bind(call);
+
+module.exports = bind ? function (fn) {
+  return fn && callBind(call, fn);
+} : function (fn) {
+  return fn && function () {
+    return call.apply(fn, arguments);
+  };
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/get-built-in.js":
+/*!********************************************************!*\
+  !*** ./node_modules/core-js/internals/get-built-in.js ***!
+  \********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var global = __webpack_require__(/*! ../internals/global */ "./node_modules/core-js/internals/global.js");
+var isCallable = __webpack_require__(/*! ../internals/is-callable */ "./node_modules/core-js/internals/is-callable.js");
+
+var aFunction = function (argument) {
+  return isCallable(argument) ? argument : undefined;
+};
+
+module.exports = function (namespace, method) {
+  return arguments.length < 2 ? aFunction(global[namespace]) : global[namespace] && global[namespace][method];
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/get-iterator-method.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/core-js/internals/get-iterator-method.js ***!
+  \***************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var classof = __webpack_require__(/*! ../internals/classof */ "./node_modules/core-js/internals/classof.js");
+var getMethod = __webpack_require__(/*! ../internals/get-method */ "./node_modules/core-js/internals/get-method.js");
+var Iterators = __webpack_require__(/*! ../internals/iterators */ "./node_modules/core-js/internals/iterators.js");
+var wellKnownSymbol = __webpack_require__(/*! ../internals/well-known-symbol */ "./node_modules/core-js/internals/well-known-symbol.js");
+
+var ITERATOR = wellKnownSymbol('iterator');
+
+module.exports = function (it) {
+  if (it != undefined) return getMethod(it, ITERATOR)
+    || getMethod(it, '@@iterator')
+    || Iterators[classof(it)];
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/get-iterator.js":
+/*!********************************************************!*\
+  !*** ./node_modules/core-js/internals/get-iterator.js ***!
+  \********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var global = __webpack_require__(/*! ../internals/global */ "./node_modules/core-js/internals/global.js");
+var call = __webpack_require__(/*! ../internals/function-call */ "./node_modules/core-js/internals/function-call.js");
+var aCallable = __webpack_require__(/*! ../internals/a-callable */ "./node_modules/core-js/internals/a-callable.js");
+var anObject = __webpack_require__(/*! ../internals/an-object */ "./node_modules/core-js/internals/an-object.js");
+var tryToString = __webpack_require__(/*! ../internals/try-to-string */ "./node_modules/core-js/internals/try-to-string.js");
+var getIteratorMethod = __webpack_require__(/*! ../internals/get-iterator-method */ "./node_modules/core-js/internals/get-iterator-method.js");
+
+var TypeError = global.TypeError;
+
+module.exports = function (argument, usingIterator) {
+  var iteratorMethod = arguments.length < 2 ? getIteratorMethod(argument) : usingIterator;
+  if (aCallable(iteratorMethod)) return anObject(call(iteratorMethod, argument));
+  throw TypeError(tryToString(argument) + ' is not iterable');
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/get-method.js":
+/*!******************************************************!*\
+  !*** ./node_modules/core-js/internals/get-method.js ***!
+  \******************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var aCallable = __webpack_require__(/*! ../internals/a-callable */ "./node_modules/core-js/internals/a-callable.js");
+
+// `GetMethod` abstract operation
+// https://tc39.es/ecma262/#sec-getmethod
+module.exports = function (V, P) {
+  var func = V[P];
+  return func == null ? undefined : aCallable(func);
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/get-substitution.js":
+/*!************************************************************!*\
+  !*** ./node_modules/core-js/internals/get-substitution.js ***!
+  \************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var uncurryThis = __webpack_require__(/*! ../internals/function-uncurry-this */ "./node_modules/core-js/internals/function-uncurry-this.js");
+var toObject = __webpack_require__(/*! ../internals/to-object */ "./node_modules/core-js/internals/to-object.js");
+
+var floor = Math.floor;
+var charAt = uncurryThis(''.charAt);
+var replace = uncurryThis(''.replace);
+var stringSlice = uncurryThis(''.slice);
+var SUBSTITUTION_SYMBOLS = /\$([$&'`]|\d{1,2}|<[^>]*>)/g;
+var SUBSTITUTION_SYMBOLS_NO_NAMED = /\$([$&'`]|\d{1,2})/g;
+
+// `GetSubstitution` abstract operation
+// https://tc39.es/ecma262/#sec-getsubstitution
+module.exports = function (matched, str, position, captures, namedCaptures, replacement) {
+  var tailPos = position + matched.length;
+  var m = captures.length;
+  var symbols = SUBSTITUTION_SYMBOLS_NO_NAMED;
+  if (namedCaptures !== undefined) {
+    namedCaptures = toObject(namedCaptures);
+    symbols = SUBSTITUTION_SYMBOLS;
+  }
+  return replace(replacement, symbols, function (match, ch) {
+    var capture;
+    switch (charAt(ch, 0)) {
+      case '$': return '$';
+      case '&': return matched;
+      case '`': return stringSlice(str, 0, position);
+      case "'": return stringSlice(str, tailPos);
+      case '<':
+        capture = namedCaptures[stringSlice(ch, 1, -1)];
+        break;
+      default: // \d\d?
+        var n = +ch;
+        if (n === 0) return match;
+        if (n > m) {
+          var f = floor(n / 10);
+          if (f === 0) return match;
+          if (f <= m) return captures[f - 1] === undefined ? charAt(ch, 1) : captures[f - 1] + charAt(ch, 1);
+          return match;
+        }
+        capture = captures[n - 1];
+    }
+    return capture === undefined ? '' : capture;
+  });
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/global.js":
+/*!**************************************************!*\
+  !*** ./node_modules/core-js/internals/global.js ***!
+  \**************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var check = function (it) {
+  return it && it.Math == Math && it;
+};
+
+// https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
+module.exports =
+  // eslint-disable-next-line es/no-global-this -- safe
+  check(typeof globalThis == 'object' && globalThis) ||
+  check(typeof window == 'object' && window) ||
+  // eslint-disable-next-line no-restricted-globals -- safe
+  check(typeof self == 'object' && self) ||
+  check(typeof __webpack_require__.g == 'object' && __webpack_require__.g) ||
+  // eslint-disable-next-line no-new-func -- fallback
+  (function () { return this; })() || Function('return this')();
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/has-own-property.js":
+/*!************************************************************!*\
+  !*** ./node_modules/core-js/internals/has-own-property.js ***!
+  \************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var uncurryThis = __webpack_require__(/*! ../internals/function-uncurry-this */ "./node_modules/core-js/internals/function-uncurry-this.js");
+var toObject = __webpack_require__(/*! ../internals/to-object */ "./node_modules/core-js/internals/to-object.js");
+
+var hasOwnProperty = uncurryThis({}.hasOwnProperty);
+
+// `HasOwnProperty` abstract operation
+// https://tc39.es/ecma262/#sec-hasownproperty
+module.exports = Object.hasOwn || function hasOwn(it, key) {
+  return hasOwnProperty(toObject(it), key);
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/hidden-keys.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/core-js/internals/hidden-keys.js ***!
+  \*******************************************************/
+/***/ ((module) => {
+
+module.exports = {};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/html.js":
+/*!************************************************!*\
+  !*** ./node_modules/core-js/internals/html.js ***!
+  \************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var getBuiltIn = __webpack_require__(/*! ../internals/get-built-in */ "./node_modules/core-js/internals/get-built-in.js");
+
+module.exports = getBuiltIn('document', 'documentElement');
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/ie8-dom-define.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/core-js/internals/ie8-dom-define.js ***!
+  \**********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var DESCRIPTORS = __webpack_require__(/*! ../internals/descriptors */ "./node_modules/core-js/internals/descriptors.js");
+var fails = __webpack_require__(/*! ../internals/fails */ "./node_modules/core-js/internals/fails.js");
+var createElement = __webpack_require__(/*! ../internals/document-create-element */ "./node_modules/core-js/internals/document-create-element.js");
+
+// Thank's IE8 for his funny defineProperty
+module.exports = !DESCRIPTORS && !fails(function () {
+  // eslint-disable-next-line es/no-object-defineproperty -- required for testing
+  return Object.defineProperty(createElement('div'), 'a', {
+    get: function () { return 7; }
+  }).a != 7;
+});
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/indexed-object.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/core-js/internals/indexed-object.js ***!
+  \**********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var global = __webpack_require__(/*! ../internals/global */ "./node_modules/core-js/internals/global.js");
+var uncurryThis = __webpack_require__(/*! ../internals/function-uncurry-this */ "./node_modules/core-js/internals/function-uncurry-this.js");
+var fails = __webpack_require__(/*! ../internals/fails */ "./node_modules/core-js/internals/fails.js");
+var classof = __webpack_require__(/*! ../internals/classof-raw */ "./node_modules/core-js/internals/classof-raw.js");
+
+var Object = global.Object;
+var split = uncurryThis(''.split);
+
+// fallback for non-array-like ES3 and non-enumerable old V8 strings
+module.exports = fails(function () {
+  // throws an error in rhino, see https://github.com/mozilla/rhino/issues/346
+  // eslint-disable-next-line no-prototype-builtins -- safe
+  return !Object('z').propertyIsEnumerable(0);
+}) ? function (it) {
+  return classof(it) == 'String' ? split(it, '') : Object(it);
+} : Object;
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/inherit-if-required.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/core-js/internals/inherit-if-required.js ***!
+  \***************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var isCallable = __webpack_require__(/*! ../internals/is-callable */ "./node_modules/core-js/internals/is-callable.js");
+var isObject = __webpack_require__(/*! ../internals/is-object */ "./node_modules/core-js/internals/is-object.js");
+var setPrototypeOf = __webpack_require__(/*! ../internals/object-set-prototype-of */ "./node_modules/core-js/internals/object-set-prototype-of.js");
+
+// makes subclassing work correct for wrapped built-ins
+module.exports = function ($this, dummy, Wrapper) {
+  var NewTarget, NewTargetPrototype;
+  if (
+    // it can work only with native `setPrototypeOf`
+    setPrototypeOf &&
+    // we haven't completely correct pre-ES6 way for getting `new.target`, so use this
+    isCallable(NewTarget = dummy.constructor) &&
+    NewTarget !== Wrapper &&
+    isObject(NewTargetPrototype = NewTarget.prototype) &&
+    NewTargetPrototype !== Wrapper.prototype
+  ) setPrototypeOf($this, NewTargetPrototype);
+  return $this;
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/inspect-source.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/core-js/internals/inspect-source.js ***!
+  \**********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var uncurryThis = __webpack_require__(/*! ../internals/function-uncurry-this */ "./node_modules/core-js/internals/function-uncurry-this.js");
+var isCallable = __webpack_require__(/*! ../internals/is-callable */ "./node_modules/core-js/internals/is-callable.js");
+var store = __webpack_require__(/*! ../internals/shared-store */ "./node_modules/core-js/internals/shared-store.js");
+
+var functionToString = uncurryThis(Function.toString);
+
+// this helper broken in `core-js@3.4.1-3.4.4`, so we can't use `shared` helper
+if (!isCallable(store.inspectSource)) {
+  store.inspectSource = function (it) {
+    return functionToString(it);
+  };
+}
+
+module.exports = store.inspectSource;
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/internal-metadata.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/core-js/internals/internal-metadata.js ***!
+  \*************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var $ = __webpack_require__(/*! ../internals/export */ "./node_modules/core-js/internals/export.js");
+var uncurryThis = __webpack_require__(/*! ../internals/function-uncurry-this */ "./node_modules/core-js/internals/function-uncurry-this.js");
+var hiddenKeys = __webpack_require__(/*! ../internals/hidden-keys */ "./node_modules/core-js/internals/hidden-keys.js");
+var isObject = __webpack_require__(/*! ../internals/is-object */ "./node_modules/core-js/internals/is-object.js");
+var hasOwn = __webpack_require__(/*! ../internals/has-own-property */ "./node_modules/core-js/internals/has-own-property.js");
+var defineProperty = (__webpack_require__(/*! ../internals/object-define-property */ "./node_modules/core-js/internals/object-define-property.js").f);
+var getOwnPropertyNamesModule = __webpack_require__(/*! ../internals/object-get-own-property-names */ "./node_modules/core-js/internals/object-get-own-property-names.js");
+var getOwnPropertyNamesExternalModule = __webpack_require__(/*! ../internals/object-get-own-property-names-external */ "./node_modules/core-js/internals/object-get-own-property-names-external.js");
+var isExtensible = __webpack_require__(/*! ../internals/object-is-extensible */ "./node_modules/core-js/internals/object-is-extensible.js");
+var uid = __webpack_require__(/*! ../internals/uid */ "./node_modules/core-js/internals/uid.js");
+var FREEZING = __webpack_require__(/*! ../internals/freezing */ "./node_modules/core-js/internals/freezing.js");
+
+var REQUIRED = false;
+var METADATA = uid('meta');
+var id = 0;
+
+var setMetadata = function (it) {
+  defineProperty(it, METADATA, { value: {
+    objectID: 'O' + id++, // object ID
+    weakData: {}          // weak collections IDs
+  } });
+};
+
+var fastKey = function (it, create) {
+  // return a primitive with prefix
+  if (!isObject(it)) return typeof it == 'symbol' ? it : (typeof it == 'string' ? 'S' : 'P') + it;
+  if (!hasOwn(it, METADATA)) {
+    // can't set metadata to uncaught frozen object
+    if (!isExtensible(it)) return 'F';
+    // not necessary to add metadata
+    if (!create) return 'E';
+    // add missing metadata
+    setMetadata(it);
+  // return object ID
+  } return it[METADATA].objectID;
+};
+
+var getWeakData = function (it, create) {
+  if (!hasOwn(it, METADATA)) {
+    // can't set metadata to uncaught frozen object
+    if (!isExtensible(it)) return true;
+    // not necessary to add metadata
+    if (!create) return false;
+    // add missing metadata
+    setMetadata(it);
+  // return the store of weak collections IDs
+  } return it[METADATA].weakData;
+};
+
+// add metadata on freeze-family methods calling
+var onFreeze = function (it) {
+  if (FREEZING && REQUIRED && isExtensible(it) && !hasOwn(it, METADATA)) setMetadata(it);
+  return it;
+};
+
+var enable = function () {
+  meta.enable = function () { /* empty */ };
+  REQUIRED = true;
+  var getOwnPropertyNames = getOwnPropertyNamesModule.f;
+  var splice = uncurryThis([].splice);
+  var test = {};
+  test[METADATA] = 1;
+
+  // prevent exposing of metadata key
+  if (getOwnPropertyNames(test).length) {
+    getOwnPropertyNamesModule.f = function (it) {
+      var result = getOwnPropertyNames(it);
+      for (var i = 0, length = result.length; i < length; i++) {
+        if (result[i] === METADATA) {
+          splice(result, i, 1);
+          break;
+        }
+      } return result;
+    };
+
+    $({ target: 'Object', stat: true, forced: true }, {
+      getOwnPropertyNames: getOwnPropertyNamesExternalModule.f
+    });
+  }
+};
+
+var meta = module.exports = {
+  enable: enable,
+  fastKey: fastKey,
+  getWeakData: getWeakData,
+  onFreeze: onFreeze
+};
+
+hiddenKeys[METADATA] = true;
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/internal-state.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/core-js/internals/internal-state.js ***!
+  \**********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var NATIVE_WEAK_MAP = __webpack_require__(/*! ../internals/native-weak-map */ "./node_modules/core-js/internals/native-weak-map.js");
+var global = __webpack_require__(/*! ../internals/global */ "./node_modules/core-js/internals/global.js");
+var uncurryThis = __webpack_require__(/*! ../internals/function-uncurry-this */ "./node_modules/core-js/internals/function-uncurry-this.js");
+var isObject = __webpack_require__(/*! ../internals/is-object */ "./node_modules/core-js/internals/is-object.js");
+var createNonEnumerableProperty = __webpack_require__(/*! ../internals/create-non-enumerable-property */ "./node_modules/core-js/internals/create-non-enumerable-property.js");
+var hasOwn = __webpack_require__(/*! ../internals/has-own-property */ "./node_modules/core-js/internals/has-own-property.js");
+var shared = __webpack_require__(/*! ../internals/shared-store */ "./node_modules/core-js/internals/shared-store.js");
+var sharedKey = __webpack_require__(/*! ../internals/shared-key */ "./node_modules/core-js/internals/shared-key.js");
+var hiddenKeys = __webpack_require__(/*! ../internals/hidden-keys */ "./node_modules/core-js/internals/hidden-keys.js");
+
+var OBJECT_ALREADY_INITIALIZED = 'Object already initialized';
+var TypeError = global.TypeError;
+var WeakMap = global.WeakMap;
+var set, get, has;
+
+var enforce = function (it) {
+  return has(it) ? get(it) : set(it, {});
+};
+
+var getterFor = function (TYPE) {
+  return function (it) {
+    var state;
+    if (!isObject(it) || (state = get(it)).type !== TYPE) {
+      throw TypeError('Incompatible receiver, ' + TYPE + ' required');
+    } return state;
+  };
+};
+
+if (NATIVE_WEAK_MAP || shared.state) {
+  var store = shared.state || (shared.state = new WeakMap());
+  var wmget = uncurryThis(store.get);
+  var wmhas = uncurryThis(store.has);
+  var wmset = uncurryThis(store.set);
+  set = function (it, metadata) {
+    if (wmhas(store, it)) throw new TypeError(OBJECT_ALREADY_INITIALIZED);
+    metadata.facade = it;
+    wmset(store, it, metadata);
+    return metadata;
+  };
+  get = function (it) {
+    return wmget(store, it) || {};
+  };
+  has = function (it) {
+    return wmhas(store, it);
+  };
+} else {
+  var STATE = sharedKey('state');
+  hiddenKeys[STATE] = true;
+  set = function (it, metadata) {
+    if (hasOwn(it, STATE)) throw new TypeError(OBJECT_ALREADY_INITIALIZED);
+    metadata.facade = it;
+    createNonEnumerableProperty(it, STATE, metadata);
+    return metadata;
+  };
+  get = function (it) {
+    return hasOwn(it, STATE) ? it[STATE] : {};
+  };
+  has = function (it) {
+    return hasOwn(it, STATE);
+  };
+}
+
+module.exports = {
+  set: set,
+  get: get,
+  has: has,
+  enforce: enforce,
+  getterFor: getterFor
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/is-array-iterator-method.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/core-js/internals/is-array-iterator-method.js ***!
+  \********************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var wellKnownSymbol = __webpack_require__(/*! ../internals/well-known-symbol */ "./node_modules/core-js/internals/well-known-symbol.js");
+var Iterators = __webpack_require__(/*! ../internals/iterators */ "./node_modules/core-js/internals/iterators.js");
+
+var ITERATOR = wellKnownSymbol('iterator');
+var ArrayPrototype = Array.prototype;
+
+// check on default Array iterator
+module.exports = function (it) {
+  return it !== undefined && (Iterators.Array === it || ArrayPrototype[ITERATOR] === it);
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/is-array.js":
+/*!****************************************************!*\
+  !*** ./node_modules/core-js/internals/is-array.js ***!
+  \****************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var classof = __webpack_require__(/*! ../internals/classof-raw */ "./node_modules/core-js/internals/classof-raw.js");
+
+// `IsArray` abstract operation
+// https://tc39.es/ecma262/#sec-isarray
+// eslint-disable-next-line es/no-array-isarray -- safe
+module.exports = Array.isArray || function isArray(argument) {
+  return classof(argument) == 'Array';
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/is-callable.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/core-js/internals/is-callable.js ***!
+  \*******************************************************/
+/***/ ((module) => {
+
+// `IsCallable` abstract operation
+// https://tc39.es/ecma262/#sec-iscallable
+module.exports = function (argument) {
+  return typeof argument == 'function';
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/is-constructor.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/core-js/internals/is-constructor.js ***!
+  \**********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var uncurryThis = __webpack_require__(/*! ../internals/function-uncurry-this */ "./node_modules/core-js/internals/function-uncurry-this.js");
+var fails = __webpack_require__(/*! ../internals/fails */ "./node_modules/core-js/internals/fails.js");
+var isCallable = __webpack_require__(/*! ../internals/is-callable */ "./node_modules/core-js/internals/is-callable.js");
+var classof = __webpack_require__(/*! ../internals/classof */ "./node_modules/core-js/internals/classof.js");
+var getBuiltIn = __webpack_require__(/*! ../internals/get-built-in */ "./node_modules/core-js/internals/get-built-in.js");
+var inspectSource = __webpack_require__(/*! ../internals/inspect-source */ "./node_modules/core-js/internals/inspect-source.js");
+
+var noop = function () { /* empty */ };
+var empty = [];
+var construct = getBuiltIn('Reflect', 'construct');
+var constructorRegExp = /^\s*(?:class|function)\b/;
+var exec = uncurryThis(constructorRegExp.exec);
+var INCORRECT_TO_STRING = !constructorRegExp.exec(noop);
+
+var isConstructorModern = function isConstructor(argument) {
+  if (!isCallable(argument)) return false;
+  try {
+    construct(noop, empty, argument);
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+
+var isConstructorLegacy = function isConstructor(argument) {
+  if (!isCallable(argument)) return false;
+  switch (classof(argument)) {
+    case 'AsyncFunction':
+    case 'GeneratorFunction':
+    case 'AsyncGeneratorFunction': return false;
+  }
+  try {
+    // we can't check .prototype since constructors produced by .bind haven't it
+    // `Function#toString` throws on some built-it function in some legacy engines
+    // (for example, `DOMQuad` and similar in FF41-)
+    return INCORRECT_TO_STRING || !!exec(constructorRegExp, inspectSource(argument));
+  } catch (error) {
+    return true;
+  }
+};
+
+isConstructorLegacy.sham = true;
+
+// `IsConstructor` abstract operation
+// https://tc39.es/ecma262/#sec-isconstructor
+module.exports = !construct || fails(function () {
+  var called;
+  return isConstructorModern(isConstructorModern.call)
+    || !isConstructorModern(Object)
+    || !isConstructorModern(function () { called = true; })
+    || called;
+}) ? isConstructorLegacy : isConstructorModern;
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/is-forced.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/core-js/internals/is-forced.js ***!
+  \*****************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var fails = __webpack_require__(/*! ../internals/fails */ "./node_modules/core-js/internals/fails.js");
+var isCallable = __webpack_require__(/*! ../internals/is-callable */ "./node_modules/core-js/internals/is-callable.js");
+
+var replacement = /#|\.prototype\./;
+
+var isForced = function (feature, detection) {
+  var value = data[normalize(feature)];
+  return value == POLYFILL ? true
+    : value == NATIVE ? false
+    : isCallable(detection) ? fails(detection)
+    : !!detection;
+};
+
+var normalize = isForced.normalize = function (string) {
+  return String(string).replace(replacement, '.').toLowerCase();
+};
+
+var data = isForced.data = {};
+var NATIVE = isForced.NATIVE = 'N';
+var POLYFILL = isForced.POLYFILL = 'P';
+
+module.exports = isForced;
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/is-object.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/core-js/internals/is-object.js ***!
+  \*****************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var isCallable = __webpack_require__(/*! ../internals/is-callable */ "./node_modules/core-js/internals/is-callable.js");
+
+module.exports = function (it) {
+  return typeof it == 'object' ? it !== null : isCallable(it);
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/is-pure.js":
+/*!***************************************************!*\
+  !*** ./node_modules/core-js/internals/is-pure.js ***!
+  \***************************************************/
+/***/ ((module) => {
+
+module.exports = false;
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/is-symbol.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/core-js/internals/is-symbol.js ***!
+  \*****************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var global = __webpack_require__(/*! ../internals/global */ "./node_modules/core-js/internals/global.js");
+var getBuiltIn = __webpack_require__(/*! ../internals/get-built-in */ "./node_modules/core-js/internals/get-built-in.js");
+var isCallable = __webpack_require__(/*! ../internals/is-callable */ "./node_modules/core-js/internals/is-callable.js");
+var isPrototypeOf = __webpack_require__(/*! ../internals/object-is-prototype-of */ "./node_modules/core-js/internals/object-is-prototype-of.js");
+var USE_SYMBOL_AS_UID = __webpack_require__(/*! ../internals/use-symbol-as-uid */ "./node_modules/core-js/internals/use-symbol-as-uid.js");
+
+var Object = global.Object;
+
+module.exports = USE_SYMBOL_AS_UID ? function (it) {
+  return typeof it == 'symbol';
+} : function (it) {
+  var $Symbol = getBuiltIn('Symbol');
+  return isCallable($Symbol) && isPrototypeOf($Symbol.prototype, Object(it));
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/iterate.js":
+/*!***************************************************!*\
+  !*** ./node_modules/core-js/internals/iterate.js ***!
+  \***************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var global = __webpack_require__(/*! ../internals/global */ "./node_modules/core-js/internals/global.js");
+var bind = __webpack_require__(/*! ../internals/function-bind-context */ "./node_modules/core-js/internals/function-bind-context.js");
+var call = __webpack_require__(/*! ../internals/function-call */ "./node_modules/core-js/internals/function-call.js");
+var anObject = __webpack_require__(/*! ../internals/an-object */ "./node_modules/core-js/internals/an-object.js");
+var tryToString = __webpack_require__(/*! ../internals/try-to-string */ "./node_modules/core-js/internals/try-to-string.js");
+var isArrayIteratorMethod = __webpack_require__(/*! ../internals/is-array-iterator-method */ "./node_modules/core-js/internals/is-array-iterator-method.js");
+var lengthOfArrayLike = __webpack_require__(/*! ../internals/length-of-array-like */ "./node_modules/core-js/internals/length-of-array-like.js");
+var isPrototypeOf = __webpack_require__(/*! ../internals/object-is-prototype-of */ "./node_modules/core-js/internals/object-is-prototype-of.js");
+var getIterator = __webpack_require__(/*! ../internals/get-iterator */ "./node_modules/core-js/internals/get-iterator.js");
+var getIteratorMethod = __webpack_require__(/*! ../internals/get-iterator-method */ "./node_modules/core-js/internals/get-iterator-method.js");
+var iteratorClose = __webpack_require__(/*! ../internals/iterator-close */ "./node_modules/core-js/internals/iterator-close.js");
+
+var TypeError = global.TypeError;
+
+var Result = function (stopped, result) {
+  this.stopped = stopped;
+  this.result = result;
+};
+
+var ResultPrototype = Result.prototype;
+
+module.exports = function (iterable, unboundFunction, options) {
+  var that = options && options.that;
+  var AS_ENTRIES = !!(options && options.AS_ENTRIES);
+  var IS_ITERATOR = !!(options && options.IS_ITERATOR);
+  var INTERRUPTED = !!(options && options.INTERRUPTED);
+  var fn = bind(unboundFunction, that);
+  var iterator, iterFn, index, length, result, next, step;
+
+  var stop = function (condition) {
+    if (iterator) iteratorClose(iterator, 'normal', condition);
+    return new Result(true, condition);
+  };
+
+  var callFn = function (value) {
+    if (AS_ENTRIES) {
+      anObject(value);
+      return INTERRUPTED ? fn(value[0], value[1], stop) : fn(value[0], value[1]);
+    } return INTERRUPTED ? fn(value, stop) : fn(value);
+  };
+
+  if (IS_ITERATOR) {
+    iterator = iterable;
+  } else {
+    iterFn = getIteratorMethod(iterable);
+    if (!iterFn) throw TypeError(tryToString(iterable) + ' is not iterable');
+    // optimisation for array iterators
+    if (isArrayIteratorMethod(iterFn)) {
+      for (index = 0, length = lengthOfArrayLike(iterable); length > index; index++) {
+        result = callFn(iterable[index]);
+        if (result && isPrototypeOf(ResultPrototype, result)) return result;
+      } return new Result(false);
+    }
+    iterator = getIterator(iterable, iterFn);
+  }
+
+  next = iterator.next;
+  while (!(step = call(next, iterator)).done) {
+    try {
+      result = callFn(step.value);
+    } catch (error) {
+      iteratorClose(iterator, 'throw', error);
+    }
+    if (typeof result == 'object' && result && isPrototypeOf(ResultPrototype, result)) return result;
+  } return new Result(false);
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/iterator-close.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/core-js/internals/iterator-close.js ***!
+  \**********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var call = __webpack_require__(/*! ../internals/function-call */ "./node_modules/core-js/internals/function-call.js");
+var anObject = __webpack_require__(/*! ../internals/an-object */ "./node_modules/core-js/internals/an-object.js");
+var getMethod = __webpack_require__(/*! ../internals/get-method */ "./node_modules/core-js/internals/get-method.js");
+
+module.exports = function (iterator, kind, value) {
+  var innerResult, innerError;
+  anObject(iterator);
+  try {
+    innerResult = getMethod(iterator, 'return');
+    if (!innerResult) {
+      if (kind === 'throw') throw value;
+      return value;
+    }
+    innerResult = call(innerResult, iterator);
+  } catch (error) {
+    innerError = true;
+    innerResult = error;
+  }
+  if (kind === 'throw') throw value;
+  if (innerError) throw innerResult;
+  anObject(innerResult);
+  return value;
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/iterators-core.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/core-js/internals/iterators-core.js ***!
+  \**********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+var fails = __webpack_require__(/*! ../internals/fails */ "./node_modules/core-js/internals/fails.js");
+var isCallable = __webpack_require__(/*! ../internals/is-callable */ "./node_modules/core-js/internals/is-callable.js");
+var create = __webpack_require__(/*! ../internals/object-create */ "./node_modules/core-js/internals/object-create.js");
+var getPrototypeOf = __webpack_require__(/*! ../internals/object-get-prototype-of */ "./node_modules/core-js/internals/object-get-prototype-of.js");
+var redefine = __webpack_require__(/*! ../internals/redefine */ "./node_modules/core-js/internals/redefine.js");
+var wellKnownSymbol = __webpack_require__(/*! ../internals/well-known-symbol */ "./node_modules/core-js/internals/well-known-symbol.js");
+var IS_PURE = __webpack_require__(/*! ../internals/is-pure */ "./node_modules/core-js/internals/is-pure.js");
+
+var ITERATOR = wellKnownSymbol('iterator');
+var BUGGY_SAFARI_ITERATORS = false;
+
+// `%IteratorPrototype%` object
+// https://tc39.es/ecma262/#sec-%iteratorprototype%-object
+var IteratorPrototype, PrototypeOfArrayIteratorPrototype, arrayIterator;
+
+/* eslint-disable es/no-array-prototype-keys -- safe */
+if ([].keys) {
+  arrayIterator = [].keys();
+  // Safari 8 has buggy iterators w/o `next`
+  if (!('next' in arrayIterator)) BUGGY_SAFARI_ITERATORS = true;
+  else {
+    PrototypeOfArrayIteratorPrototype = getPrototypeOf(getPrototypeOf(arrayIterator));
+    if (PrototypeOfArrayIteratorPrototype !== Object.prototype) IteratorPrototype = PrototypeOfArrayIteratorPrototype;
+  }
+}
+
+var NEW_ITERATOR_PROTOTYPE = IteratorPrototype == undefined || fails(function () {
+  var test = {};
+  // FF44- legacy iterators case
+  return IteratorPrototype[ITERATOR].call(test) !== test;
+});
+
+if (NEW_ITERATOR_PROTOTYPE) IteratorPrototype = {};
+else if (IS_PURE) IteratorPrototype = create(IteratorPrototype);
+
+// `%IteratorPrototype%[@@iterator]()` method
+// https://tc39.es/ecma262/#sec-%iteratorprototype%-@@iterator
+if (!isCallable(IteratorPrototype[ITERATOR])) {
+  redefine(IteratorPrototype, ITERATOR, function () {
+    return this;
+  });
+}
+
+module.exports = {
+  IteratorPrototype: IteratorPrototype,
+  BUGGY_SAFARI_ITERATORS: BUGGY_SAFARI_ITERATORS
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/iterators.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/core-js/internals/iterators.js ***!
+  \*****************************************************/
+/***/ ((module) => {
+
+module.exports = {};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/length-of-array-like.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/core-js/internals/length-of-array-like.js ***!
+  \****************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var toLength = __webpack_require__(/*! ../internals/to-length */ "./node_modules/core-js/internals/to-length.js");
+
+// `LengthOfArrayLike` abstract operation
+// https://tc39.es/ecma262/#sec-lengthofarraylike
+module.exports = function (obj) {
+  return toLength(obj.length);
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/native-symbol.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/core-js/internals/native-symbol.js ***!
+  \*********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+/* eslint-disable es/no-symbol -- required for testing */
+var V8_VERSION = __webpack_require__(/*! ../internals/engine-v8-version */ "./node_modules/core-js/internals/engine-v8-version.js");
+var fails = __webpack_require__(/*! ../internals/fails */ "./node_modules/core-js/internals/fails.js");
+
+// eslint-disable-next-line es/no-object-getownpropertysymbols -- required for testing
+module.exports = !!Object.getOwnPropertySymbols && !fails(function () {
+  var symbol = Symbol();
+  // Chrome 38 Symbol has incorrect toString conversion
+  // `get-own-property-symbols` polyfill symbols converted to object are not Symbol instances
+  return !String(symbol) || !(Object(symbol) instanceof Symbol) ||
+    // Chrome 38-40 symbols are not inherited from DOM collections prototypes to instances
+    !Symbol.sham && V8_VERSION && V8_VERSION < 41;
+});
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/native-weak-map.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/core-js/internals/native-weak-map.js ***!
+  \***********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var global = __webpack_require__(/*! ../internals/global */ "./node_modules/core-js/internals/global.js");
+var isCallable = __webpack_require__(/*! ../internals/is-callable */ "./node_modules/core-js/internals/is-callable.js");
+var inspectSource = __webpack_require__(/*! ../internals/inspect-source */ "./node_modules/core-js/internals/inspect-source.js");
+
+var WeakMap = global.WeakMap;
+
+module.exports = isCallable(WeakMap) && /native code/.test(inspectSource(WeakMap));
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/number-parse-int.js":
+/*!************************************************************!*\
+  !*** ./node_modules/core-js/internals/number-parse-int.js ***!
+  \************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var global = __webpack_require__(/*! ../internals/global */ "./node_modules/core-js/internals/global.js");
+var fails = __webpack_require__(/*! ../internals/fails */ "./node_modules/core-js/internals/fails.js");
+var uncurryThis = __webpack_require__(/*! ../internals/function-uncurry-this */ "./node_modules/core-js/internals/function-uncurry-this.js");
+var toString = __webpack_require__(/*! ../internals/to-string */ "./node_modules/core-js/internals/to-string.js");
+var trim = (__webpack_require__(/*! ../internals/string-trim */ "./node_modules/core-js/internals/string-trim.js").trim);
+var whitespaces = __webpack_require__(/*! ../internals/whitespaces */ "./node_modules/core-js/internals/whitespaces.js");
+
+var $parseInt = global.parseInt;
+var Symbol = global.Symbol;
+var ITERATOR = Symbol && Symbol.iterator;
+var hex = /^[+-]?0x/i;
+var exec = uncurryThis(hex.exec);
+var FORCED = $parseInt(whitespaces + '08') !== 8 || $parseInt(whitespaces + '0x16') !== 22
+  // MS Edge 18- broken with boxed symbols
+  || (ITERATOR && !fails(function () { $parseInt(Object(ITERATOR)); }));
+
+// `parseInt` method
+// https://tc39.es/ecma262/#sec-parseint-string-radix
+module.exports = FORCED ? function parseInt(string, radix) {
+  var S = trim(toString(string));
+  return $parseInt(S, (radix >>> 0) || (exec(hex, S) ? 16 : 10));
+} : $parseInt;
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/object-assign.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/core-js/internals/object-assign.js ***!
+  \*********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+var DESCRIPTORS = __webpack_require__(/*! ../internals/descriptors */ "./node_modules/core-js/internals/descriptors.js");
+var uncurryThis = __webpack_require__(/*! ../internals/function-uncurry-this */ "./node_modules/core-js/internals/function-uncurry-this.js");
+var call = __webpack_require__(/*! ../internals/function-call */ "./node_modules/core-js/internals/function-call.js");
+var fails = __webpack_require__(/*! ../internals/fails */ "./node_modules/core-js/internals/fails.js");
+var objectKeys = __webpack_require__(/*! ../internals/object-keys */ "./node_modules/core-js/internals/object-keys.js");
+var getOwnPropertySymbolsModule = __webpack_require__(/*! ../internals/object-get-own-property-symbols */ "./node_modules/core-js/internals/object-get-own-property-symbols.js");
+var propertyIsEnumerableModule = __webpack_require__(/*! ../internals/object-property-is-enumerable */ "./node_modules/core-js/internals/object-property-is-enumerable.js");
+var toObject = __webpack_require__(/*! ../internals/to-object */ "./node_modules/core-js/internals/to-object.js");
+var IndexedObject = __webpack_require__(/*! ../internals/indexed-object */ "./node_modules/core-js/internals/indexed-object.js");
+
+// eslint-disable-next-line es/no-object-assign -- safe
+var $assign = Object.assign;
+// eslint-disable-next-line es/no-object-defineproperty -- required for testing
+var defineProperty = Object.defineProperty;
+var concat = uncurryThis([].concat);
+
+// `Object.assign` method
+// https://tc39.es/ecma262/#sec-object.assign
+module.exports = !$assign || fails(function () {
+  // should have correct order of operations (Edge bug)
+  if (DESCRIPTORS && $assign({ b: 1 }, $assign(defineProperty({}, 'a', {
+    enumerable: true,
+    get: function () {
+      defineProperty(this, 'b', {
+        value: 3,
+        enumerable: false
+      });
+    }
+  }), { b: 2 })).b !== 1) return true;
+  // should work with symbols and should have deterministic property order (V8 bug)
+  var A = {};
+  var B = {};
+  // eslint-disable-next-line es/no-symbol -- safe
+  var symbol = Symbol();
+  var alphabet = 'abcdefghijklmnopqrst';
+  A[symbol] = 7;
+  alphabet.split('').forEach(function (chr) { B[chr] = chr; });
+  return $assign({}, A)[symbol] != 7 || objectKeys($assign({}, B)).join('') != alphabet;
+}) ? function assign(target, source) { // eslint-disable-line no-unused-vars -- required for `.length`
+  var T = toObject(target);
+  var argumentsLength = arguments.length;
+  var index = 1;
+  var getOwnPropertySymbols = getOwnPropertySymbolsModule.f;
+  var propertyIsEnumerable = propertyIsEnumerableModule.f;
+  while (argumentsLength > index) {
+    var S = IndexedObject(arguments[index++]);
+    var keys = getOwnPropertySymbols ? concat(objectKeys(S), getOwnPropertySymbols(S)) : objectKeys(S);
+    var length = keys.length;
+    var j = 0;
+    var key;
+    while (length > j) {
+      key = keys[j++];
+      if (!DESCRIPTORS || call(propertyIsEnumerable, S, key)) T[key] = S[key];
+    }
+  } return T;
+} : $assign;
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/object-create.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/core-js/internals/object-create.js ***!
+  \*********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+/* global ActiveXObject -- old IE, WSH */
+var anObject = __webpack_require__(/*! ../internals/an-object */ "./node_modules/core-js/internals/an-object.js");
+var defineProperties = __webpack_require__(/*! ../internals/object-define-properties */ "./node_modules/core-js/internals/object-define-properties.js");
+var enumBugKeys = __webpack_require__(/*! ../internals/enum-bug-keys */ "./node_modules/core-js/internals/enum-bug-keys.js");
+var hiddenKeys = __webpack_require__(/*! ../internals/hidden-keys */ "./node_modules/core-js/internals/hidden-keys.js");
+var html = __webpack_require__(/*! ../internals/html */ "./node_modules/core-js/internals/html.js");
+var documentCreateElement = __webpack_require__(/*! ../internals/document-create-element */ "./node_modules/core-js/internals/document-create-element.js");
+var sharedKey = __webpack_require__(/*! ../internals/shared-key */ "./node_modules/core-js/internals/shared-key.js");
+
+var GT = '>';
+var LT = '<';
+var PROTOTYPE = 'prototype';
+var SCRIPT = 'script';
+var IE_PROTO = sharedKey('IE_PROTO');
+
+var EmptyConstructor = function () { /* empty */ };
+
+var scriptTag = function (content) {
+  return LT + SCRIPT + GT + content + LT + '/' + SCRIPT + GT;
+};
+
+// Create object with fake `null` prototype: use ActiveX Object with cleared prototype
+var NullProtoObjectViaActiveX = function (activeXDocument) {
+  activeXDocument.write(scriptTag(''));
+  activeXDocument.close();
+  var temp = activeXDocument.parentWindow.Object;
+  activeXDocument = null; // avoid memory leak
+  return temp;
+};
+
+// Create object with fake `null` prototype: use iframe Object with cleared prototype
+var NullProtoObjectViaIFrame = function () {
+  // Thrash, waste and sodomy: IE GC bug
+  var iframe = documentCreateElement('iframe');
+  var JS = 'java' + SCRIPT + ':';
+  var iframeDocument;
+  iframe.style.display = 'none';
+  html.appendChild(iframe);
+  // https://github.com/zloirock/core-js/issues/475
+  iframe.src = String(JS);
+  iframeDocument = iframe.contentWindow.document;
+  iframeDocument.open();
+  iframeDocument.write(scriptTag('document.F=Object'));
+  iframeDocument.close();
+  return iframeDocument.F;
+};
+
+// Check for document.domain and active x support
+// No need to use active x approach when document.domain is not set
+// see https://github.com/es-shims/es5-shim/issues/150
+// variation of https://github.com/kitcambridge/es5-shim/commit/4f738ac066346
+// avoid IE GC bug
+var activeXDocument;
+var NullProtoObject = function () {
+  try {
+    activeXDocument = new ActiveXObject('htmlfile');
+  } catch (error) { /* ignore */ }
+  NullProtoObject = typeof document != 'undefined'
+    ? document.domain && activeXDocument
+      ? NullProtoObjectViaActiveX(activeXDocument) // old IE
+      : NullProtoObjectViaIFrame()
+    : NullProtoObjectViaActiveX(activeXDocument); // WSH
+  var length = enumBugKeys.length;
+  while (length--) delete NullProtoObject[PROTOTYPE][enumBugKeys[length]];
+  return NullProtoObject();
+};
+
+hiddenKeys[IE_PROTO] = true;
+
+// `Object.create` method
+// https://tc39.es/ecma262/#sec-object.create
+module.exports = Object.create || function create(O, Properties) {
+  var result;
+  if (O !== null) {
+    EmptyConstructor[PROTOTYPE] = anObject(O);
+    result = new EmptyConstructor();
+    EmptyConstructor[PROTOTYPE] = null;
+    // add "__proto__" for Object.getPrototypeOf polyfill
+    result[IE_PROTO] = O;
+  } else result = NullProtoObject();
+  return Properties === undefined ? result : defineProperties(result, Properties);
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/object-define-properties.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/core-js/internals/object-define-properties.js ***!
+  \********************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var DESCRIPTORS = __webpack_require__(/*! ../internals/descriptors */ "./node_modules/core-js/internals/descriptors.js");
+var definePropertyModule = __webpack_require__(/*! ../internals/object-define-property */ "./node_modules/core-js/internals/object-define-property.js");
+var anObject = __webpack_require__(/*! ../internals/an-object */ "./node_modules/core-js/internals/an-object.js");
+var toIndexedObject = __webpack_require__(/*! ../internals/to-indexed-object */ "./node_modules/core-js/internals/to-indexed-object.js");
+var objectKeys = __webpack_require__(/*! ../internals/object-keys */ "./node_modules/core-js/internals/object-keys.js");
+
+// `Object.defineProperties` method
+// https://tc39.es/ecma262/#sec-object.defineproperties
+// eslint-disable-next-line es/no-object-defineproperties -- safe
+module.exports = DESCRIPTORS ? Object.defineProperties : function defineProperties(O, Properties) {
+  anObject(O);
+  var props = toIndexedObject(Properties);
+  var keys = objectKeys(Properties);
+  var length = keys.length;
+  var index = 0;
+  var key;
+  while (length > index) definePropertyModule.f(O, key = keys[index++], props[key]);
+  return O;
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/object-define-property.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/core-js/internals/object-define-property.js ***!
+  \******************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+var global = __webpack_require__(/*! ../internals/global */ "./node_modules/core-js/internals/global.js");
+var DESCRIPTORS = __webpack_require__(/*! ../internals/descriptors */ "./node_modules/core-js/internals/descriptors.js");
+var IE8_DOM_DEFINE = __webpack_require__(/*! ../internals/ie8-dom-define */ "./node_modules/core-js/internals/ie8-dom-define.js");
+var anObject = __webpack_require__(/*! ../internals/an-object */ "./node_modules/core-js/internals/an-object.js");
+var toPropertyKey = __webpack_require__(/*! ../internals/to-property-key */ "./node_modules/core-js/internals/to-property-key.js");
+
+var TypeError = global.TypeError;
+// eslint-disable-next-line es/no-object-defineproperty -- safe
+var $defineProperty = Object.defineProperty;
+
+// `Object.defineProperty` method
+// https://tc39.es/ecma262/#sec-object.defineproperty
+exports.f = DESCRIPTORS ? $defineProperty : function defineProperty(O, P, Attributes) {
+  anObject(O);
+  P = toPropertyKey(P);
+  anObject(Attributes);
+  if (IE8_DOM_DEFINE) try {
+    return $defineProperty(O, P, Attributes);
+  } catch (error) { /* empty */ }
+  if ('get' in Attributes || 'set' in Attributes) throw TypeError('Accessors not supported');
+  if ('value' in Attributes) O[P] = Attributes.value;
+  return O;
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/object-get-own-property-descriptor.js":
+/*!******************************************************************************!*\
+  !*** ./node_modules/core-js/internals/object-get-own-property-descriptor.js ***!
+  \******************************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+var DESCRIPTORS = __webpack_require__(/*! ../internals/descriptors */ "./node_modules/core-js/internals/descriptors.js");
+var call = __webpack_require__(/*! ../internals/function-call */ "./node_modules/core-js/internals/function-call.js");
+var propertyIsEnumerableModule = __webpack_require__(/*! ../internals/object-property-is-enumerable */ "./node_modules/core-js/internals/object-property-is-enumerable.js");
+var createPropertyDescriptor = __webpack_require__(/*! ../internals/create-property-descriptor */ "./node_modules/core-js/internals/create-property-descriptor.js");
+var toIndexedObject = __webpack_require__(/*! ../internals/to-indexed-object */ "./node_modules/core-js/internals/to-indexed-object.js");
+var toPropertyKey = __webpack_require__(/*! ../internals/to-property-key */ "./node_modules/core-js/internals/to-property-key.js");
+var hasOwn = __webpack_require__(/*! ../internals/has-own-property */ "./node_modules/core-js/internals/has-own-property.js");
+var IE8_DOM_DEFINE = __webpack_require__(/*! ../internals/ie8-dom-define */ "./node_modules/core-js/internals/ie8-dom-define.js");
+
+// eslint-disable-next-line es/no-object-getownpropertydescriptor -- safe
+var $getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
+
+// `Object.getOwnPropertyDescriptor` method
+// https://tc39.es/ecma262/#sec-object.getownpropertydescriptor
+exports.f = DESCRIPTORS ? $getOwnPropertyDescriptor : function getOwnPropertyDescriptor(O, P) {
+  O = toIndexedObject(O);
+  P = toPropertyKey(P);
+  if (IE8_DOM_DEFINE) try {
+    return $getOwnPropertyDescriptor(O, P);
+  } catch (error) { /* empty */ }
+  if (hasOwn(O, P)) return createPropertyDescriptor(!call(propertyIsEnumerableModule.f, O, P), O[P]);
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/object-get-own-property-names-external.js":
+/*!**********************************************************************************!*\
+  !*** ./node_modules/core-js/internals/object-get-own-property-names-external.js ***!
+  \**********************************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+/* eslint-disable es/no-object-getownpropertynames -- safe */
+var classof = __webpack_require__(/*! ../internals/classof-raw */ "./node_modules/core-js/internals/classof-raw.js");
+var toIndexedObject = __webpack_require__(/*! ../internals/to-indexed-object */ "./node_modules/core-js/internals/to-indexed-object.js");
+var $getOwnPropertyNames = (__webpack_require__(/*! ../internals/object-get-own-property-names */ "./node_modules/core-js/internals/object-get-own-property-names.js").f);
+var arraySlice = __webpack_require__(/*! ../internals/array-slice-simple */ "./node_modules/core-js/internals/array-slice-simple.js");
+
+var windowNames = typeof window == 'object' && window && Object.getOwnPropertyNames
+  ? Object.getOwnPropertyNames(window) : [];
+
+var getWindowNames = function (it) {
+  try {
+    return $getOwnPropertyNames(it);
+  } catch (error) {
+    return arraySlice(windowNames);
+  }
+};
+
+// fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
+module.exports.f = function getOwnPropertyNames(it) {
+  return windowNames && classof(it) == 'Window'
+    ? getWindowNames(it)
+    : $getOwnPropertyNames(toIndexedObject(it));
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/object-get-own-property-names.js":
+/*!*************************************************************************!*\
+  !*** ./node_modules/core-js/internals/object-get-own-property-names.js ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+var internalObjectKeys = __webpack_require__(/*! ../internals/object-keys-internal */ "./node_modules/core-js/internals/object-keys-internal.js");
+var enumBugKeys = __webpack_require__(/*! ../internals/enum-bug-keys */ "./node_modules/core-js/internals/enum-bug-keys.js");
+
+var hiddenKeys = enumBugKeys.concat('length', 'prototype');
+
+// `Object.getOwnPropertyNames` method
+// https://tc39.es/ecma262/#sec-object.getownpropertynames
+// eslint-disable-next-line es/no-object-getownpropertynames -- safe
+exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
+  return internalObjectKeys(O, hiddenKeys);
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/object-get-own-property-symbols.js":
+/*!***************************************************************************!*\
+  !*** ./node_modules/core-js/internals/object-get-own-property-symbols.js ***!
+  \***************************************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+// eslint-disable-next-line es/no-object-getownpropertysymbols -- safe
+exports.f = Object.getOwnPropertySymbols;
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/object-get-prototype-of.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/core-js/internals/object-get-prototype-of.js ***!
+  \*******************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var global = __webpack_require__(/*! ../internals/global */ "./node_modules/core-js/internals/global.js");
+var hasOwn = __webpack_require__(/*! ../internals/has-own-property */ "./node_modules/core-js/internals/has-own-property.js");
+var isCallable = __webpack_require__(/*! ../internals/is-callable */ "./node_modules/core-js/internals/is-callable.js");
+var toObject = __webpack_require__(/*! ../internals/to-object */ "./node_modules/core-js/internals/to-object.js");
+var sharedKey = __webpack_require__(/*! ../internals/shared-key */ "./node_modules/core-js/internals/shared-key.js");
+var CORRECT_PROTOTYPE_GETTER = __webpack_require__(/*! ../internals/correct-prototype-getter */ "./node_modules/core-js/internals/correct-prototype-getter.js");
+
+var IE_PROTO = sharedKey('IE_PROTO');
+var Object = global.Object;
+var ObjectPrototype = Object.prototype;
+
+// `Object.getPrototypeOf` method
+// https://tc39.es/ecma262/#sec-object.getprototypeof
+module.exports = CORRECT_PROTOTYPE_GETTER ? Object.getPrototypeOf : function (O) {
+  var object = toObject(O);
+  if (hasOwn(object, IE_PROTO)) return object[IE_PROTO];
+  var constructor = object.constructor;
+  if (isCallable(constructor) && object instanceof constructor) {
+    return constructor.prototype;
+  } return object instanceof Object ? ObjectPrototype : null;
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/object-is-extensible.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/core-js/internals/object-is-extensible.js ***!
+  \****************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var fails = __webpack_require__(/*! ../internals/fails */ "./node_modules/core-js/internals/fails.js");
+var isObject = __webpack_require__(/*! ../internals/is-object */ "./node_modules/core-js/internals/is-object.js");
+var classof = __webpack_require__(/*! ../internals/classof-raw */ "./node_modules/core-js/internals/classof-raw.js");
+var ARRAY_BUFFER_NON_EXTENSIBLE = __webpack_require__(/*! ../internals/array-buffer-non-extensible */ "./node_modules/core-js/internals/array-buffer-non-extensible.js");
+
+// eslint-disable-next-line es/no-object-isextensible -- safe
+var $isExtensible = Object.isExtensible;
+var FAILS_ON_PRIMITIVES = fails(function () { $isExtensible(1); });
+
+// `Object.isExtensible` method
+// https://tc39.es/ecma262/#sec-object.isextensible
+module.exports = (FAILS_ON_PRIMITIVES || ARRAY_BUFFER_NON_EXTENSIBLE) ? function isExtensible(it) {
+  if (!isObject(it)) return false;
+  if (ARRAY_BUFFER_NON_EXTENSIBLE && classof(it) == 'ArrayBuffer') return false;
+  return $isExtensible ? $isExtensible(it) : true;
+} : $isExtensible;
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/object-is-prototype-of.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/core-js/internals/object-is-prototype-of.js ***!
+  \******************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var uncurryThis = __webpack_require__(/*! ../internals/function-uncurry-this */ "./node_modules/core-js/internals/function-uncurry-this.js");
+
+module.exports = uncurryThis({}.isPrototypeOf);
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/object-keys-internal.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/core-js/internals/object-keys-internal.js ***!
+  \****************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var uncurryThis = __webpack_require__(/*! ../internals/function-uncurry-this */ "./node_modules/core-js/internals/function-uncurry-this.js");
+var hasOwn = __webpack_require__(/*! ../internals/has-own-property */ "./node_modules/core-js/internals/has-own-property.js");
+var toIndexedObject = __webpack_require__(/*! ../internals/to-indexed-object */ "./node_modules/core-js/internals/to-indexed-object.js");
+var indexOf = (__webpack_require__(/*! ../internals/array-includes */ "./node_modules/core-js/internals/array-includes.js").indexOf);
+var hiddenKeys = __webpack_require__(/*! ../internals/hidden-keys */ "./node_modules/core-js/internals/hidden-keys.js");
+
+var push = uncurryThis([].push);
+
+module.exports = function (object, names) {
+  var O = toIndexedObject(object);
+  var i = 0;
+  var result = [];
+  var key;
+  for (key in O) !hasOwn(hiddenKeys, key) && hasOwn(O, key) && push(result, key);
+  // Don't enum bug & hidden keys
+  while (names.length > i) if (hasOwn(O, key = names[i++])) {
+    ~indexOf(result, key) || push(result, key);
+  }
+  return result;
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/object-keys.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/core-js/internals/object-keys.js ***!
+  \*******************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var internalObjectKeys = __webpack_require__(/*! ../internals/object-keys-internal */ "./node_modules/core-js/internals/object-keys-internal.js");
+var enumBugKeys = __webpack_require__(/*! ../internals/enum-bug-keys */ "./node_modules/core-js/internals/enum-bug-keys.js");
+
+// `Object.keys` method
+// https://tc39.es/ecma262/#sec-object.keys
+// eslint-disable-next-line es/no-object-keys -- safe
+module.exports = Object.keys || function keys(O) {
+  return internalObjectKeys(O, enumBugKeys);
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/object-property-is-enumerable.js":
+/*!*************************************************************************!*\
+  !*** ./node_modules/core-js/internals/object-property-is-enumerable.js ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+var $propertyIsEnumerable = {}.propertyIsEnumerable;
+// eslint-disable-next-line es/no-object-getownpropertydescriptor -- safe
+var getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
+
+// Nashorn ~ JDK8 bug
+var NASHORN_BUG = getOwnPropertyDescriptor && !$propertyIsEnumerable.call({ 1: 2 }, 1);
+
+// `Object.prototype.propertyIsEnumerable` method implementation
+// https://tc39.es/ecma262/#sec-object.prototype.propertyisenumerable
+exports.f = NASHORN_BUG ? function propertyIsEnumerable(V) {
+  var descriptor = getOwnPropertyDescriptor(this, V);
+  return !!descriptor && descriptor.enumerable;
+} : $propertyIsEnumerable;
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/object-set-prototype-of.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/core-js/internals/object-set-prototype-of.js ***!
+  \*******************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+/* eslint-disable no-proto -- safe */
+var uncurryThis = __webpack_require__(/*! ../internals/function-uncurry-this */ "./node_modules/core-js/internals/function-uncurry-this.js");
+var anObject = __webpack_require__(/*! ../internals/an-object */ "./node_modules/core-js/internals/an-object.js");
+var aPossiblePrototype = __webpack_require__(/*! ../internals/a-possible-prototype */ "./node_modules/core-js/internals/a-possible-prototype.js");
+
+// `Object.setPrototypeOf` method
+// https://tc39.es/ecma262/#sec-object.setprototypeof
+// Works with __proto__ only. Old v8 can't work with null proto objects.
+// eslint-disable-next-line es/no-object-setprototypeof -- safe
+module.exports = Object.setPrototypeOf || ('__proto__' in {} ? function () {
+  var CORRECT_SETTER = false;
+  var test = {};
+  var setter;
+  try {
+    // eslint-disable-next-line es/no-object-getownpropertydescriptor -- safe
+    setter = uncurryThis(Object.getOwnPropertyDescriptor(Object.prototype, '__proto__').set);
+    setter(test, []);
+    CORRECT_SETTER = test instanceof Array;
+  } catch (error) { /* empty */ }
+  return function setPrototypeOf(O, proto) {
+    anObject(O);
+    aPossiblePrototype(proto);
+    if (CORRECT_SETTER) setter(O, proto);
+    else O.__proto__ = proto;
+    return O;
+  };
+}() : undefined);
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/object-to-string.js":
+/*!************************************************************!*\
+  !*** ./node_modules/core-js/internals/object-to-string.js ***!
+  \************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+var TO_STRING_TAG_SUPPORT = __webpack_require__(/*! ../internals/to-string-tag-support */ "./node_modules/core-js/internals/to-string-tag-support.js");
+var classof = __webpack_require__(/*! ../internals/classof */ "./node_modules/core-js/internals/classof.js");
+
+// `Object.prototype.toString` method implementation
+// https://tc39.es/ecma262/#sec-object.prototype.tostring
+module.exports = TO_STRING_TAG_SUPPORT ? {}.toString : function toString() {
+  return '[object ' + classof(this) + ']';
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/ordinary-to-primitive.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/core-js/internals/ordinary-to-primitive.js ***!
+  \*****************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var global = __webpack_require__(/*! ../internals/global */ "./node_modules/core-js/internals/global.js");
+var call = __webpack_require__(/*! ../internals/function-call */ "./node_modules/core-js/internals/function-call.js");
+var isCallable = __webpack_require__(/*! ../internals/is-callable */ "./node_modules/core-js/internals/is-callable.js");
+var isObject = __webpack_require__(/*! ../internals/is-object */ "./node_modules/core-js/internals/is-object.js");
+
+var TypeError = global.TypeError;
+
+// `OrdinaryToPrimitive` abstract operation
+// https://tc39.es/ecma262/#sec-ordinarytoprimitive
+module.exports = function (input, pref) {
+  var fn, val;
+  if (pref === 'string' && isCallable(fn = input.toString) && !isObject(val = call(fn, input))) return val;
+  if (isCallable(fn = input.valueOf) && !isObject(val = call(fn, input))) return val;
+  if (pref !== 'string' && isCallable(fn = input.toString) && !isObject(val = call(fn, input))) return val;
+  throw TypeError("Can't convert object to primitive value");
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/own-keys.js":
+/*!****************************************************!*\
+  !*** ./node_modules/core-js/internals/own-keys.js ***!
+  \****************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var getBuiltIn = __webpack_require__(/*! ../internals/get-built-in */ "./node_modules/core-js/internals/get-built-in.js");
+var uncurryThis = __webpack_require__(/*! ../internals/function-uncurry-this */ "./node_modules/core-js/internals/function-uncurry-this.js");
+var getOwnPropertyNamesModule = __webpack_require__(/*! ../internals/object-get-own-property-names */ "./node_modules/core-js/internals/object-get-own-property-names.js");
+var getOwnPropertySymbolsModule = __webpack_require__(/*! ../internals/object-get-own-property-symbols */ "./node_modules/core-js/internals/object-get-own-property-symbols.js");
+var anObject = __webpack_require__(/*! ../internals/an-object */ "./node_modules/core-js/internals/an-object.js");
+
+var concat = uncurryThis([].concat);
+
+// all object keys, includes non-enumerable and symbols
+module.exports = getBuiltIn('Reflect', 'ownKeys') || function ownKeys(it) {
+  var keys = getOwnPropertyNamesModule.f(anObject(it));
+  var getOwnPropertySymbols = getOwnPropertySymbolsModule.f;
+  return getOwnPropertySymbols ? concat(keys, getOwnPropertySymbols(it)) : keys;
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/redefine-all.js":
+/*!********************************************************!*\
+  !*** ./node_modules/core-js/internals/redefine-all.js ***!
+  \********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var redefine = __webpack_require__(/*! ../internals/redefine */ "./node_modules/core-js/internals/redefine.js");
+
+module.exports = function (target, src, options) {
+  for (var key in src) redefine(target, key, src[key], options);
+  return target;
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/redefine.js":
+/*!****************************************************!*\
+  !*** ./node_modules/core-js/internals/redefine.js ***!
+  \****************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var global = __webpack_require__(/*! ../internals/global */ "./node_modules/core-js/internals/global.js");
+var isCallable = __webpack_require__(/*! ../internals/is-callable */ "./node_modules/core-js/internals/is-callable.js");
+var hasOwn = __webpack_require__(/*! ../internals/has-own-property */ "./node_modules/core-js/internals/has-own-property.js");
+var createNonEnumerableProperty = __webpack_require__(/*! ../internals/create-non-enumerable-property */ "./node_modules/core-js/internals/create-non-enumerable-property.js");
+var setGlobal = __webpack_require__(/*! ../internals/set-global */ "./node_modules/core-js/internals/set-global.js");
+var inspectSource = __webpack_require__(/*! ../internals/inspect-source */ "./node_modules/core-js/internals/inspect-source.js");
+var InternalStateModule = __webpack_require__(/*! ../internals/internal-state */ "./node_modules/core-js/internals/internal-state.js");
+var CONFIGURABLE_FUNCTION_NAME = (__webpack_require__(/*! ../internals/function-name */ "./node_modules/core-js/internals/function-name.js").CONFIGURABLE);
+
+var getInternalState = InternalStateModule.get;
+var enforceInternalState = InternalStateModule.enforce;
+var TEMPLATE = String(String).split('String');
+
+(module.exports = function (O, key, value, options) {
+  var unsafe = options ? !!options.unsafe : false;
+  var simple = options ? !!options.enumerable : false;
+  var noTargetGet = options ? !!options.noTargetGet : false;
+  var name = options && options.name !== undefined ? options.name : key;
+  var state;
+  if (isCallable(value)) {
+    if (String(name).slice(0, 7) === 'Symbol(') {
+      name = '[' + String(name).replace(/^Symbol\(([^)]*)\)/, '$1') + ']';
+    }
+    if (!hasOwn(value, 'name') || (CONFIGURABLE_FUNCTION_NAME && value.name !== name)) {
+      createNonEnumerableProperty(value, 'name', name);
+    }
+    state = enforceInternalState(value);
+    if (!state.source) {
+      state.source = TEMPLATE.join(typeof name == 'string' ? name : '');
+    }
+  }
+  if (O === global) {
+    if (simple) O[key] = value;
+    else setGlobal(key, value);
+    return;
+  } else if (!unsafe) {
+    delete O[key];
+  } else if (!noTargetGet && O[key]) {
+    simple = true;
+  }
+  if (simple) O[key] = value;
+  else createNonEnumerableProperty(O, key, value);
+// add fake Function#toString for correct work wrapped methods / constructors with methods like LoDash isNative
+})(Function.prototype, 'toString', function toString() {
+  return isCallable(this) && getInternalState(this).source || inspectSource(this);
+});
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/regexp-exec-abstract.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/core-js/internals/regexp-exec-abstract.js ***!
+  \****************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var global = __webpack_require__(/*! ../internals/global */ "./node_modules/core-js/internals/global.js");
+var call = __webpack_require__(/*! ../internals/function-call */ "./node_modules/core-js/internals/function-call.js");
+var anObject = __webpack_require__(/*! ../internals/an-object */ "./node_modules/core-js/internals/an-object.js");
+var isCallable = __webpack_require__(/*! ../internals/is-callable */ "./node_modules/core-js/internals/is-callable.js");
+var classof = __webpack_require__(/*! ../internals/classof-raw */ "./node_modules/core-js/internals/classof-raw.js");
+var regexpExec = __webpack_require__(/*! ../internals/regexp-exec */ "./node_modules/core-js/internals/regexp-exec.js");
+
+var TypeError = global.TypeError;
+
+// `RegExpExec` abstract operation
+// https://tc39.es/ecma262/#sec-regexpexec
+module.exports = function (R, S) {
+  var exec = R.exec;
+  if (isCallable(exec)) {
+    var result = call(exec, R, S);
+    if (result !== null) anObject(result);
+    return result;
+  }
+  if (classof(R) === 'RegExp') return call(regexpExec, R, S);
+  throw TypeError('RegExp#exec called on incompatible receiver');
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/regexp-exec.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/core-js/internals/regexp-exec.js ***!
+  \*******************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+/* eslint-disable regexp/no-empty-capturing-group, regexp/no-empty-group, regexp/no-lazy-ends -- testing */
+/* eslint-disable regexp/no-useless-quantifier -- testing */
+var call = __webpack_require__(/*! ../internals/function-call */ "./node_modules/core-js/internals/function-call.js");
+var uncurryThis = __webpack_require__(/*! ../internals/function-uncurry-this */ "./node_modules/core-js/internals/function-uncurry-this.js");
+var toString = __webpack_require__(/*! ../internals/to-string */ "./node_modules/core-js/internals/to-string.js");
+var regexpFlags = __webpack_require__(/*! ../internals/regexp-flags */ "./node_modules/core-js/internals/regexp-flags.js");
+var stickyHelpers = __webpack_require__(/*! ../internals/regexp-sticky-helpers */ "./node_modules/core-js/internals/regexp-sticky-helpers.js");
+var shared = __webpack_require__(/*! ../internals/shared */ "./node_modules/core-js/internals/shared.js");
+var create = __webpack_require__(/*! ../internals/object-create */ "./node_modules/core-js/internals/object-create.js");
+var getInternalState = (__webpack_require__(/*! ../internals/internal-state */ "./node_modules/core-js/internals/internal-state.js").get);
+var UNSUPPORTED_DOT_ALL = __webpack_require__(/*! ../internals/regexp-unsupported-dot-all */ "./node_modules/core-js/internals/regexp-unsupported-dot-all.js");
+var UNSUPPORTED_NCG = __webpack_require__(/*! ../internals/regexp-unsupported-ncg */ "./node_modules/core-js/internals/regexp-unsupported-ncg.js");
+
+var nativeReplace = shared('native-string-replace', String.prototype.replace);
+var nativeExec = RegExp.prototype.exec;
+var patchedExec = nativeExec;
+var charAt = uncurryThis(''.charAt);
+var indexOf = uncurryThis(''.indexOf);
+var replace = uncurryThis(''.replace);
+var stringSlice = uncurryThis(''.slice);
+
+var UPDATES_LAST_INDEX_WRONG = (function () {
+  var re1 = /a/;
+  var re2 = /b*/g;
+  call(nativeExec, re1, 'a');
+  call(nativeExec, re2, 'a');
+  return re1.lastIndex !== 0 || re2.lastIndex !== 0;
+})();
+
+var UNSUPPORTED_Y = stickyHelpers.BROKEN_CARET;
+
+// nonparticipating capturing group, copied from es5-shim's String#split patch.
+var NPCG_INCLUDED = /()??/.exec('')[1] !== undefined;
+
+var PATCH = UPDATES_LAST_INDEX_WRONG || NPCG_INCLUDED || UNSUPPORTED_Y || UNSUPPORTED_DOT_ALL || UNSUPPORTED_NCG;
+
+if (PATCH) {
+  patchedExec = function exec(string) {
+    var re = this;
+    var state = getInternalState(re);
+    var str = toString(string);
+    var raw = state.raw;
+    var result, reCopy, lastIndex, match, i, object, group;
+
+    if (raw) {
+      raw.lastIndex = re.lastIndex;
+      result = call(patchedExec, raw, str);
+      re.lastIndex = raw.lastIndex;
+      return result;
+    }
+
+    var groups = state.groups;
+    var sticky = UNSUPPORTED_Y && re.sticky;
+    var flags = call(regexpFlags, re);
+    var source = re.source;
+    var charsAdded = 0;
+    var strCopy = str;
+
+    if (sticky) {
+      flags = replace(flags, 'y', '');
+      if (indexOf(flags, 'g') === -1) {
+        flags += 'g';
+      }
+
+      strCopy = stringSlice(str, re.lastIndex);
+      // Support anchored sticky behavior.
+      if (re.lastIndex > 0 && (!re.multiline || re.multiline && charAt(str, re.lastIndex - 1) !== '\n')) {
+        source = '(?: ' + source + ')';
+        strCopy = ' ' + strCopy;
+        charsAdded++;
+      }
+      // ^(? + rx + ) is needed, in combination with some str slicing, to
+      // simulate the 'y' flag.
+      reCopy = new RegExp('^(?:' + source + ')', flags);
+    }
+
+    if (NPCG_INCLUDED) {
+      reCopy = new RegExp('^' + source + '$(?!\\s)', flags);
+    }
+    if (UPDATES_LAST_INDEX_WRONG) lastIndex = re.lastIndex;
+
+    match = call(nativeExec, sticky ? reCopy : re, strCopy);
+
+    if (sticky) {
+      if (match) {
+        match.input = stringSlice(match.input, charsAdded);
+        match[0] = stringSlice(match[0], charsAdded);
+        match.index = re.lastIndex;
+        re.lastIndex += match[0].length;
+      } else re.lastIndex = 0;
+    } else if (UPDATES_LAST_INDEX_WRONG && match) {
+      re.lastIndex = re.global ? match.index + match[0].length : lastIndex;
+    }
+    if (NPCG_INCLUDED && match && match.length > 1) {
+      // Fix browsers whose `exec` methods don't consistently return `undefined`
+      // for NPCG, like IE8. NOTE: This doesn' work for /(.?)?/
+      call(nativeReplace, match[0], reCopy, function () {
+        for (i = 1; i < arguments.length - 2; i++) {
+          if (arguments[i] === undefined) match[i] = undefined;
+        }
+      });
+    }
+
+    if (match && groups) {
+      match.groups = object = create(null);
+      for (i = 0; i < groups.length; i++) {
+        group = groups[i];
+        object[group[0]] = match[group[1]];
+      }
+    }
+
+    return match;
+  };
+}
+
+module.exports = patchedExec;
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/regexp-flags.js":
+/*!********************************************************!*\
+  !*** ./node_modules/core-js/internals/regexp-flags.js ***!
+  \********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+var anObject = __webpack_require__(/*! ../internals/an-object */ "./node_modules/core-js/internals/an-object.js");
+
+// `RegExp.prototype.flags` getter implementation
+// https://tc39.es/ecma262/#sec-get-regexp.prototype.flags
+module.exports = function () {
+  var that = anObject(this);
+  var result = '';
+  if (that.global) result += 'g';
+  if (that.ignoreCase) result += 'i';
+  if (that.multiline) result += 'm';
+  if (that.dotAll) result += 's';
+  if (that.unicode) result += 'u';
+  if (that.sticky) result += 'y';
+  return result;
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/regexp-sticky-helpers.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/core-js/internals/regexp-sticky-helpers.js ***!
+  \*****************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var fails = __webpack_require__(/*! ../internals/fails */ "./node_modules/core-js/internals/fails.js");
+var global = __webpack_require__(/*! ../internals/global */ "./node_modules/core-js/internals/global.js");
+
+// babel-minify and Closure Compiler transpiles RegExp('a', 'y') -> /a/y and it causes SyntaxError
+var $RegExp = global.RegExp;
+
+var UNSUPPORTED_Y = fails(function () {
+  var re = $RegExp('a', 'y');
+  re.lastIndex = 2;
+  return re.exec('abcd') != null;
+});
+
+// UC Browser bug
+// https://github.com/zloirock/core-js/issues/1008
+var MISSED_STICKY = UNSUPPORTED_Y || fails(function () {
+  return !$RegExp('a', 'y').sticky;
+});
+
+var BROKEN_CARET = UNSUPPORTED_Y || fails(function () {
+  // https://bugzilla.mozilla.org/show_bug.cgi?id=773687
+  var re = $RegExp('^r', 'gy');
+  re.lastIndex = 2;
+  return re.exec('str') != null;
+});
+
+module.exports = {
+  BROKEN_CARET: BROKEN_CARET,
+  MISSED_STICKY: MISSED_STICKY,
+  UNSUPPORTED_Y: UNSUPPORTED_Y
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/regexp-unsupported-dot-all.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/core-js/internals/regexp-unsupported-dot-all.js ***!
+  \**********************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var fails = __webpack_require__(/*! ../internals/fails */ "./node_modules/core-js/internals/fails.js");
+var global = __webpack_require__(/*! ../internals/global */ "./node_modules/core-js/internals/global.js");
+
+// babel-minify and Closure Compiler transpiles RegExp('.', 's') -> /./s and it causes SyntaxError
+var $RegExp = global.RegExp;
+
+module.exports = fails(function () {
+  var re = $RegExp('.', 's');
+  return !(re.dotAll && re.exec('\n') && re.flags === 's');
+});
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/regexp-unsupported-ncg.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/core-js/internals/regexp-unsupported-ncg.js ***!
+  \******************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var fails = __webpack_require__(/*! ../internals/fails */ "./node_modules/core-js/internals/fails.js");
+var global = __webpack_require__(/*! ../internals/global */ "./node_modules/core-js/internals/global.js");
+
+// babel-minify and Closure Compiler transpiles RegExp('(?<a>b)', 'g') -> /(?<a>b)/g and it causes SyntaxError
+var $RegExp = global.RegExp;
+
+module.exports = fails(function () {
+  var re = $RegExp('(?<a>b)', 'g');
+  return re.exec('b').groups.a !== 'b' ||
+    'b'.replace(re, '$<a>c') !== 'bc';
+});
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/require-object-coercible.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/core-js/internals/require-object-coercible.js ***!
+  \********************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var global = __webpack_require__(/*! ../internals/global */ "./node_modules/core-js/internals/global.js");
+
+var TypeError = global.TypeError;
+
+// `RequireObjectCoercible` abstract operation
+// https://tc39.es/ecma262/#sec-requireobjectcoercible
+module.exports = function (it) {
+  if (it == undefined) throw TypeError("Can't call method on " + it);
+  return it;
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/set-global.js":
+/*!******************************************************!*\
+  !*** ./node_modules/core-js/internals/set-global.js ***!
+  \******************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var global = __webpack_require__(/*! ../internals/global */ "./node_modules/core-js/internals/global.js");
+
+// eslint-disable-next-line es/no-object-defineproperty -- safe
+var defineProperty = Object.defineProperty;
+
+module.exports = function (key, value) {
+  try {
+    defineProperty(global, key, { value: value, configurable: true, writable: true });
+  } catch (error) {
+    global[key] = value;
+  } return value;
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/set-to-string-tag.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/core-js/internals/set-to-string-tag.js ***!
+  \*************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var defineProperty = (__webpack_require__(/*! ../internals/object-define-property */ "./node_modules/core-js/internals/object-define-property.js").f);
+var hasOwn = __webpack_require__(/*! ../internals/has-own-property */ "./node_modules/core-js/internals/has-own-property.js");
+var wellKnownSymbol = __webpack_require__(/*! ../internals/well-known-symbol */ "./node_modules/core-js/internals/well-known-symbol.js");
+
+var TO_STRING_TAG = wellKnownSymbol('toStringTag');
+
+module.exports = function (target, TAG, STATIC) {
+  if (target && !STATIC) target = target.prototype;
+  if (target && !hasOwn(target, TO_STRING_TAG)) {
+    defineProperty(target, TO_STRING_TAG, { configurable: true, value: TAG });
+  }
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/shared-key.js":
+/*!******************************************************!*\
+  !*** ./node_modules/core-js/internals/shared-key.js ***!
+  \******************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var shared = __webpack_require__(/*! ../internals/shared */ "./node_modules/core-js/internals/shared.js");
+var uid = __webpack_require__(/*! ../internals/uid */ "./node_modules/core-js/internals/uid.js");
+
+var keys = shared('keys');
+
+module.exports = function (key) {
+  return keys[key] || (keys[key] = uid(key));
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/shared-store.js":
+/*!********************************************************!*\
+  !*** ./node_modules/core-js/internals/shared-store.js ***!
+  \********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var global = __webpack_require__(/*! ../internals/global */ "./node_modules/core-js/internals/global.js");
+var setGlobal = __webpack_require__(/*! ../internals/set-global */ "./node_modules/core-js/internals/set-global.js");
+
+var SHARED = '__core-js_shared__';
+var store = global[SHARED] || setGlobal(SHARED, {});
+
+module.exports = store;
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/shared.js":
+/*!**************************************************!*\
+  !*** ./node_modules/core-js/internals/shared.js ***!
+  \**************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var IS_PURE = __webpack_require__(/*! ../internals/is-pure */ "./node_modules/core-js/internals/is-pure.js");
+var store = __webpack_require__(/*! ../internals/shared-store */ "./node_modules/core-js/internals/shared-store.js");
+
+(module.exports = function (key, value) {
+  return store[key] || (store[key] = value !== undefined ? value : {});
+})('versions', []).push({
+  version: '3.20.1',
+  mode: IS_PURE ? 'pure' : 'global',
+  copyright: '© 2021 Denis Pushkarev (zloirock.ru)'
+});
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/string-multibyte.js":
+/*!************************************************************!*\
+  !*** ./node_modules/core-js/internals/string-multibyte.js ***!
+  \************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var uncurryThis = __webpack_require__(/*! ../internals/function-uncurry-this */ "./node_modules/core-js/internals/function-uncurry-this.js");
+var toIntegerOrInfinity = __webpack_require__(/*! ../internals/to-integer-or-infinity */ "./node_modules/core-js/internals/to-integer-or-infinity.js");
+var toString = __webpack_require__(/*! ../internals/to-string */ "./node_modules/core-js/internals/to-string.js");
+var requireObjectCoercible = __webpack_require__(/*! ../internals/require-object-coercible */ "./node_modules/core-js/internals/require-object-coercible.js");
+
+var charAt = uncurryThis(''.charAt);
+var charCodeAt = uncurryThis(''.charCodeAt);
+var stringSlice = uncurryThis(''.slice);
+
+var createMethod = function (CONVERT_TO_STRING) {
+  return function ($this, pos) {
+    var S = toString(requireObjectCoercible($this));
+    var position = toIntegerOrInfinity(pos);
+    var size = S.length;
+    var first, second;
+    if (position < 0 || position >= size) return CONVERT_TO_STRING ? '' : undefined;
+    first = charCodeAt(S, position);
+    return first < 0xD800 || first > 0xDBFF || position + 1 === size
+      || (second = charCodeAt(S, position + 1)) < 0xDC00 || second > 0xDFFF
+        ? CONVERT_TO_STRING
+          ? charAt(S, position)
+          : first
+        : CONVERT_TO_STRING
+          ? stringSlice(S, position, position + 2)
+          : (first - 0xD800 << 10) + (second - 0xDC00) + 0x10000;
+  };
+};
+
+module.exports = {
+  // `String.prototype.codePointAt` method
+  // https://tc39.es/ecma262/#sec-string.prototype.codepointat
+  codeAt: createMethod(false),
+  // `String.prototype.at` method
+  // https://github.com/mathiasbynens/String.prototype.at
+  charAt: createMethod(true)
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/string-trim.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/core-js/internals/string-trim.js ***!
+  \*******************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var uncurryThis = __webpack_require__(/*! ../internals/function-uncurry-this */ "./node_modules/core-js/internals/function-uncurry-this.js");
+var requireObjectCoercible = __webpack_require__(/*! ../internals/require-object-coercible */ "./node_modules/core-js/internals/require-object-coercible.js");
+var toString = __webpack_require__(/*! ../internals/to-string */ "./node_modules/core-js/internals/to-string.js");
+var whitespaces = __webpack_require__(/*! ../internals/whitespaces */ "./node_modules/core-js/internals/whitespaces.js");
+
+var replace = uncurryThis(''.replace);
+var whitespace = '[' + whitespaces + ']';
+var ltrim = RegExp('^' + whitespace + whitespace + '*');
+var rtrim = RegExp(whitespace + whitespace + '*$');
+
+// `String.prototype.{ trim, trimStart, trimEnd, trimLeft, trimRight }` methods implementation
+var createMethod = function (TYPE) {
+  return function ($this) {
+    var string = toString(requireObjectCoercible($this));
+    if (TYPE & 1) string = replace(string, ltrim, '');
+    if (TYPE & 2) string = replace(string, rtrim, '');
+    return string;
+  };
+};
+
+module.exports = {
+  // `String.prototype.{ trimLeft, trimStart }` methods
+  // https://tc39.es/ecma262/#sec-string.prototype.trimstart
+  start: createMethod(1),
+  // `String.prototype.{ trimRight, trimEnd }` methods
+  // https://tc39.es/ecma262/#sec-string.prototype.trimend
+  end: createMethod(2),
+  // `String.prototype.trim` method
+  // https://tc39.es/ecma262/#sec-string.prototype.trim
+  trim: createMethod(3)
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/to-absolute-index.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/core-js/internals/to-absolute-index.js ***!
+  \*************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var toIntegerOrInfinity = __webpack_require__(/*! ../internals/to-integer-or-infinity */ "./node_modules/core-js/internals/to-integer-or-infinity.js");
+
+var max = Math.max;
+var min = Math.min;
+
+// Helper for a popular repeating case of the spec:
+// Let integer be ? ToInteger(index).
+// If integer < 0, let result be max((length + integer), 0); else let result be min(integer, length).
+module.exports = function (index, length) {
+  var integer = toIntegerOrInfinity(index);
+  return integer < 0 ? max(integer + length, 0) : min(integer, length);
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/to-indexed-object.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/core-js/internals/to-indexed-object.js ***!
+  \*************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+// toObject with fallback for non-array-like ES3 strings
+var IndexedObject = __webpack_require__(/*! ../internals/indexed-object */ "./node_modules/core-js/internals/indexed-object.js");
+var requireObjectCoercible = __webpack_require__(/*! ../internals/require-object-coercible */ "./node_modules/core-js/internals/require-object-coercible.js");
+
+module.exports = function (it) {
+  return IndexedObject(requireObjectCoercible(it));
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/to-integer-or-infinity.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/core-js/internals/to-integer-or-infinity.js ***!
+  \******************************************************************/
+/***/ ((module) => {
+
+var ceil = Math.ceil;
+var floor = Math.floor;
+
+// `ToIntegerOrInfinity` abstract operation
+// https://tc39.es/ecma262/#sec-tointegerorinfinity
+module.exports = function (argument) {
+  var number = +argument;
+  // eslint-disable-next-line no-self-compare -- safe
+  return number !== number || number === 0 ? 0 : (number > 0 ? floor : ceil)(number);
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/to-length.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/core-js/internals/to-length.js ***!
+  \*****************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var toIntegerOrInfinity = __webpack_require__(/*! ../internals/to-integer-or-infinity */ "./node_modules/core-js/internals/to-integer-or-infinity.js");
+
+var min = Math.min;
+
+// `ToLength` abstract operation
+// https://tc39.es/ecma262/#sec-tolength
+module.exports = function (argument) {
+  return argument > 0 ? min(toIntegerOrInfinity(argument), 0x1FFFFFFFFFFFFF) : 0; // 2 ** 53 - 1 == 9007199254740991
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/to-object.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/core-js/internals/to-object.js ***!
+  \*****************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var global = __webpack_require__(/*! ../internals/global */ "./node_modules/core-js/internals/global.js");
+var requireObjectCoercible = __webpack_require__(/*! ../internals/require-object-coercible */ "./node_modules/core-js/internals/require-object-coercible.js");
+
+var Object = global.Object;
+
+// `ToObject` abstract operation
+// https://tc39.es/ecma262/#sec-toobject
+module.exports = function (argument) {
+  return Object(requireObjectCoercible(argument));
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/to-primitive.js":
+/*!********************************************************!*\
+  !*** ./node_modules/core-js/internals/to-primitive.js ***!
+  \********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var global = __webpack_require__(/*! ../internals/global */ "./node_modules/core-js/internals/global.js");
+var call = __webpack_require__(/*! ../internals/function-call */ "./node_modules/core-js/internals/function-call.js");
+var isObject = __webpack_require__(/*! ../internals/is-object */ "./node_modules/core-js/internals/is-object.js");
+var isSymbol = __webpack_require__(/*! ../internals/is-symbol */ "./node_modules/core-js/internals/is-symbol.js");
+var getMethod = __webpack_require__(/*! ../internals/get-method */ "./node_modules/core-js/internals/get-method.js");
+var ordinaryToPrimitive = __webpack_require__(/*! ../internals/ordinary-to-primitive */ "./node_modules/core-js/internals/ordinary-to-primitive.js");
+var wellKnownSymbol = __webpack_require__(/*! ../internals/well-known-symbol */ "./node_modules/core-js/internals/well-known-symbol.js");
+
+var TypeError = global.TypeError;
+var TO_PRIMITIVE = wellKnownSymbol('toPrimitive');
+
+// `ToPrimitive` abstract operation
+// https://tc39.es/ecma262/#sec-toprimitive
+module.exports = function (input, pref) {
+  if (!isObject(input) || isSymbol(input)) return input;
+  var exoticToPrim = getMethod(input, TO_PRIMITIVE);
+  var result;
+  if (exoticToPrim) {
+    if (pref === undefined) pref = 'default';
+    result = call(exoticToPrim, input, pref);
+    if (!isObject(result) || isSymbol(result)) return result;
+    throw TypeError("Can't convert object to primitive value");
+  }
+  if (pref === undefined) pref = 'number';
+  return ordinaryToPrimitive(input, pref);
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/to-property-key.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/core-js/internals/to-property-key.js ***!
+  \***********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var toPrimitive = __webpack_require__(/*! ../internals/to-primitive */ "./node_modules/core-js/internals/to-primitive.js");
+var isSymbol = __webpack_require__(/*! ../internals/is-symbol */ "./node_modules/core-js/internals/is-symbol.js");
+
+// `ToPropertyKey` abstract operation
+// https://tc39.es/ecma262/#sec-topropertykey
+module.exports = function (argument) {
+  var key = toPrimitive(argument, 'string');
+  return isSymbol(key) ? key : key + '';
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/to-string-tag-support.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/core-js/internals/to-string-tag-support.js ***!
+  \*****************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var wellKnownSymbol = __webpack_require__(/*! ../internals/well-known-symbol */ "./node_modules/core-js/internals/well-known-symbol.js");
+
+var TO_STRING_TAG = wellKnownSymbol('toStringTag');
+var test = {};
+
+test[TO_STRING_TAG] = 'z';
+
+module.exports = String(test) === '[object z]';
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/to-string.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/core-js/internals/to-string.js ***!
+  \*****************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var global = __webpack_require__(/*! ../internals/global */ "./node_modules/core-js/internals/global.js");
+var classof = __webpack_require__(/*! ../internals/classof */ "./node_modules/core-js/internals/classof.js");
+
+var String = global.String;
+
+module.exports = function (argument) {
+  if (classof(argument) === 'Symbol') throw TypeError('Cannot convert a Symbol value to a string');
+  return String(argument);
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/try-to-string.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/core-js/internals/try-to-string.js ***!
+  \*********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var global = __webpack_require__(/*! ../internals/global */ "./node_modules/core-js/internals/global.js");
+
+var String = global.String;
+
+module.exports = function (argument) {
+  try {
+    return String(argument);
+  } catch (error) {
+    return 'Object';
+  }
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/uid.js":
+/*!***********************************************!*\
+  !*** ./node_modules/core-js/internals/uid.js ***!
+  \***********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var uncurryThis = __webpack_require__(/*! ../internals/function-uncurry-this */ "./node_modules/core-js/internals/function-uncurry-this.js");
+
+var id = 0;
+var postfix = Math.random();
+var toString = uncurryThis(1.0.toString);
+
+module.exports = function (key) {
+  return 'Symbol(' + (key === undefined ? '' : key) + ')_' + toString(++id + postfix, 36);
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/use-symbol-as-uid.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/core-js/internals/use-symbol-as-uid.js ***!
+  \*************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+/* eslint-disable es/no-symbol -- required for testing */
+var NATIVE_SYMBOL = __webpack_require__(/*! ../internals/native-symbol */ "./node_modules/core-js/internals/native-symbol.js");
+
+module.exports = NATIVE_SYMBOL
+  && !Symbol.sham
+  && typeof Symbol.iterator == 'symbol';
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/well-known-symbol.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/core-js/internals/well-known-symbol.js ***!
+  \*************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var global = __webpack_require__(/*! ../internals/global */ "./node_modules/core-js/internals/global.js");
+var shared = __webpack_require__(/*! ../internals/shared */ "./node_modules/core-js/internals/shared.js");
+var hasOwn = __webpack_require__(/*! ../internals/has-own-property */ "./node_modules/core-js/internals/has-own-property.js");
+var uid = __webpack_require__(/*! ../internals/uid */ "./node_modules/core-js/internals/uid.js");
+var NATIVE_SYMBOL = __webpack_require__(/*! ../internals/native-symbol */ "./node_modules/core-js/internals/native-symbol.js");
+var USE_SYMBOL_AS_UID = __webpack_require__(/*! ../internals/use-symbol-as-uid */ "./node_modules/core-js/internals/use-symbol-as-uid.js");
+
+var WellKnownSymbolsStore = shared('wks');
+var Symbol = global.Symbol;
+var symbolFor = Symbol && Symbol['for'];
+var createWellKnownSymbol = USE_SYMBOL_AS_UID ? Symbol : Symbol && Symbol.withoutSetter || uid;
+
+module.exports = function (name) {
+  if (!hasOwn(WellKnownSymbolsStore, name) || !(NATIVE_SYMBOL || typeof WellKnownSymbolsStore[name] == 'string')) {
+    var description = 'Symbol.' + name;
+    if (NATIVE_SYMBOL && hasOwn(Symbol, name)) {
+      WellKnownSymbolsStore[name] = Symbol[name];
+    } else if (USE_SYMBOL_AS_UID && symbolFor) {
+      WellKnownSymbolsStore[name] = symbolFor(description);
+    } else {
+      WellKnownSymbolsStore[name] = createWellKnownSymbol(description);
+    }
+  } return WellKnownSymbolsStore[name];
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/whitespaces.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/core-js/internals/whitespaces.js ***!
+  \*******************************************************/
+/***/ ((module) => {
+
+// a string of all valid unicode whitespaces
+module.exports = '\u0009\u000A\u000B\u000C\u000D\u0020\u00A0\u1680\u2000\u2001\u2002' +
+  '\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF';
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/modules/es.array.filter.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/core-js/modules/es.array.filter.js ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+var $ = __webpack_require__(/*! ../internals/export */ "./node_modules/core-js/internals/export.js");
+var $filter = (__webpack_require__(/*! ../internals/array-iteration */ "./node_modules/core-js/internals/array-iteration.js").filter);
+var arrayMethodHasSpeciesSupport = __webpack_require__(/*! ../internals/array-method-has-species-support */ "./node_modules/core-js/internals/array-method-has-species-support.js");
+
+var HAS_SPECIES_SUPPORT = arrayMethodHasSpeciesSupport('filter');
+
+// `Array.prototype.filter` method
+// https://tc39.es/ecma262/#sec-array.prototype.filter
+// with adding support of @@species
+$({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT }, {
+  filter: function filter(callbackfn /* , thisArg */) {
+    return $filter(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
+  }
+});
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/modules/es.array.for-each.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/core-js/modules/es.array.for-each.js ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+var $ = __webpack_require__(/*! ../internals/export */ "./node_modules/core-js/internals/export.js");
+var forEach = __webpack_require__(/*! ../internals/array-for-each */ "./node_modules/core-js/internals/array-for-each.js");
+
+// `Array.prototype.forEach` method
+// https://tc39.es/ecma262/#sec-array.prototype.foreach
+// eslint-disable-next-line es/no-array-prototype-foreach -- safe
+$({ target: 'Array', proto: true, forced: [].forEach != forEach }, {
+  forEach: forEach
+});
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/modules/es.array.iterator.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/core-js/modules/es.array.iterator.js ***!
+  \***********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+var toIndexedObject = __webpack_require__(/*! ../internals/to-indexed-object */ "./node_modules/core-js/internals/to-indexed-object.js");
+var addToUnscopables = __webpack_require__(/*! ../internals/add-to-unscopables */ "./node_modules/core-js/internals/add-to-unscopables.js");
+var Iterators = __webpack_require__(/*! ../internals/iterators */ "./node_modules/core-js/internals/iterators.js");
+var InternalStateModule = __webpack_require__(/*! ../internals/internal-state */ "./node_modules/core-js/internals/internal-state.js");
+var defineProperty = (__webpack_require__(/*! ../internals/object-define-property */ "./node_modules/core-js/internals/object-define-property.js").f);
+var defineIterator = __webpack_require__(/*! ../internals/define-iterator */ "./node_modules/core-js/internals/define-iterator.js");
+var IS_PURE = __webpack_require__(/*! ../internals/is-pure */ "./node_modules/core-js/internals/is-pure.js");
+var DESCRIPTORS = __webpack_require__(/*! ../internals/descriptors */ "./node_modules/core-js/internals/descriptors.js");
+
+var ARRAY_ITERATOR = 'Array Iterator';
+var setInternalState = InternalStateModule.set;
+var getInternalState = InternalStateModule.getterFor(ARRAY_ITERATOR);
+
+// `Array.prototype.entries` method
+// https://tc39.es/ecma262/#sec-array.prototype.entries
+// `Array.prototype.keys` method
+// https://tc39.es/ecma262/#sec-array.prototype.keys
+// `Array.prototype.values` method
+// https://tc39.es/ecma262/#sec-array.prototype.values
+// `Array.prototype[@@iterator]` method
+// https://tc39.es/ecma262/#sec-array.prototype-@@iterator
+// `CreateArrayIterator` internal method
+// https://tc39.es/ecma262/#sec-createarrayiterator
+module.exports = defineIterator(Array, 'Array', function (iterated, kind) {
+  setInternalState(this, {
+    type: ARRAY_ITERATOR,
+    target: toIndexedObject(iterated), // target
+    index: 0,                          // next index
+    kind: kind                         // kind
+  });
+// `%ArrayIteratorPrototype%.next` method
+// https://tc39.es/ecma262/#sec-%arrayiteratorprototype%.next
+}, function () {
+  var state = getInternalState(this);
+  var target = state.target;
+  var kind = state.kind;
+  var index = state.index++;
+  if (!target || index >= target.length) {
+    state.target = undefined;
+    return { value: undefined, done: true };
+  }
+  if (kind == 'keys') return { value: index, done: false };
+  if (kind == 'values') return { value: target[index], done: false };
+  return { value: [index, target[index]], done: false };
+}, 'values');
+
+// argumentsList[@@iterator] is %ArrayProto_values%
+// https://tc39.es/ecma262/#sec-createunmappedargumentsobject
+// https://tc39.es/ecma262/#sec-createmappedargumentsobject
+var values = Iterators.Arguments = Iterators.Array;
+
+// https://tc39.es/ecma262/#sec-array.prototype-@@unscopables
+addToUnscopables('keys');
+addToUnscopables('values');
+addToUnscopables('entries');
+
+// V8 ~ Chrome 45- bug
+if (!IS_PURE && DESCRIPTORS && values.name !== 'values') try {
+  defineProperty(values, 'name', { value: 'values' });
+} catch (error) { /* empty */ }
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/modules/es.array.reduce.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/core-js/modules/es.array.reduce.js ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+var $ = __webpack_require__(/*! ../internals/export */ "./node_modules/core-js/internals/export.js");
+var $reduce = (__webpack_require__(/*! ../internals/array-reduce */ "./node_modules/core-js/internals/array-reduce.js").left);
+var arrayMethodIsStrict = __webpack_require__(/*! ../internals/array-method-is-strict */ "./node_modules/core-js/internals/array-method-is-strict.js");
+var CHROME_VERSION = __webpack_require__(/*! ../internals/engine-v8-version */ "./node_modules/core-js/internals/engine-v8-version.js");
+var IS_NODE = __webpack_require__(/*! ../internals/engine-is-node */ "./node_modules/core-js/internals/engine-is-node.js");
+
+var STRICT_METHOD = arrayMethodIsStrict('reduce');
+// Chrome 80-82 has a critical bug
+// https://bugs.chromium.org/p/chromium/issues/detail?id=1049982
+var CHROME_BUG = !IS_NODE && CHROME_VERSION > 79 && CHROME_VERSION < 83;
+
+// `Array.prototype.reduce` method
+// https://tc39.es/ecma262/#sec-array.prototype.reduce
+$({ target: 'Array', proto: true, forced: !STRICT_METHOD || CHROME_BUG }, {
+  reduce: function reduce(callbackfn /* , initialValue */) {
+    var length = arguments.length;
+    return $reduce(this, callbackfn, length, length > 1 ? arguments[1] : undefined);
+  }
+});
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/modules/es.function.name.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/core-js/modules/es.function.name.js ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
+var DESCRIPTORS = __webpack_require__(/*! ../internals/descriptors */ "./node_modules/core-js/internals/descriptors.js");
+var FUNCTION_NAME_EXISTS = (__webpack_require__(/*! ../internals/function-name */ "./node_modules/core-js/internals/function-name.js").EXISTS);
+var uncurryThis = __webpack_require__(/*! ../internals/function-uncurry-this */ "./node_modules/core-js/internals/function-uncurry-this.js");
+var defineProperty = (__webpack_require__(/*! ../internals/object-define-property */ "./node_modules/core-js/internals/object-define-property.js").f);
+
+var FunctionPrototype = Function.prototype;
+var functionToString = uncurryThis(FunctionPrototype.toString);
+var nameRE = /function\b(?:\s|\/\*[\S\s]*?\*\/|\/\/[^\n\r]*[\n\r]+)*([^\s(/]*)/;
+var regExpExec = uncurryThis(nameRE.exec);
+var NAME = 'name';
+
+// Function instances `.name` property
+// https://tc39.es/ecma262/#sec-function-instances-name
+if (DESCRIPTORS && !FUNCTION_NAME_EXISTS) {
+  defineProperty(FunctionPrototype, NAME, {
+    configurable: true,
+    get: function () {
+      try {
+        return regExpExec(nameRE, functionToString(this))[1];
+      } catch (error) {
+        return '';
+      }
+    }
+  });
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/modules/es.object.assign.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/core-js/modules/es.object.assign.js ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
+var $ = __webpack_require__(/*! ../internals/export */ "./node_modules/core-js/internals/export.js");
+var assign = __webpack_require__(/*! ../internals/object-assign */ "./node_modules/core-js/internals/object-assign.js");
+
+// `Object.assign` method
+// https://tc39.es/ecma262/#sec-object.assign
+// eslint-disable-next-line es/no-object-assign -- required for testing
+$({ target: 'Object', stat: true, forced: Object.assign !== assign }, {
+  assign: assign
+});
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/modules/es.object.to-string.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/core-js/modules/es.object.to-string.js ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
+var TO_STRING_TAG_SUPPORT = __webpack_require__(/*! ../internals/to-string-tag-support */ "./node_modules/core-js/internals/to-string-tag-support.js");
+var redefine = __webpack_require__(/*! ../internals/redefine */ "./node_modules/core-js/internals/redefine.js");
+var toString = __webpack_require__(/*! ../internals/object-to-string */ "./node_modules/core-js/internals/object-to-string.js");
+
+// `Object.prototype.toString` method
+// https://tc39.es/ecma262/#sec-object.prototype.tostring
+if (!TO_STRING_TAG_SUPPORT) {
+  redefine(Object.prototype, 'toString', toString, { unsafe: true });
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/modules/es.parse-int.js":
+/*!******************************************************!*\
+  !*** ./node_modules/core-js/modules/es.parse-int.js ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
+var $ = __webpack_require__(/*! ../internals/export */ "./node_modules/core-js/internals/export.js");
+var $parseInt = __webpack_require__(/*! ../internals/number-parse-int */ "./node_modules/core-js/internals/number-parse-int.js");
+
+// `parseInt` method
+// https://tc39.es/ecma262/#sec-parseint-string-radix
+$({ global: true, forced: parseInt != $parseInt }, {
+  parseInt: $parseInt
+});
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/modules/es.regexp.exec.js":
+/*!********************************************************!*\
+  !*** ./node_modules/core-js/modules/es.regexp.exec.js ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+var $ = __webpack_require__(/*! ../internals/export */ "./node_modules/core-js/internals/export.js");
+var exec = __webpack_require__(/*! ../internals/regexp-exec */ "./node_modules/core-js/internals/regexp-exec.js");
+
+// `RegExp.prototype.exec` method
+// https://tc39.es/ecma262/#sec-regexp.prototype.exec
+$({ target: 'RegExp', proto: true, forced: /./.exec !== exec }, {
+  exec: exec
+});
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/modules/es.string.iterator.js":
+/*!************************************************************!*\
+  !*** ./node_modules/core-js/modules/es.string.iterator.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+var charAt = (__webpack_require__(/*! ../internals/string-multibyte */ "./node_modules/core-js/internals/string-multibyte.js").charAt);
+var toString = __webpack_require__(/*! ../internals/to-string */ "./node_modules/core-js/internals/to-string.js");
+var InternalStateModule = __webpack_require__(/*! ../internals/internal-state */ "./node_modules/core-js/internals/internal-state.js");
+var defineIterator = __webpack_require__(/*! ../internals/define-iterator */ "./node_modules/core-js/internals/define-iterator.js");
+
+var STRING_ITERATOR = 'String Iterator';
+var setInternalState = InternalStateModule.set;
+var getInternalState = InternalStateModule.getterFor(STRING_ITERATOR);
+
+// `String.prototype[@@iterator]` method
+// https://tc39.es/ecma262/#sec-string.prototype-@@iterator
+defineIterator(String, 'String', function (iterated) {
+  setInternalState(this, {
+    type: STRING_ITERATOR,
+    string: toString(iterated),
+    index: 0
+  });
+// `%StringIteratorPrototype%.next` method
+// https://tc39.es/ecma262/#sec-%stringiteratorprototype%.next
+}, function next() {
+  var state = getInternalState(this);
+  var string = state.string;
+  var index = state.index;
+  var point;
+  if (index >= string.length) return { value: undefined, done: true };
+  point = charAt(string, index);
+  state.index += point.length;
+  return { value: point, done: false };
+});
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/modules/es.string.match.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/core-js/modules/es.string.match.js ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+var call = __webpack_require__(/*! ../internals/function-call */ "./node_modules/core-js/internals/function-call.js");
+var fixRegExpWellKnownSymbolLogic = __webpack_require__(/*! ../internals/fix-regexp-well-known-symbol-logic */ "./node_modules/core-js/internals/fix-regexp-well-known-symbol-logic.js");
+var anObject = __webpack_require__(/*! ../internals/an-object */ "./node_modules/core-js/internals/an-object.js");
+var toLength = __webpack_require__(/*! ../internals/to-length */ "./node_modules/core-js/internals/to-length.js");
+var toString = __webpack_require__(/*! ../internals/to-string */ "./node_modules/core-js/internals/to-string.js");
+var requireObjectCoercible = __webpack_require__(/*! ../internals/require-object-coercible */ "./node_modules/core-js/internals/require-object-coercible.js");
+var getMethod = __webpack_require__(/*! ../internals/get-method */ "./node_modules/core-js/internals/get-method.js");
+var advanceStringIndex = __webpack_require__(/*! ../internals/advance-string-index */ "./node_modules/core-js/internals/advance-string-index.js");
+var regExpExec = __webpack_require__(/*! ../internals/regexp-exec-abstract */ "./node_modules/core-js/internals/regexp-exec-abstract.js");
+
+// @@match logic
+fixRegExpWellKnownSymbolLogic('match', function (MATCH, nativeMatch, maybeCallNative) {
+  return [
+    // `String.prototype.match` method
+    // https://tc39.es/ecma262/#sec-string.prototype.match
+    function match(regexp) {
+      var O = requireObjectCoercible(this);
+      var matcher = regexp == undefined ? undefined : getMethod(regexp, MATCH);
+      return matcher ? call(matcher, regexp, O) : new RegExp(regexp)[MATCH](toString(O));
+    },
+    // `RegExp.prototype[@@match]` method
+    // https://tc39.es/ecma262/#sec-regexp.prototype-@@match
+    function (string) {
+      var rx = anObject(this);
+      var S = toString(string);
+      var res = maybeCallNative(nativeMatch, rx, S);
+
+      if (res.done) return res.value;
+
+      if (!rx.global) return regExpExec(rx, S);
+
+      var fullUnicode = rx.unicode;
+      rx.lastIndex = 0;
+      var A = [];
+      var n = 0;
+      var result;
+      while ((result = regExpExec(rx, S)) !== null) {
+        var matchStr = toString(result[0]);
+        A[n] = matchStr;
+        if (matchStr === '') rx.lastIndex = advanceStringIndex(S, toLength(rx.lastIndex), fullUnicode);
+        n++;
+      }
+      return n === 0 ? null : A;
+    }
+  ];
+});
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/modules/es.string.replace.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/core-js/modules/es.string.replace.js ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+var apply = __webpack_require__(/*! ../internals/function-apply */ "./node_modules/core-js/internals/function-apply.js");
+var call = __webpack_require__(/*! ../internals/function-call */ "./node_modules/core-js/internals/function-call.js");
+var uncurryThis = __webpack_require__(/*! ../internals/function-uncurry-this */ "./node_modules/core-js/internals/function-uncurry-this.js");
+var fixRegExpWellKnownSymbolLogic = __webpack_require__(/*! ../internals/fix-regexp-well-known-symbol-logic */ "./node_modules/core-js/internals/fix-regexp-well-known-symbol-logic.js");
+var fails = __webpack_require__(/*! ../internals/fails */ "./node_modules/core-js/internals/fails.js");
+var anObject = __webpack_require__(/*! ../internals/an-object */ "./node_modules/core-js/internals/an-object.js");
+var isCallable = __webpack_require__(/*! ../internals/is-callable */ "./node_modules/core-js/internals/is-callable.js");
+var toIntegerOrInfinity = __webpack_require__(/*! ../internals/to-integer-or-infinity */ "./node_modules/core-js/internals/to-integer-or-infinity.js");
+var toLength = __webpack_require__(/*! ../internals/to-length */ "./node_modules/core-js/internals/to-length.js");
+var toString = __webpack_require__(/*! ../internals/to-string */ "./node_modules/core-js/internals/to-string.js");
+var requireObjectCoercible = __webpack_require__(/*! ../internals/require-object-coercible */ "./node_modules/core-js/internals/require-object-coercible.js");
+var advanceStringIndex = __webpack_require__(/*! ../internals/advance-string-index */ "./node_modules/core-js/internals/advance-string-index.js");
+var getMethod = __webpack_require__(/*! ../internals/get-method */ "./node_modules/core-js/internals/get-method.js");
+var getSubstitution = __webpack_require__(/*! ../internals/get-substitution */ "./node_modules/core-js/internals/get-substitution.js");
+var regExpExec = __webpack_require__(/*! ../internals/regexp-exec-abstract */ "./node_modules/core-js/internals/regexp-exec-abstract.js");
+var wellKnownSymbol = __webpack_require__(/*! ../internals/well-known-symbol */ "./node_modules/core-js/internals/well-known-symbol.js");
+
+var REPLACE = wellKnownSymbol('replace');
+var max = Math.max;
+var min = Math.min;
+var concat = uncurryThis([].concat);
+var push = uncurryThis([].push);
+var stringIndexOf = uncurryThis(''.indexOf);
+var stringSlice = uncurryThis(''.slice);
+
+var maybeToString = function (it) {
+  return it === undefined ? it : String(it);
+};
+
+// IE <= 11 replaces $0 with the whole match, as if it was $&
+// https://stackoverflow.com/questions/6024666/getting-ie-to-replace-a-regex-with-the-literal-string-0
+var REPLACE_KEEPS_$0 = (function () {
+  // eslint-disable-next-line regexp/prefer-escape-replacement-dollar-char -- required for testing
+  return 'a'.replace(/./, '$0') === '$0';
+})();
+
+// Safari <= 13.0.3(?) substitutes nth capture where n>m with an empty string
+var REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE = (function () {
+  if (/./[REPLACE]) {
+    return /./[REPLACE]('a', '$0') === '';
+  }
+  return false;
+})();
+
+var REPLACE_SUPPORTS_NAMED_GROUPS = !fails(function () {
+  var re = /./;
+  re.exec = function () {
+    var result = [];
+    result.groups = { a: '7' };
+    return result;
+  };
+  // eslint-disable-next-line regexp/no-useless-dollar-replacements -- false positive
+  return ''.replace(re, '$<a>') !== '7';
+});
+
+// @@replace logic
+fixRegExpWellKnownSymbolLogic('replace', function (_, nativeReplace, maybeCallNative) {
+  var UNSAFE_SUBSTITUTE = REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE ? '$' : '$0';
+
+  return [
+    // `String.prototype.replace` method
+    // https://tc39.es/ecma262/#sec-string.prototype.replace
+    function replace(searchValue, replaceValue) {
+      var O = requireObjectCoercible(this);
+      var replacer = searchValue == undefined ? undefined : getMethod(searchValue, REPLACE);
+      return replacer
+        ? call(replacer, searchValue, O, replaceValue)
+        : call(nativeReplace, toString(O), searchValue, replaceValue);
+    },
+    // `RegExp.prototype[@@replace]` method
+    // https://tc39.es/ecma262/#sec-regexp.prototype-@@replace
+    function (string, replaceValue) {
+      var rx = anObject(this);
+      var S = toString(string);
+
+      if (
+        typeof replaceValue == 'string' &&
+        stringIndexOf(replaceValue, UNSAFE_SUBSTITUTE) === -1 &&
+        stringIndexOf(replaceValue, '$<') === -1
+      ) {
+        var res = maybeCallNative(nativeReplace, rx, S, replaceValue);
+        if (res.done) return res.value;
+      }
+
+      var functionalReplace = isCallable(replaceValue);
+      if (!functionalReplace) replaceValue = toString(replaceValue);
+
+      var global = rx.global;
+      if (global) {
+        var fullUnicode = rx.unicode;
+        rx.lastIndex = 0;
+      }
+      var results = [];
+      while (true) {
+        var result = regExpExec(rx, S);
+        if (result === null) break;
+
+        push(results, result);
+        if (!global) break;
+
+        var matchStr = toString(result[0]);
+        if (matchStr === '') rx.lastIndex = advanceStringIndex(S, toLength(rx.lastIndex), fullUnicode);
+      }
+
+      var accumulatedResult = '';
+      var nextSourcePosition = 0;
+      for (var i = 0; i < results.length; i++) {
+        result = results[i];
+
+        var matched = toString(result[0]);
+        var position = max(min(toIntegerOrInfinity(result.index), S.length), 0);
+        var captures = [];
+        // NOTE: This is equivalent to
+        //   captures = result.slice(1).map(maybeToString)
+        // but for some reason `nativeSlice.call(result, 1, result.length)` (called in
+        // the slice polyfill when slicing native arrays) "doesn't work" in safari 9 and
+        // causes a crash (https://pastebin.com/N21QzeQA) when trying to debug it.
+        for (var j = 1; j < result.length; j++) push(captures, maybeToString(result[j]));
+        var namedCaptures = result.groups;
+        if (functionalReplace) {
+          var replacerArgs = concat([matched], captures, position, S);
+          if (namedCaptures !== undefined) push(replacerArgs, namedCaptures);
+          var replacement = toString(apply(replaceValue, undefined, replacerArgs));
+        } else {
+          replacement = getSubstitution(matched, S, position, captures, namedCaptures, replaceValue);
+        }
+        if (position >= nextSourcePosition) {
+          accumulatedResult += stringSlice(S, nextSourcePosition, position) + replacement;
+          nextSourcePosition = position + matched.length;
+        }
+      }
+      return accumulatedResult + stringSlice(S, nextSourcePosition);
+    }
+  ];
+}, !REPLACE_SUPPORTS_NAMED_GROUPS || !REPLACE_KEEPS_$0 || REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE);
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/modules/es.weak-map.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/core-js/modules/es.weak-map.js ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+var global = __webpack_require__(/*! ../internals/global */ "./node_modules/core-js/internals/global.js");
+var uncurryThis = __webpack_require__(/*! ../internals/function-uncurry-this */ "./node_modules/core-js/internals/function-uncurry-this.js");
+var redefineAll = __webpack_require__(/*! ../internals/redefine-all */ "./node_modules/core-js/internals/redefine-all.js");
+var InternalMetadataModule = __webpack_require__(/*! ../internals/internal-metadata */ "./node_modules/core-js/internals/internal-metadata.js");
+var collection = __webpack_require__(/*! ../internals/collection */ "./node_modules/core-js/internals/collection.js");
+var collectionWeak = __webpack_require__(/*! ../internals/collection-weak */ "./node_modules/core-js/internals/collection-weak.js");
+var isObject = __webpack_require__(/*! ../internals/is-object */ "./node_modules/core-js/internals/is-object.js");
+var isExtensible = __webpack_require__(/*! ../internals/object-is-extensible */ "./node_modules/core-js/internals/object-is-extensible.js");
+var enforceInternalState = (__webpack_require__(/*! ../internals/internal-state */ "./node_modules/core-js/internals/internal-state.js").enforce);
+var NATIVE_WEAK_MAP = __webpack_require__(/*! ../internals/native-weak-map */ "./node_modules/core-js/internals/native-weak-map.js");
+
+var IS_IE11 = !global.ActiveXObject && 'ActiveXObject' in global;
+var InternalWeakMap;
+
+var wrapper = function (init) {
+  return function WeakMap() {
+    return init(this, arguments.length ? arguments[0] : undefined);
+  };
+};
+
+// `WeakMap` constructor
+// https://tc39.es/ecma262/#sec-weakmap-constructor
+var $WeakMap = collection('WeakMap', wrapper, collectionWeak);
+
+// IE11 WeakMap frozen keys fix
+// We can't use feature detection because it crash some old IE builds
+// https://github.com/zloirock/core-js/issues/485
+if (NATIVE_WEAK_MAP && IS_IE11) {
+  InternalWeakMap = collectionWeak.getConstructor(wrapper, 'WeakMap', true);
+  InternalMetadataModule.enable();
+  var WeakMapPrototype = $WeakMap.prototype;
+  var nativeDelete = uncurryThis(WeakMapPrototype['delete']);
+  var nativeHas = uncurryThis(WeakMapPrototype.has);
+  var nativeGet = uncurryThis(WeakMapPrototype.get);
+  var nativeSet = uncurryThis(WeakMapPrototype.set);
+  redefineAll(WeakMapPrototype, {
+    'delete': function (key) {
+      if (isObject(key) && !isExtensible(key)) {
+        var state = enforceInternalState(this);
+        if (!state.frozen) state.frozen = new InternalWeakMap();
+        return nativeDelete(this, key) || state.frozen['delete'](key);
+      } return nativeDelete(this, key);
+    },
+    has: function has(key) {
+      if (isObject(key) && !isExtensible(key)) {
+        var state = enforceInternalState(this);
+        if (!state.frozen) state.frozen = new InternalWeakMap();
+        return nativeHas(this, key) || state.frozen.has(key);
+      } return nativeHas(this, key);
+    },
+    get: function get(key) {
+      if (isObject(key) && !isExtensible(key)) {
+        var state = enforceInternalState(this);
+        if (!state.frozen) state.frozen = new InternalWeakMap();
+        return nativeHas(this, key) ? nativeGet(this, key) : state.frozen.get(key);
+      } return nativeGet(this, key);
+    },
+    set: function set(key, value) {
+      if (isObject(key) && !isExtensible(key)) {
+        var state = enforceInternalState(this);
+        if (!state.frozen) state.frozen = new InternalWeakMap();
+        nativeHas(this, key) ? nativeSet(this, key, value) : state.frozen.set(key, value);
+      } else nativeSet(this, key, value);
+      return this;
+    }
+  });
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/modules/web.dom-collections.for-each.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/core-js/modules/web.dom-collections.for-each.js ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
+var global = __webpack_require__(/*! ../internals/global */ "./node_modules/core-js/internals/global.js");
+var DOMIterables = __webpack_require__(/*! ../internals/dom-iterables */ "./node_modules/core-js/internals/dom-iterables.js");
+var DOMTokenListPrototype = __webpack_require__(/*! ../internals/dom-token-list-prototype */ "./node_modules/core-js/internals/dom-token-list-prototype.js");
+var forEach = __webpack_require__(/*! ../internals/array-for-each */ "./node_modules/core-js/internals/array-for-each.js");
+var createNonEnumerableProperty = __webpack_require__(/*! ../internals/create-non-enumerable-property */ "./node_modules/core-js/internals/create-non-enumerable-property.js");
+
+var handlePrototype = function (CollectionPrototype) {
+  // some Chrome versions have non-configurable methods on DOMTokenList
+  if (CollectionPrototype && CollectionPrototype.forEach !== forEach) try {
+    createNonEnumerableProperty(CollectionPrototype, 'forEach', forEach);
+  } catch (error) {
+    CollectionPrototype.forEach = forEach;
+  }
+};
+
+for (var COLLECTION_NAME in DOMIterables) {
+  if (DOMIterables[COLLECTION_NAME]) {
+    handlePrototype(global[COLLECTION_NAME] && global[COLLECTION_NAME].prototype);
+  }
+}
+
+handlePrototype(DOMTokenListPrototype);
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/modules/web.dom-collections.iterator.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/core-js/modules/web.dom-collections.iterator.js ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
+var global = __webpack_require__(/*! ../internals/global */ "./node_modules/core-js/internals/global.js");
+var DOMIterables = __webpack_require__(/*! ../internals/dom-iterables */ "./node_modules/core-js/internals/dom-iterables.js");
+var DOMTokenListPrototype = __webpack_require__(/*! ../internals/dom-token-list-prototype */ "./node_modules/core-js/internals/dom-token-list-prototype.js");
+var ArrayIteratorMethods = __webpack_require__(/*! ../modules/es.array.iterator */ "./node_modules/core-js/modules/es.array.iterator.js");
+var createNonEnumerableProperty = __webpack_require__(/*! ../internals/create-non-enumerable-property */ "./node_modules/core-js/internals/create-non-enumerable-property.js");
+var wellKnownSymbol = __webpack_require__(/*! ../internals/well-known-symbol */ "./node_modules/core-js/internals/well-known-symbol.js");
+
+var ITERATOR = wellKnownSymbol('iterator');
+var TO_STRING_TAG = wellKnownSymbol('toStringTag');
+var ArrayValues = ArrayIteratorMethods.values;
+
+var handlePrototype = function (CollectionPrototype, COLLECTION_NAME) {
+  if (CollectionPrototype) {
+    // some Chrome versions have non-configurable methods on DOMTokenList
+    if (CollectionPrototype[ITERATOR] !== ArrayValues) try {
+      createNonEnumerableProperty(CollectionPrototype, ITERATOR, ArrayValues);
+    } catch (error) {
+      CollectionPrototype[ITERATOR] = ArrayValues;
+    }
+    if (!CollectionPrototype[TO_STRING_TAG]) {
+      createNonEnumerableProperty(CollectionPrototype, TO_STRING_TAG, COLLECTION_NAME);
+    }
+    if (DOMIterables[COLLECTION_NAME]) for (var METHOD_NAME in ArrayIteratorMethods) {
+      // some Chrome versions have non-configurable methods on DOMTokenList
+      if (CollectionPrototype[METHOD_NAME] !== ArrayIteratorMethods[METHOD_NAME]) try {
+        createNonEnumerableProperty(CollectionPrototype, METHOD_NAME, ArrayIteratorMethods[METHOD_NAME]);
+      } catch (error) {
+        CollectionPrototype[METHOD_NAME] = ArrayIteratorMethods[METHOD_NAME];
+      }
+    }
+  }
+};
+
+for (var COLLECTION_NAME in DOMIterables) {
+  handlePrototype(global[COLLECTION_NAME] && global[COLLECTION_NAME].prototype, COLLECTION_NAME);
+}
+
+handlePrototype(DOMTokenListPrototype, 'DOMTokenList');
+
+
+/***/ }),
+
+/***/ "./node_modules/drift-zoom/es/BoundingBox.js":
+/*!***************************************************!*\
+  !*** ./node_modules/drift-zoom/es/BoundingBox.js ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ BoundingBox)
+/* harmony export */ });
+/* harmony import */ var _util_throwIfMissing__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./util/throwIfMissing */ "./node_modules/drift-zoom/es/util/throwIfMissing.js");
+/* harmony import */ var _util_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./util/dom */ "./node_modules/drift-zoom/es/util/dom.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+
+var BoundingBox = /*#__PURE__*/function () {
+  function BoundingBox(options) {
+    _classCallCheck(this, BoundingBox);
+
+    this.isShowing = false;
+    var _options$namespace = options.namespace,
+        namespace = _options$namespace === void 0 ? null : _options$namespace,
+        _options$zoomFactor = options.zoomFactor,
+        zoomFactor = _options$zoomFactor === void 0 ? (0,_util_throwIfMissing__WEBPACK_IMPORTED_MODULE_0__["default"])() : _options$zoomFactor,
+        _options$containerEl = options.containerEl,
+        containerEl = _options$containerEl === void 0 ? (0,_util_throwIfMissing__WEBPACK_IMPORTED_MODULE_0__["default"])() : _options$containerEl;
+    this.settings = {
+      namespace: namespace,
+      zoomFactor: zoomFactor,
+      containerEl: containerEl
+    };
+    this.openClasses = this._buildClasses("open");
+
+    this._buildElement();
+  }
+
+  _createClass(BoundingBox, [{
+    key: "_buildClasses",
+    value: function _buildClasses(suffix) {
+      var classes = ["drift-".concat(suffix)];
+      var ns = this.settings.namespace;
+
+      if (ns) {
+        classes.push("".concat(ns, "-").concat(suffix));
+      }
+
+      return classes;
+    }
+  }, {
+    key: "_buildElement",
+    value: function _buildElement() {
+      this.el = document.createElement("div");
+      (0,_util_dom__WEBPACK_IMPORTED_MODULE_1__.addClasses)(this.el, this._buildClasses("bounding-box"));
+    }
+  }, {
+    key: "show",
+    value: function show(zoomPaneWidth, zoomPaneHeight) {
+      this.isShowing = true;
+      this.settings.containerEl.appendChild(this.el);
+      var style = this.el.style;
+      style.width = "".concat(Math.round(zoomPaneWidth / this.settings.zoomFactor), "px");
+      style.height = "".concat(Math.round(zoomPaneHeight / this.settings.zoomFactor), "px");
+      (0,_util_dom__WEBPACK_IMPORTED_MODULE_1__.addClasses)(this.el, this.openClasses);
+    }
+  }, {
+    key: "hide",
+    value: function hide() {
+      if (this.isShowing) {
+        this.settings.containerEl.removeChild(this.el);
+      }
+
+      this.isShowing = false;
+      (0,_util_dom__WEBPACK_IMPORTED_MODULE_1__.removeClasses)(this.el, this.openClasses);
+    }
+  }, {
+    key: "setPosition",
+    value: function setPosition(percentageOffsetX, percentageOffsetY, triggerRect) {
+      var pageXOffset = window.pageXOffset;
+      var pageYOffset = window.pageYOffset;
+      var inlineLeft = triggerRect.left + percentageOffsetX * triggerRect.width - this.el.clientWidth / 2 + pageXOffset;
+      var inlineTop = triggerRect.top + percentageOffsetY * triggerRect.height - this.el.clientHeight / 2 + pageYOffset;
+
+      if (inlineLeft < triggerRect.left + pageXOffset) {
+        inlineLeft = triggerRect.left + pageXOffset;
+      } else if (inlineLeft + this.el.clientWidth > triggerRect.left + triggerRect.width + pageXOffset) {
+        inlineLeft = triggerRect.left + triggerRect.width - this.el.clientWidth + pageXOffset;
+      }
+
+      if (inlineTop < triggerRect.top + pageYOffset) {
+        inlineTop = triggerRect.top + pageYOffset;
+      } else if (inlineTop + this.el.clientHeight > triggerRect.top + triggerRect.height + pageYOffset) {
+        inlineTop = triggerRect.top + triggerRect.height - this.el.clientHeight + pageYOffset;
+      }
+
+      this.el.style.left = "".concat(inlineLeft, "px");
+      this.el.style.top = "".concat(inlineTop, "px");
+    }
+  }]);
+
+  return BoundingBox;
+}();
+
+
+//# sourceMappingURL=BoundingBox.js.map
+
+/***/ }),
+
+/***/ "./node_modules/drift-zoom/es/Drift.js":
+/*!*********************************************!*\
+  !*** ./node_modules/drift-zoom/es/Drift.js ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Drift)
+/* harmony export */ });
+/* harmony import */ var _util_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./util/dom */ "./node_modules/drift-zoom/es/util/dom.js");
+/* harmony import */ var _injectBaseStylesheet__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./injectBaseStylesheet */ "./node_modules/drift-zoom/es/injectBaseStylesheet.js");
+/* harmony import */ var _Trigger__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Trigger */ "./node_modules/drift-zoom/es/Trigger.js");
+/* harmony import */ var _ZoomPane__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ZoomPane */ "./node_modules/drift-zoom/es/ZoomPane.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+
+
+
+var Drift = /*#__PURE__*/function () {
+  function Drift(triggerEl) {
+    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+    _classCallCheck(this, Drift);
+
+    this.VERSION = "1.4.5";
+    this.triggerEl = triggerEl;
+    this.destroy = this.destroy.bind(this);
+
+    if (!(0,_util_dom__WEBPACK_IMPORTED_MODULE_0__.isDOMElement)(this.triggerEl)) {
+      throw new TypeError("`new Drift` requires a DOM element as its first argument.");
+    } // Prefix for generated element class names (e.g. `my-ns` will
+    // result in classes such as `my-ns-pane`. Default `drift-`
+    // prefixed classes will always be added as well.
+
+
+    var namespace = options["namespace"] || null; // Whether the ZoomPane should show whitespace when near the edges.
+
+    var showWhitespaceAtEdges = options["showWhitespaceAtEdges"] || false; // Whether the inline ZoomPane should stay inside
+    // the bounds of its image.
+
+    var containInline = options["containInline"] || false; // How much to offset the ZoomPane from the
+    // interaction point when inline.
+
+    var inlineOffsetX = options["inlineOffsetX"] || 0;
+    var inlineOffsetY = options["inlineOffsetY"] || 0; // A DOM element to append the inline ZoomPane to
+
+    var inlineContainer = options["inlineContainer"] || document.body; // Which trigger attribute to pull the ZoomPane image source from.
+
+    var sourceAttribute = options["sourceAttribute"] || "data-zoom"; // How much to magnify the trigger by in the ZoomPane.
+    // (e.g., `zoomFactor: 3` will result in a 900 px wide ZoomPane imag
+    // if the trigger is displayed at 300 px wide)
+
+    var zoomFactor = options["zoomFactor"] || 3; // A DOM element to append the non-inline ZoomPane to.
+    // Required if `inlinePane !== true`.
+
+    var paneContainer = options["paneContainer"] === undefined ? document.body : options["paneContainer"]; // When to switch to an inline ZoomPane. This can be a boolean or
+    // an integer. If `true`, the ZoomPane will always be inline,
+    // if `false`, it will switch to inline when `windowWidth <= inlinePane`
+
+    var inlinePane = options["inlinePane"] || 375; // If `true`, touch events will trigger the zoom, like mouse events.
+
+    var handleTouch = "handleTouch" in options ? !!options["handleTouch"] : true; // If present (and a function), this will be called
+    // whenever the ZoomPane is shown.
+
+    var onShow = options["onShow"] || null; // If present (and a function), this will be called
+    // whenever the ZoomPane is hidden.
+
+    var onHide = options["onHide"] || null; // Add base styles to the page. See the "Theming"
+    // section of README.md for more information.
+
+    var injectBaseStyles = "injectBaseStyles" in options ? !!options["injectBaseStyles"] : true; // An optional number that determines how long to wait before
+    // showing the ZoomPane because of a `mouseenter` event.
+
+    var hoverDelay = options["hoverDelay"] || 0; // An optional number that determines how long to wait before
+    // showing the ZoomPane because of a `touchstart` event.
+    // It's unlikely that you would want to use this option, since
+    // "tap and hold" is much more intentional than a hover event.
+
+    var touchDelay = options["touchDelay"] || 0; // If true, a bounding box will show the area currently being previewed
+    // during mouse hover
+
+    var hoverBoundingBox = options["hoverBoundingBox"] || false; // If true, a bounding box will show the area currently being previewed
+    // during touch events
+
+    var touchBoundingBox = options["touchBoundingBox"] || false; // A DOM element to append the bounding box to.
+
+    var boundingBoxContainer = options["boundingBoxContainer"] || document.body; // If true, the events related to handleTouch use passive listeners in
+    // order to improve performance for touch devices.
+
+    var passive = options["passive"] || false;
+
+    if (inlinePane !== true && !(0,_util_dom__WEBPACK_IMPORTED_MODULE_0__.isDOMElement)(paneContainer)) {
+      throw new TypeError("`paneContainer` must be a DOM element when `inlinePane !== true`");
+    }
+
+    if (!(0,_util_dom__WEBPACK_IMPORTED_MODULE_0__.isDOMElement)(inlineContainer)) {
+      throw new TypeError("`inlineContainer` must be a DOM element");
+    }
+
+    this.settings = {
+      namespace: namespace,
+      showWhitespaceAtEdges: showWhitespaceAtEdges,
+      containInline: containInline,
+      inlineOffsetX: inlineOffsetX,
+      inlineOffsetY: inlineOffsetY,
+      inlineContainer: inlineContainer,
+      sourceAttribute: sourceAttribute,
+      zoomFactor: zoomFactor,
+      paneContainer: paneContainer,
+      inlinePane: inlinePane,
+      handleTouch: handleTouch,
+      onShow: onShow,
+      onHide: onHide,
+      injectBaseStyles: injectBaseStyles,
+      hoverDelay: hoverDelay,
+      touchDelay: touchDelay,
+      hoverBoundingBox: hoverBoundingBox,
+      touchBoundingBox: touchBoundingBox,
+      boundingBoxContainer: boundingBoxContainer,
+      passive: passive
+    };
+
+    if (this.settings.injectBaseStyles) {
+      (0,_injectBaseStylesheet__WEBPACK_IMPORTED_MODULE_1__["default"])();
+    }
+
+    this._buildZoomPane();
+
+    this._buildTrigger();
+  }
+
+  _createClass(Drift, [{
+    key: "_buildZoomPane",
+    value: function _buildZoomPane() {
+      this.zoomPane = new _ZoomPane__WEBPACK_IMPORTED_MODULE_3__["default"]({
+        container: this.settings.paneContainer,
+        zoomFactor: this.settings.zoomFactor,
+        showWhitespaceAtEdges: this.settings.showWhitespaceAtEdges,
+        containInline: this.settings.containInline,
+        inline: this.settings.inlinePane,
+        namespace: this.settings.namespace,
+        inlineOffsetX: this.settings.inlineOffsetX,
+        inlineOffsetY: this.settings.inlineOffsetY,
+        inlineContainer: this.settings.inlineContainer
+      });
+    }
+  }, {
+    key: "_buildTrigger",
+    value: function _buildTrigger() {
+      this.trigger = new _Trigger__WEBPACK_IMPORTED_MODULE_2__["default"]({
+        el: this.triggerEl,
+        zoomPane: this.zoomPane,
+        handleTouch: this.settings.handleTouch,
+        onShow: this.settings.onShow,
+        onHide: this.settings.onHide,
+        sourceAttribute: this.settings.sourceAttribute,
+        hoverDelay: this.settings.hoverDelay,
+        touchDelay: this.settings.touchDelay,
+        hoverBoundingBox: this.settings.hoverBoundingBox,
+        touchBoundingBox: this.settings.touchBoundingBox,
+        namespace: this.settings.namespace,
+        zoomFactor: this.settings.zoomFactor,
+        boundingBoxContainer: this.settings.boundingBoxContainer,
+        passive: this.settings.passive
+      });
+    }
+  }, {
+    key: "setZoomImageURL",
+    value: function setZoomImageURL(imageURL) {
+      this.zoomPane._setImageURL(imageURL);
+    }
+  }, {
+    key: "disable",
+    value: function disable() {
+      this.trigger.enabled = false;
+    }
+  }, {
+    key: "enable",
+    value: function enable() {
+      this.trigger.enabled = true;
+    }
+  }, {
+    key: "destroy",
+    value: function destroy() {
+      this.trigger._hide();
+
+      this.trigger._unbindEvents();
+    }
+  }, {
+    key: "isShowing",
+    get: function get() {
+      return this.zoomPane.isShowing;
+    }
+  }, {
+    key: "zoomFactor",
+    get: function get() {
+      return this.settings.zoomFactor;
+    },
+    set: function set(zf) {
+      this.settings.zoomFactor = zf;
+      this.zoomPane.settings.zoomFactor = zf;
+      this.trigger.settings.zoomFactor = zf;
+      this.boundingBox.settings.zoomFactor = zf;
+    }
+  }]);
+
+  return Drift;
+}(); // Public API
+
+/* eslint-disable no-self-assign */
+
+
+
+Object.defineProperty(Drift.prototype, "isShowing", {
+  get: function get() {
+    return this.isShowing;
+  }
+});
+Object.defineProperty(Drift.prototype, "zoomFactor", {
+  get: function get() {
+    return this.zoomFactor;
+  },
+  set: function set(value) {
+    this.zoomFactor = value;
+  }
+});
+Drift.prototype["setZoomImageURL"] = Drift.prototype.setZoomImageURL;
+Drift.prototype["disable"] = Drift.prototype.disable;
+Drift.prototype["enable"] = Drift.prototype.enable;
+Drift.prototype["destroy"] = Drift.prototype.destroy;
+/* eslint-enable no-self-assign */
+//# sourceMappingURL=Drift.js.map
+
+/***/ }),
+
+/***/ "./node_modules/drift-zoom/es/Trigger.js":
+/*!***********************************************!*\
+  !*** ./node_modules/drift-zoom/es/Trigger.js ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Trigger)
+/* harmony export */ });
+/* harmony import */ var _util_throwIfMissing__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./util/throwIfMissing */ "./node_modules/drift-zoom/es/util/throwIfMissing.js");
+/* harmony import */ var _BoundingBox__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BoundingBox */ "./node_modules/drift-zoom/es/BoundingBox.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+
+var Trigger = /*#__PURE__*/function () {
+  function Trigger() {
+    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+    _classCallCheck(this, Trigger);
+
+    this._show = this._show.bind(this);
+    this._hide = this._hide.bind(this);
+    this._handleEntry = this._handleEntry.bind(this);
+    this._handleMovement = this._handleMovement.bind(this);
+    var _options$el = options.el,
+        el = _options$el === void 0 ? (0,_util_throwIfMissing__WEBPACK_IMPORTED_MODULE_0__["default"])() : _options$el,
+        _options$zoomPane = options.zoomPane,
+        zoomPane = _options$zoomPane === void 0 ? (0,_util_throwIfMissing__WEBPACK_IMPORTED_MODULE_0__["default"])() : _options$zoomPane,
+        _options$sourceAttrib = options.sourceAttribute,
+        sourceAttribute = _options$sourceAttrib === void 0 ? (0,_util_throwIfMissing__WEBPACK_IMPORTED_MODULE_0__["default"])() : _options$sourceAttrib,
+        _options$handleTouch = options.handleTouch,
+        handleTouch = _options$handleTouch === void 0 ? (0,_util_throwIfMissing__WEBPACK_IMPORTED_MODULE_0__["default"])() : _options$handleTouch,
+        _options$onShow = options.onShow,
+        onShow = _options$onShow === void 0 ? null : _options$onShow,
+        _options$onHide = options.onHide,
+        onHide = _options$onHide === void 0 ? null : _options$onHide,
+        _options$hoverDelay = options.hoverDelay,
+        hoverDelay = _options$hoverDelay === void 0 ? 0 : _options$hoverDelay,
+        _options$touchDelay = options.touchDelay,
+        touchDelay = _options$touchDelay === void 0 ? 0 : _options$touchDelay,
+        _options$hoverBoundin = options.hoverBoundingBox,
+        hoverBoundingBox = _options$hoverBoundin === void 0 ? (0,_util_throwIfMissing__WEBPACK_IMPORTED_MODULE_0__["default"])() : _options$hoverBoundin,
+        _options$touchBoundin = options.touchBoundingBox,
+        touchBoundingBox = _options$touchBoundin === void 0 ? (0,_util_throwIfMissing__WEBPACK_IMPORTED_MODULE_0__["default"])() : _options$touchBoundin,
+        _options$namespace = options.namespace,
+        namespace = _options$namespace === void 0 ? null : _options$namespace,
+        _options$zoomFactor = options.zoomFactor,
+        zoomFactor = _options$zoomFactor === void 0 ? (0,_util_throwIfMissing__WEBPACK_IMPORTED_MODULE_0__["default"])() : _options$zoomFactor,
+        _options$boundingBoxC = options.boundingBoxContainer,
+        boundingBoxContainer = _options$boundingBoxC === void 0 ? (0,_util_throwIfMissing__WEBPACK_IMPORTED_MODULE_0__["default"])() : _options$boundingBoxC,
+        _options$passive = options.passive,
+        passive = _options$passive === void 0 ? false : _options$passive;
+    this.settings = {
+      el: el,
+      zoomPane: zoomPane,
+      sourceAttribute: sourceAttribute,
+      handleTouch: handleTouch,
+      onShow: onShow,
+      onHide: onHide,
+      hoverDelay: hoverDelay,
+      touchDelay: touchDelay,
+      hoverBoundingBox: hoverBoundingBox,
+      touchBoundingBox: touchBoundingBox,
+      namespace: namespace,
+      zoomFactor: zoomFactor,
+      boundingBoxContainer: boundingBoxContainer,
+      passive: passive
+    };
+
+    if (this.settings.hoverBoundingBox || this.settings.touchBoundingBox) {
+      this.boundingBox = new _BoundingBox__WEBPACK_IMPORTED_MODULE_1__["default"]({
+        namespace: this.settings.namespace,
+        zoomFactor: this.settings.zoomFactor,
+        containerEl: this.settings.boundingBoxContainer
+      });
+    }
+
+    this.enabled = true;
+
+    this._bindEvents();
+  }
+
+  _createClass(Trigger, [{
+    key: "_preventDefault",
+    value: function _preventDefault(event) {
+      event.preventDefault();
+    }
+  }, {
+    key: "_preventDefaultAllowTouchScroll",
+    value: function _preventDefaultAllowTouchScroll(event) {
+      if (!this.settings.touchDelay || !this._isTouchEvent(event) || this.isShowing) {
+        event.preventDefault();
+      }
+    }
+  }, {
+    key: "_isTouchEvent",
+    value: function _isTouchEvent(event) {
+      return !!event.touches;
+    }
+  }, {
+    key: "_bindEvents",
+    value: function _bindEvents() {
+      this.settings.el.addEventListener("mouseenter", this._handleEntry, false);
+      this.settings.el.addEventListener("mouseleave", this._hide, false);
+      this.settings.el.addEventListener("mousemove", this._handleMovement, false);
+      var isPassive = {
+        passive: this.settings.passive
+      };
+
+      if (this.settings.handleTouch) {
+        this.settings.el.addEventListener("touchstart", this._handleEntry, isPassive);
+        this.settings.el.addEventListener("touchend", this._hide, false);
+        this.settings.el.addEventListener("touchmove", this._handleMovement, isPassive);
+      } else {
+        this.settings.el.addEventListener("touchstart", this._preventDefault, isPassive);
+        this.settings.el.addEventListener("touchend", this._preventDefault, false);
+        this.settings.el.addEventListener("touchmove", this._preventDefault, isPassive);
+      }
+    }
+  }, {
+    key: "_unbindEvents",
+    value: function _unbindEvents() {
+      this.settings.el.removeEventListener("mouseenter", this._handleEntry, false);
+      this.settings.el.removeEventListener("mouseleave", this._hide, false);
+      this.settings.el.removeEventListener("mousemove", this._handleMovement, false);
+
+      if (this.settings.handleTouch) {
+        this.settings.el.removeEventListener("touchstart", this._handleEntry, false);
+        this.settings.el.removeEventListener("touchend", this._hide, false);
+        this.settings.el.removeEventListener("touchmove", this._handleMovement, false);
+      } else {
+        this.settings.el.removeEventListener("touchstart", this._preventDefault, false);
+        this.settings.el.removeEventListener("touchend", this._preventDefault, false);
+        this.settings.el.removeEventListener("touchmove", this._preventDefault, false);
+      }
+    }
+  }, {
+    key: "_handleEntry",
+    value: function _handleEntry(e) {
+      this._preventDefaultAllowTouchScroll(e);
+
+      this._lastMovement = e;
+
+      if (e.type == "mouseenter" && this.settings.hoverDelay) {
+        this.entryTimeout = setTimeout(this._show, this.settings.hoverDelay);
+      } else if (this.settings.touchDelay) {
+        this.entryTimeout = setTimeout(this._show, this.settings.touchDelay);
+      } else {
+        this._show();
+      }
+    }
+  }, {
+    key: "_show",
+    value: function _show() {
+      if (!this.enabled) {
+        return;
+      }
+
+      var onShow = this.settings.onShow;
+
+      if (onShow && typeof onShow === "function") {
+        onShow();
+      }
+
+      this.settings.zoomPane.show(this.settings.el.getAttribute(this.settings.sourceAttribute), this.settings.el.clientWidth, this.settings.el.clientHeight);
+
+      if (this._lastMovement) {
+        var touchActivated = this._lastMovement.touches;
+
+        if (touchActivated && this.settings.touchBoundingBox || !touchActivated && this.settings.hoverBoundingBox) {
+          this.boundingBox.show(this.settings.zoomPane.el.clientWidth, this.settings.zoomPane.el.clientHeight);
+        }
+      }
+
+      this._handleMovement();
+    }
+  }, {
+    key: "_hide",
+    value: function _hide(e) {
+      if (e) {
+        this._preventDefaultAllowTouchScroll(e);
+      }
+
+      this._lastMovement = null;
+
+      if (this.entryTimeout) {
+        clearTimeout(this.entryTimeout);
+      }
+
+      if (this.boundingBox) {
+        this.boundingBox.hide();
+      }
+
+      var onHide = this.settings.onHide;
+
+      if (onHide && typeof onHide === "function") {
+        onHide();
+      }
+
+      this.settings.zoomPane.hide();
+    }
+  }, {
+    key: "_handleMovement",
+    value: function _handleMovement(e) {
+      if (e) {
+        this._preventDefaultAllowTouchScroll(e);
+
+        this._lastMovement = e;
+      } else if (this._lastMovement) {
+        e = this._lastMovement;
+      } else {
+        return;
+      }
+
+      var movementX;
+      var movementY;
+
+      if (e.touches) {
+        var firstTouch = e.touches[0];
+        movementX = firstTouch.clientX;
+        movementY = firstTouch.clientY;
+      } else {
+        movementX = e.clientX;
+        movementY = e.clientY;
+      }
+
+      var el = this.settings.el;
+      var rect = el.getBoundingClientRect();
+      var offsetX = movementX - rect.left;
+      var offsetY = movementY - rect.top;
+      var percentageOffsetX = offsetX / this.settings.el.clientWidth;
+      var percentageOffsetY = offsetY / this.settings.el.clientHeight;
+
+      if (this.boundingBox) {
+        this.boundingBox.setPosition(percentageOffsetX, percentageOffsetY, rect);
+      }
+
+      this.settings.zoomPane.setPosition(percentageOffsetX, percentageOffsetY, rect);
+    }
+  }, {
+    key: "isShowing",
+    get: function get() {
+      return this.settings.zoomPane.isShowing;
+    }
+  }]);
+
+  return Trigger;
+}();
+
+
+//# sourceMappingURL=Trigger.js.map
+
+/***/ }),
+
+/***/ "./node_modules/drift-zoom/es/ZoomPane.js":
+/*!************************************************!*\
+  !*** ./node_modules/drift-zoom/es/ZoomPane.js ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ ZoomPane)
+/* harmony export */ });
+/* harmony import */ var _util_throwIfMissing__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./util/throwIfMissing */ "./node_modules/drift-zoom/es/util/throwIfMissing.js");
+/* harmony import */ var _util_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./util/dom */ "./node_modules/drift-zoom/es/util/dom.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+
+var ZoomPane = /*#__PURE__*/function () {
+  function ZoomPane() {
+    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+    _classCallCheck(this, ZoomPane);
+
+    // All officially-supported browsers have this, but it's easy to
+    // account for, just in case.
+    this.HAS_ANIMATION = false;
+
+    if (typeof document !== "undefined") {
+      var divStyle = document.createElement("div").style;
+      this.HAS_ANIMATION = "animation" in divStyle || "webkitAnimation" in divStyle;
+    }
+
+    this._completeShow = this._completeShow.bind(this);
+    this._completeHide = this._completeHide.bind(this);
+    this._handleLoad = this._handleLoad.bind(this);
+    this.isShowing = false;
+    var _options$container = options.container,
+        container = _options$container === void 0 ? null : _options$container,
+        _options$zoomFactor = options.zoomFactor,
+        zoomFactor = _options$zoomFactor === void 0 ? (0,_util_throwIfMissing__WEBPACK_IMPORTED_MODULE_0__["default"])() : _options$zoomFactor,
+        _options$inline = options.inline,
+        inline = _options$inline === void 0 ? (0,_util_throwIfMissing__WEBPACK_IMPORTED_MODULE_0__["default"])() : _options$inline,
+        _options$namespace = options.namespace,
+        namespace = _options$namespace === void 0 ? null : _options$namespace,
+        _options$showWhitespa = options.showWhitespaceAtEdges,
+        showWhitespaceAtEdges = _options$showWhitespa === void 0 ? (0,_util_throwIfMissing__WEBPACK_IMPORTED_MODULE_0__["default"])() : _options$showWhitespa,
+        _options$containInlin = options.containInline,
+        containInline = _options$containInlin === void 0 ? (0,_util_throwIfMissing__WEBPACK_IMPORTED_MODULE_0__["default"])() : _options$containInlin,
+        _options$inlineOffset = options.inlineOffsetX,
+        inlineOffsetX = _options$inlineOffset === void 0 ? 0 : _options$inlineOffset,
+        _options$inlineOffset2 = options.inlineOffsetY,
+        inlineOffsetY = _options$inlineOffset2 === void 0 ? 0 : _options$inlineOffset2,
+        _options$inlineContai = options.inlineContainer,
+        inlineContainer = _options$inlineContai === void 0 ? document.body : _options$inlineContai;
+    this.settings = {
+      container: container,
+      zoomFactor: zoomFactor,
+      inline: inline,
+      namespace: namespace,
+      showWhitespaceAtEdges: showWhitespaceAtEdges,
+      containInline: containInline,
+      inlineOffsetX: inlineOffsetX,
+      inlineOffsetY: inlineOffsetY,
+      inlineContainer: inlineContainer
+    };
+    this.openClasses = this._buildClasses("open");
+    this.openingClasses = this._buildClasses("opening");
+    this.closingClasses = this._buildClasses("closing");
+    this.inlineClasses = this._buildClasses("inline");
+    this.loadingClasses = this._buildClasses("loading");
+
+    this._buildElement();
+  }
+
+  _createClass(ZoomPane, [{
+    key: "_buildClasses",
+    value: function _buildClasses(suffix) {
+      var classes = ["drift-".concat(suffix)];
+      var ns = this.settings.namespace;
+
+      if (ns) {
+        classes.push("".concat(ns, "-").concat(suffix));
+      }
+
+      return classes;
+    }
+  }, {
+    key: "_buildElement",
+    value: function _buildElement() {
+      this.el = document.createElement("div");
+      (0,_util_dom__WEBPACK_IMPORTED_MODULE_1__.addClasses)(this.el, this._buildClasses("zoom-pane"));
+      var loaderEl = document.createElement("div");
+      (0,_util_dom__WEBPACK_IMPORTED_MODULE_1__.addClasses)(loaderEl, this._buildClasses("zoom-pane-loader"));
+      this.el.appendChild(loaderEl);
+      this.imgEl = document.createElement("img");
+      this.el.appendChild(this.imgEl);
+    }
+  }, {
+    key: "_setImageURL",
+    value: function _setImageURL(imageURL) {
+      this.imgEl.setAttribute("src", imageURL);
+    }
+  }, {
+    key: "_setImageSize",
+    value: function _setImageSize(triggerWidth, triggerHeight) {
+      this.imgEl.style.width = "".concat(triggerWidth * this.settings.zoomFactor, "px");
+      this.imgEl.style.height = "".concat(triggerHeight * this.settings.zoomFactor, "px");
+    } // `percentageOffsetX` and `percentageOffsetY` must be percentages
+    // expressed as floats between `0' and `1`.
+
+  }, {
+    key: "setPosition",
+    value: function setPosition(percentageOffsetX, percentageOffsetY, triggerRect) {
+      var imgElWidth = this.imgEl.offsetWidth;
+      var imgElHeight = this.imgEl.offsetHeight;
+      var elWidth = this.el.offsetWidth;
+      var elHeight = this.el.offsetHeight;
+      var centreOfContainerX = elWidth / 2;
+      var centreOfContainerY = elHeight / 2;
+      var targetImgXToBeCentre = imgElWidth * percentageOffsetX;
+      var targetImgYToBeCentre = imgElHeight * percentageOffsetY;
+      var left = centreOfContainerX - targetImgXToBeCentre;
+      var top = centreOfContainerY - targetImgYToBeCentre;
+      var differenceBetweenContainerWidthAndImgWidth = elWidth - imgElWidth;
+      var differenceBetweenContainerHeightAndImgHeight = elHeight - imgElHeight;
+      var isContainerLargerThanImgX = differenceBetweenContainerWidthAndImgWidth > 0;
+      var isContainerLargerThanImgY = differenceBetweenContainerHeightAndImgHeight > 0;
+      var minLeft = isContainerLargerThanImgX ? differenceBetweenContainerWidthAndImgWidth / 2 : 0;
+      var minTop = isContainerLargerThanImgY ? differenceBetweenContainerHeightAndImgHeight / 2 : 0;
+      var maxLeft = isContainerLargerThanImgX ? differenceBetweenContainerWidthAndImgWidth / 2 : differenceBetweenContainerWidthAndImgWidth;
+      var maxTop = isContainerLargerThanImgY ? differenceBetweenContainerHeightAndImgHeight / 2 : differenceBetweenContainerHeightAndImgHeight;
+
+      if (this.el.parentElement === this.settings.inlineContainer) {
+        // This may be needed in the future to deal with browser event
+        // inconsistencies, but it's difficult to tell for sure.
+        // let scrollX = isTouch ? 0 : window.scrollX;
+        // let scrollY = isTouch ? 0 : window.scrollY;
+        var scrollX = window.pageXOffset;
+        var scrollY = window.pageYOffset;
+        var inlineLeft = triggerRect.left + percentageOffsetX * triggerRect.width - elWidth / 2 + this.settings.inlineOffsetX + scrollX;
+        var inlineTop = triggerRect.top + percentageOffsetY * triggerRect.height - elHeight / 2 + this.settings.inlineOffsetY + scrollY;
+
+        if (this.settings.containInline) {
+          if (inlineLeft < triggerRect.left + scrollX) {
+            inlineLeft = triggerRect.left + scrollX;
+          } else if (inlineLeft + elWidth > triggerRect.left + triggerRect.width + scrollX) {
+            inlineLeft = triggerRect.left + triggerRect.width - elWidth + scrollX;
+          }
+
+          if (inlineTop < triggerRect.top + scrollY) {
+            inlineTop = triggerRect.top + scrollY;
+          } else if (inlineTop + elHeight > triggerRect.top + triggerRect.height + scrollY) {
+            inlineTop = triggerRect.top + triggerRect.height - elHeight + scrollY;
+          }
+        }
+
+        this.el.style.left = "".concat(inlineLeft, "px");
+        this.el.style.top = "".concat(inlineTop, "px");
+      }
+
+      if (!this.settings.showWhitespaceAtEdges) {
+        if (left > minLeft) {
+          left = minLeft;
+        } else if (left < maxLeft) {
+          left = maxLeft;
+        }
+
+        if (top > minTop) {
+          top = minTop;
+        } else if (top < maxTop) {
+          top = maxTop;
+        }
+      }
+
+      this.imgEl.style.transform = "translate(".concat(left, "px, ").concat(top, "px)");
+      this.imgEl.style.webkitTransform = "translate(".concat(left, "px, ").concat(top, "px)");
+    }
+  }, {
+    key: "_removeListenersAndResetClasses",
+    value: function _removeListenersAndResetClasses() {
+      this.el.removeEventListener("animationend", this._completeShow, false);
+      this.el.removeEventListener("animationend", this._completeHide, false);
+      this.el.removeEventListener("webkitAnimationEnd", this._completeShow, false);
+      this.el.removeEventListener("webkitAnimationEnd", this._completeHide, false);
+      (0,_util_dom__WEBPACK_IMPORTED_MODULE_1__.removeClasses)(this.el, this.openClasses);
+      (0,_util_dom__WEBPACK_IMPORTED_MODULE_1__.removeClasses)(this.el, this.closingClasses);
+    }
+  }, {
+    key: "show",
+    value: function show(imageURL, triggerWidth, triggerHeight) {
+      this._removeListenersAndResetClasses();
+
+      this.isShowing = true;
+      (0,_util_dom__WEBPACK_IMPORTED_MODULE_1__.addClasses)(this.el, this.openClasses);
+
+      if (this.imgEl.getAttribute("src") != imageURL) {
+        (0,_util_dom__WEBPACK_IMPORTED_MODULE_1__.addClasses)(this.el, this.loadingClasses);
+        this.imgEl.addEventListener("load", this._handleLoad, false);
+
+        this._setImageURL(imageURL);
+      }
+
+      this._setImageSize(triggerWidth, triggerHeight);
+
+      if (this._isInline) {
+        this._showInline();
+      } else {
+        this._showInContainer();
+      }
+
+      if (this.HAS_ANIMATION) {
+        this.el.addEventListener("animationend", this._completeShow, false);
+        this.el.addEventListener("webkitAnimationEnd", this._completeShow, false);
+        (0,_util_dom__WEBPACK_IMPORTED_MODULE_1__.addClasses)(this.el, this.openingClasses);
+      }
+    }
+  }, {
+    key: "_showInline",
+    value: function _showInline() {
+      this.settings.inlineContainer.appendChild(this.el);
+      (0,_util_dom__WEBPACK_IMPORTED_MODULE_1__.addClasses)(this.el, this.inlineClasses);
+    }
+  }, {
+    key: "_showInContainer",
+    value: function _showInContainer() {
+      this.settings.container.appendChild(this.el);
+    }
+  }, {
+    key: "hide",
+    value: function hide() {
+      this._removeListenersAndResetClasses();
+
+      this.isShowing = false;
+
+      if (this.HAS_ANIMATION) {
+        this.el.addEventListener("animationend", this._completeHide, false);
+        this.el.addEventListener("webkitAnimationEnd", this._completeHide, false);
+        (0,_util_dom__WEBPACK_IMPORTED_MODULE_1__.addClasses)(this.el, this.closingClasses);
+      } else {
+        (0,_util_dom__WEBPACK_IMPORTED_MODULE_1__.removeClasses)(this.el, this.openClasses);
+        (0,_util_dom__WEBPACK_IMPORTED_MODULE_1__.removeClasses)(this.el, this.inlineClasses);
+      }
+    }
+  }, {
+    key: "_completeShow",
+    value: function _completeShow() {
+      this.el.removeEventListener("animationend", this._completeShow, false);
+      this.el.removeEventListener("webkitAnimationEnd", this._completeShow, false);
+      (0,_util_dom__WEBPACK_IMPORTED_MODULE_1__.removeClasses)(this.el, this.openingClasses);
+    }
+  }, {
+    key: "_completeHide",
+    value: function _completeHide() {
+      this.el.removeEventListener("animationend", this._completeHide, false);
+      this.el.removeEventListener("webkitAnimationEnd", this._completeHide, false);
+      (0,_util_dom__WEBPACK_IMPORTED_MODULE_1__.removeClasses)(this.el, this.openClasses);
+      (0,_util_dom__WEBPACK_IMPORTED_MODULE_1__.removeClasses)(this.el, this.closingClasses);
+      (0,_util_dom__WEBPACK_IMPORTED_MODULE_1__.removeClasses)(this.el, this.inlineClasses);
+      this.el.style.left = "";
+      this.el.style.top = ""; // The window could have been resized above or below `inline`
+      // limits since the ZoomPane was shown. Because of this, we
+      // can't rely on `this._isInline` here.
+
+      if (this.el.parentElement === this.settings.container) {
+        this.settings.container.removeChild(this.el);
+      } else if (this.el.parentElement === this.settings.inlineContainer) {
+        this.settings.inlineContainer.removeChild(this.el);
+      }
+    }
+  }, {
+    key: "_handleLoad",
+    value: function _handleLoad() {
+      this.imgEl.removeEventListener("load", this._handleLoad, false);
+      (0,_util_dom__WEBPACK_IMPORTED_MODULE_1__.removeClasses)(this.el, this.loadingClasses);
+    }
+  }, {
+    key: "_isInline",
+    get: function get() {
+      var inline = this.settings.inline;
+      return inline === true || typeof inline === "number" && window.innerWidth <= inline;
+    }
+  }]);
+
+  return ZoomPane;
+}();
+
+
+//# sourceMappingURL=ZoomPane.js.map
+
+/***/ }),
+
+/***/ "./node_modules/drift-zoom/es/injectBaseStylesheet.js":
+/*!************************************************************!*\
+  !*** ./node_modules/drift-zoom/es/injectBaseStylesheet.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ injectBaseStylesheet)
+/* harmony export */ });
+/* UNMINIFIED RULES
+
+const RULES = `
+@keyframes noop {
+  0% { zoom: 1; }
+}
+
+@-webkit-keyframes noop {
+  0% { zoom: 1; }
+}
+
+.drift-zoom-pane.drift-open {
+  display: block;
+}
+
+.drift-zoom-pane.drift-opening, .drift-zoom-pane.drift-closing {
+  animation: noop 1ms;
+  -webkit-animation: noop 1ms;
+}
+
+.drift-zoom-pane {
+  position: absolute;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.drift-zoom-pane-loader {
+  display: none;
+}
+
+.drift-zoom-pane img {
+  position: absolute;
+  display: block;
+  max-width: none;
+  max-height: none;
+}
+
+.drift-bounding-box {
+  position: absolute;
+  pointer-events: none;
+}
+`;
+
+*/
+var RULES = ".drift-bounding-box,.drift-zoom-pane{position:absolute;pointer-events:none}@keyframes noop{0%{zoom:1}}@-webkit-keyframes noop{0%{zoom:1}}.drift-zoom-pane.drift-open{display:block}.drift-zoom-pane.drift-closing,.drift-zoom-pane.drift-opening{animation:noop 1ms;-webkit-animation:noop 1ms}.drift-zoom-pane{overflow:hidden;width:100%;height:100%;top:0;left:0}.drift-zoom-pane-loader{display:none}.drift-zoom-pane img{position:absolute;display:block;max-width:none;max-height:none}";
+function injectBaseStylesheet() {
+  if (document.querySelector(".drift-base-styles")) {
+    return;
+  }
+
+  var styleEl = document.createElement("style");
+  styleEl.type = "text/css";
+  styleEl.classList.add("drift-base-styles");
+  styleEl.appendChild(document.createTextNode(RULES));
+  var head = document.head;
+  head.insertBefore(styleEl, head.firstChild);
+}
+//# sourceMappingURL=injectBaseStylesheet.js.map
+
+/***/ }),
+
+/***/ "./node_modules/drift-zoom/es/util/dom.js":
+/*!************************************************!*\
+  !*** ./node_modules/drift-zoom/es/util/dom.js ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "isDOMElement": () => (/* binding */ isDOMElement),
+/* harmony export */   "addClasses": () => (/* binding */ addClasses),
+/* harmony export */   "removeClasses": () => (/* binding */ removeClasses)
+/* harmony export */ });
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+// This is not really a perfect check, but works fine.
+// From http://stackoverflow.com/questions/384286
+var HAS_DOM_2 = (typeof HTMLElement === "undefined" ? "undefined" : _typeof(HTMLElement)) === "object";
+function isDOMElement(obj) {
+  return HAS_DOM_2 ? obj instanceof HTMLElement : obj && _typeof(obj) === "object" && obj !== null && obj.nodeType === 1 && typeof obj.nodeName === "string";
+}
+function addClasses(el, classNames) {
+  classNames.forEach(function (className) {
+    el.classList.add(className);
+  });
+}
+function removeClasses(el, classNames) {
+  classNames.forEach(function (className) {
+    el.classList.remove(className);
+  });
+}
+//# sourceMappingURL=dom.js.map
+
+/***/ }),
+
+/***/ "./node_modules/drift-zoom/es/util/throwIfMissing.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/drift-zoom/es/util/throwIfMissing.js ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ throwIfMissing)
+/* harmony export */ });
+function throwIfMissing() {
+  throw new Error("Missing parameter");
+}
+//# sourceMappingURL=throwIfMissing.js.map
+
+/***/ }),
+
+/***/ "./node_modules/lodash.debounce/index.js":
+/*!***********************************************!*\
+  !*** ./node_modules/lodash.debounce/index.js ***!
+  \***********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+/**
+ * lodash (Custom Build) <https://lodash.com/>
+ * Build: `lodash modularize exports="npm" -o ./`
+ * Copyright jQuery Foundation and other contributors <https://jquery.org/>
+ * Released under MIT license <https://lodash.com/license>
+ * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+ * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ */
+
+/** Used as the `TypeError` message for "Functions" methods. */
+var FUNC_ERROR_TEXT = 'Expected a function';
+
+/** Used as references for various `Number` constants. */
+var NAN = 0 / 0;
+
+/** `Object#toString` result references. */
+var symbolTag = '[object Symbol]';
+
+/** Used to match leading and trailing whitespace. */
+var reTrim = /^\s+|\s+$/g;
+
+/** Used to detect bad signed hexadecimal string values. */
+var reIsBadHex = /^[-+]0x[0-9a-f]+$/i;
+
+/** Used to detect binary string values. */
+var reIsBinary = /^0b[01]+$/i;
+
+/** Used to detect octal string values. */
+var reIsOctal = /^0o[0-7]+$/i;
+
+/** Built-in method references without a dependency on `root`. */
+var freeParseInt = parseInt;
+
+/** Detect free variable `global` from Node.js. */
+var freeGlobal = typeof __webpack_require__.g == 'object' && __webpack_require__.g && __webpack_require__.g.Object === Object && __webpack_require__.g;
+
+/** Detect free variable `self`. */
+var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
+
+/** Used as a reference to the global object. */
+var root = freeGlobal || freeSelf || Function('return this')();
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+
+/**
+ * Used to resolve the
+ * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+ * of values.
+ */
+var objectToString = objectProto.toString;
+
+/* Built-in method references for those with the same name as other `lodash` methods. */
+var nativeMax = Math.max,
+    nativeMin = Math.min;
+
+/**
+ * Gets the timestamp of the number of milliseconds that have elapsed since
+ * the Unix epoch (1 January 1970 00:00:00 UTC).
+ *
+ * @static
+ * @memberOf _
+ * @since 2.4.0
+ * @category Date
+ * @returns {number} Returns the timestamp.
+ * @example
+ *
+ * _.defer(function(stamp) {
+ *   console.log(_.now() - stamp);
+ * }, _.now());
+ * // => Logs the number of milliseconds it took for the deferred invocation.
+ */
+var now = function() {
+  return root.Date.now();
+};
+
+/**
+ * Creates a debounced function that delays invoking `func` until after `wait`
+ * milliseconds have elapsed since the last time the debounced function was
+ * invoked. The debounced function comes with a `cancel` method to cancel
+ * delayed `func` invocations and a `flush` method to immediately invoke them.
+ * Provide `options` to indicate whether `func` should be invoked on the
+ * leading and/or trailing edge of the `wait` timeout. The `func` is invoked
+ * with the last arguments provided to the debounced function. Subsequent
+ * calls to the debounced function return the result of the last `func`
+ * invocation.
+ *
+ * **Note:** If `leading` and `trailing` options are `true`, `func` is
+ * invoked on the trailing edge of the timeout only if the debounced function
+ * is invoked more than once during the `wait` timeout.
+ *
+ * If `wait` is `0` and `leading` is `false`, `func` invocation is deferred
+ * until to the next tick, similar to `setTimeout` with a timeout of `0`.
+ *
+ * See [David Corbacho's article](https://css-tricks.com/debouncing-throttling-explained-examples/)
+ * for details over the differences between `_.debounce` and `_.throttle`.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Function
+ * @param {Function} func The function to debounce.
+ * @param {number} [wait=0] The number of milliseconds to delay.
+ * @param {Object} [options={}] The options object.
+ * @param {boolean} [options.leading=false]
+ *  Specify invoking on the leading edge of the timeout.
+ * @param {number} [options.maxWait]
+ *  The maximum time `func` is allowed to be delayed before it's invoked.
+ * @param {boolean} [options.trailing=true]
+ *  Specify invoking on the trailing edge of the timeout.
+ * @returns {Function} Returns the new debounced function.
+ * @example
+ *
+ * // Avoid costly calculations while the window size is in flux.
+ * jQuery(window).on('resize', _.debounce(calculateLayout, 150));
+ *
+ * // Invoke `sendMail` when clicked, debouncing subsequent calls.
+ * jQuery(element).on('click', _.debounce(sendMail, 300, {
+ *   'leading': true,
+ *   'trailing': false
+ * }));
+ *
+ * // Ensure `batchLog` is invoked once after 1 second of debounced calls.
+ * var debounced = _.debounce(batchLog, 250, { 'maxWait': 1000 });
+ * var source = new EventSource('/stream');
+ * jQuery(source).on('message', debounced);
+ *
+ * // Cancel the trailing debounced invocation.
+ * jQuery(window).on('popstate', debounced.cancel);
+ */
+function debounce(func, wait, options) {
+  var lastArgs,
+      lastThis,
+      maxWait,
+      result,
+      timerId,
+      lastCallTime,
+      lastInvokeTime = 0,
+      leading = false,
+      maxing = false,
+      trailing = true;
+
+  if (typeof func != 'function') {
+    throw new TypeError(FUNC_ERROR_TEXT);
+  }
+  wait = toNumber(wait) || 0;
+  if (isObject(options)) {
+    leading = !!options.leading;
+    maxing = 'maxWait' in options;
+    maxWait = maxing ? nativeMax(toNumber(options.maxWait) || 0, wait) : maxWait;
+    trailing = 'trailing' in options ? !!options.trailing : trailing;
+  }
+
+  function invokeFunc(time) {
+    var args = lastArgs,
+        thisArg = lastThis;
+
+    lastArgs = lastThis = undefined;
+    lastInvokeTime = time;
+    result = func.apply(thisArg, args);
+    return result;
+  }
+
+  function leadingEdge(time) {
+    // Reset any `maxWait` timer.
+    lastInvokeTime = time;
+    // Start the timer for the trailing edge.
+    timerId = setTimeout(timerExpired, wait);
+    // Invoke the leading edge.
+    return leading ? invokeFunc(time) : result;
+  }
+
+  function remainingWait(time) {
+    var timeSinceLastCall = time - lastCallTime,
+        timeSinceLastInvoke = time - lastInvokeTime,
+        result = wait - timeSinceLastCall;
+
+    return maxing ? nativeMin(result, maxWait - timeSinceLastInvoke) : result;
+  }
+
+  function shouldInvoke(time) {
+    var timeSinceLastCall = time - lastCallTime,
+        timeSinceLastInvoke = time - lastInvokeTime;
+
+    // Either this is the first call, activity has stopped and we're at the
+    // trailing edge, the system time has gone backwards and we're treating
+    // it as the trailing edge, or we've hit the `maxWait` limit.
+    return (lastCallTime === undefined || (timeSinceLastCall >= wait) ||
+      (timeSinceLastCall < 0) || (maxing && timeSinceLastInvoke >= maxWait));
+  }
+
+  function timerExpired() {
+    var time = now();
+    if (shouldInvoke(time)) {
+      return trailingEdge(time);
+    }
+    // Restart the timer.
+    timerId = setTimeout(timerExpired, remainingWait(time));
+  }
+
+  function trailingEdge(time) {
+    timerId = undefined;
+
+    // Only invoke if we have `lastArgs` which means `func` has been
+    // debounced at least once.
+    if (trailing && lastArgs) {
+      return invokeFunc(time);
+    }
+    lastArgs = lastThis = undefined;
+    return result;
+  }
+
+  function cancel() {
+    if (timerId !== undefined) {
+      clearTimeout(timerId);
+    }
+    lastInvokeTime = 0;
+    lastArgs = lastCallTime = lastThis = timerId = undefined;
+  }
+
+  function flush() {
+    return timerId === undefined ? result : trailingEdge(now());
+  }
+
+  function debounced() {
+    var time = now(),
+        isInvoking = shouldInvoke(time);
+
+    lastArgs = arguments;
+    lastThis = this;
+    lastCallTime = time;
+
+    if (isInvoking) {
+      if (timerId === undefined) {
+        return leadingEdge(lastCallTime);
+      }
+      if (maxing) {
+        // Handle invocations in a tight loop.
+        timerId = setTimeout(timerExpired, wait);
+        return invokeFunc(lastCallTime);
+      }
+    }
+    if (timerId === undefined) {
+      timerId = setTimeout(timerExpired, wait);
+    }
+    return result;
+  }
+  debounced.cancel = cancel;
+  debounced.flush = flush;
+  return debounced;
+}
+
+/**
+ * Checks if `value` is the
+ * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
+ * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an object, else `false`.
+ * @example
+ *
+ * _.isObject({});
+ * // => true
+ *
+ * _.isObject([1, 2, 3]);
+ * // => true
+ *
+ * _.isObject(_.noop);
+ * // => true
+ *
+ * _.isObject(null);
+ * // => false
+ */
+function isObject(value) {
+  var type = typeof value;
+  return !!value && (type == 'object' || type == 'function');
+}
+
+/**
+ * Checks if `value` is object-like. A value is object-like if it's not `null`
+ * and has a `typeof` result of "object".
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+ * @example
+ *
+ * _.isObjectLike({});
+ * // => true
+ *
+ * _.isObjectLike([1, 2, 3]);
+ * // => true
+ *
+ * _.isObjectLike(_.noop);
+ * // => false
+ *
+ * _.isObjectLike(null);
+ * // => false
+ */
+function isObjectLike(value) {
+  return !!value && typeof value == 'object';
+}
+
+/**
+ * Checks if `value` is classified as a `Symbol` primitive or object.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a symbol, else `false`.
+ * @example
+ *
+ * _.isSymbol(Symbol.iterator);
+ * // => true
+ *
+ * _.isSymbol('abc');
+ * // => false
+ */
+function isSymbol(value) {
+  return typeof value == 'symbol' ||
+    (isObjectLike(value) && objectToString.call(value) == symbolTag);
+}
+
+/**
+ * Converts `value` to a number.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to process.
+ * @returns {number} Returns the number.
+ * @example
+ *
+ * _.toNumber(3.2);
+ * // => 3.2
+ *
+ * _.toNumber(Number.MIN_VALUE);
+ * // => 5e-324
+ *
+ * _.toNumber(Infinity);
+ * // => Infinity
+ *
+ * _.toNumber('3.2');
+ * // => 3.2
+ */
+function toNumber(value) {
+  if (typeof value == 'number') {
+    return value;
+  }
+  if (isSymbol(value)) {
+    return NAN;
+  }
+  if (isObject(value)) {
+    var other = typeof value.valueOf == 'function' ? value.valueOf() : value;
+    value = isObject(other) ? (other + '') : other;
+  }
+  if (typeof value != 'string') {
+    return value === 0 ? value : +value;
+  }
+  value = value.replace(reTrim, '');
+  var isBinary = reIsBinary.test(value);
+  return (isBinary || reIsOctal.test(value))
+    ? freeParseInt(value.slice(2), isBinary ? 2 : 8)
+    : (reIsBadHex.test(value) ? NAN : +value);
+}
+
+module.exports = debounce;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash.memoize/index.js":
+/*!**********************************************!*\
+  !*** ./node_modules/lodash.memoize/index.js ***!
+  \**********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+/**
+ * lodash (Custom Build) <https://lodash.com/>
+ * Build: `lodash modularize exports="npm" -o ./`
+ * Copyright jQuery Foundation and other contributors <https://jquery.org/>
+ * Released under MIT license <https://lodash.com/license>
+ * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+ * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ */
+
+/** Used as the `TypeError` message for "Functions" methods. */
+var FUNC_ERROR_TEXT = 'Expected a function';
+
+/** Used to stand-in for `undefined` hash values. */
+var HASH_UNDEFINED = '__lodash_hash_undefined__';
+
+/** `Object#toString` result references. */
+var funcTag = '[object Function]',
+    genTag = '[object GeneratorFunction]';
+
+/**
+ * Used to match `RegExp`
+ * [syntax characters](http://ecma-international.org/ecma-262/7.0/#sec-patterns).
+ */
+var reRegExpChar = /[\\^$.*+?()[\]{}|]/g;
+
+/** Used to detect host constructors (Safari). */
+var reIsHostCtor = /^\[object .+?Constructor\]$/;
+
+/** Detect free variable `global` from Node.js. */
+var freeGlobal = typeof __webpack_require__.g == 'object' && __webpack_require__.g && __webpack_require__.g.Object === Object && __webpack_require__.g;
+
+/** Detect free variable `self`. */
+var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
+
+/** Used as a reference to the global object. */
+var root = freeGlobal || freeSelf || Function('return this')();
+
+/**
+ * Gets the value at `key` of `object`.
+ *
+ * @private
+ * @param {Object} [object] The object to query.
+ * @param {string} key The key of the property to get.
+ * @returns {*} Returns the property value.
+ */
+function getValue(object, key) {
+  return object == null ? undefined : object[key];
+}
+
+/**
+ * Checks if `value` is a host object in IE < 9.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a host object, else `false`.
+ */
+function isHostObject(value) {
+  // Many host objects are `Object` objects that can coerce to strings
+  // despite having improperly defined `toString` methods.
+  var result = false;
+  if (value != null && typeof value.toString != 'function') {
+    try {
+      result = !!(value + '');
+    } catch (e) {}
+  }
+  return result;
+}
+
+/** Used for built-in method references. */
+var arrayProto = Array.prototype,
+    funcProto = Function.prototype,
+    objectProto = Object.prototype;
+
+/** Used to detect overreaching core-js shims. */
+var coreJsData = root['__core-js_shared__'];
+
+/** Used to detect methods masquerading as native. */
+var maskSrcKey = (function() {
+  var uid = /[^.]+$/.exec(coreJsData && coreJsData.keys && coreJsData.keys.IE_PROTO || '');
+  return uid ? ('Symbol(src)_1.' + uid) : '';
+}());
+
+/** Used to resolve the decompiled source of functions. */
+var funcToString = funcProto.toString;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/**
+ * Used to resolve the
+ * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+ * of values.
+ */
+var objectToString = objectProto.toString;
+
+/** Used to detect if a method is native. */
+var reIsNative = RegExp('^' +
+  funcToString.call(hasOwnProperty).replace(reRegExpChar, '\\$&')
+  .replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$'
+);
+
+/** Built-in value references. */
+var splice = arrayProto.splice;
+
+/* Built-in method references that are verified to be native. */
+var Map = getNative(root, 'Map'),
+    nativeCreate = getNative(Object, 'create');
+
+/**
+ * Creates a hash object.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [entries] The key-value pairs to cache.
+ */
+function Hash(entries) {
+  var index = -1,
+      length = entries ? entries.length : 0;
+
+  this.clear();
+  while (++index < length) {
+    var entry = entries[index];
+    this.set(entry[0], entry[1]);
+  }
+}
+
+/**
+ * Removes all key-value entries from the hash.
+ *
+ * @private
+ * @name clear
+ * @memberOf Hash
+ */
+function hashClear() {
+  this.__data__ = nativeCreate ? nativeCreate(null) : {};
+}
+
+/**
+ * Removes `key` and its value from the hash.
+ *
+ * @private
+ * @name delete
+ * @memberOf Hash
+ * @param {Object} hash The hash to modify.
+ * @param {string} key The key of the value to remove.
+ * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+ */
+function hashDelete(key) {
+  return this.has(key) && delete this.__data__[key];
+}
+
+/**
+ * Gets the hash value for `key`.
+ *
+ * @private
+ * @name get
+ * @memberOf Hash
+ * @param {string} key The key of the value to get.
+ * @returns {*} Returns the entry value.
+ */
+function hashGet(key) {
+  var data = this.__data__;
+  if (nativeCreate) {
+    var result = data[key];
+    return result === HASH_UNDEFINED ? undefined : result;
+  }
+  return hasOwnProperty.call(data, key) ? data[key] : undefined;
+}
+
+/**
+ * Checks if a hash value for `key` exists.
+ *
+ * @private
+ * @name has
+ * @memberOf Hash
+ * @param {string} key The key of the entry to check.
+ * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+ */
+function hashHas(key) {
+  var data = this.__data__;
+  return nativeCreate ? data[key] !== undefined : hasOwnProperty.call(data, key);
+}
+
+/**
+ * Sets the hash `key` to `value`.
+ *
+ * @private
+ * @name set
+ * @memberOf Hash
+ * @param {string} key The key of the value to set.
+ * @param {*} value The value to set.
+ * @returns {Object} Returns the hash instance.
+ */
+function hashSet(key, value) {
+  var data = this.__data__;
+  data[key] = (nativeCreate && value === undefined) ? HASH_UNDEFINED : value;
+  return this;
+}
+
+// Add methods to `Hash`.
+Hash.prototype.clear = hashClear;
+Hash.prototype['delete'] = hashDelete;
+Hash.prototype.get = hashGet;
+Hash.prototype.has = hashHas;
+Hash.prototype.set = hashSet;
+
+/**
+ * Creates an list cache object.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [entries] The key-value pairs to cache.
+ */
+function ListCache(entries) {
+  var index = -1,
+      length = entries ? entries.length : 0;
+
+  this.clear();
+  while (++index < length) {
+    var entry = entries[index];
+    this.set(entry[0], entry[1]);
+  }
+}
+
+/**
+ * Removes all key-value entries from the list cache.
+ *
+ * @private
+ * @name clear
+ * @memberOf ListCache
+ */
+function listCacheClear() {
+  this.__data__ = [];
+}
+
+/**
+ * Removes `key` and its value from the list cache.
+ *
+ * @private
+ * @name delete
+ * @memberOf ListCache
+ * @param {string} key The key of the value to remove.
+ * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+ */
+function listCacheDelete(key) {
+  var data = this.__data__,
+      index = assocIndexOf(data, key);
+
+  if (index < 0) {
+    return false;
+  }
+  var lastIndex = data.length - 1;
+  if (index == lastIndex) {
+    data.pop();
+  } else {
+    splice.call(data, index, 1);
+  }
+  return true;
+}
+
+/**
+ * Gets the list cache value for `key`.
+ *
+ * @private
+ * @name get
+ * @memberOf ListCache
+ * @param {string} key The key of the value to get.
+ * @returns {*} Returns the entry value.
+ */
+function listCacheGet(key) {
+  var data = this.__data__,
+      index = assocIndexOf(data, key);
+
+  return index < 0 ? undefined : data[index][1];
+}
+
+/**
+ * Checks if a list cache value for `key` exists.
+ *
+ * @private
+ * @name has
+ * @memberOf ListCache
+ * @param {string} key The key of the entry to check.
+ * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+ */
+function listCacheHas(key) {
+  return assocIndexOf(this.__data__, key) > -1;
+}
+
+/**
+ * Sets the list cache `key` to `value`.
+ *
+ * @private
+ * @name set
+ * @memberOf ListCache
+ * @param {string} key The key of the value to set.
+ * @param {*} value The value to set.
+ * @returns {Object} Returns the list cache instance.
+ */
+function listCacheSet(key, value) {
+  var data = this.__data__,
+      index = assocIndexOf(data, key);
+
+  if (index < 0) {
+    data.push([key, value]);
+  } else {
+    data[index][1] = value;
+  }
+  return this;
+}
+
+// Add methods to `ListCache`.
+ListCache.prototype.clear = listCacheClear;
+ListCache.prototype['delete'] = listCacheDelete;
+ListCache.prototype.get = listCacheGet;
+ListCache.prototype.has = listCacheHas;
+ListCache.prototype.set = listCacheSet;
+
+/**
+ * Creates a map cache object to store key-value pairs.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [entries] The key-value pairs to cache.
+ */
+function MapCache(entries) {
+  var index = -1,
+      length = entries ? entries.length : 0;
+
+  this.clear();
+  while (++index < length) {
+    var entry = entries[index];
+    this.set(entry[0], entry[1]);
+  }
+}
+
+/**
+ * Removes all key-value entries from the map.
+ *
+ * @private
+ * @name clear
+ * @memberOf MapCache
+ */
+function mapCacheClear() {
+  this.__data__ = {
+    'hash': new Hash,
+    'map': new (Map || ListCache),
+    'string': new Hash
+  };
+}
+
+/**
+ * Removes `key` and its value from the map.
+ *
+ * @private
+ * @name delete
+ * @memberOf MapCache
+ * @param {string} key The key of the value to remove.
+ * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+ */
+function mapCacheDelete(key) {
+  return getMapData(this, key)['delete'](key);
+}
+
+/**
+ * Gets the map value for `key`.
+ *
+ * @private
+ * @name get
+ * @memberOf MapCache
+ * @param {string} key The key of the value to get.
+ * @returns {*} Returns the entry value.
+ */
+function mapCacheGet(key) {
+  return getMapData(this, key).get(key);
+}
+
+/**
+ * Checks if a map value for `key` exists.
+ *
+ * @private
+ * @name has
+ * @memberOf MapCache
+ * @param {string} key The key of the entry to check.
+ * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+ */
+function mapCacheHas(key) {
+  return getMapData(this, key).has(key);
+}
+
+/**
+ * Sets the map `key` to `value`.
+ *
+ * @private
+ * @name set
+ * @memberOf MapCache
+ * @param {string} key The key of the value to set.
+ * @param {*} value The value to set.
+ * @returns {Object} Returns the map cache instance.
+ */
+function mapCacheSet(key, value) {
+  getMapData(this, key).set(key, value);
+  return this;
+}
+
+// Add methods to `MapCache`.
+MapCache.prototype.clear = mapCacheClear;
+MapCache.prototype['delete'] = mapCacheDelete;
+MapCache.prototype.get = mapCacheGet;
+MapCache.prototype.has = mapCacheHas;
+MapCache.prototype.set = mapCacheSet;
+
+/**
+ * Gets the index at which the `key` is found in `array` of key-value pairs.
+ *
+ * @private
+ * @param {Array} array The array to inspect.
+ * @param {*} key The key to search for.
+ * @returns {number} Returns the index of the matched value, else `-1`.
+ */
+function assocIndexOf(array, key) {
+  var length = array.length;
+  while (length--) {
+    if (eq(array[length][0], key)) {
+      return length;
+    }
+  }
+  return -1;
+}
+
+/**
+ * The base implementation of `_.isNative` without bad shim checks.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a native function,
+ *  else `false`.
+ */
+function baseIsNative(value) {
+  if (!isObject(value) || isMasked(value)) {
+    return false;
+  }
+  var pattern = (isFunction(value) || isHostObject(value)) ? reIsNative : reIsHostCtor;
+  return pattern.test(toSource(value));
+}
+
+/**
+ * Gets the data for `map`.
+ *
+ * @private
+ * @param {Object} map The map to query.
+ * @param {string} key The reference key.
+ * @returns {*} Returns the map data.
+ */
+function getMapData(map, key) {
+  var data = map.__data__;
+  return isKeyable(key)
+    ? data[typeof key == 'string' ? 'string' : 'hash']
+    : data.map;
+}
+
+/**
+ * Gets the native function at `key` of `object`.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @param {string} key The key of the method to get.
+ * @returns {*} Returns the function if it's native, else `undefined`.
+ */
+function getNative(object, key) {
+  var value = getValue(object, key);
+  return baseIsNative(value) ? value : undefined;
+}
+
+/**
+ * Checks if `value` is suitable for use as unique object key.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is suitable, else `false`.
+ */
+function isKeyable(value) {
+  var type = typeof value;
+  return (type == 'string' || type == 'number' || type == 'symbol' || type == 'boolean')
+    ? (value !== '__proto__')
+    : (value === null);
+}
+
+/**
+ * Checks if `func` has its source masked.
+ *
+ * @private
+ * @param {Function} func The function to check.
+ * @returns {boolean} Returns `true` if `func` is masked, else `false`.
+ */
+function isMasked(func) {
+  return !!maskSrcKey && (maskSrcKey in func);
+}
+
+/**
+ * Converts `func` to its source code.
+ *
+ * @private
+ * @param {Function} func The function to process.
+ * @returns {string} Returns the source code.
+ */
+function toSource(func) {
+  if (func != null) {
+    try {
+      return funcToString.call(func);
+    } catch (e) {}
+    try {
+      return (func + '');
+    } catch (e) {}
+  }
+  return '';
+}
+
+/**
+ * Creates a function that memoizes the result of `func`. If `resolver` is
+ * provided, it determines the cache key for storing the result based on the
+ * arguments provided to the memoized function. By default, the first argument
+ * provided to the memoized function is used as the map cache key. The `func`
+ * is invoked with the `this` binding of the memoized function.
+ *
+ * **Note:** The cache is exposed as the `cache` property on the memoized
+ * function. Its creation may be customized by replacing the `_.memoize.Cache`
+ * constructor with one whose instances implement the
+ * [`Map`](http://ecma-international.org/ecma-262/7.0/#sec-properties-of-the-map-prototype-object)
+ * method interface of `delete`, `get`, `has`, and `set`.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Function
+ * @param {Function} func The function to have its output memoized.
+ * @param {Function} [resolver] The function to resolve the cache key.
+ * @returns {Function} Returns the new memoized function.
+ * @example
+ *
+ * var object = { 'a': 1, 'b': 2 };
+ * var other = { 'c': 3, 'd': 4 };
+ *
+ * var values = _.memoize(_.values);
+ * values(object);
+ * // => [1, 2]
+ *
+ * values(other);
+ * // => [3, 4]
+ *
+ * object.a = 2;
+ * values(object);
+ * // => [1, 2]
+ *
+ * // Modify the result cache.
+ * values.cache.set(object, ['a', 'b']);
+ * values(object);
+ * // => ['a', 'b']
+ *
+ * // Replace `_.memoize.Cache`.
+ * _.memoize.Cache = WeakMap;
+ */
+function memoize(func, resolver) {
+  if (typeof func != 'function' || (resolver && typeof resolver != 'function')) {
+    throw new TypeError(FUNC_ERROR_TEXT);
+  }
+  var memoized = function() {
+    var args = arguments,
+        key = resolver ? resolver.apply(this, args) : args[0],
+        cache = memoized.cache;
+
+    if (cache.has(key)) {
+      return cache.get(key);
+    }
+    var result = func.apply(this, args);
+    memoized.cache = cache.set(key, result);
+    return result;
+  };
+  memoized.cache = new (memoize.Cache || MapCache);
+  return memoized;
+}
+
+// Assign cache to `_.memoize`.
+memoize.Cache = MapCache;
+
+/**
+ * Performs a
+ * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
+ * comparison between two values to determine if they are equivalent.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to compare.
+ * @param {*} other The other value to compare.
+ * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
+ * @example
+ *
+ * var object = { 'a': 1 };
+ * var other = { 'a': 1 };
+ *
+ * _.eq(object, object);
+ * // => true
+ *
+ * _.eq(object, other);
+ * // => false
+ *
+ * _.eq('a', 'a');
+ * // => true
+ *
+ * _.eq('a', Object('a'));
+ * // => false
+ *
+ * _.eq(NaN, NaN);
+ * // => true
+ */
+function eq(value, other) {
+  return value === other || (value !== value && other !== other);
+}
+
+/**
+ * Checks if `value` is classified as a `Function` object.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a function, else `false`.
+ * @example
+ *
+ * _.isFunction(_);
+ * // => true
+ *
+ * _.isFunction(/abc/);
+ * // => false
+ */
+function isFunction(value) {
+  // The use of `Object#toString` avoids issues with the `typeof` operator
+  // in Safari 8-9 which returns 'object' for typed array and other constructors.
+  var tag = isObject(value) ? objectToString.call(value) : '';
+  return tag == funcTag || tag == genTag;
+}
+
+/**
+ * Checks if `value` is the
+ * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
+ * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an object, else `false`.
+ * @example
+ *
+ * _.isObject({});
+ * // => true
+ *
+ * _.isObject([1, 2, 3]);
+ * // => true
+ *
+ * _.isObject(_.noop);
+ * // => true
+ *
+ * _.isObject(null);
+ * // => false
+ */
+function isObject(value) {
+  var type = typeof value;
+  return !!value && (type == 'object' || type == 'function');
+}
+
+module.exports = memoize;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash.throttle/index.js":
+/*!***********************************************!*\
+  !*** ./node_modules/lodash.throttle/index.js ***!
+  \***********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+/**
+ * lodash (Custom Build) <https://lodash.com/>
+ * Build: `lodash modularize exports="npm" -o ./`
+ * Copyright jQuery Foundation and other contributors <https://jquery.org/>
+ * Released under MIT license <https://lodash.com/license>
+ * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+ * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ */
+
+/** Used as the `TypeError` message for "Functions" methods. */
+var FUNC_ERROR_TEXT = 'Expected a function';
+
+/** Used as references for various `Number` constants. */
+var NAN = 0 / 0;
+
+/** `Object#toString` result references. */
+var symbolTag = '[object Symbol]';
+
+/** Used to match leading and trailing whitespace. */
+var reTrim = /^\s+|\s+$/g;
+
+/** Used to detect bad signed hexadecimal string values. */
+var reIsBadHex = /^[-+]0x[0-9a-f]+$/i;
+
+/** Used to detect binary string values. */
+var reIsBinary = /^0b[01]+$/i;
+
+/** Used to detect octal string values. */
+var reIsOctal = /^0o[0-7]+$/i;
+
+/** Built-in method references without a dependency on `root`. */
+var freeParseInt = parseInt;
+
+/** Detect free variable `global` from Node.js. */
+var freeGlobal = typeof __webpack_require__.g == 'object' && __webpack_require__.g && __webpack_require__.g.Object === Object && __webpack_require__.g;
+
+/** Detect free variable `self`. */
+var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
+
+/** Used as a reference to the global object. */
+var root = freeGlobal || freeSelf || Function('return this')();
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+
+/**
+ * Used to resolve the
+ * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+ * of values.
+ */
+var objectToString = objectProto.toString;
+
+/* Built-in method references for those with the same name as other `lodash` methods. */
+var nativeMax = Math.max,
+    nativeMin = Math.min;
+
+/**
+ * Gets the timestamp of the number of milliseconds that have elapsed since
+ * the Unix epoch (1 January 1970 00:00:00 UTC).
+ *
+ * @static
+ * @memberOf _
+ * @since 2.4.0
+ * @category Date
+ * @returns {number} Returns the timestamp.
+ * @example
+ *
+ * _.defer(function(stamp) {
+ *   console.log(_.now() - stamp);
+ * }, _.now());
+ * // => Logs the number of milliseconds it took for the deferred invocation.
+ */
+var now = function() {
+  return root.Date.now();
+};
+
+/**
+ * Creates a debounced function that delays invoking `func` until after `wait`
+ * milliseconds have elapsed since the last time the debounced function was
+ * invoked. The debounced function comes with a `cancel` method to cancel
+ * delayed `func` invocations and a `flush` method to immediately invoke them.
+ * Provide `options` to indicate whether `func` should be invoked on the
+ * leading and/or trailing edge of the `wait` timeout. The `func` is invoked
+ * with the last arguments provided to the debounced function. Subsequent
+ * calls to the debounced function return the result of the last `func`
+ * invocation.
+ *
+ * **Note:** If `leading` and `trailing` options are `true`, `func` is
+ * invoked on the trailing edge of the timeout only if the debounced function
+ * is invoked more than once during the `wait` timeout.
+ *
+ * If `wait` is `0` and `leading` is `false`, `func` invocation is deferred
+ * until to the next tick, similar to `setTimeout` with a timeout of `0`.
+ *
+ * See [David Corbacho's article](https://css-tricks.com/debouncing-throttling-explained-examples/)
+ * for details over the differences between `_.debounce` and `_.throttle`.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Function
+ * @param {Function} func The function to debounce.
+ * @param {number} [wait=0] The number of milliseconds to delay.
+ * @param {Object} [options={}] The options object.
+ * @param {boolean} [options.leading=false]
+ *  Specify invoking on the leading edge of the timeout.
+ * @param {number} [options.maxWait]
+ *  The maximum time `func` is allowed to be delayed before it's invoked.
+ * @param {boolean} [options.trailing=true]
+ *  Specify invoking on the trailing edge of the timeout.
+ * @returns {Function} Returns the new debounced function.
+ * @example
+ *
+ * // Avoid costly calculations while the window size is in flux.
+ * jQuery(window).on('resize', _.debounce(calculateLayout, 150));
+ *
+ * // Invoke `sendMail` when clicked, debouncing subsequent calls.
+ * jQuery(element).on('click', _.debounce(sendMail, 300, {
+ *   'leading': true,
+ *   'trailing': false
+ * }));
+ *
+ * // Ensure `batchLog` is invoked once after 1 second of debounced calls.
+ * var debounced = _.debounce(batchLog, 250, { 'maxWait': 1000 });
+ * var source = new EventSource('/stream');
+ * jQuery(source).on('message', debounced);
+ *
+ * // Cancel the trailing debounced invocation.
+ * jQuery(window).on('popstate', debounced.cancel);
+ */
+function debounce(func, wait, options) {
+  var lastArgs,
+      lastThis,
+      maxWait,
+      result,
+      timerId,
+      lastCallTime,
+      lastInvokeTime = 0,
+      leading = false,
+      maxing = false,
+      trailing = true;
+
+  if (typeof func != 'function') {
+    throw new TypeError(FUNC_ERROR_TEXT);
+  }
+  wait = toNumber(wait) || 0;
+  if (isObject(options)) {
+    leading = !!options.leading;
+    maxing = 'maxWait' in options;
+    maxWait = maxing ? nativeMax(toNumber(options.maxWait) || 0, wait) : maxWait;
+    trailing = 'trailing' in options ? !!options.trailing : trailing;
+  }
+
+  function invokeFunc(time) {
+    var args = lastArgs,
+        thisArg = lastThis;
+
+    lastArgs = lastThis = undefined;
+    lastInvokeTime = time;
+    result = func.apply(thisArg, args);
+    return result;
+  }
+
+  function leadingEdge(time) {
+    // Reset any `maxWait` timer.
+    lastInvokeTime = time;
+    // Start the timer for the trailing edge.
+    timerId = setTimeout(timerExpired, wait);
+    // Invoke the leading edge.
+    return leading ? invokeFunc(time) : result;
+  }
+
+  function remainingWait(time) {
+    var timeSinceLastCall = time - lastCallTime,
+        timeSinceLastInvoke = time - lastInvokeTime,
+        result = wait - timeSinceLastCall;
+
+    return maxing ? nativeMin(result, maxWait - timeSinceLastInvoke) : result;
+  }
+
+  function shouldInvoke(time) {
+    var timeSinceLastCall = time - lastCallTime,
+        timeSinceLastInvoke = time - lastInvokeTime;
+
+    // Either this is the first call, activity has stopped and we're at the
+    // trailing edge, the system time has gone backwards and we're treating
+    // it as the trailing edge, or we've hit the `maxWait` limit.
+    return (lastCallTime === undefined || (timeSinceLastCall >= wait) ||
+      (timeSinceLastCall < 0) || (maxing && timeSinceLastInvoke >= maxWait));
+  }
+
+  function timerExpired() {
+    var time = now();
+    if (shouldInvoke(time)) {
+      return trailingEdge(time);
+    }
+    // Restart the timer.
+    timerId = setTimeout(timerExpired, remainingWait(time));
+  }
+
+  function trailingEdge(time) {
+    timerId = undefined;
+
+    // Only invoke if we have `lastArgs` which means `func` has been
+    // debounced at least once.
+    if (trailing && lastArgs) {
+      return invokeFunc(time);
+    }
+    lastArgs = lastThis = undefined;
+    return result;
+  }
+
+  function cancel() {
+    if (timerId !== undefined) {
+      clearTimeout(timerId);
+    }
+    lastInvokeTime = 0;
+    lastArgs = lastCallTime = lastThis = timerId = undefined;
+  }
+
+  function flush() {
+    return timerId === undefined ? result : trailingEdge(now());
+  }
+
+  function debounced() {
+    var time = now(),
+        isInvoking = shouldInvoke(time);
+
+    lastArgs = arguments;
+    lastThis = this;
+    lastCallTime = time;
+
+    if (isInvoking) {
+      if (timerId === undefined) {
+        return leadingEdge(lastCallTime);
+      }
+      if (maxing) {
+        // Handle invocations in a tight loop.
+        timerId = setTimeout(timerExpired, wait);
+        return invokeFunc(lastCallTime);
+      }
+    }
+    if (timerId === undefined) {
+      timerId = setTimeout(timerExpired, wait);
+    }
+    return result;
+  }
+  debounced.cancel = cancel;
+  debounced.flush = flush;
+  return debounced;
+}
+
+/**
+ * Creates a throttled function that only invokes `func` at most once per
+ * every `wait` milliseconds. The throttled function comes with a `cancel`
+ * method to cancel delayed `func` invocations and a `flush` method to
+ * immediately invoke them. Provide `options` to indicate whether `func`
+ * should be invoked on the leading and/or trailing edge of the `wait`
+ * timeout. The `func` is invoked with the last arguments provided to the
+ * throttled function. Subsequent calls to the throttled function return the
+ * result of the last `func` invocation.
+ *
+ * **Note:** If `leading` and `trailing` options are `true`, `func` is
+ * invoked on the trailing edge of the timeout only if the throttled function
+ * is invoked more than once during the `wait` timeout.
+ *
+ * If `wait` is `0` and `leading` is `false`, `func` invocation is deferred
+ * until to the next tick, similar to `setTimeout` with a timeout of `0`.
+ *
+ * See [David Corbacho's article](https://css-tricks.com/debouncing-throttling-explained-examples/)
+ * for details over the differences between `_.throttle` and `_.debounce`.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Function
+ * @param {Function} func The function to throttle.
+ * @param {number} [wait=0] The number of milliseconds to throttle invocations to.
+ * @param {Object} [options={}] The options object.
+ * @param {boolean} [options.leading=true]
+ *  Specify invoking on the leading edge of the timeout.
+ * @param {boolean} [options.trailing=true]
+ *  Specify invoking on the trailing edge of the timeout.
+ * @returns {Function} Returns the new throttled function.
+ * @example
+ *
+ * // Avoid excessively updating the position while scrolling.
+ * jQuery(window).on('scroll', _.throttle(updatePosition, 100));
+ *
+ * // Invoke `renewToken` when the click event is fired, but not more than once every 5 minutes.
+ * var throttled = _.throttle(renewToken, 300000, { 'trailing': false });
+ * jQuery(element).on('click', throttled);
+ *
+ * // Cancel the trailing throttled invocation.
+ * jQuery(window).on('popstate', throttled.cancel);
+ */
+function throttle(func, wait, options) {
+  var leading = true,
+      trailing = true;
+
+  if (typeof func != 'function') {
+    throw new TypeError(FUNC_ERROR_TEXT);
+  }
+  if (isObject(options)) {
+    leading = 'leading' in options ? !!options.leading : leading;
+    trailing = 'trailing' in options ? !!options.trailing : trailing;
+  }
+  return debounce(func, wait, {
+    'leading': leading,
+    'maxWait': wait,
+    'trailing': trailing
+  });
+}
+
+/**
+ * Checks if `value` is the
+ * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
+ * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an object, else `false`.
+ * @example
+ *
+ * _.isObject({});
+ * // => true
+ *
+ * _.isObject([1, 2, 3]);
+ * // => true
+ *
+ * _.isObject(_.noop);
+ * // => true
+ *
+ * _.isObject(null);
+ * // => false
+ */
+function isObject(value) {
+  var type = typeof value;
+  return !!value && (type == 'object' || type == 'function');
+}
+
+/**
+ * Checks if `value` is object-like. A value is object-like if it's not `null`
+ * and has a `typeof` result of "object".
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+ * @example
+ *
+ * _.isObjectLike({});
+ * // => true
+ *
+ * _.isObjectLike([1, 2, 3]);
+ * // => true
+ *
+ * _.isObjectLike(_.noop);
+ * // => false
+ *
+ * _.isObjectLike(null);
+ * // => false
+ */
+function isObjectLike(value) {
+  return !!value && typeof value == 'object';
+}
+
+/**
+ * Checks if `value` is classified as a `Symbol` primitive or object.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a symbol, else `false`.
+ * @example
+ *
+ * _.isSymbol(Symbol.iterator);
+ * // => true
+ *
+ * _.isSymbol('abc');
+ * // => false
+ */
+function isSymbol(value) {
+  return typeof value == 'symbol' ||
+    (isObjectLike(value) && objectToString.call(value) == symbolTag);
+}
+
+/**
+ * Converts `value` to a number.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to process.
+ * @returns {number} Returns the number.
+ * @example
+ *
+ * _.toNumber(3.2);
+ * // => 3.2
+ *
+ * _.toNumber(Number.MIN_VALUE);
+ * // => 5e-324
+ *
+ * _.toNumber(Infinity);
+ * // => Infinity
+ *
+ * _.toNumber('3.2');
+ * // => 3.2
+ */
+function toNumber(value) {
+  if (typeof value == 'number') {
+    return value;
+  }
+  if (isSymbol(value)) {
+    return NAN;
+  }
+  if (isObject(value)) {
+    var other = typeof value.valueOf == 'function' ? value.valueOf() : value;
+    value = isObject(other) ? (other + '') : other;
+  }
+  if (typeof value != 'string') {
+    return value === 0 ? value : +value;
+  }
+  value = value.replace(reTrim, '');
+  var isBinary = reIsBinary.test(value);
+  return (isBinary || reIsOctal.test(value))
+    ? freeParseInt(value.slice(2), isBinary ? 2 : 8)
+    : (reIsBadHex.test(value) ? NAN : +value);
+}
+
+module.exports = throttle;
 
 
 /***/ }),
@@ -44874,6 +56145,4756 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
+/***/ "./node_modules/simplebar/dist/simplebar.esm.js":
+/*!******************************************************!*\
+  !*** ./node_modules/simplebar/dist/simplebar.esm.js ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var core_js_modules_es_array_for_each__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.array.for-each */ "./node_modules/core-js/modules/es.array.for-each.js");
+/* harmony import */ var core_js_modules_es_array_for_each__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_for_each__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var can_use_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! can-use-dom */ "./node_modules/can-use-dom/index.js");
+/* harmony import */ var can_use_dom__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(can_use_dom__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var core_js_modules_es_array_filter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! core-js/modules/es.array.filter */ "./node_modules/core-js/modules/es.array.filter.js");
+/* harmony import */ var core_js_modules_es_array_filter__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_filter__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var core_js_modules_es_array_iterator__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! core-js/modules/es.array.iterator */ "./node_modules/core-js/modules/es.array.iterator.js");
+/* harmony import */ var core_js_modules_es_array_iterator__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_iterator__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var core_js_modules_es_object_assign__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! core-js/modules/es.object.assign */ "./node_modules/core-js/modules/es.object.assign.js");
+/* harmony import */ var core_js_modules_es_object_assign__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_object_assign__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var core_js_modules_es_object_to_string__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! core-js/modules/es.object.to-string */ "./node_modules/core-js/modules/es.object.to-string.js");
+/* harmony import */ var core_js_modules_es_object_to_string__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_object_to_string__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var core_js_modules_es_parse_int__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! core-js/modules/es.parse-int */ "./node_modules/core-js/modules/es.parse-int.js");
+/* harmony import */ var core_js_modules_es_parse_int__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_parse_int__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var core_js_modules_es_string_iterator__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! core-js/modules/es.string.iterator */ "./node_modules/core-js/modules/es.string.iterator.js");
+/* harmony import */ var core_js_modules_es_string_iterator__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_iterator__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var core_js_modules_es_weak_map__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! core-js/modules/es.weak-map */ "./node_modules/core-js/modules/es.weak-map.js");
+/* harmony import */ var core_js_modules_es_weak_map__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_weak_map__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var core_js_modules_web_dom_collections_iterator__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! core-js/modules/web.dom-collections.iterator */ "./node_modules/core-js/modules/web.dom-collections.iterator.js");
+/* harmony import */ var core_js_modules_web_dom_collections_iterator__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_iterator__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var lodash_throttle__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! lodash.throttle */ "./node_modules/lodash.throttle/index.js");
+/* harmony import */ var lodash_throttle__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(lodash_throttle__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var lodash_debounce__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! lodash.debounce */ "./node_modules/lodash.debounce/index.js");
+/* harmony import */ var lodash_debounce__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(lodash_debounce__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var lodash_memoize__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! lodash.memoize */ "./node_modules/lodash.memoize/index.js");
+/* harmony import */ var lodash_memoize__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(lodash_memoize__WEBPACK_IMPORTED_MODULE_13__);
+/* harmony import */ var _juggle_resize_observer__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @juggle/resize-observer */ "./node_modules/@juggle/resize-observer/lib/exports/resize-observer.js");
+/* harmony import */ var core_js_modules_es_array_reduce__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! core-js/modules/es.array.reduce */ "./node_modules/core-js/modules/es.array.reduce.js");
+/* harmony import */ var core_js_modules_es_array_reduce__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_reduce__WEBPACK_IMPORTED_MODULE_15__);
+/* harmony import */ var core_js_modules_es_function_name__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! core-js/modules/es.function.name */ "./node_modules/core-js/modules/es.function.name.js");
+/* harmony import */ var core_js_modules_es_function_name__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_function_name__WEBPACK_IMPORTED_MODULE_16__);
+/* harmony import */ var core_js_modules_es_regexp_exec__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! core-js/modules/es.regexp.exec */ "./node_modules/core-js/modules/es.regexp.exec.js");
+/* harmony import */ var core_js_modules_es_regexp_exec__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_regexp_exec__WEBPACK_IMPORTED_MODULE_17__);
+/* harmony import */ var core_js_modules_es_string_match__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! core-js/modules/es.string.match */ "./node_modules/core-js/modules/es.string.match.js");
+/* harmony import */ var core_js_modules_es_string_match__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_match__WEBPACK_IMPORTED_MODULE_18__);
+/* harmony import */ var core_js_modules_es_string_replace__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! core-js/modules/es.string.replace */ "./node_modules/core-js/modules/es.string.replace.js");
+/* harmony import */ var core_js_modules_es_string_replace__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_replace__WEBPACK_IMPORTED_MODULE_19__);
+/**
+ * SimpleBar.js - v5.3.6
+ * Scrollbars, simpler.
+ * https://grsmto.github.io/simplebar/
+ *
+ * Made by Adrien Denat from a fork by Jonathan Nicol
+ * Under MIT License
+ */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Helper function to retrieve options from element attributes
+var getOptions = function getOptions(obj) {
+  var options = Array.prototype.reduce.call(obj, function (acc, attribute) {
+    var option = attribute.name.match(/data-simplebar-(.+)/);
+
+    if (option) {
+      var key = option[1].replace(/\W+(.)/g, function (x, chr) {
+        return chr.toUpperCase();
+      });
+
+      switch (attribute.value) {
+        case 'true':
+          acc[key] = true;
+          break;
+
+        case 'false':
+          acc[key] = false;
+          break;
+
+        case undefined:
+          acc[key] = true;
+          break;
+
+        default:
+          acc[key] = attribute.value;
+      }
+    }
+
+    return acc;
+  }, {});
+  return options;
+};
+function getElementWindow(element) {
+  if (!element || !element.ownerDocument || !element.ownerDocument.defaultView) {
+    return window;
+  }
+
+  return element.ownerDocument.defaultView;
+}
+function getElementDocument(element) {
+  if (!element || !element.ownerDocument) {
+    return document;
+  }
+
+  return element.ownerDocument;
+}
+
+var cachedScrollbarWidth = null;
+var cachedDevicePixelRatio = null;
+
+if ((can_use_dom__WEBPACK_IMPORTED_MODULE_2___default())) {
+  window.addEventListener('resize', function () {
+    if (cachedDevicePixelRatio !== window.devicePixelRatio) {
+      cachedDevicePixelRatio = window.devicePixelRatio;
+      cachedScrollbarWidth = null;
+    }
+  });
+}
+
+function scrollbarWidth(el) {
+  if (cachedScrollbarWidth === null) {
+    var document = getElementDocument(el);
+
+    if (typeof document === 'undefined') {
+      cachedScrollbarWidth = 0;
+      return cachedScrollbarWidth;
+    }
+
+    var body = document.body;
+    var box = document.createElement('div');
+    box.classList.add('simplebar-hide-scrollbar');
+    body.appendChild(box);
+    var width = box.getBoundingClientRect().right;
+    body.removeChild(box);
+    cachedScrollbarWidth = width;
+  }
+
+  return cachedScrollbarWidth;
+}
+
+var SimpleBar =
+/*#__PURE__*/
+function () {
+  function SimpleBar(element, options) {
+    var _this = this;
+
+    this.onScroll = function () {
+      var elWindow = getElementWindow(_this.el);
+
+      if (!_this.scrollXTicking) {
+        elWindow.requestAnimationFrame(_this.scrollX);
+        _this.scrollXTicking = true;
+      }
+
+      if (!_this.scrollYTicking) {
+        elWindow.requestAnimationFrame(_this.scrollY);
+        _this.scrollYTicking = true;
+      }
+    };
+
+    this.scrollX = function () {
+      if (_this.axis.x.isOverflowing) {
+        _this.showScrollbar('x');
+
+        _this.positionScrollbar('x');
+      }
+
+      _this.scrollXTicking = false;
+    };
+
+    this.scrollY = function () {
+      if (_this.axis.y.isOverflowing) {
+        _this.showScrollbar('y');
+
+        _this.positionScrollbar('y');
+      }
+
+      _this.scrollYTicking = false;
+    };
+
+    this.onMouseEnter = function () {
+      _this.showScrollbar('x');
+
+      _this.showScrollbar('y');
+    };
+
+    this.onMouseMove = function (e) {
+      _this.mouseX = e.clientX;
+      _this.mouseY = e.clientY;
+
+      if (_this.axis.x.isOverflowing || _this.axis.x.forceVisible) {
+        _this.onMouseMoveForAxis('x');
+      }
+
+      if (_this.axis.y.isOverflowing || _this.axis.y.forceVisible) {
+        _this.onMouseMoveForAxis('y');
+      }
+    };
+
+    this.onMouseLeave = function () {
+      _this.onMouseMove.cancel();
+
+      if (_this.axis.x.isOverflowing || _this.axis.x.forceVisible) {
+        _this.onMouseLeaveForAxis('x');
+      }
+
+      if (_this.axis.y.isOverflowing || _this.axis.y.forceVisible) {
+        _this.onMouseLeaveForAxis('y');
+      }
+
+      _this.mouseX = -1;
+      _this.mouseY = -1;
+    };
+
+    this.onWindowResize = function () {
+      // Recalculate scrollbarWidth in case it's a zoom
+      _this.scrollbarWidth = _this.getScrollbarWidth();
+
+      _this.hideNativeScrollbar();
+    };
+
+    this.hideScrollbars = function () {
+      _this.axis.x.track.rect = _this.axis.x.track.el.getBoundingClientRect();
+      _this.axis.y.track.rect = _this.axis.y.track.el.getBoundingClientRect();
+
+      if (!_this.isWithinBounds(_this.axis.y.track.rect)) {
+        _this.axis.y.scrollbar.el.classList.remove(_this.classNames.visible);
+
+        _this.axis.y.isVisible = false;
+      }
+
+      if (!_this.isWithinBounds(_this.axis.x.track.rect)) {
+        _this.axis.x.scrollbar.el.classList.remove(_this.classNames.visible);
+
+        _this.axis.x.isVisible = false;
+      }
+    };
+
+    this.onPointerEvent = function (e) {
+      var isWithinTrackXBounds, isWithinTrackYBounds;
+      _this.axis.x.track.rect = _this.axis.x.track.el.getBoundingClientRect();
+      _this.axis.y.track.rect = _this.axis.y.track.el.getBoundingClientRect();
+
+      if (_this.axis.x.isOverflowing || _this.axis.x.forceVisible) {
+        isWithinTrackXBounds = _this.isWithinBounds(_this.axis.x.track.rect);
+      }
+
+      if (_this.axis.y.isOverflowing || _this.axis.y.forceVisible) {
+        isWithinTrackYBounds = _this.isWithinBounds(_this.axis.y.track.rect);
+      } // If any pointer event is called on the scrollbar
+
+
+      if (isWithinTrackXBounds || isWithinTrackYBounds) {
+        // Preventing the event's default action stops text being
+        // selectable during the drag.
+        e.preventDefault(); // Prevent event leaking
+
+        e.stopPropagation();
+
+        if (e.type === 'mousedown') {
+          if (isWithinTrackXBounds) {
+            _this.axis.x.scrollbar.rect = _this.axis.x.scrollbar.el.getBoundingClientRect();
+
+            if (_this.isWithinBounds(_this.axis.x.scrollbar.rect)) {
+              _this.onDragStart(e, 'x');
+            } else {
+              _this.onTrackClick(e, 'x');
+            }
+          }
+
+          if (isWithinTrackYBounds) {
+            _this.axis.y.scrollbar.rect = _this.axis.y.scrollbar.el.getBoundingClientRect();
+
+            if (_this.isWithinBounds(_this.axis.y.scrollbar.rect)) {
+              _this.onDragStart(e, 'y');
+            } else {
+              _this.onTrackClick(e, 'y');
+            }
+          }
+        }
+      }
+    };
+
+    this.drag = function (e) {
+      var eventOffset;
+      var track = _this.axis[_this.draggedAxis].track;
+      var trackSize = track.rect[_this.axis[_this.draggedAxis].sizeAttr];
+      var scrollbar = _this.axis[_this.draggedAxis].scrollbar;
+      var contentSize = _this.contentWrapperEl[_this.axis[_this.draggedAxis].scrollSizeAttr];
+      var hostSize = parseInt(_this.elStyles[_this.axis[_this.draggedAxis].sizeAttr], 10);
+      e.preventDefault();
+      e.stopPropagation();
+
+      if (_this.draggedAxis === 'y') {
+        eventOffset = e.pageY;
+      } else {
+        eventOffset = e.pageX;
+      } // Calculate how far the user's mouse is from the top/left of the scrollbar (minus the dragOffset).
+
+
+      var dragPos = eventOffset - track.rect[_this.axis[_this.draggedAxis].offsetAttr] - _this.axis[_this.draggedAxis].dragOffset; // Convert the mouse position into a percentage of the scrollbar height/width.
+
+      var dragPerc = dragPos / (trackSize - scrollbar.size); // Scroll the content by the same percentage.
+
+      var scrollPos = dragPerc * (contentSize - hostSize); // Fix browsers inconsistency on RTL
+
+      if (_this.draggedAxis === 'x') {
+        scrollPos = _this.isRtl && SimpleBar.getRtlHelpers().isRtlScrollbarInverted ? scrollPos - (trackSize + scrollbar.size) : scrollPos;
+        scrollPos = _this.isRtl && SimpleBar.getRtlHelpers().isRtlScrollingInverted ? -scrollPos : scrollPos;
+      }
+
+      _this.contentWrapperEl[_this.axis[_this.draggedAxis].scrollOffsetAttr] = scrollPos;
+    };
+
+    this.onEndDrag = function (e) {
+      var elDocument = getElementDocument(_this.el);
+      var elWindow = getElementWindow(_this.el);
+      e.preventDefault();
+      e.stopPropagation();
+
+      _this.el.classList.remove(_this.classNames.dragging);
+
+      elDocument.removeEventListener('mousemove', _this.drag, true);
+      elDocument.removeEventListener('mouseup', _this.onEndDrag, true);
+      _this.removePreventClickId = elWindow.setTimeout(function () {
+        // Remove these asynchronously so we still suppress click events
+        // generated simultaneously with mouseup.
+        elDocument.removeEventListener('click', _this.preventClick, true);
+        elDocument.removeEventListener('dblclick', _this.preventClick, true);
+        _this.removePreventClickId = null;
+      });
+    };
+
+    this.preventClick = function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    };
+
+    this.el = element;
+    this.minScrollbarWidth = 20;
+    this.options = Object.assign({}, SimpleBar.defaultOptions, {}, options);
+    this.classNames = Object.assign({}, SimpleBar.defaultOptions.classNames, {}, this.options.classNames);
+    this.axis = {
+      x: {
+        scrollOffsetAttr: 'scrollLeft',
+        sizeAttr: 'width',
+        scrollSizeAttr: 'scrollWidth',
+        offsetSizeAttr: 'offsetWidth',
+        offsetAttr: 'left',
+        overflowAttr: 'overflowX',
+        dragOffset: 0,
+        isOverflowing: true,
+        isVisible: false,
+        forceVisible: false,
+        track: {},
+        scrollbar: {}
+      },
+      y: {
+        scrollOffsetAttr: 'scrollTop',
+        sizeAttr: 'height',
+        scrollSizeAttr: 'scrollHeight',
+        offsetSizeAttr: 'offsetHeight',
+        offsetAttr: 'top',
+        overflowAttr: 'overflowY',
+        dragOffset: 0,
+        isOverflowing: true,
+        isVisible: false,
+        forceVisible: false,
+        track: {},
+        scrollbar: {}
+      }
+    };
+    this.removePreventClickId = null; // Don't re-instantiate over an existing one
+
+    if (SimpleBar.instances.has(this.el)) {
+      return;
+    }
+
+    this.recalculate = lodash_throttle__WEBPACK_IMPORTED_MODULE_11___default()(this.recalculate.bind(this), 64);
+    this.onMouseMove = lodash_throttle__WEBPACK_IMPORTED_MODULE_11___default()(this.onMouseMove.bind(this), 64);
+    this.hideScrollbars = lodash_debounce__WEBPACK_IMPORTED_MODULE_12___default()(this.hideScrollbars.bind(this), this.options.timeout);
+    this.onWindowResize = lodash_debounce__WEBPACK_IMPORTED_MODULE_12___default()(this.onWindowResize.bind(this), 64, {
+      leading: true
+    });
+    SimpleBar.getRtlHelpers = lodash_memoize__WEBPACK_IMPORTED_MODULE_13___default()(SimpleBar.getRtlHelpers);
+    this.init();
+  }
+  /**
+   * Static properties
+   */
+
+  /**
+   * Helper to fix browsers inconsistency on RTL:
+   *  - Firefox inverts the scrollbar initial position
+   *  - IE11 inverts both scrollbar position and scrolling offset
+   * Directly inspired by @KingSora's OverlayScrollbars https://github.com/KingSora/OverlayScrollbars/blob/master/js/OverlayScrollbars.js#L1634
+   */
+
+
+  SimpleBar.getRtlHelpers = function getRtlHelpers() {
+    var dummyDiv = document.createElement('div');
+    dummyDiv.innerHTML = '<div class="hs-dummy-scrollbar-size"><div style="height: 200%; width: 200%; margin: 10px 0;"></div></div>';
+    var scrollbarDummyEl = dummyDiv.firstElementChild;
+    document.body.appendChild(scrollbarDummyEl);
+    var dummyContainerChild = scrollbarDummyEl.firstElementChild;
+    scrollbarDummyEl.scrollLeft = 0;
+    var dummyContainerOffset = SimpleBar.getOffset(scrollbarDummyEl);
+    var dummyContainerChildOffset = SimpleBar.getOffset(dummyContainerChild);
+    scrollbarDummyEl.scrollLeft = 999;
+    var dummyContainerScrollOffsetAfterScroll = SimpleBar.getOffset(dummyContainerChild);
+    return {
+      // determines if the scrolling is responding with negative values
+      isRtlScrollingInverted: dummyContainerOffset.left !== dummyContainerChildOffset.left && dummyContainerChildOffset.left - dummyContainerScrollOffsetAfterScroll.left !== 0,
+      // determines if the origin scrollbar position is inverted or not (positioned on left or right)
+      isRtlScrollbarInverted: dummyContainerOffset.left !== dummyContainerChildOffset.left
+    };
+  };
+
+  SimpleBar.getOffset = function getOffset(el) {
+    var rect = el.getBoundingClientRect();
+    var elDocument = getElementDocument(el);
+    var elWindow = getElementWindow(el);
+    return {
+      top: rect.top + (elWindow.pageYOffset || elDocument.documentElement.scrollTop),
+      left: rect.left + (elWindow.pageXOffset || elDocument.documentElement.scrollLeft)
+    };
+  };
+
+  var _proto = SimpleBar.prototype;
+
+  _proto.init = function init() {
+    // Save a reference to the instance, so we know this DOM node has already been instancied
+    SimpleBar.instances.set(this.el, this); // We stop here on server-side
+
+    if ((can_use_dom__WEBPACK_IMPORTED_MODULE_2___default())) {
+      this.initDOM();
+      this.setAccessibilityAttributes();
+      this.scrollbarWidth = this.getScrollbarWidth();
+      this.recalculate();
+      this.initListeners();
+    }
+  };
+
+  _proto.initDOM = function initDOM() {
+    var _this2 = this;
+
+    // make sure this element doesn't have the elements yet
+    if (Array.prototype.filter.call(this.el.children, function (child) {
+      return child.classList.contains(_this2.classNames.wrapper);
+    }).length) {
+      // assume that element has his DOM already initiated
+      this.wrapperEl = this.el.querySelector("." + this.classNames.wrapper);
+      this.contentWrapperEl = this.options.scrollableNode || this.el.querySelector("." + this.classNames.contentWrapper);
+      this.contentEl = this.options.contentNode || this.el.querySelector("." + this.classNames.contentEl);
+      this.offsetEl = this.el.querySelector("." + this.classNames.offset);
+      this.maskEl = this.el.querySelector("." + this.classNames.mask);
+      this.placeholderEl = this.findChild(this.wrapperEl, "." + this.classNames.placeholder);
+      this.heightAutoObserverWrapperEl = this.el.querySelector("." + this.classNames.heightAutoObserverWrapperEl);
+      this.heightAutoObserverEl = this.el.querySelector("." + this.classNames.heightAutoObserverEl);
+      this.axis.x.track.el = this.findChild(this.el, "." + this.classNames.track + "." + this.classNames.horizontal);
+      this.axis.y.track.el = this.findChild(this.el, "." + this.classNames.track + "." + this.classNames.vertical);
+    } else {
+      // Prepare DOM
+      this.wrapperEl = document.createElement('div');
+      this.contentWrapperEl = document.createElement('div');
+      this.offsetEl = document.createElement('div');
+      this.maskEl = document.createElement('div');
+      this.contentEl = document.createElement('div');
+      this.placeholderEl = document.createElement('div');
+      this.heightAutoObserverWrapperEl = document.createElement('div');
+      this.heightAutoObserverEl = document.createElement('div');
+      this.wrapperEl.classList.add(this.classNames.wrapper);
+      this.contentWrapperEl.classList.add(this.classNames.contentWrapper);
+      this.offsetEl.classList.add(this.classNames.offset);
+      this.maskEl.classList.add(this.classNames.mask);
+      this.contentEl.classList.add(this.classNames.contentEl);
+      this.placeholderEl.classList.add(this.classNames.placeholder);
+      this.heightAutoObserverWrapperEl.classList.add(this.classNames.heightAutoObserverWrapperEl);
+      this.heightAutoObserverEl.classList.add(this.classNames.heightAutoObserverEl);
+
+      while (this.el.firstChild) {
+        this.contentEl.appendChild(this.el.firstChild);
+      }
+
+      this.contentWrapperEl.appendChild(this.contentEl);
+      this.offsetEl.appendChild(this.contentWrapperEl);
+      this.maskEl.appendChild(this.offsetEl);
+      this.heightAutoObserverWrapperEl.appendChild(this.heightAutoObserverEl);
+      this.wrapperEl.appendChild(this.heightAutoObserverWrapperEl);
+      this.wrapperEl.appendChild(this.maskEl);
+      this.wrapperEl.appendChild(this.placeholderEl);
+      this.el.appendChild(this.wrapperEl);
+    }
+
+    if (!this.axis.x.track.el || !this.axis.y.track.el) {
+      var track = document.createElement('div');
+      var scrollbar = document.createElement('div');
+      track.classList.add(this.classNames.track);
+      scrollbar.classList.add(this.classNames.scrollbar);
+      track.appendChild(scrollbar);
+      this.axis.x.track.el = track.cloneNode(true);
+      this.axis.x.track.el.classList.add(this.classNames.horizontal);
+      this.axis.y.track.el = track.cloneNode(true);
+      this.axis.y.track.el.classList.add(this.classNames.vertical);
+      this.el.appendChild(this.axis.x.track.el);
+      this.el.appendChild(this.axis.y.track.el);
+    }
+
+    this.axis.x.scrollbar.el = this.axis.x.track.el.querySelector("." + this.classNames.scrollbar);
+    this.axis.y.scrollbar.el = this.axis.y.track.el.querySelector("." + this.classNames.scrollbar);
+
+    if (!this.options.autoHide) {
+      this.axis.x.scrollbar.el.classList.add(this.classNames.visible);
+      this.axis.y.scrollbar.el.classList.add(this.classNames.visible);
+    }
+
+    this.el.setAttribute('data-simplebar', 'init');
+  };
+
+  _proto.setAccessibilityAttributes = function setAccessibilityAttributes() {
+    var ariaLabel = this.options.ariaLabel || 'scrollable content';
+    this.contentWrapperEl.setAttribute('tabindex', '0');
+    this.contentWrapperEl.setAttribute('role', 'region');
+    this.contentWrapperEl.setAttribute('aria-label', ariaLabel);
+  };
+
+  _proto.initListeners = function initListeners() {
+    var _this3 = this;
+
+    var elWindow = getElementWindow(this.el); // Event listeners
+
+    if (this.options.autoHide) {
+      this.el.addEventListener('mouseenter', this.onMouseEnter);
+    }
+
+    ['mousedown', 'click', 'dblclick'].forEach(function (e) {
+      _this3.el.addEventListener(e, _this3.onPointerEvent, true);
+    });
+    ['touchstart', 'touchend', 'touchmove'].forEach(function (e) {
+      _this3.el.addEventListener(e, _this3.onPointerEvent, {
+        capture: true,
+        passive: true
+      });
+    });
+    this.el.addEventListener('mousemove', this.onMouseMove);
+    this.el.addEventListener('mouseleave', this.onMouseLeave);
+    this.contentWrapperEl.addEventListener('scroll', this.onScroll); // Browser zoom triggers a window resize
+
+    elWindow.addEventListener('resize', this.onWindowResize); // Hack for https://github.com/WICG/ResizeObserver/issues/38
+
+    var resizeObserverStarted = false;
+    var resizeObserver = elWindow.ResizeObserver || _juggle_resize_observer__WEBPACK_IMPORTED_MODULE_14__.ResizeObserver;
+    this.resizeObserver = new resizeObserver(function () {
+      if (!resizeObserverStarted) return;
+
+      _this3.recalculate();
+    });
+    this.resizeObserver.observe(this.el);
+    this.resizeObserver.observe(this.contentEl);
+    elWindow.requestAnimationFrame(function () {
+      resizeObserverStarted = true;
+    }); // This is required to detect horizontal scroll. Vertical scroll only needs the resizeObserver.
+
+    this.mutationObserver = new elWindow.MutationObserver(this.recalculate);
+    this.mutationObserver.observe(this.contentEl, {
+      childList: true,
+      subtree: true,
+      characterData: true
+    });
+  };
+
+  _proto.recalculate = function recalculate() {
+    var elWindow = getElementWindow(this.el);
+    this.elStyles = elWindow.getComputedStyle(this.el);
+    this.isRtl = this.elStyles.direction === 'rtl';
+    var isHeightAuto = this.heightAutoObserverEl.offsetHeight <= 1;
+    var isWidthAuto = this.heightAutoObserverEl.offsetWidth <= 1;
+    var contentElOffsetWidth = this.contentEl.offsetWidth;
+    var contentWrapperElOffsetWidth = this.contentWrapperEl.offsetWidth;
+    var elOverflowX = this.elStyles.overflowX;
+    var elOverflowY = this.elStyles.overflowY;
+    this.contentEl.style.padding = this.elStyles.paddingTop + " " + this.elStyles.paddingRight + " " + this.elStyles.paddingBottom + " " + this.elStyles.paddingLeft;
+    this.wrapperEl.style.margin = "-" + this.elStyles.paddingTop + " -" + this.elStyles.paddingRight + " -" + this.elStyles.paddingBottom + " -" + this.elStyles.paddingLeft;
+    var contentElScrollHeight = this.contentEl.scrollHeight;
+    var contentElScrollWidth = this.contentEl.scrollWidth;
+    this.contentWrapperEl.style.height = isHeightAuto ? 'auto' : '100%'; // Determine placeholder size
+
+    this.placeholderEl.style.width = isWidthAuto ? contentElOffsetWidth + "px" : 'auto';
+    this.placeholderEl.style.height = contentElScrollHeight + "px";
+    var contentWrapperElOffsetHeight = this.contentWrapperEl.offsetHeight;
+    this.axis.x.isOverflowing = contentElScrollWidth > contentElOffsetWidth;
+    this.axis.y.isOverflowing = contentElScrollHeight > contentWrapperElOffsetHeight; // Set isOverflowing to false if user explicitely set hidden overflow
+
+    this.axis.x.isOverflowing = elOverflowX === 'hidden' ? false : this.axis.x.isOverflowing;
+    this.axis.y.isOverflowing = elOverflowY === 'hidden' ? false : this.axis.y.isOverflowing;
+    this.axis.x.forceVisible = this.options.forceVisible === 'x' || this.options.forceVisible === true;
+    this.axis.y.forceVisible = this.options.forceVisible === 'y' || this.options.forceVisible === true;
+    this.hideNativeScrollbar(); // Set isOverflowing to false if scrollbar is not necessary (content is shorter than offset)
+
+    var offsetForXScrollbar = this.axis.x.isOverflowing ? this.scrollbarWidth : 0;
+    var offsetForYScrollbar = this.axis.y.isOverflowing ? this.scrollbarWidth : 0;
+    this.axis.x.isOverflowing = this.axis.x.isOverflowing && contentElScrollWidth > contentWrapperElOffsetWidth - offsetForYScrollbar;
+    this.axis.y.isOverflowing = this.axis.y.isOverflowing && contentElScrollHeight > contentWrapperElOffsetHeight - offsetForXScrollbar;
+    this.axis.x.scrollbar.size = this.getScrollbarSize('x');
+    this.axis.y.scrollbar.size = this.getScrollbarSize('y');
+    this.axis.x.scrollbar.el.style.width = this.axis.x.scrollbar.size + "px";
+    this.axis.y.scrollbar.el.style.height = this.axis.y.scrollbar.size + "px";
+    this.positionScrollbar('x');
+    this.positionScrollbar('y');
+    this.toggleTrackVisibility('x');
+    this.toggleTrackVisibility('y');
+  }
+  /**
+   * Calculate scrollbar size
+   */
+  ;
+
+  _proto.getScrollbarSize = function getScrollbarSize(axis) {
+    if (axis === void 0) {
+      axis = 'y';
+    }
+
+    if (!this.axis[axis].isOverflowing) {
+      return 0;
+    }
+
+    var contentSize = this.contentEl[this.axis[axis].scrollSizeAttr];
+    var trackSize = this.axis[axis].track.el[this.axis[axis].offsetSizeAttr];
+    var scrollbarSize;
+    var scrollbarRatio = trackSize / contentSize; // Calculate new height/position of drag handle.
+
+    scrollbarSize = Math.max(~~(scrollbarRatio * trackSize), this.options.scrollbarMinSize);
+
+    if (this.options.scrollbarMaxSize) {
+      scrollbarSize = Math.min(scrollbarSize, this.options.scrollbarMaxSize);
+    }
+
+    return scrollbarSize;
+  };
+
+  _proto.positionScrollbar = function positionScrollbar(axis) {
+    if (axis === void 0) {
+      axis = 'y';
+    }
+
+    if (!this.axis[axis].isOverflowing) {
+      return;
+    }
+
+    var contentSize = this.contentWrapperEl[this.axis[axis].scrollSizeAttr];
+    var trackSize = this.axis[axis].track.el[this.axis[axis].offsetSizeAttr];
+    var hostSize = parseInt(this.elStyles[this.axis[axis].sizeAttr], 10);
+    var scrollbar = this.axis[axis].scrollbar;
+    var scrollOffset = this.contentWrapperEl[this.axis[axis].scrollOffsetAttr];
+    scrollOffset = axis === 'x' && this.isRtl && SimpleBar.getRtlHelpers().isRtlScrollingInverted ? -scrollOffset : scrollOffset;
+    var scrollPourcent = scrollOffset / (contentSize - hostSize);
+    var handleOffset = ~~((trackSize - scrollbar.size) * scrollPourcent);
+    handleOffset = axis === 'x' && this.isRtl && SimpleBar.getRtlHelpers().isRtlScrollbarInverted ? handleOffset + (trackSize - scrollbar.size) : handleOffset;
+    scrollbar.el.style.transform = axis === 'x' ? "translate3d(" + handleOffset + "px, 0, 0)" : "translate3d(0, " + handleOffset + "px, 0)";
+  };
+
+  _proto.toggleTrackVisibility = function toggleTrackVisibility(axis) {
+    if (axis === void 0) {
+      axis = 'y';
+    }
+
+    var track = this.axis[axis].track.el;
+    var scrollbar = this.axis[axis].scrollbar.el;
+
+    if (this.axis[axis].isOverflowing || this.axis[axis].forceVisible) {
+      track.style.visibility = 'visible';
+      this.contentWrapperEl.style[this.axis[axis].overflowAttr] = 'scroll';
+    } else {
+      track.style.visibility = 'hidden';
+      this.contentWrapperEl.style[this.axis[axis].overflowAttr] = 'hidden';
+    } // Even if forceVisible is enabled, scrollbar itself should be hidden
+
+
+    if (this.axis[axis].isOverflowing) {
+      scrollbar.style.display = 'block';
+    } else {
+      scrollbar.style.display = 'none';
+    }
+  };
+
+  _proto.hideNativeScrollbar = function hideNativeScrollbar() {
+    this.offsetEl.style[this.isRtl ? 'left' : 'right'] = this.axis.y.isOverflowing || this.axis.y.forceVisible ? "-" + this.scrollbarWidth + "px" : 0;
+    this.offsetEl.style.bottom = this.axis.x.isOverflowing || this.axis.x.forceVisible ? "-" + this.scrollbarWidth + "px" : 0;
+  }
+  /**
+   * On scroll event handling
+   */
+  ;
+
+  _proto.onMouseMoveForAxis = function onMouseMoveForAxis(axis) {
+    if (axis === void 0) {
+      axis = 'y';
+    }
+
+    this.axis[axis].track.rect = this.axis[axis].track.el.getBoundingClientRect();
+    this.axis[axis].scrollbar.rect = this.axis[axis].scrollbar.el.getBoundingClientRect();
+    var isWithinScrollbarBoundsX = this.isWithinBounds(this.axis[axis].scrollbar.rect);
+
+    if (isWithinScrollbarBoundsX) {
+      this.axis[axis].scrollbar.el.classList.add(this.classNames.hover);
+    } else {
+      this.axis[axis].scrollbar.el.classList.remove(this.classNames.hover);
+    }
+
+    if (this.isWithinBounds(this.axis[axis].track.rect)) {
+      this.showScrollbar(axis);
+      this.axis[axis].track.el.classList.add(this.classNames.hover);
+    } else {
+      this.axis[axis].track.el.classList.remove(this.classNames.hover);
+    }
+  };
+
+  _proto.onMouseLeaveForAxis = function onMouseLeaveForAxis(axis) {
+    if (axis === void 0) {
+      axis = 'y';
+    }
+
+    this.axis[axis].track.el.classList.remove(this.classNames.hover);
+    this.axis[axis].scrollbar.el.classList.remove(this.classNames.hover);
+  };
+
+  /**
+   * Show scrollbar
+   */
+  _proto.showScrollbar = function showScrollbar(axis) {
+    if (axis === void 0) {
+      axis = 'y';
+    }
+
+    var scrollbar = this.axis[axis].scrollbar.el;
+
+    if (!this.axis[axis].isVisible) {
+      scrollbar.classList.add(this.classNames.visible);
+      this.axis[axis].isVisible = true;
+    }
+
+    if (this.options.autoHide) {
+      this.hideScrollbars();
+    }
+  }
+  /**
+   * Hide Scrollbar
+   */
+  ;
+
+  /**
+   * on scrollbar handle drag movement starts
+   */
+  _proto.onDragStart = function onDragStart(e, axis) {
+    if (axis === void 0) {
+      axis = 'y';
+    }
+
+    var elDocument = getElementDocument(this.el);
+    var elWindow = getElementWindow(this.el);
+    var scrollbar = this.axis[axis].scrollbar; // Measure how far the user's mouse is from the top of the scrollbar drag handle.
+
+    var eventOffset = axis === 'y' ? e.pageY : e.pageX;
+    this.axis[axis].dragOffset = eventOffset - scrollbar.rect[this.axis[axis].offsetAttr];
+    this.draggedAxis = axis;
+    this.el.classList.add(this.classNames.dragging);
+    elDocument.addEventListener('mousemove', this.drag, true);
+    elDocument.addEventListener('mouseup', this.onEndDrag, true);
+
+    if (this.removePreventClickId === null) {
+      elDocument.addEventListener('click', this.preventClick, true);
+      elDocument.addEventListener('dblclick', this.preventClick, true);
+    } else {
+      elWindow.clearTimeout(this.removePreventClickId);
+      this.removePreventClickId = null;
+    }
+  }
+  /**
+   * Drag scrollbar handle
+   */
+  ;
+
+  _proto.onTrackClick = function onTrackClick(e, axis) {
+    var _this4 = this;
+
+    if (axis === void 0) {
+      axis = 'y';
+    }
+
+    if (!this.options.clickOnTrack) return;
+    var elWindow = getElementWindow(this.el);
+    this.axis[axis].scrollbar.rect = this.axis[axis].scrollbar.el.getBoundingClientRect();
+    var scrollbar = this.axis[axis].scrollbar;
+    var scrollbarOffset = scrollbar.rect[this.axis[axis].offsetAttr];
+    var hostSize = parseInt(this.elStyles[this.axis[axis].sizeAttr], 10);
+    var scrolled = this.contentWrapperEl[this.axis[axis].scrollOffsetAttr];
+    var t = axis === 'y' ? this.mouseY - scrollbarOffset : this.mouseX - scrollbarOffset;
+    var dir = t < 0 ? -1 : 1;
+    var scrollSize = dir === -1 ? scrolled - hostSize : scrolled + hostSize;
+
+    var scrollTo = function scrollTo() {
+      if (dir === -1) {
+        if (scrolled > scrollSize) {
+          var _this4$contentWrapper;
+
+          scrolled -= _this4.options.clickOnTrackSpeed;
+
+          _this4.contentWrapperEl.scrollTo((_this4$contentWrapper = {}, _this4$contentWrapper[_this4.axis[axis].offsetAttr] = scrolled, _this4$contentWrapper));
+
+          elWindow.requestAnimationFrame(scrollTo);
+        }
+      } else {
+        if (scrolled < scrollSize) {
+          var _this4$contentWrapper2;
+
+          scrolled += _this4.options.clickOnTrackSpeed;
+
+          _this4.contentWrapperEl.scrollTo((_this4$contentWrapper2 = {}, _this4$contentWrapper2[_this4.axis[axis].offsetAttr] = scrolled, _this4$contentWrapper2));
+
+          elWindow.requestAnimationFrame(scrollTo);
+        }
+      }
+    };
+
+    scrollTo();
+  }
+  /**
+   * Getter for content element
+   */
+  ;
+
+  _proto.getContentElement = function getContentElement() {
+    return this.contentEl;
+  }
+  /**
+   * Getter for original scrolling element
+   */
+  ;
+
+  _proto.getScrollElement = function getScrollElement() {
+    return this.contentWrapperEl;
+  };
+
+  _proto.getScrollbarWidth = function getScrollbarWidth() {
+    // Try/catch for FF 56 throwing on undefined computedStyles
+    try {
+      // Detect browsers supporting CSS scrollbar styling and do not calculate
+      if (getComputedStyle(this.contentWrapperEl, '::-webkit-scrollbar').display === 'none' || 'scrollbarWidth' in document.documentElement.style || '-ms-overflow-style' in document.documentElement.style) {
+        return 0;
+      } else {
+        return scrollbarWidth(this.el);
+      }
+    } catch (e) {
+      return scrollbarWidth(this.el);
+    }
+  };
+
+  _proto.removeListeners = function removeListeners() {
+    var _this5 = this;
+
+    var elWindow = getElementWindow(this.el); // Event listeners
+
+    if (this.options.autoHide) {
+      this.el.removeEventListener('mouseenter', this.onMouseEnter);
+    }
+
+    ['mousedown', 'click', 'dblclick'].forEach(function (e) {
+      _this5.el.removeEventListener(e, _this5.onPointerEvent, true);
+    });
+    ['touchstart', 'touchend', 'touchmove'].forEach(function (e) {
+      _this5.el.removeEventListener(e, _this5.onPointerEvent, {
+        capture: true,
+        passive: true
+      });
+    });
+    this.el.removeEventListener('mousemove', this.onMouseMove);
+    this.el.removeEventListener('mouseleave', this.onMouseLeave);
+
+    if (this.contentWrapperEl) {
+      this.contentWrapperEl.removeEventListener('scroll', this.onScroll);
+    }
+
+    elWindow.removeEventListener('resize', this.onWindowResize);
+
+    if (this.mutationObserver) {
+      this.mutationObserver.disconnect();
+    }
+
+    if (this.resizeObserver) {
+      this.resizeObserver.disconnect();
+    } // Cancel all debounced functions
+
+
+    this.recalculate.cancel();
+    this.onMouseMove.cancel();
+    this.hideScrollbars.cancel();
+    this.onWindowResize.cancel();
+  }
+  /**
+   * UnMount mutation observer and delete SimpleBar instance from DOM element
+   */
+  ;
+
+  _proto.unMount = function unMount() {
+    this.removeListeners();
+    SimpleBar.instances.delete(this.el);
+  }
+  /**
+   * Check if mouse is within bounds
+   */
+  ;
+
+  _proto.isWithinBounds = function isWithinBounds(bbox) {
+    return this.mouseX >= bbox.left && this.mouseX <= bbox.left + bbox.width && this.mouseY >= bbox.top && this.mouseY <= bbox.top + bbox.height;
+  }
+  /**
+   * Find element children matches query
+   */
+  ;
+
+  _proto.findChild = function findChild(el, query) {
+    var matches = el.matches || el.webkitMatchesSelector || el.mozMatchesSelector || el.msMatchesSelector;
+    return Array.prototype.filter.call(el.children, function (child) {
+      return matches.call(child, query);
+    })[0];
+  };
+
+  return SimpleBar;
+}();
+
+SimpleBar.defaultOptions = {
+  autoHide: true,
+  forceVisible: false,
+  clickOnTrack: true,
+  clickOnTrackSpeed: 40,
+  classNames: {
+    contentEl: 'simplebar-content',
+    contentWrapper: 'simplebar-content-wrapper',
+    offset: 'simplebar-offset',
+    mask: 'simplebar-mask',
+    wrapper: 'simplebar-wrapper',
+    placeholder: 'simplebar-placeholder',
+    scrollbar: 'simplebar-scrollbar',
+    track: 'simplebar-track',
+    heightAutoObserverWrapperEl: 'simplebar-height-auto-observer-wrapper',
+    heightAutoObserverEl: 'simplebar-height-auto-observer',
+    visible: 'simplebar-visible',
+    horizontal: 'simplebar-horizontal',
+    vertical: 'simplebar-vertical',
+    hover: 'simplebar-hover',
+    dragging: 'simplebar-dragging'
+  },
+  scrollbarMinSize: 25,
+  scrollbarMaxSize: 0,
+  timeout: 1000
+};
+SimpleBar.instances = new WeakMap();
+
+SimpleBar.initDOMLoadedElements = function () {
+  document.removeEventListener('DOMContentLoaded', this.initDOMLoadedElements);
+  window.removeEventListener('load', this.initDOMLoadedElements);
+  Array.prototype.forEach.call(document.querySelectorAll('[data-simplebar]'), function (el) {
+    if (el.getAttribute('data-simplebar') !== 'init' && !SimpleBar.instances.has(el)) new SimpleBar(el, getOptions(el.attributes));
+  });
+};
+
+SimpleBar.removeObserver = function () {
+  this.globalObserver.disconnect();
+};
+
+SimpleBar.initHtmlApi = function () {
+  this.initDOMLoadedElements = this.initDOMLoadedElements.bind(this); // MutationObserver is IE11+
+
+  if (typeof MutationObserver !== 'undefined') {
+    // Mutation observer to observe dynamically added elements
+    this.globalObserver = new MutationObserver(SimpleBar.handleMutations);
+    this.globalObserver.observe(document, {
+      childList: true,
+      subtree: true
+    });
+  } // Taken from jQuery `ready` function
+  // Instantiate elements already present on the page
+
+
+  if (document.readyState === 'complete' || document.readyState !== 'loading' && !document.documentElement.doScroll) {
+    // Handle it asynchronously to allow scripts the opportunity to delay init
+    window.setTimeout(this.initDOMLoadedElements);
+  } else {
+    document.addEventListener('DOMContentLoaded', this.initDOMLoadedElements);
+    window.addEventListener('load', this.initDOMLoadedElements);
+  }
+};
+
+SimpleBar.handleMutations = function (mutations) {
+  mutations.forEach(function (mutation) {
+    Array.prototype.forEach.call(mutation.addedNodes, function (addedNode) {
+      if (addedNode.nodeType === 1) {
+        if (addedNode.hasAttribute('data-simplebar')) {
+          !SimpleBar.instances.has(addedNode) && document.documentElement.contains(addedNode) && new SimpleBar(addedNode, getOptions(addedNode.attributes));
+        } else {
+          Array.prototype.forEach.call(addedNode.querySelectorAll('[data-simplebar]'), function (el) {
+            if (el.getAttribute('data-simplebar') !== 'init' && !SimpleBar.instances.has(el) && document.documentElement.contains(el)) new SimpleBar(el, getOptions(el.attributes));
+          });
+        }
+      }
+    });
+    Array.prototype.forEach.call(mutation.removedNodes, function (removedNode) {
+      if (removedNode.nodeType === 1) {
+        if (removedNode.getAttribute('data-simplebar') === 'init') {
+          SimpleBar.instances.has(removedNode) && !document.documentElement.contains(removedNode) && SimpleBar.instances.get(removedNode).unMount();
+        } else {
+          Array.prototype.forEach.call(removedNode.querySelectorAll('[data-simplebar="init"]'), function (el) {
+            SimpleBar.instances.has(el) && !document.documentElement.contains(el) && SimpleBar.instances.get(el).unMount();
+          });
+        }
+      }
+    });
+  });
+};
+
+SimpleBar.getOptions = getOptions;
+/**
+ * HTML API
+ * Called only in a browser env.
+ */
+
+if ((can_use_dom__WEBPACK_IMPORTED_MODULE_2___default())) {
+  SimpleBar.initHtmlApi();
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SimpleBar);
+//# sourceMappingURL=simplebar.esm.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/smooth-scroll/dist/smooth-scroll.polyfills.min.js":
+/*!************************************************************************!*\
+  !*** ./node_modules/smooth-scroll/dist/smooth-scroll.polyfills.min.js ***!
+  \************************************************************************/
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! smooth-scroll v16.1.3 | (c) 2020 Chris Ferdinandi | MIT License | http://github.com/cferdinandi/smooth-scroll */
+window.Element&&!Element.prototype.closest&&(Element.prototype.closest=function(e){var t,n=(this.document||this.ownerDocument).querySelectorAll(e),o=this;do{for(t=n.length;0<=--t&&n.item(t)!==o;);}while(t<0&&(o=o.parentElement));return o}),(function(){if("function"==typeof window.CustomEvent)return;function e(e,t){t=t||{bubbles:!1,cancelable:!1,detail:void 0};var n=document.createEvent("CustomEvent");return n.initCustomEvent(e,t.bubbles,t.cancelable,t.detail),n}e.prototype=window.Event.prototype,window.CustomEvent=e})(),(function(){for(var r=0,e=["ms","moz","webkit","o"],t=0;t<e.length&&!window.requestAnimationFrame;++t)window.requestAnimationFrame=window[e[t]+"RequestAnimationFrame"],window.cancelAnimationFrame=window[e[t]+"CancelAnimationFrame"]||window[e[t]+"CancelRequestAnimationFrame"];window.requestAnimationFrame||(window.requestAnimationFrame=function(e,t){var n=(new Date).getTime(),o=Math.max(0,16-(n-r)),a=window.setTimeout((function(){e(n+o)}),o);return r=n+o,a}),window.cancelAnimationFrame||(window.cancelAnimationFrame=function(e){clearTimeout(e)})})(),(function(e,t){ true?!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = (function(){return t(e)}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)):0})("undefined"!=typeof __webpack_require__.g?__webpack_require__.g:"undefined"!=typeof window?window:this,(function(M){"use strict";var q={ignore:"[data-scroll-ignore]",header:null,topOnEmptyHash:!0,speed:500,speedAsDuration:!1,durationMax:null,durationMin:null,clip:!0,offset:0,easing:"easeInOutCubic",customEasing:null,updateURL:!0,popstate:!0,emitEvents:!0},I=function(){var n={};return Array.prototype.forEach.call(arguments,(function(e){for(var t in e){if(!e.hasOwnProperty(t))return;n[t]=e[t]}})),n},r=function(e){"#"===e.charAt(0)&&(e=e.substr(1));for(var t,n=String(e),o=n.length,a=-1,r="",i=n.charCodeAt(0);++a<o;){if(0===(t=n.charCodeAt(a)))throw new InvalidCharacterError("Invalid character: the input contains U+0000.");1<=t&&t<=31||127==t||0===a&&48<=t&&t<=57||1===a&&48<=t&&t<=57&&45===i?r+="\\"+t.toString(16)+" ":r+=128<=t||45===t||95===t||48<=t&&t<=57||65<=t&&t<=90||97<=t&&t<=122?n.charAt(a):"\\"+n.charAt(a)}return"#"+r},F=function(){return Math.max(document.body.scrollHeight,document.documentElement.scrollHeight,document.body.offsetHeight,document.documentElement.offsetHeight,document.body.clientHeight,document.documentElement.clientHeight)},L=function(e){return e?(t=e,parseInt(M.getComputedStyle(t).height,10)+e.offsetTop):0;var t},x=function(e,t,n){0===e&&document.body.focus(),n||(e.focus(),document.activeElement!==e&&(e.setAttribute("tabindex","-1"),e.focus(),e.style.outline="none"),M.scrollTo(0,t))},H=function(e,t,n,o){if(t.emitEvents&&"function"==typeof M.CustomEvent){var a=new CustomEvent(e,{bubbles:!0,detail:{anchor:n,toggle:o}});document.dispatchEvent(a)}};return function(o,e){var b,a,A,O,C={};C.cancelScroll=function(e){cancelAnimationFrame(O),O=null,e||H("scrollCancel",b)},C.animateScroll=function(a,r,e){C.cancelScroll();var i=I(b||q,e||{}),c="[object Number]"===Object.prototype.toString.call(a),t=c||!a.tagName?null:a;if(c||t){var s=M.pageYOffset;i.header&&!A&&(A=document.querySelector(i.header));var n,o,u,l,m,d,f,h,p=L(A),g=c?a:(function(e,t,n,o){var a=0;if(e.offsetParent)for(;a+=e.offsetTop,e=e.offsetParent;);return a=Math.max(a-t-n,0),o&&(a=Math.min(a,F()-M.innerHeight)),a})(t,p,parseInt("function"==typeof i.offset?i.offset(a,r):i.offset,10),i.clip),y=g-s,v=F(),w=0,S=(n=y,u=(o=i).speedAsDuration?o.speed:Math.abs(n/1e3*o.speed),o.durationMax&&u>o.durationMax?o.durationMax:o.durationMin&&u<o.durationMin?o.durationMin:parseInt(u,10)),E=function(e){var t,n,o;l||(l=e),w+=e-l,d=s+y*(n=m=1<(m=0===S?0:w/S)?1:m,"easeInQuad"===(t=i).easing&&(o=n*n),"easeOutQuad"===t.easing&&(o=n*(2-n)),"easeInOutQuad"===t.easing&&(o=n<.5?2*n*n:(4-2*n)*n-1),"easeInCubic"===t.easing&&(o=n*n*n),"easeOutCubic"===t.easing&&(o=--n*n*n+1),"easeInOutCubic"===t.easing&&(o=n<.5?4*n*n*n:(n-1)*(2*n-2)*(2*n-2)+1),"easeInQuart"===t.easing&&(o=n*n*n*n),"easeOutQuart"===t.easing&&(o=1- --n*n*n*n),"easeInOutQuart"===t.easing&&(o=n<.5?8*n*n*n*n:1-8*--n*n*n*n),"easeInQuint"===t.easing&&(o=n*n*n*n*n),"easeOutQuint"===t.easing&&(o=1+--n*n*n*n*n),"easeInOutQuint"===t.easing&&(o=n<.5?16*n*n*n*n*n:1+16*--n*n*n*n*n),t.customEasing&&(o=t.customEasing(n)),o||n),M.scrollTo(0,Math.floor(d)),(function(e,t){var n=M.pageYOffset;if(e==t||n==t||(s<t&&M.innerHeight+n)>=v)return C.cancelScroll(!0),x(a,t,c),H("scrollStop",i,a,r),!(O=l=null)})(d,g)||(O=M.requestAnimationFrame(E),l=e)};0===M.pageYOffset&&M.scrollTo(0,0),f=a,h=i,c||history.pushState&&h.updateURL&&history.pushState({smoothScroll:JSON.stringify(h),anchor:f.id},document.title,f===document.documentElement?"#top":"#"+f.id),"matchMedia"in M&&M.matchMedia("(prefers-reduced-motion)").matches?x(a,Math.floor(g),!1):(H("scrollStart",i,a,r),C.cancelScroll(!0),M.requestAnimationFrame(E))}};var t=function(e){if(!e.defaultPrevented&&!(0!==e.button||e.metaKey||e.ctrlKey||e.shiftKey)&&"closest"in e.target&&(a=e.target.closest(o))&&"a"===a.tagName.toLowerCase()&&!e.target.closest(b.ignore)&&a.hostname===M.location.hostname&&a.pathname===M.location.pathname&&/#/.test(a.href)){var t,n;try{t=r(decodeURIComponent(a.hash))}catch(e){t=r(a.hash)}if("#"===t){if(!b.topOnEmptyHash)return;n=document.documentElement}else n=document.querySelector(t);(n=n||"#top"!==t?n:document.documentElement)&&(e.preventDefault(),(function(e){if(history.replaceState&&e.updateURL&&!history.state){var t=M.location.hash;t=t||"",history.replaceState({smoothScroll:JSON.stringify(e),anchor:t||M.pageYOffset},document.title,t||M.location.href)}})(b),C.animateScroll(n,a))}},n=function(e){if(null!==history.state&&history.state.smoothScroll&&history.state.smoothScroll===JSON.stringify(b)){var t=history.state.anchor;"string"==typeof t&&t&&!(t=document.querySelector(r(history.state.anchor)))||C.animateScroll(t,null,{updateURL:!1})}};C.destroy=function(){b&&(document.removeEventListener("click",t,!1),M.removeEventListener("popstate",n,!1),C.cancelScroll(),O=A=a=b=null)};return (function(){if(!("querySelector"in document&&"addEventListener"in M&&"requestAnimationFrame"in M&&"closest"in M.Element.prototype))throw"Smooth Scroll: This browser does not support the required JavaScript methods and browser APIs.";C.destroy(),b=I(q,e||{}),A=b.header?document.querySelector(b.header):null,document.addEventListener("click",t,!1),b.updateURL&&b.popstate&&M.addEventListener("popstate",n,!1)})(),C}}));
+
+/***/ }),
+
+/***/ "./node_modules/tiny-slider/dist/tiny-slider.js":
+/*!******************************************************!*\
+  !*** ./node_modules/tiny-slider/dist/tiny-slider.js ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+
+var win$1 = window;
+var raf = win$1.requestAnimationFrame || win$1.webkitRequestAnimationFrame || win$1.mozRequestAnimationFrame || win$1.msRequestAnimationFrame || function (cb) {
+  return setTimeout(cb, 16);
+};
+
+var win = window;
+var caf = win.cancelAnimationFrame || win.mozCancelAnimationFrame || function (id) {
+  clearTimeout(id);
+};
+
+function extend() {
+  var obj,
+      name,
+      copy,
+      target = arguments[0] || {},
+      i = 1,
+      length = arguments.length;
+
+  for (; i < length; i++) {
+    if ((obj = arguments[i]) !== null) {
+      for (name in obj) {
+        copy = obj[name];
+
+        if (target === copy) {
+          continue;
+        } else if (copy !== undefined) {
+          target[name] = copy;
+        }
+      }
+    }
+  }
+
+  return target;
+}
+
+function checkStorageValue(value) {
+  return ['true', 'false'].indexOf(value) >= 0 ? JSON.parse(value) : value;
+}
+
+function setLocalStorage(storage, key, value, access) {
+  if (access) {
+    try {
+      storage.setItem(key, value);
+    } catch (e) {}
+  }
+
+  return value;
+}
+
+function getSlideId() {
+  var id = window.tnsId;
+  window.tnsId = !id ? 1 : id + 1;
+  return 'tns' + window.tnsId;
+}
+
+function getBody() {
+  var doc = document,
+      body = doc.body;
+
+  if (!body) {
+    body = doc.createElement('body');
+    body.fake = true;
+  }
+
+  return body;
+}
+
+var docElement = document.documentElement;
+
+function setFakeBody(body) {
+  var docOverflow = '';
+
+  if (body.fake) {
+    docOverflow = docElement.style.overflow; //avoid crashing IE8, if background image is used
+
+    body.style.background = ''; //Safari 5.13/5.1.4 OSX stops loading if ::-webkit-scrollbar is used and scrollbars are visible
+
+    body.style.overflow = docElement.style.overflow = 'hidden';
+    docElement.appendChild(body);
+  }
+
+  return docOverflow;
+}
+
+function resetFakeBody(body, docOverflow) {
+  if (body.fake) {
+    body.remove();
+    docElement.style.overflow = docOverflow; // Trigger layout so kinetic scrolling isn't disabled in iOS6+
+    // eslint-disable-next-line
+
+    docElement.offsetHeight;
+  }
+}
+
+// get css-calc 
+function calc() {
+  var doc = document,
+      body = getBody(),
+      docOverflow = setFakeBody(body),
+      div = doc.createElement('div'),
+      result = false;
+  body.appendChild(div);
+
+  try {
+    var str = '(10px * 10)',
+        vals = ['calc' + str, '-moz-calc' + str, '-webkit-calc' + str],
+        val;
+
+    for (var i = 0; i < 3; i++) {
+      val = vals[i];
+      div.style.width = val;
+
+      if (div.offsetWidth === 100) {
+        result = val.replace(str, '');
+        break;
+      }
+    }
+  } catch (e) {}
+
+  body.fake ? resetFakeBody(body, docOverflow) : div.remove();
+  return result;
+}
+
+// get subpixel support value
+function percentageLayout() {
+  // check subpixel layout supporting
+  var doc = document,
+      body = getBody(),
+      docOverflow = setFakeBody(body),
+      wrapper = doc.createElement('div'),
+      outer = doc.createElement('div'),
+      str = '',
+      count = 70,
+      perPage = 3,
+      supported = false;
+  wrapper.className = "tns-t-subp2";
+  outer.className = "tns-t-ct";
+
+  for (var i = 0; i < count; i++) {
+    str += '<div></div>';
+  }
+
+  outer.innerHTML = str;
+  wrapper.appendChild(outer);
+  body.appendChild(wrapper);
+  supported = Math.abs(wrapper.getBoundingClientRect().left - outer.children[count - perPage].getBoundingClientRect().left) < 2;
+  body.fake ? resetFakeBody(body, docOverflow) : wrapper.remove();
+  return supported;
+}
+
+function mediaquerySupport() {
+  if (window.matchMedia || window.msMatchMedia) {
+    return true;
+  }
+
+  var doc = document,
+      body = getBody(),
+      docOverflow = setFakeBody(body),
+      div = doc.createElement('div'),
+      style = doc.createElement('style'),
+      rule = '@media all and (min-width:1px){.tns-mq-test{position:absolute}}',
+      position;
+  style.type = 'text/css';
+  div.className = 'tns-mq-test';
+  body.appendChild(style);
+  body.appendChild(div);
+
+  if (style.styleSheet) {
+    style.styleSheet.cssText = rule;
+  } else {
+    style.appendChild(doc.createTextNode(rule));
+  }
+
+  position = window.getComputedStyle ? window.getComputedStyle(div).position : div.currentStyle['position'];
+  body.fake ? resetFakeBody(body, docOverflow) : div.remove();
+  return position === "absolute";
+}
+
+// create and append style sheet
+function createStyleSheet(media, nonce) {
+  // Create the <style> tag
+  var style = document.createElement("style"); // style.setAttribute("type", "text/css");
+  // Add a media (and/or media query) here if you'd like!
+  // style.setAttribute("media", "screen")
+  // style.setAttribute("media", "only screen and (max-width : 1024px)")
+
+  if (media) {
+    style.setAttribute("media", media);
+  } // Add nonce attribute for Content Security Policy
+
+
+  if (nonce) {
+    style.setAttribute("nonce", nonce);
+  } // WebKit hack :(
+  // style.appendChild(document.createTextNode(""));
+  // Add the <style> element to the page
+
+
+  document.querySelector('head').appendChild(style);
+  return style.sheet ? style.sheet : style.styleSheet;
+}
+
+// cross browsers addRule method
+function addCSSRule(sheet, selector, rules, index) {
+  // return raf(function() {
+  'insertRule' in sheet ? sheet.insertRule(selector + '{' + rules + '}', index) : sheet.addRule(selector, rules, index); // });
+}
+
+// cross browsers addRule method
+function removeCSSRule(sheet, index) {
+  // return raf(function() {
+  'deleteRule' in sheet ? sheet.deleteRule(index) : sheet.removeRule(index); // });
+}
+
+function getCssRulesLength(sheet) {
+  var rule = 'insertRule' in sheet ? sheet.cssRules : sheet.rules;
+  return rule.length;
+}
+
+function toDegree(y, x) {
+  return Math.atan2(y, x) * (180 / Math.PI);
+}
+
+function getTouchDirection(angle, range) {
+  var direction = false,
+      gap = Math.abs(90 - Math.abs(angle));
+
+  if (gap >= 90 - range) {
+    direction = 'horizontal';
+  } else if (gap <= range) {
+    direction = 'vertical';
+  }
+
+  return direction;
+}
+
+// https://toddmotto.com/ditch-the-array-foreach-call-nodelist-hack/
+function forEach(arr, callback, scope) {
+  for (var i = 0, l = arr.length; i < l; i++) {
+    callback.call(scope, arr[i], i);
+  }
+}
+
+var classListSupport = ('classList' in document.createElement('_'));
+
+var hasClass = classListSupport ? function (el, str) {
+  return el.classList.contains(str);
+} : function (el, str) {
+  return el.className.indexOf(str) >= 0;
+};
+
+var addClass = classListSupport ? function (el, str) {
+  if (!hasClass(el, str)) {
+    el.classList.add(str);
+  }
+} : function (el, str) {
+  if (!hasClass(el, str)) {
+    el.className += ' ' + str;
+  }
+};
+
+var removeClass = classListSupport ? function (el, str) {
+  if (hasClass(el, str)) {
+    el.classList.remove(str);
+  }
+} : function (el, str) {
+  if (hasClass(el, str)) {
+    el.className = el.className.replace(str, '');
+  }
+};
+
+function hasAttr(el, attr) {
+  return el.hasAttribute(attr);
+}
+
+function getAttr(el, attr) {
+  return el.getAttribute(attr);
+}
+
+function isNodeList(el) {
+  // Only NodeList has the "item()" function
+  return typeof el.item !== "undefined";
+}
+
+function setAttrs(els, attrs) {
+  els = isNodeList(els) || els instanceof Array ? els : [els];
+
+  if (Object.prototype.toString.call(attrs) !== '[object Object]') {
+    return;
+  }
+
+  for (var i = els.length; i--;) {
+    for (var key in attrs) {
+      els[i].setAttribute(key, attrs[key]);
+    }
+  }
+}
+
+function removeAttrs(els, attrs) {
+  els = isNodeList(els) || els instanceof Array ? els : [els];
+  attrs = attrs instanceof Array ? attrs : [attrs];
+  var attrLength = attrs.length;
+
+  for (var i = els.length; i--;) {
+    for (var j = attrLength; j--;) {
+      els[i].removeAttribute(attrs[j]);
+    }
+  }
+}
+
+function arrayFromNodeList(nl) {
+  var arr = [];
+
+  for (var i = 0, l = nl.length; i < l; i++) {
+    arr.push(nl[i]);
+  }
+
+  return arr;
+}
+
+function hideElement(el, forceHide) {
+  if (el.style.display !== 'none') {
+    el.style.display = 'none';
+  }
+}
+
+function showElement(el, forceHide) {
+  if (el.style.display === 'none') {
+    el.style.display = '';
+  }
+}
+
+function isVisible(el) {
+  return window.getComputedStyle(el).display !== 'none';
+}
+
+function whichProperty(props) {
+  if (typeof props === 'string') {
+    var arr = [props],
+        Props = props.charAt(0).toUpperCase() + props.substr(1),
+        prefixes = ['Webkit', 'Moz', 'ms', 'O'];
+    prefixes.forEach(function (prefix) {
+      if (prefix !== 'ms' || props === 'transform') {
+        arr.push(prefix + Props);
+      }
+    });
+    props = arr;
+  }
+
+  var el = document.createElement('fakeelement');
+      props.length;
+
+  for (var i = 0; i < props.length; i++) {
+    var prop = props[i];
+
+    if (el.style[prop] !== undefined) {
+      return prop;
+    }
+  }
+
+  return false; // explicit for ie9-
+}
+
+function has3DTransforms(tf) {
+  if (!tf) {
+    return false;
+  }
+
+  if (!window.getComputedStyle) {
+    return false;
+  }
+
+  var doc = document,
+      body = getBody(),
+      docOverflow = setFakeBody(body),
+      el = doc.createElement('p'),
+      has3d,
+      cssTF = tf.length > 9 ? '-' + tf.slice(0, -9).toLowerCase() + '-' : '';
+  cssTF += 'transform'; // Add it to the body to get the computed style
+
+  body.insertBefore(el, null);
+  el.style[tf] = 'translate3d(1px,1px,1px)';
+  has3d = window.getComputedStyle(el).getPropertyValue(cssTF);
+  body.fake ? resetFakeBody(body, docOverflow) : el.remove();
+  return has3d !== undefined && has3d.length > 0 && has3d !== "none";
+}
+
+// get transitionend, animationend based on transitionDuration
+// @propin: string
+// @propOut: string, first-letter uppercase
+// Usage: getEndProperty('WebkitTransitionDuration', 'Transition') => webkitTransitionEnd
+function getEndProperty(propIn, propOut) {
+  var endProp = false;
+
+  if (/^Webkit/.test(propIn)) {
+    endProp = 'webkit' + propOut + 'End';
+  } else if (/^O/.test(propIn)) {
+    endProp = 'o' + propOut + 'End';
+  } else if (propIn) {
+    endProp = propOut.toLowerCase() + 'end';
+  }
+
+  return endProp;
+}
+
+// Test via a getter in the options object to see if the passive property is accessed
+var supportsPassive = false;
+
+try {
+  var opts = Object.defineProperty({}, 'passive', {
+    get: function () {
+      supportsPassive = true;
+    }
+  });
+  window.addEventListener("test", null, opts);
+} catch (e) {}
+
+var passiveOption = supportsPassive ? {
+  passive: true
+} : false;
+
+function addEvents(el, obj, preventScrolling) {
+  for (var prop in obj) {
+    var option = ['touchstart', 'touchmove'].indexOf(prop) >= 0 && !preventScrolling ? passiveOption : false;
+    el.addEventListener(prop, obj[prop], option);
+  }
+}
+
+function removeEvents(el, obj) {
+  for (var prop in obj) {
+    var option = ['touchstart', 'touchmove'].indexOf(prop) >= 0 ? passiveOption : false;
+    el.removeEventListener(prop, obj[prop], option);
+  }
+}
+
+function Events() {
+  return {
+    topics: {},
+    on: function (eventName, fn) {
+      this.topics[eventName] = this.topics[eventName] || [];
+      this.topics[eventName].push(fn);
+    },
+    off: function (eventName, fn) {
+      if (this.topics[eventName]) {
+        for (var i = 0; i < this.topics[eventName].length; i++) {
+          if (this.topics[eventName][i] === fn) {
+            this.topics[eventName].splice(i, 1);
+            break;
+          }
+        }
+      }
+    },
+    emit: function (eventName, data) {
+      data.type = eventName;
+
+      if (this.topics[eventName]) {
+        this.topics[eventName].forEach(function (fn) {
+          fn(data, eventName);
+        });
+      }
+    }
+  };
+}
+
+function jsTransform(element, attr, prefix, postfix, to, duration, callback) {
+  var tick = Math.min(duration, 10),
+      unit = to.indexOf('%') >= 0 ? '%' : 'px',
+      to = to.replace(unit, ''),
+      from = Number(element.style[attr].replace(prefix, '').replace(postfix, '').replace(unit, '')),
+      positionTick = (to - from) / duration * tick;
+  setTimeout(moveElement, tick);
+
+  function moveElement() {
+    duration -= tick;
+    from += positionTick;
+    element.style[attr] = prefix + from + unit + postfix;
+
+    if (duration > 0) {
+      setTimeout(moveElement, tick);
+    } else {
+      callback();
+    }
+  }
+}
+
+// Object.keys
+if (!Object.keys) {
+  Object.keys = function (object) {
+    var keys = [];
+
+    for (var name in object) {
+      if (Object.prototype.hasOwnProperty.call(object, name)) {
+        keys.push(name);
+      }
+    }
+
+    return keys;
+  };
+} // ChildNode.remove
+
+
+if (!("remove" in Element.prototype)) {
+  Element.prototype.remove = function () {
+    if (this.parentNode) {
+      this.parentNode.removeChild(this);
+    }
+  };
+}
+var tns = function (options) {
+  options = extend({
+    container: '.slider',
+    mode: 'carousel',
+    axis: 'horizontal',
+    items: 1,
+    gutter: 0,
+    edgePadding: 0,
+    fixedWidth: false,
+    autoWidth: false,
+    viewportMax: false,
+    slideBy: 1,
+    center: false,
+    controls: true,
+    controlsPosition: 'top',
+    controlsText: ['prev', 'next'],
+    controlsContainer: false,
+    prevButton: false,
+    nextButton: false,
+    nav: true,
+    navPosition: 'top',
+    navContainer: false,
+    navAsThumbnails: false,
+    arrowKeys: false,
+    speed: 300,
+    autoplay: false,
+    autoplayPosition: 'top',
+    autoplayTimeout: 5000,
+    autoplayDirection: 'forward',
+    autoplayText: ['start', 'stop'],
+    autoplayHoverPause: false,
+    autoplayButton: false,
+    autoplayButtonOutput: true,
+    autoplayResetOnVisibility: true,
+    animateIn: 'tns-fadeIn',
+    animateOut: 'tns-fadeOut',
+    animateNormal: 'tns-normal',
+    animateDelay: false,
+    loop: true,
+    rewind: false,
+    autoHeight: false,
+    responsive: false,
+    lazyload: false,
+    lazyloadSelector: '.tns-lazy-img',
+    touch: true,
+    mouseDrag: false,
+    swipeAngle: 15,
+    nested: false,
+    preventActionWhenRunning: false,
+    preventScrollOnTouch: false,
+    freezable: true,
+    onInit: false,
+    useLocalStorage: true,
+    nonce: false
+  }, options || {});
+  var doc = document,
+      win = window,
+      KEYS = {
+    ENTER: 13,
+    SPACE: 32,
+    LEFT: 37,
+    RIGHT: 39
+  },
+      tnsStorage = {},
+      localStorageAccess = options.useLocalStorage;
+
+  if (localStorageAccess) {
+    // check browser version and local storage access
+    var browserInfo = navigator.userAgent;
+    var uid = new Date();
+
+    try {
+      tnsStorage = win.localStorage;
+
+      if (tnsStorage) {
+        tnsStorage.setItem(uid, uid);
+        localStorageAccess = tnsStorage.getItem(uid) == uid;
+        tnsStorage.removeItem(uid);
+      } else {
+        localStorageAccess = false;
+      }
+
+      if (!localStorageAccess) {
+        tnsStorage = {};
+      }
+    } catch (e) {
+      localStorageAccess = false;
+    }
+
+    if (localStorageAccess) {
+      // remove storage when browser version changes
+      if (tnsStorage['tnsApp'] && tnsStorage['tnsApp'] !== browserInfo) {
+        ['tC', 'tPL', 'tMQ', 'tTf', 't3D', 'tTDu', 'tTDe', 'tADu', 'tADe', 'tTE', 'tAE'].forEach(function (item) {
+          tnsStorage.removeItem(item);
+        });
+      } // update browserInfo
+
+
+      localStorage['tnsApp'] = browserInfo;
+    }
+  }
+
+  var CALC = tnsStorage['tC'] ? checkStorageValue(tnsStorage['tC']) : setLocalStorage(tnsStorage, 'tC', calc(), localStorageAccess),
+      PERCENTAGELAYOUT = tnsStorage['tPL'] ? checkStorageValue(tnsStorage['tPL']) : setLocalStorage(tnsStorage, 'tPL', percentageLayout(), localStorageAccess),
+      CSSMQ = tnsStorage['tMQ'] ? checkStorageValue(tnsStorage['tMQ']) : setLocalStorage(tnsStorage, 'tMQ', mediaquerySupport(), localStorageAccess),
+      TRANSFORM = tnsStorage['tTf'] ? checkStorageValue(tnsStorage['tTf']) : setLocalStorage(tnsStorage, 'tTf', whichProperty('transform'), localStorageAccess),
+      HAS3DTRANSFORMS = tnsStorage['t3D'] ? checkStorageValue(tnsStorage['t3D']) : setLocalStorage(tnsStorage, 't3D', has3DTransforms(TRANSFORM), localStorageAccess),
+      TRANSITIONDURATION = tnsStorage['tTDu'] ? checkStorageValue(tnsStorage['tTDu']) : setLocalStorage(tnsStorage, 'tTDu', whichProperty('transitionDuration'), localStorageAccess),
+      TRANSITIONDELAY = tnsStorage['tTDe'] ? checkStorageValue(tnsStorage['tTDe']) : setLocalStorage(tnsStorage, 'tTDe', whichProperty('transitionDelay'), localStorageAccess),
+      ANIMATIONDURATION = tnsStorage['tADu'] ? checkStorageValue(tnsStorage['tADu']) : setLocalStorage(tnsStorage, 'tADu', whichProperty('animationDuration'), localStorageAccess),
+      ANIMATIONDELAY = tnsStorage['tADe'] ? checkStorageValue(tnsStorage['tADe']) : setLocalStorage(tnsStorage, 'tADe', whichProperty('animationDelay'), localStorageAccess),
+      TRANSITIONEND = tnsStorage['tTE'] ? checkStorageValue(tnsStorage['tTE']) : setLocalStorage(tnsStorage, 'tTE', getEndProperty(TRANSITIONDURATION, 'Transition'), localStorageAccess),
+      ANIMATIONEND = tnsStorage['tAE'] ? checkStorageValue(tnsStorage['tAE']) : setLocalStorage(tnsStorage, 'tAE', getEndProperty(ANIMATIONDURATION, 'Animation'), localStorageAccess); // get element nodes from selectors
+
+  var supportConsoleWarn = win.console && typeof win.console.warn === "function",
+      tnsList = ['container', 'controlsContainer', 'prevButton', 'nextButton', 'navContainer', 'autoplayButton'],
+      optionsElements = {};
+  tnsList.forEach(function (item) {
+    if (typeof options[item] === 'string') {
+      var str = options[item],
+          el = doc.querySelector(str);
+      optionsElements[item] = str;
+
+      if (el && el.nodeName) {
+        options[item] = el;
+      } else {
+        if (supportConsoleWarn) {
+          console.warn('Can\'t find', options[item]);
+        }
+
+        return;
+      }
+    }
+  }); // make sure at least 1 slide
+
+  if (options.container.children.length < 1) {
+    if (supportConsoleWarn) {
+      console.warn('No slides found in', options.container);
+    }
+
+    return;
+  } // update options
+
+
+  var responsive = options.responsive,
+      nested = options.nested,
+      carousel = options.mode === 'carousel' ? true : false;
+
+  if (responsive) {
+    // apply responsive[0] to options and remove it
+    if (0 in responsive) {
+      options = extend(options, responsive[0]);
+      delete responsive[0];
+    }
+
+    var responsiveTem = {};
+
+    for (var key in responsive) {
+      var val = responsive[key]; // update responsive
+      // from: 300: 2
+      // to:
+      //   300: {
+      //     items: 2
+      //   }
+
+      val = typeof val === 'number' ? {
+        items: val
+      } : val;
+      responsiveTem[key] = val;
+    }
+
+    responsive = responsiveTem;
+    responsiveTem = null;
+  } // update options
+
+
+  function updateOptions(obj) {
+    for (var key in obj) {
+      if (!carousel) {
+        if (key === 'slideBy') {
+          obj[key] = 'page';
+        }
+
+        if (key === 'edgePadding') {
+          obj[key] = false;
+        }
+
+        if (key === 'autoHeight') {
+          obj[key] = false;
+        }
+      } // update responsive options
+
+
+      if (key === 'responsive') {
+        updateOptions(obj[key]);
+      }
+    }
+  }
+
+  if (!carousel) {
+    updateOptions(options);
+  } // === define and set variables ===
+
+
+  if (!carousel) {
+    options.axis = 'horizontal';
+    options.slideBy = 'page';
+    options.edgePadding = false;
+    var animateIn = options.animateIn,
+        animateOut = options.animateOut,
+        animateDelay = options.animateDelay,
+        animateNormal = options.animateNormal;
+  }
+
+  var horizontal = options.axis === 'horizontal' ? true : false,
+      outerWrapper = doc.createElement('div'),
+      innerWrapper = doc.createElement('div'),
+      middleWrapper,
+      container = options.container,
+      containerParent = container.parentNode,
+      containerHTML = container.outerHTML,
+      slideItems = container.children,
+      slideCount = slideItems.length,
+      breakpointZone,
+      windowWidth = getWindowWidth(),
+      isOn = false;
+
+  if (responsive) {
+    setBreakpointZone();
+  }
+
+  if (carousel) {
+    container.className += ' tns-vpfix';
+  } // fixedWidth: viewport > rightBoundary > indexMax
+
+
+  var autoWidth = options.autoWidth,
+      fixedWidth = getOption('fixedWidth'),
+      edgePadding = getOption('edgePadding'),
+      gutter = getOption('gutter'),
+      viewport = getViewportWidth(),
+      center = getOption('center'),
+      items = !autoWidth ? Math.floor(getOption('items')) : 1,
+      slideBy = getOption('slideBy'),
+      viewportMax = options.viewportMax || options.fixedWidthViewportWidth,
+      arrowKeys = getOption('arrowKeys'),
+      speed = getOption('speed'),
+      rewind = options.rewind,
+      loop = rewind ? false : options.loop,
+      autoHeight = getOption('autoHeight'),
+      controls = getOption('controls'),
+      controlsText = getOption('controlsText'),
+      nav = getOption('nav'),
+      touch = getOption('touch'),
+      mouseDrag = getOption('mouseDrag'),
+      autoplay = getOption('autoplay'),
+      autoplayTimeout = getOption('autoplayTimeout'),
+      autoplayText = getOption('autoplayText'),
+      autoplayHoverPause = getOption('autoplayHoverPause'),
+      autoplayResetOnVisibility = getOption('autoplayResetOnVisibility'),
+      sheet = createStyleSheet(null, getOption('nonce')),
+      lazyload = options.lazyload,
+      lazyloadSelector = options.lazyloadSelector,
+      slidePositions,
+      // collection of slide positions
+  slideItemsOut = [],
+      cloneCount = loop ? getCloneCountForLoop() : 0,
+      slideCountNew = !carousel ? slideCount + cloneCount : slideCount + cloneCount * 2,
+      hasRightDeadZone = (fixedWidth || autoWidth) && !loop ? true : false,
+      rightBoundary = fixedWidth ? getRightBoundary() : null,
+      updateIndexBeforeTransform = !carousel || !loop ? true : false,
+      // transform
+  transformAttr = horizontal ? 'left' : 'top',
+      transformPrefix = '',
+      transformPostfix = '',
+      // index
+  getIndexMax = function () {
+    if (fixedWidth) {
+      return function () {
+        return center && !loop ? slideCount - 1 : Math.ceil(-rightBoundary / (fixedWidth + gutter));
+      };
+    } else if (autoWidth) {
+      return function () {
+        for (var i = 0; i < slideCountNew; i++) {
+          if (slidePositions[i] >= -rightBoundary) {
+            return i;
+          }
+        }
+      };
+    } else {
+      return function () {
+        if (center && carousel && !loop) {
+          return slideCount - 1;
+        } else {
+          return loop || carousel ? Math.max(0, slideCountNew - Math.ceil(items)) : slideCountNew - 1;
+        }
+      };
+    }
+  }(),
+      index = getStartIndex(getOption('startIndex')),
+      indexCached = index;
+      getCurrentSlide();
+      var indexMin = 0,
+      indexMax = !autoWidth ? getIndexMax() : null,
+      preventActionWhenRunning = options.preventActionWhenRunning,
+      swipeAngle = options.swipeAngle,
+      moveDirectionExpected = swipeAngle ? '?' : true,
+      running = false,
+      onInit = options.onInit,
+      events = new Events(),
+      // id, class
+  newContainerClasses = ' tns-slider tns-' + options.mode,
+      slideId = container.id || getSlideId(),
+      disable = getOption('disable'),
+      disabled = false,
+      freezable = options.freezable,
+      freeze = freezable && !autoWidth ? getFreeze() : false,
+      frozen = false,
+      controlsEvents = {
+    'click': onControlsClick,
+    'keydown': onControlsKeydown
+  },
+      navEvents = {
+    'click': onNavClick,
+    'keydown': onNavKeydown
+  },
+      hoverEvents = {
+    'mouseover': mouseoverPause,
+    'mouseout': mouseoutRestart
+  },
+      visibilityEvent = {
+    'visibilitychange': onVisibilityChange
+  },
+      docmentKeydownEvent = {
+    'keydown': onDocumentKeydown
+  },
+      touchEvents = {
+    'touchstart': onPanStart,
+    'touchmove': onPanMove,
+    'touchend': onPanEnd,
+    'touchcancel': onPanEnd
+  },
+      dragEvents = {
+    'mousedown': onPanStart,
+    'mousemove': onPanMove,
+    'mouseup': onPanEnd,
+    'mouseleave': onPanEnd
+  },
+      hasControls = hasOption('controls'),
+      hasNav = hasOption('nav'),
+      navAsThumbnails = autoWidth ? true : options.navAsThumbnails,
+      hasAutoplay = hasOption('autoplay'),
+      hasTouch = hasOption('touch'),
+      hasMouseDrag = hasOption('mouseDrag'),
+      slideActiveClass = 'tns-slide-active',
+      slideClonedClass = 'tns-slide-cloned',
+      imgCompleteClass = 'tns-complete',
+      imgEvents = {
+    'load': onImgLoaded,
+    'error': onImgFailed
+  },
+      imgsComplete,
+      liveregionCurrent,
+      preventScroll = options.preventScrollOnTouch === 'force' ? true : false; // controls
+
+
+  if (hasControls) {
+    var controlsContainer = options.controlsContainer,
+        controlsContainerHTML = options.controlsContainer ? options.controlsContainer.outerHTML : '',
+        prevButton = options.prevButton,
+        nextButton = options.nextButton,
+        prevButtonHTML = options.prevButton ? options.prevButton.outerHTML : '',
+        nextButtonHTML = options.nextButton ? options.nextButton.outerHTML : '',
+        prevIsButton,
+        nextIsButton;
+  } // nav
+
+
+  if (hasNav) {
+    var navContainer = options.navContainer,
+        navContainerHTML = options.navContainer ? options.navContainer.outerHTML : '',
+        navItems,
+        pages = autoWidth ? slideCount : getPages(),
+        pagesCached = 0,
+        navClicked = -1,
+        navCurrentIndex = getCurrentNavIndex(),
+        navCurrentIndexCached = navCurrentIndex,
+        navActiveClass = 'tns-nav-active',
+        navStr = 'Carousel Page ',
+        navStrCurrent = ' (Current Slide)';
+  } // autoplay
+
+
+  if (hasAutoplay) {
+    var autoplayDirection = options.autoplayDirection === 'forward' ? 1 : -1,
+        autoplayButton = options.autoplayButton,
+        autoplayButtonHTML = options.autoplayButton ? options.autoplayButton.outerHTML : '',
+        autoplayHtmlStrings = ['<span class=\'tns-visually-hidden\'>', ' animation</span>'],
+        autoplayTimer,
+        animating,
+        autoplayHoverPaused,
+        autoplayUserPaused,
+        autoplayVisibilityPaused;
+  }
+
+  if (hasTouch || hasMouseDrag) {
+    var initPosition = {},
+        lastPosition = {},
+        translateInit,
+        panStart = false,
+        rafIndex,
+        getDist = horizontal ? function (a, b) {
+      return a.x - b.x;
+    } : function (a, b) {
+      return a.y - b.y;
+    };
+  } // disable slider when slidecount <= items
+
+
+  if (!autoWidth) {
+    resetVariblesWhenDisable(disable || freeze);
+  }
+
+  if (TRANSFORM) {
+    transformAttr = TRANSFORM;
+    transformPrefix = 'translate';
+
+    if (HAS3DTRANSFORMS) {
+      transformPrefix += horizontal ? '3d(' : '3d(0px, ';
+      transformPostfix = horizontal ? ', 0px, 0px)' : ', 0px)';
+    } else {
+      transformPrefix += horizontal ? 'X(' : 'Y(';
+      transformPostfix = ')';
+    }
+  }
+
+  if (carousel) {
+    container.className = container.className.replace('tns-vpfix', '');
+  }
+
+  initStructure();
+  initSheet();
+  initSliderTransform(); // === COMMON FUNCTIONS === //
+
+  function resetVariblesWhenDisable(condition) {
+    if (condition) {
+      controls = nav = touch = mouseDrag = arrowKeys = autoplay = autoplayHoverPause = autoplayResetOnVisibility = false;
+    }
+  }
+
+  function getCurrentSlide() {
+    var tem = carousel ? index - cloneCount : index;
+
+    while (tem < 0) {
+      tem += slideCount;
+    }
+
+    return tem % slideCount + 1;
+  }
+
+  function getStartIndex(ind) {
+    ind = ind ? Math.max(0, Math.min(loop ? slideCount - 1 : slideCount - items, ind)) : 0;
+    return carousel ? ind + cloneCount : ind;
+  }
+
+  function getAbsIndex(i) {
+    if (i == null) {
+      i = index;
+    }
+
+    if (carousel) {
+      i -= cloneCount;
+    }
+
+    while (i < 0) {
+      i += slideCount;
+    }
+
+    return Math.floor(i % slideCount);
+  }
+
+  function getCurrentNavIndex() {
+    var absIndex = getAbsIndex(),
+        result;
+    result = navAsThumbnails ? absIndex : fixedWidth || autoWidth ? Math.ceil((absIndex + 1) * pages / slideCount - 1) : Math.floor(absIndex / items); // set active nav to the last one when reaches the right edge
+
+    if (!loop && carousel && index === indexMax) {
+      result = pages - 1;
+    }
+
+    return result;
+  }
+
+  function getItemsMax() {
+    // fixedWidth or autoWidth while viewportMax is not available
+    if (autoWidth || fixedWidth && !viewportMax) {
+      return slideCount - 1; // most cases
+    } else {
+      var str = fixedWidth ? 'fixedWidth' : 'items',
+          arr = [];
+
+      if (fixedWidth || options[str] < slideCount) {
+        arr.push(options[str]);
+      }
+
+      if (responsive) {
+        for (var bp in responsive) {
+          var tem = responsive[bp][str];
+
+          if (tem && (fixedWidth || tem < slideCount)) {
+            arr.push(tem);
+          }
+        }
+      }
+
+      if (!arr.length) {
+        arr.push(0);
+      }
+
+      return Math.ceil(fixedWidth ? viewportMax / Math.min.apply(null, arr) : Math.max.apply(null, arr));
+    }
+  }
+
+  function getCloneCountForLoop() {
+    var itemsMax = getItemsMax(),
+        result = carousel ? Math.ceil((itemsMax * 5 - slideCount) / 2) : itemsMax * 4 - slideCount;
+    result = Math.max(itemsMax, result);
+    return hasOption('edgePadding') ? result + 1 : result;
+  }
+
+  function getWindowWidth() {
+    return win.innerWidth || doc.documentElement.clientWidth || doc.body.clientWidth;
+  }
+
+  function getInsertPosition(pos) {
+    return pos === 'top' ? 'afterbegin' : 'beforeend';
+  }
+
+  function getClientWidth(el) {
+    if (el == null) {
+      return;
+    }
+
+    var div = doc.createElement('div'),
+        rect,
+        width;
+    el.appendChild(div);
+    rect = div.getBoundingClientRect();
+    width = rect.right - rect.left;
+    div.remove();
+    return width || getClientWidth(el.parentNode);
+  }
+
+  function getViewportWidth() {
+    var gap = edgePadding ? edgePadding * 2 - gutter : 0;
+    return getClientWidth(containerParent) - gap;
+  }
+
+  function hasOption(item) {
+    if (options[item]) {
+      return true;
+    } else {
+      if (responsive) {
+        for (var bp in responsive) {
+          if (responsive[bp][item]) {
+            return true;
+          }
+        }
+      }
+
+      return false;
+    }
+  } // get option:
+  // fixed width: viewport, fixedWidth, gutter => items
+  // others: window width => all variables
+  // all: items => slideBy
+
+
+  function getOption(item, ww) {
+    if (ww == null) {
+      ww = windowWidth;
+    }
+
+    if (item === 'items' && fixedWidth) {
+      return Math.floor((viewport + gutter) / (fixedWidth + gutter)) || 1;
+    } else {
+      var result = options[item];
+
+      if (responsive) {
+        for (var bp in responsive) {
+          // bp: convert string to number
+          if (ww >= parseInt(bp)) {
+            if (item in responsive[bp]) {
+              result = responsive[bp][item];
+            }
+          }
+        }
+      }
+
+      if (item === 'slideBy' && result === 'page') {
+        result = getOption('items');
+      }
+
+      if (!carousel && (item === 'slideBy' || item === 'items')) {
+        result = Math.floor(result);
+      }
+
+      return result;
+    }
+  }
+
+  function getSlideMarginLeft(i) {
+    return CALC ? CALC + '(' + i * 100 + '% / ' + slideCountNew + ')' : i * 100 / slideCountNew + '%';
+  }
+
+  function getInnerWrapperStyles(edgePaddingTem, gutterTem, fixedWidthTem, speedTem, autoHeightBP) {
+    var str = '';
+
+    if (edgePaddingTem !== undefined) {
+      var gap = edgePaddingTem;
+
+      if (gutterTem) {
+        gap -= gutterTem;
+      }
+
+      str = horizontal ? 'margin: 0 ' + gap + 'px 0 ' + edgePaddingTem + 'px;' : 'margin: ' + edgePaddingTem + 'px 0 ' + gap + 'px 0;';
+    } else if (gutterTem && !fixedWidthTem) {
+      var gutterTemUnit = '-' + gutterTem + 'px',
+          dir = horizontal ? gutterTemUnit + ' 0 0' : '0 ' + gutterTemUnit + ' 0';
+      str = 'margin: 0 ' + dir + ';';
+    }
+
+    if (!carousel && autoHeightBP && TRANSITIONDURATION && speedTem) {
+      str += getTransitionDurationStyle(speedTem);
+    }
+
+    return str;
+  }
+
+  function getContainerWidth(fixedWidthTem, gutterTem, itemsTem) {
+    if (fixedWidthTem) {
+      return (fixedWidthTem + gutterTem) * slideCountNew + 'px';
+    } else {
+      return CALC ? CALC + '(' + slideCountNew * 100 + '% / ' + itemsTem + ')' : slideCountNew * 100 / itemsTem + '%';
+    }
+  }
+
+  function getSlideWidthStyle(fixedWidthTem, gutterTem, itemsTem) {
+    var width;
+
+    if (fixedWidthTem) {
+      width = fixedWidthTem + gutterTem + 'px';
+    } else {
+      if (!carousel) {
+        itemsTem = Math.floor(itemsTem);
+      }
+
+      var dividend = carousel ? slideCountNew : itemsTem;
+      width = CALC ? CALC + '(100% / ' + dividend + ')' : 100 / dividend + '%';
+    }
+
+    width = 'width:' + width; // inner slider: overwrite outer slider styles
+
+    return nested !== 'inner' ? width + ';' : width + ' !important;';
+  }
+
+  function getSlideGutterStyle(gutterTem) {
+    var str = ''; // gutter maybe interger || 0
+    // so can't use 'if (gutter)'
+
+    if (gutterTem !== false) {
+      var prop = horizontal ? 'padding-' : 'margin-',
+          dir = horizontal ? 'right' : 'bottom';
+      str = prop + dir + ': ' + gutterTem + 'px;';
+    }
+
+    return str;
+  }
+
+  function getCSSPrefix(name, num) {
+    var prefix = name.substring(0, name.length - num).toLowerCase();
+
+    if (prefix) {
+      prefix = '-' + prefix + '-';
+    }
+
+    return prefix;
+  }
+
+  function getTransitionDurationStyle(speed) {
+    return getCSSPrefix(TRANSITIONDURATION, 18) + 'transition-duration:' + speed / 1000 + 's;';
+  }
+
+  function getAnimationDurationStyle(speed) {
+    return getCSSPrefix(ANIMATIONDURATION, 17) + 'animation-duration:' + speed / 1000 + 's;';
+  }
+
+  function initStructure() {
+    var classOuter = 'tns-outer',
+        classInner = 'tns-inner';
+        hasOption('gutter');
+    outerWrapper.className = classOuter;
+    innerWrapper.className = classInner;
+    outerWrapper.id = slideId + '-ow';
+    innerWrapper.id = slideId + '-iw'; // set container properties
+
+    if (container.id === '') {
+      container.id = slideId;
+    }
+
+    newContainerClasses += PERCENTAGELAYOUT || autoWidth ? ' tns-subpixel' : ' tns-no-subpixel';
+    newContainerClasses += CALC ? ' tns-calc' : ' tns-no-calc';
+
+    if (autoWidth) {
+      newContainerClasses += ' tns-autowidth';
+    }
+
+    newContainerClasses += ' tns-' + options.axis;
+    container.className += newContainerClasses; // add constrain layer for carousel
+
+    if (carousel) {
+      middleWrapper = doc.createElement('div');
+      middleWrapper.id = slideId + '-mw';
+      middleWrapper.className = 'tns-ovh';
+      outerWrapper.appendChild(middleWrapper);
+      middleWrapper.appendChild(innerWrapper);
+    } else {
+      outerWrapper.appendChild(innerWrapper);
+    }
+
+    if (autoHeight) {
+      var wp = middleWrapper ? middleWrapper : innerWrapper;
+      wp.className += ' tns-ah';
+    }
+
+    containerParent.insertBefore(outerWrapper, container);
+    innerWrapper.appendChild(container); // add id, class, aria attributes
+    // before clone slides
+
+    forEach(slideItems, function (item, i) {
+      addClass(item, 'tns-item');
+
+      if (!item.id) {
+        item.id = slideId + '-item' + i;
+      }
+
+      if (!carousel && animateNormal) {
+        addClass(item, animateNormal);
+      }
+
+      setAttrs(item, {
+        'aria-hidden': 'true',
+        'tabindex': '-1'
+      });
+    }); // ## clone slides
+    // carousel: n + slides + n
+    // gallery:      slides + n
+
+    if (cloneCount) {
+      var fragmentBefore = doc.createDocumentFragment(),
+          fragmentAfter = doc.createDocumentFragment();
+
+      for (var j = cloneCount; j--;) {
+        var num = j % slideCount,
+            cloneFirst = slideItems[num].cloneNode(true);
+        addClass(cloneFirst, slideClonedClass);
+        removeAttrs(cloneFirst, 'id');
+        fragmentAfter.insertBefore(cloneFirst, fragmentAfter.firstChild);
+
+        if (carousel) {
+          var cloneLast = slideItems[slideCount - 1 - num].cloneNode(true);
+          addClass(cloneLast, slideClonedClass);
+          removeAttrs(cloneLast, 'id');
+          fragmentBefore.appendChild(cloneLast);
+        }
+      }
+
+      container.insertBefore(fragmentBefore, container.firstChild);
+      container.appendChild(fragmentAfter);
+      slideItems = container.children;
+    }
+  }
+
+  function initSliderTransform() {
+    // ## images loaded/failed
+    if (hasOption('autoHeight') || autoWidth || !horizontal) {
+      var imgs = container.querySelectorAll('img'); // add img load event listener
+
+      forEach(imgs, function (img) {
+        var src = img.src;
+
+        if (!lazyload) {
+          // not data img
+          if (src && src.indexOf('data:image') < 0) {
+            img.src = '';
+            addEvents(img, imgEvents);
+            addClass(img, 'loading');
+            img.src = src; // data img
+          } else {
+            imgLoaded(img);
+          }
+        }
+      }); // set imgsComplete
+
+      raf(function () {
+        imgsLoadedCheck(arrayFromNodeList(imgs), function () {
+          imgsComplete = true;
+        });
+      }); // reset imgs for auto height: check visible imgs only
+
+      if (hasOption('autoHeight')) {
+        imgs = getImageArray(index, Math.min(index + items - 1, slideCountNew - 1));
+      }
+
+      lazyload ? initSliderTransformStyleCheck() : raf(function () {
+        imgsLoadedCheck(arrayFromNodeList(imgs), initSliderTransformStyleCheck);
+      });
+    } else {
+      // set container transform property
+      if (carousel) {
+        doContainerTransformSilent();
+      } // update slider tools and events
+
+
+      initTools();
+      initEvents();
+    }
+  }
+
+  function initSliderTransformStyleCheck() {
+    if (autoWidth && slideCount > 1) {
+      // check styles application
+      var num = loop ? index : slideCount - 1;
+
+      (function stylesApplicationCheck() {
+        var left = slideItems[num].getBoundingClientRect().left;
+        var right = slideItems[num - 1].getBoundingClientRect().right;
+        Math.abs(left - right) <= 1 ? initSliderTransformCore() : setTimeout(function () {
+          stylesApplicationCheck();
+        }, 16);
+      })();
+    } else {
+      initSliderTransformCore();
+    }
+  }
+
+  function initSliderTransformCore() {
+    // run Fn()s which are rely on image loading
+    if (!horizontal || autoWidth) {
+      setSlidePositions();
+
+      if (autoWidth) {
+        rightBoundary = getRightBoundary();
+
+        if (freezable) {
+          freeze = getFreeze();
+        }
+
+        indexMax = getIndexMax(); // <= slidePositions, rightBoundary <=
+
+        resetVariblesWhenDisable(disable || freeze);
+      } else {
+        updateContentWrapperHeight();
+      }
+    } // set container transform property
+
+
+    if (carousel) {
+      doContainerTransformSilent();
+    } // update slider tools and events
+
+
+    initTools();
+    initEvents();
+  }
+
+  function initSheet() {
+    // gallery:
+    // set animation classes and left value for gallery slider
+    if (!carousel) {
+      for (var i = index, l = index + Math.min(slideCount, items); i < l; i++) {
+        var item = slideItems[i];
+        item.style.left = (i - index) * 100 / items + '%';
+        addClass(item, animateIn);
+        removeClass(item, animateNormal);
+      }
+    } // #### LAYOUT
+    // ## INLINE-BLOCK VS FLOAT
+    // ## PercentageLayout:
+    // slides: inline-block
+    // remove blank space between slides by set font-size: 0
+    // ## Non PercentageLayout:
+    // slides: float
+    //         margin-right: -100%
+    //         margin-left: ~
+    // Resource: https://docs.google.com/spreadsheets/d/147up245wwTXeQYve3BRSAD4oVcvQmuGsFteJOeA5xNQ/edit?usp=sharing
+
+
+    if (horizontal) {
+      if (PERCENTAGELAYOUT || autoWidth) {
+        addCSSRule(sheet, '#' + slideId + ' > .tns-item', 'font-size:' + win.getComputedStyle(slideItems[0]).fontSize + ';', getCssRulesLength(sheet));
+        addCSSRule(sheet, '#' + slideId, 'font-size:0;', getCssRulesLength(sheet));
+      } else if (carousel) {
+        forEach(slideItems, function (slide, i) {
+          slide.style.marginLeft = getSlideMarginLeft(i);
+        });
+      }
+    } // ## BASIC STYLES
+
+
+    if (CSSMQ) {
+      // middle wrapper style
+      if (TRANSITIONDURATION) {
+        var str = middleWrapper && options.autoHeight ? getTransitionDurationStyle(options.speed) : '';
+        addCSSRule(sheet, '#' + slideId + '-mw', str, getCssRulesLength(sheet));
+      } // inner wrapper styles
+
+
+      str = getInnerWrapperStyles(options.edgePadding, options.gutter, options.fixedWidth, options.speed, options.autoHeight);
+      addCSSRule(sheet, '#' + slideId + '-iw', str, getCssRulesLength(sheet)); // container styles
+
+      if (carousel) {
+        str = horizontal && !autoWidth ? 'width:' + getContainerWidth(options.fixedWidth, options.gutter, options.items) + ';' : '';
+
+        if (TRANSITIONDURATION) {
+          str += getTransitionDurationStyle(speed);
+        }
+
+        addCSSRule(sheet, '#' + slideId, str, getCssRulesLength(sheet));
+      } // slide styles
+
+
+      str = horizontal && !autoWidth ? getSlideWidthStyle(options.fixedWidth, options.gutter, options.items) : '';
+
+      if (options.gutter) {
+        str += getSlideGutterStyle(options.gutter);
+      } // set gallery items transition-duration
+
+
+      if (!carousel) {
+        if (TRANSITIONDURATION) {
+          str += getTransitionDurationStyle(speed);
+        }
+
+        if (ANIMATIONDURATION) {
+          str += getAnimationDurationStyle(speed);
+        }
+      }
+
+      if (str) {
+        addCSSRule(sheet, '#' + slideId + ' > .tns-item', str, getCssRulesLength(sheet));
+      } // non CSS mediaqueries: IE8
+      // ## update inner wrapper, container, slides if needed
+      // set inline styles for inner wrapper & container
+      // insert stylesheet (one line) for slides only (since slides are many)
+
+    } else {
+      // middle wrapper styles
+      update_carousel_transition_duration(); // inner wrapper styles
+
+      innerWrapper.style.cssText = getInnerWrapperStyles(edgePadding, gutter, fixedWidth, autoHeight); // container styles
+
+      if (carousel && horizontal && !autoWidth) {
+        container.style.width = getContainerWidth(fixedWidth, gutter, items);
+      } // slide styles
+
+
+      var str = horizontal && !autoWidth ? getSlideWidthStyle(fixedWidth, gutter, items) : '';
+
+      if (gutter) {
+        str += getSlideGutterStyle(gutter);
+      } // append to the last line
+
+
+      if (str) {
+        addCSSRule(sheet, '#' + slideId + ' > .tns-item', str, getCssRulesLength(sheet));
+      }
+    } // ## MEDIAQUERIES
+
+
+    if (responsive && CSSMQ) {
+      for (var bp in responsive) {
+        // bp: convert string to number
+        bp = parseInt(bp);
+        var opts = responsive[bp],
+            str = '',
+            middleWrapperStr = '',
+            innerWrapperStr = '',
+            containerStr = '',
+            slideStr = '',
+            itemsBP = !autoWidth ? getOption('items', bp) : null,
+            fixedWidthBP = getOption('fixedWidth', bp),
+            speedBP = getOption('speed', bp),
+            edgePaddingBP = getOption('edgePadding', bp),
+            autoHeightBP = getOption('autoHeight', bp),
+            gutterBP = getOption('gutter', bp); // middle wrapper string
+
+        if (TRANSITIONDURATION && middleWrapper && getOption('autoHeight', bp) && 'speed' in opts) {
+          middleWrapperStr = '#' + slideId + '-mw{' + getTransitionDurationStyle(speedBP) + '}';
+        } // inner wrapper string
+
+
+        if ('edgePadding' in opts || 'gutter' in opts) {
+          innerWrapperStr = '#' + slideId + '-iw{' + getInnerWrapperStyles(edgePaddingBP, gutterBP, fixedWidthBP, speedBP, autoHeightBP) + '}';
+        } // container string
+
+
+        if (carousel && horizontal && !autoWidth && ('fixedWidth' in opts || 'items' in opts || fixedWidth && 'gutter' in opts)) {
+          containerStr = 'width:' + getContainerWidth(fixedWidthBP, gutterBP, itemsBP) + ';';
+        }
+
+        if (TRANSITIONDURATION && 'speed' in opts) {
+          containerStr += getTransitionDurationStyle(speedBP);
+        }
+
+        if (containerStr) {
+          containerStr = '#' + slideId + '{' + containerStr + '}';
+        } // slide string
+
+
+        if ('fixedWidth' in opts || fixedWidth && 'gutter' in opts || !carousel && 'items' in opts) {
+          slideStr += getSlideWidthStyle(fixedWidthBP, gutterBP, itemsBP);
+        }
+
+        if ('gutter' in opts) {
+          slideStr += getSlideGutterStyle(gutterBP);
+        } // set gallery items transition-duration
+
+
+        if (!carousel && 'speed' in opts) {
+          if (TRANSITIONDURATION) {
+            slideStr += getTransitionDurationStyle(speedBP);
+          }
+
+          if (ANIMATIONDURATION) {
+            slideStr += getAnimationDurationStyle(speedBP);
+          }
+        }
+
+        if (slideStr) {
+          slideStr = '#' + slideId + ' > .tns-item{' + slideStr + '}';
+        } // add up
+
+
+        str = middleWrapperStr + innerWrapperStr + containerStr + slideStr;
+
+        if (str) {
+          sheet.insertRule('@media (min-width: ' + bp / 16 + 'em) {' + str + '}', sheet.cssRules.length);
+        }
+      }
+    }
+  }
+
+  function initTools() {
+    // == slides ==
+    updateSlideStatus(); // == live region ==
+
+    outerWrapper.insertAdjacentHTML('afterbegin', '<div class="tns-liveregion tns-visually-hidden" aria-live="polite" aria-atomic="true">slide <span class="current">' + getLiveRegionStr() + '</span>  of ' + slideCount + '</div>');
+    liveregionCurrent = outerWrapper.querySelector('.tns-liveregion .current'); // == autoplayInit ==
+
+    if (hasAutoplay) {
+      var txt = autoplay ? 'stop' : 'start';
+
+      if (autoplayButton) {
+        setAttrs(autoplayButton, {
+          'data-action': txt
+        });
+      } else if (options.autoplayButtonOutput) {
+        outerWrapper.insertAdjacentHTML(getInsertPosition(options.autoplayPosition), '<button type="button" data-action="' + txt + '">' + autoplayHtmlStrings[0] + txt + autoplayHtmlStrings[1] + autoplayText[0] + '</button>');
+        autoplayButton = outerWrapper.querySelector('[data-action]');
+      } // add event
+
+
+      if (autoplayButton) {
+        addEvents(autoplayButton, {
+          'click': toggleAutoplay
+        });
+      }
+
+      if (autoplay) {
+        startAutoplay();
+
+        if (autoplayHoverPause) {
+          addEvents(container, hoverEvents);
+        }
+
+        if (autoplayResetOnVisibility) {
+          addEvents(container, visibilityEvent);
+        }
+      }
+    } // == navInit ==
+
+
+    if (hasNav) {
+      // will not hide the navs in case they're thumbnails
+
+      if (navContainer) {
+        setAttrs(navContainer, {
+          'aria-label': 'Carousel Pagination'
+        });
+        navItems = navContainer.children;
+        forEach(navItems, function (item, i) {
+          setAttrs(item, {
+            'data-nav': i,
+            'tabindex': '-1',
+            'aria-label': navStr + (i + 1),
+            'aria-controls': slideId
+          });
+        }); // generated nav
+      } else {
+        var navHtml = '',
+            hiddenStr = navAsThumbnails ? '' : 'style="display:none"';
+
+        for (var i = 0; i < slideCount; i++) {
+          // hide nav items by default
+          navHtml += '<button type="button" data-nav="' + i + '" tabindex="-1" aria-controls="' + slideId + '" ' + hiddenStr + ' aria-label="' + navStr + (i + 1) + '"></button>';
+        }
+
+        navHtml = '<div class="tns-nav" aria-label="Carousel Pagination">' + navHtml + '</div>';
+        outerWrapper.insertAdjacentHTML(getInsertPosition(options.navPosition), navHtml);
+        navContainer = outerWrapper.querySelector('.tns-nav');
+        navItems = navContainer.children;
+      }
+
+      updateNavVisibility(); // add transition
+
+      if (TRANSITIONDURATION) {
+        var prefix = TRANSITIONDURATION.substring(0, TRANSITIONDURATION.length - 18).toLowerCase(),
+            str = 'transition: all ' + speed / 1000 + 's';
+
+        if (prefix) {
+          str = '-' + prefix + '-' + str;
+        }
+
+        addCSSRule(sheet, '[aria-controls^=' + slideId + '-item]', str, getCssRulesLength(sheet));
+      }
+
+      setAttrs(navItems[navCurrentIndex], {
+        'aria-label': navStr + (navCurrentIndex + 1) + navStrCurrent
+      });
+      removeAttrs(navItems[navCurrentIndex], 'tabindex');
+      addClass(navItems[navCurrentIndex], navActiveClass); // add events
+
+      addEvents(navContainer, navEvents);
+    } // == controlsInit ==
+
+
+    if (hasControls) {
+      if (!controlsContainer && (!prevButton || !nextButton)) {
+        outerWrapper.insertAdjacentHTML(getInsertPosition(options.controlsPosition), '<div class="tns-controls" aria-label="Carousel Navigation" tabindex="0"><button type="button" data-controls="prev" tabindex="-1" aria-controls="' + slideId + '">' + controlsText[0] + '</button><button type="button" data-controls="next" tabindex="-1" aria-controls="' + slideId + '">' + controlsText[1] + '</button></div>');
+        controlsContainer = outerWrapper.querySelector('.tns-controls');
+      }
+
+      if (!prevButton || !nextButton) {
+        prevButton = controlsContainer.children[0];
+        nextButton = controlsContainer.children[1];
+      }
+
+      if (options.controlsContainer) {
+        setAttrs(controlsContainer, {
+          'aria-label': 'Carousel Navigation',
+          'tabindex': '0'
+        });
+      }
+
+      if (options.controlsContainer || options.prevButton && options.nextButton) {
+        setAttrs([prevButton, nextButton], {
+          'aria-controls': slideId,
+          'tabindex': '-1'
+        });
+      }
+
+      if (options.controlsContainer || options.prevButton && options.nextButton) {
+        setAttrs(prevButton, {
+          'data-controls': 'prev'
+        });
+        setAttrs(nextButton, {
+          'data-controls': 'next'
+        });
+      }
+
+      prevIsButton = isButton(prevButton);
+      nextIsButton = isButton(nextButton);
+      updateControlsStatus(); // add events
+
+      if (controlsContainer) {
+        addEvents(controlsContainer, controlsEvents);
+      } else {
+        addEvents(prevButton, controlsEvents);
+        addEvents(nextButton, controlsEvents);
+      }
+    } // hide tools if needed
+
+
+    disableUI();
+  }
+
+  function initEvents() {
+    // add events
+    if (carousel && TRANSITIONEND) {
+      var eve = {};
+      eve[TRANSITIONEND] = onTransitionEnd;
+      addEvents(container, eve);
+    }
+
+    if (touch) {
+      addEvents(container, touchEvents, options.preventScrollOnTouch);
+    }
+
+    if (mouseDrag) {
+      addEvents(container, dragEvents);
+    }
+
+    if (arrowKeys) {
+      addEvents(doc, docmentKeydownEvent);
+    }
+
+    if (nested === 'inner') {
+      events.on('outerResized', function () {
+        resizeTasks();
+        events.emit('innerLoaded', info());
+      });
+    } else if (responsive || fixedWidth || autoWidth || autoHeight || !horizontal) {
+      addEvents(win, {
+        'resize': onResize
+      });
+    }
+
+    if (autoHeight) {
+      if (nested === 'outer') {
+        events.on('innerLoaded', doAutoHeight);
+      } else if (!disable) {
+        doAutoHeight();
+      }
+    }
+
+    doLazyLoad();
+
+    if (disable) {
+      disableSlider();
+    } else if (freeze) {
+      freezeSlider();
+    }
+
+    events.on('indexChanged', additionalUpdates);
+
+    if (nested === 'inner') {
+      events.emit('innerLoaded', info());
+    }
+
+    if (typeof onInit === 'function') {
+      onInit(info());
+    }
+
+    isOn = true;
+  }
+
+  function destroy() {
+    // sheet
+    sheet.disabled = true;
+
+    if (sheet.ownerNode) {
+      sheet.ownerNode.remove();
+    } // remove win event listeners
+
+
+    removeEvents(win, {
+      'resize': onResize
+    }); // arrowKeys, controls, nav
+
+    if (arrowKeys) {
+      removeEvents(doc, docmentKeydownEvent);
+    }
+
+    if (controlsContainer) {
+      removeEvents(controlsContainer, controlsEvents);
+    }
+
+    if (navContainer) {
+      removeEvents(navContainer, navEvents);
+    } // autoplay
+
+
+    removeEvents(container, hoverEvents);
+    removeEvents(container, visibilityEvent);
+
+    if (autoplayButton) {
+      removeEvents(autoplayButton, {
+        'click': toggleAutoplay
+      });
+    }
+
+    if (autoplay) {
+      clearInterval(autoplayTimer);
+    } // container
+
+
+    if (carousel && TRANSITIONEND) {
+      var eve = {};
+      eve[TRANSITIONEND] = onTransitionEnd;
+      removeEvents(container, eve);
+    }
+
+    if (touch) {
+      removeEvents(container, touchEvents);
+    }
+
+    if (mouseDrag) {
+      removeEvents(container, dragEvents);
+    } // cache Object values in options && reset HTML
+
+
+    var htmlList = [containerHTML, controlsContainerHTML, prevButtonHTML, nextButtonHTML, navContainerHTML, autoplayButtonHTML];
+    tnsList.forEach(function (item, i) {
+      var el = item === 'container' ? outerWrapper : options[item];
+
+      if (typeof el === 'object' && el) {
+        var prevEl = el.previousElementSibling ? el.previousElementSibling : false,
+            parentEl = el.parentNode;
+        el.outerHTML = htmlList[i];
+        options[item] = prevEl ? prevEl.nextElementSibling : parentEl.firstElementChild;
+      }
+    }); // reset variables
+
+    tnsList = animateIn = animateOut = animateDelay = animateNormal = horizontal = outerWrapper = innerWrapper = container = containerParent = containerHTML = slideItems = slideCount = breakpointZone = windowWidth = autoWidth = fixedWidth = edgePadding = gutter = viewport = items = slideBy = viewportMax = arrowKeys = speed = rewind = loop = autoHeight = sheet = lazyload = slidePositions = slideItemsOut = cloneCount = slideCountNew = hasRightDeadZone = rightBoundary = updateIndexBeforeTransform = transformAttr = transformPrefix = transformPostfix = getIndexMax = index = indexCached = indexMin = indexMax = swipeAngle = moveDirectionExpected = running = onInit = events = newContainerClasses = slideId = disable = disabled = freezable = freeze = frozen = controlsEvents = navEvents = hoverEvents = visibilityEvent = docmentKeydownEvent = touchEvents = dragEvents = hasControls = hasNav = navAsThumbnails = hasAutoplay = hasTouch = hasMouseDrag = slideActiveClass = imgCompleteClass = imgEvents = imgsComplete = controls = controlsText = controlsContainer = controlsContainerHTML = prevButton = nextButton = prevIsButton = nextIsButton = nav = navContainer = navContainerHTML = navItems = pages = pagesCached = navClicked = navCurrentIndex = navCurrentIndexCached = navActiveClass = navStr = navStrCurrent = autoplay = autoplayTimeout = autoplayDirection = autoplayText = autoplayHoverPause = autoplayButton = autoplayButtonHTML = autoplayResetOnVisibility = autoplayHtmlStrings = autoplayTimer = animating = autoplayHoverPaused = autoplayUserPaused = autoplayVisibilityPaused = initPosition = lastPosition = translateInit = panStart = rafIndex = getDist = touch = mouseDrag = null; // check variables
+    // [animateIn, animateOut, animateDelay, animateNormal, horizontal, outerWrapper, innerWrapper, container, containerParent, containerHTML, slideItems, slideCount, breakpointZone, windowWidth, autoWidth, fixedWidth, edgePadding, gutter, viewport, items, slideBy, viewportMax, arrowKeys, speed, rewind, loop, autoHeight, sheet, lazyload, slidePositions, slideItemsOut, cloneCount, slideCountNew, hasRightDeadZone, rightBoundary, updateIndexBeforeTransform, transformAttr, transformPrefix, transformPostfix, getIndexMax, index, indexCached, indexMin, indexMax, resizeTimer, swipeAngle, moveDirectionExpected, running, onInit, events, newContainerClasses, slideId, disable, disabled, freezable, freeze, frozen, controlsEvents, navEvents, hoverEvents, visibilityEvent, docmentKeydownEvent, touchEvents, dragEvents, hasControls, hasNav, navAsThumbnails, hasAutoplay, hasTouch, hasMouseDrag, slideActiveClass, imgCompleteClass, imgEvents, imgsComplete, controls, controlsText, controlsContainer, controlsContainerHTML, prevButton, nextButton, prevIsButton, nextIsButton, nav, navContainer, navContainerHTML, navItems, pages, pagesCached, navClicked, navCurrentIndex, navCurrentIndexCached, navActiveClass, navStr, navStrCurrent, autoplay, autoplayTimeout, autoplayDirection, autoplayText, autoplayHoverPause, autoplayButton, autoplayButtonHTML, autoplayResetOnVisibility, autoplayHtmlStrings, autoplayTimer, animating, autoplayHoverPaused, autoplayUserPaused, autoplayVisibilityPaused, initPosition, lastPosition, translateInit, disX, disY, panStart, rafIndex, getDist, touch, mouseDrag ].forEach(function(item) { if (item !== null) { console.log(item); } });
+
+    for (var a in this) {
+      if (a !== 'rebuild') {
+        this[a] = null;
+      }
+    }
+
+    isOn = false;
+  } // === ON RESIZE ===
+  // responsive || fixedWidth || autoWidth || !horizontal
+
+
+  function onResize(e) {
+    raf(function () {
+      resizeTasks(getEvent(e));
+    });
+  }
+
+  function resizeTasks(e) {
+    if (!isOn) {
+      return;
+    }
+
+    if (nested === 'outer') {
+      events.emit('outerResized', info(e));
+    }
+
+    windowWidth = getWindowWidth();
+    var bpChanged,
+        breakpointZoneTem = breakpointZone,
+        needContainerTransform = false;
+
+    if (responsive) {
+      setBreakpointZone();
+      bpChanged = breakpointZoneTem !== breakpointZone; // if (hasRightDeadZone) { needContainerTransform = true; } // *?
+
+      if (bpChanged) {
+        events.emit('newBreakpointStart', info(e));
+      }
+    }
+
+    var indChanged,
+        itemsChanged,
+        itemsTem = items,
+        disableTem = disable,
+        freezeTem = freeze,
+        arrowKeysTem = arrowKeys,
+        controlsTem = controls,
+        navTem = nav,
+        touchTem = touch,
+        mouseDragTem = mouseDrag,
+        autoplayTem = autoplay,
+        autoplayHoverPauseTem = autoplayHoverPause,
+        autoplayResetOnVisibilityTem = autoplayResetOnVisibility,
+        indexTem = index;
+
+    if (bpChanged) {
+      var fixedWidthTem = fixedWidth,
+          autoHeightTem = autoHeight,
+          controlsTextTem = controlsText,
+          centerTem = center,
+          autoplayTextTem = autoplayText;
+
+      if (!CSSMQ) {
+        var gutterTem = gutter,
+            edgePaddingTem = edgePadding;
+      }
+    } // get option:
+    // fixed width: viewport, fixedWidth, gutter => items
+    // others: window width => all variables
+    // all: items => slideBy
+
+
+    arrowKeys = getOption('arrowKeys');
+    controls = getOption('controls');
+    nav = getOption('nav');
+    touch = getOption('touch');
+    center = getOption('center');
+    mouseDrag = getOption('mouseDrag');
+    autoplay = getOption('autoplay');
+    autoplayHoverPause = getOption('autoplayHoverPause');
+    autoplayResetOnVisibility = getOption('autoplayResetOnVisibility');
+
+    if (bpChanged) {
+      disable = getOption('disable');
+      fixedWidth = getOption('fixedWidth');
+      speed = getOption('speed');
+      autoHeight = getOption('autoHeight');
+      controlsText = getOption('controlsText');
+      autoplayText = getOption('autoplayText');
+      autoplayTimeout = getOption('autoplayTimeout');
+
+      if (!CSSMQ) {
+        edgePadding = getOption('edgePadding');
+        gutter = getOption('gutter');
+      }
+    } // update options
+
+
+    resetVariblesWhenDisable(disable);
+    viewport = getViewportWidth(); // <= edgePadding, gutter
+
+    if ((!horizontal || autoWidth) && !disable) {
+      setSlidePositions();
+
+      if (!horizontal) {
+        updateContentWrapperHeight(); // <= setSlidePositions
+
+        needContainerTransform = true;
+      }
+    }
+
+    if (fixedWidth || autoWidth) {
+      rightBoundary = getRightBoundary(); // autoWidth: <= viewport, slidePositions, gutter
+      // fixedWidth: <= viewport, fixedWidth, gutter
+
+      indexMax = getIndexMax(); // autoWidth: <= rightBoundary, slidePositions
+      // fixedWidth: <= rightBoundary, fixedWidth, gutter
+    }
+
+    if (bpChanged || fixedWidth) {
+      items = getOption('items');
+      slideBy = getOption('slideBy');
+      itemsChanged = items !== itemsTem;
+
+      if (itemsChanged) {
+        if (!fixedWidth && !autoWidth) {
+          indexMax = getIndexMax();
+        } // <= items
+        // check index before transform in case
+        // slider reach the right edge then items become bigger
+
+
+        updateIndex();
+      }
+    }
+
+    if (bpChanged) {
+      if (disable !== disableTem) {
+        if (disable) {
+          disableSlider();
+        } else {
+          enableSlider(); // <= slidePositions, rightBoundary, indexMax
+        }
+      }
+    }
+
+    if (freezable && (bpChanged || fixedWidth || autoWidth)) {
+      freeze = getFreeze(); // <= autoWidth: slidePositions, gutter, viewport, rightBoundary
+      // <= fixedWidth: fixedWidth, gutter, rightBoundary
+      // <= others: items
+
+      if (freeze !== freezeTem) {
+        if (freeze) {
+          doContainerTransform(getContainerTransformValue(getStartIndex(0)));
+          freezeSlider();
+        } else {
+          unfreezeSlider();
+          needContainerTransform = true;
+        }
+      }
+    }
+
+    resetVariblesWhenDisable(disable || freeze); // controls, nav, touch, mouseDrag, arrowKeys, autoplay, autoplayHoverPause, autoplayResetOnVisibility
+
+    if (!autoplay) {
+      autoplayHoverPause = autoplayResetOnVisibility = false;
+    }
+
+    if (arrowKeys !== arrowKeysTem) {
+      arrowKeys ? addEvents(doc, docmentKeydownEvent) : removeEvents(doc, docmentKeydownEvent);
+    }
+
+    if (controls !== controlsTem) {
+      if (controls) {
+        if (controlsContainer) {
+          showElement(controlsContainer);
+        } else {
+          if (prevButton) {
+            showElement(prevButton);
+          }
+
+          if (nextButton) {
+            showElement(nextButton);
+          }
+        }
+      } else {
+        if (controlsContainer) {
+          hideElement(controlsContainer);
+        } else {
+          if (prevButton) {
+            hideElement(prevButton);
+          }
+
+          if (nextButton) {
+            hideElement(nextButton);
+          }
+        }
+      }
+    }
+
+    if (nav !== navTem) {
+      if (nav) {
+        showElement(navContainer);
+        updateNavVisibility();
+      } else {
+        hideElement(navContainer);
+      }
+    }
+
+    if (touch !== touchTem) {
+      touch ? addEvents(container, touchEvents, options.preventScrollOnTouch) : removeEvents(container, touchEvents);
+    }
+
+    if (mouseDrag !== mouseDragTem) {
+      mouseDrag ? addEvents(container, dragEvents) : removeEvents(container, dragEvents);
+    }
+
+    if (autoplay !== autoplayTem) {
+      if (autoplay) {
+        if (autoplayButton) {
+          showElement(autoplayButton);
+        }
+
+        if (!animating && !autoplayUserPaused) {
+          startAutoplay();
+        }
+      } else {
+        if (autoplayButton) {
+          hideElement(autoplayButton);
+        }
+
+        if (animating) {
+          stopAutoplay();
+        }
+      }
+    }
+
+    if (autoplayHoverPause !== autoplayHoverPauseTem) {
+      autoplayHoverPause ? addEvents(container, hoverEvents) : removeEvents(container, hoverEvents);
+    }
+
+    if (autoplayResetOnVisibility !== autoplayResetOnVisibilityTem) {
+      autoplayResetOnVisibility ? addEvents(doc, visibilityEvent) : removeEvents(doc, visibilityEvent);
+    }
+
+    if (bpChanged) {
+      if (fixedWidth !== fixedWidthTem || center !== centerTem) {
+        needContainerTransform = true;
+      }
+
+      if (autoHeight !== autoHeightTem) {
+        if (!autoHeight) {
+          innerWrapper.style.height = '';
+        }
+      }
+
+      if (controls && controlsText !== controlsTextTem) {
+        prevButton.innerHTML = controlsText[0];
+        nextButton.innerHTML = controlsText[1];
+      }
+
+      if (autoplayButton && autoplayText !== autoplayTextTem) {
+        var i = autoplay ? 1 : 0,
+            html = autoplayButton.innerHTML,
+            len = html.length - autoplayTextTem[i].length;
+
+        if (html.substring(len) === autoplayTextTem[i]) {
+          autoplayButton.innerHTML = html.substring(0, len) + autoplayText[i];
+        }
+      }
+    } else {
+      if (center && (fixedWidth || autoWidth)) {
+        needContainerTransform = true;
+      }
+    }
+
+    if (itemsChanged || fixedWidth && !autoWidth) {
+      pages = getPages();
+      updateNavVisibility();
+    }
+
+    indChanged = index !== indexTem;
+
+    if (indChanged) {
+      events.emit('indexChanged', info());
+      needContainerTransform = true;
+    } else if (itemsChanged) {
+      if (!indChanged) {
+        additionalUpdates();
+      }
+    } else if (fixedWidth || autoWidth) {
+      doLazyLoad();
+      updateSlideStatus();
+      updateLiveRegion();
+    }
+
+    if (itemsChanged && !carousel) {
+      updateGallerySlidePositions();
+    }
+
+    if (!disable && !freeze) {
+      // non-mediaqueries: IE8
+      if (bpChanged && !CSSMQ) {
+        // middle wrapper styles
+        // inner wrapper styles
+        if (edgePadding !== edgePaddingTem || gutter !== gutterTem) {
+          innerWrapper.style.cssText = getInnerWrapperStyles(edgePadding, gutter, fixedWidth, speed, autoHeight);
+        }
+
+        if (horizontal) {
+          // container styles
+          if (carousel) {
+            container.style.width = getContainerWidth(fixedWidth, gutter, items);
+          } // slide styles
+
+
+          var str = getSlideWidthStyle(fixedWidth, gutter, items) + getSlideGutterStyle(gutter); // remove the last line and
+          // add new styles
+
+          removeCSSRule(sheet, getCssRulesLength(sheet) - 1);
+          addCSSRule(sheet, '#' + slideId + ' > .tns-item', str, getCssRulesLength(sheet));
+        }
+      } // auto height
+
+
+      if (autoHeight) {
+        doAutoHeight();
+      }
+
+      if (needContainerTransform) {
+        doContainerTransformSilent();
+        indexCached = index;
+      }
+    }
+
+    if (bpChanged) {
+      events.emit('newBreakpointEnd', info(e));
+    }
+  } // === INITIALIZATION FUNCTIONS === //
+
+
+  function getFreeze() {
+    if (!fixedWidth && !autoWidth) {
+      var a = center ? items - (items - 1) / 2 : items;
+      return slideCount <= a;
+    }
+
+    var width = fixedWidth ? (fixedWidth + gutter) * slideCount : slidePositions[slideCount],
+        vp = edgePadding ? viewport + edgePadding * 2 : viewport + gutter;
+
+    if (center) {
+      vp -= fixedWidth ? (viewport - fixedWidth) / 2 : (viewport - (slidePositions[index + 1] - slidePositions[index] - gutter)) / 2;
+    }
+
+    return width <= vp;
+  }
+
+  function setBreakpointZone() {
+    breakpointZone = 0;
+
+    for (var bp in responsive) {
+      bp = parseInt(bp); // convert string to number
+
+      if (windowWidth >= bp) {
+        breakpointZone = bp;
+      }
+    }
+  } // (slideBy, indexMin, indexMax) => index
+
+
+  var updateIndex = function () {
+    return loop ? carousel ? // loop + carousel
+    function () {
+      var leftEdge = indexMin,
+          rightEdge = indexMax;
+      leftEdge += slideBy;
+      rightEdge -= slideBy; // adjust edges when has edge paddings
+      // or fixed-width slider with extra space on the right side
+
+      if (edgePadding) {
+        leftEdge += 1;
+        rightEdge -= 1;
+      } else if (fixedWidth) {
+        if ((viewport + gutter) % (fixedWidth + gutter)) {
+          rightEdge -= 1;
+        }
+      }
+
+      if (cloneCount) {
+        if (index > rightEdge) {
+          index -= slideCount;
+        } else if (index < leftEdge) {
+          index += slideCount;
+        }
+      }
+    } : // loop + gallery
+    function () {
+      if (index > indexMax) {
+        while (index >= indexMin + slideCount) {
+          index -= slideCount;
+        }
+      } else if (index < indexMin) {
+        while (index <= indexMax - slideCount) {
+          index += slideCount;
+        }
+      }
+    } : // non-loop
+    function () {
+      index = Math.max(indexMin, Math.min(indexMax, index));
+    };
+  }();
+
+  function disableUI() {
+    if (!autoplay && autoplayButton) {
+      hideElement(autoplayButton);
+    }
+
+    if (!nav && navContainer) {
+      hideElement(navContainer);
+    }
+
+    if (!controls) {
+      if (controlsContainer) {
+        hideElement(controlsContainer);
+      } else {
+        if (prevButton) {
+          hideElement(prevButton);
+        }
+
+        if (nextButton) {
+          hideElement(nextButton);
+        }
+      }
+    }
+  }
+
+  function enableUI() {
+    if (autoplay && autoplayButton) {
+      showElement(autoplayButton);
+    }
+
+    if (nav && navContainer) {
+      showElement(navContainer);
+    }
+
+    if (controls) {
+      if (controlsContainer) {
+        showElement(controlsContainer);
+      } else {
+        if (prevButton) {
+          showElement(prevButton);
+        }
+
+        if (nextButton) {
+          showElement(nextButton);
+        }
+      }
+    }
+  }
+
+  function freezeSlider() {
+    if (frozen) {
+      return;
+    } // remove edge padding from inner wrapper
+
+
+    if (edgePadding) {
+      innerWrapper.style.margin = '0px';
+    } // add class tns-transparent to cloned slides
+
+
+    if (cloneCount) {
+      var str = 'tns-transparent';
+
+      for (var i = cloneCount; i--;) {
+        if (carousel) {
+          addClass(slideItems[i], str);
+        }
+
+        addClass(slideItems[slideCountNew - i - 1], str);
+      }
+    } // update tools
+
+
+    disableUI();
+    frozen = true;
+  }
+
+  function unfreezeSlider() {
+    if (!frozen) {
+      return;
+    } // restore edge padding for inner wrapper
+    // for mordern browsers
+
+
+    if (edgePadding && CSSMQ) {
+      innerWrapper.style.margin = '';
+    } // remove class tns-transparent to cloned slides
+
+
+    if (cloneCount) {
+      var str = 'tns-transparent';
+
+      for (var i = cloneCount; i--;) {
+        if (carousel) {
+          removeClass(slideItems[i], str);
+        }
+
+        removeClass(slideItems[slideCountNew - i - 1], str);
+      }
+    } // update tools
+
+
+    enableUI();
+    frozen = false;
+  }
+
+  function disableSlider() {
+    if (disabled) {
+      return;
+    }
+
+    sheet.disabled = true;
+    container.className = container.className.replace(newContainerClasses.substring(1), '');
+    removeAttrs(container, ['style']);
+
+    if (loop) {
+      for (var j = cloneCount; j--;) {
+        if (carousel) {
+          hideElement(slideItems[j]);
+        }
+
+        hideElement(slideItems[slideCountNew - j - 1]);
+      }
+    } // vertical slider
+
+
+    if (!horizontal || !carousel) {
+      removeAttrs(innerWrapper, ['style']);
+    } // gallery
+
+
+    if (!carousel) {
+      for (var i = index, l = index + slideCount; i < l; i++) {
+        var item = slideItems[i];
+        removeAttrs(item, ['style']);
+        removeClass(item, animateIn);
+        removeClass(item, animateNormal);
+      }
+    } // update tools
+
+
+    disableUI();
+    disabled = true;
+  }
+
+  function enableSlider() {
+    if (!disabled) {
+      return;
+    }
+
+    sheet.disabled = false;
+    container.className += newContainerClasses;
+    doContainerTransformSilent();
+
+    if (loop) {
+      for (var j = cloneCount; j--;) {
+        if (carousel) {
+          showElement(slideItems[j]);
+        }
+
+        showElement(slideItems[slideCountNew - j - 1]);
+      }
+    } // gallery
+
+
+    if (!carousel) {
+      for (var i = index, l = index + slideCount; i < l; i++) {
+        var item = slideItems[i],
+            classN = i < index + items ? animateIn : animateNormal;
+        item.style.left = (i - index) * 100 / items + '%';
+        addClass(item, classN);
+      }
+    } // update tools
+
+
+    enableUI();
+    disabled = false;
+  }
+
+  function updateLiveRegion() {
+    var str = getLiveRegionStr();
+
+    if (liveregionCurrent.innerHTML !== str) {
+      liveregionCurrent.innerHTML = str;
+    }
+  }
+
+  function getLiveRegionStr() {
+    var arr = getVisibleSlideRange(),
+        start = arr[0] + 1,
+        end = arr[1] + 1;
+    return start === end ? start + '' : start + ' to ' + end;
+  }
+
+  function getVisibleSlideRange(val) {
+    if (val == null) {
+      val = getContainerTransformValue();
+    }
+
+    var start = index,
+        end,
+        rangestart,
+        rangeend; // get range start, range end for autoWidth and fixedWidth
+
+    if (center || edgePadding) {
+      if (autoWidth || fixedWidth) {
+        rangestart = -(parseFloat(val) + edgePadding);
+        rangeend = rangestart + viewport + edgePadding * 2;
+      }
+    } else {
+      if (autoWidth) {
+        rangestart = slidePositions[index];
+        rangeend = rangestart + viewport;
+      }
+    } // get start, end
+    // - check auto width
+
+
+    if (autoWidth) {
+      slidePositions.forEach(function (point, i) {
+        if (i < slideCountNew) {
+          if ((center || edgePadding) && point <= rangestart + 0.5) {
+            start = i;
+          }
+
+          if (rangeend - point >= 0.5) {
+            end = i;
+          }
+        }
+      }); // - check percentage width, fixed width
+    } else {
+      if (fixedWidth) {
+        var cell = fixedWidth + gutter;
+
+        if (center || edgePadding) {
+          start = Math.floor(rangestart / cell);
+          end = Math.ceil(rangeend / cell - 1);
+        } else {
+          end = start + Math.ceil(viewport / cell) - 1;
+        }
+      } else {
+        if (center || edgePadding) {
+          var a = items - 1;
+
+          if (center) {
+            start -= a / 2;
+            end = index + a / 2;
+          } else {
+            end = index + a;
+          }
+
+          if (edgePadding) {
+            var b = edgePadding * items / viewport;
+            start -= b;
+            end += b;
+          }
+
+          start = Math.floor(start);
+          end = Math.ceil(end);
+        } else {
+          end = start + items - 1;
+        }
+      }
+
+      start = Math.max(start, 0);
+      end = Math.min(end, slideCountNew - 1);
+    }
+
+    return [start, end];
+  }
+
+  function doLazyLoad() {
+    if (lazyload && !disable) {
+      var arg = getVisibleSlideRange();
+      arg.push(lazyloadSelector);
+      getImageArray.apply(null, arg).forEach(function (img) {
+        if (!hasClass(img, imgCompleteClass)) {
+          // stop propagation transitionend event to container
+          var eve = {};
+
+          eve[TRANSITIONEND] = function (e) {
+            e.stopPropagation();
+          };
+
+          addEvents(img, eve);
+          addEvents(img, imgEvents); // update src
+
+          img.src = getAttr(img, 'data-src'); // update srcset
+
+          var srcset = getAttr(img, 'data-srcset');
+
+          if (srcset) {
+            img.srcset = srcset;
+          }
+
+          addClass(img, 'loading');
+        }
+      });
+    }
+  }
+
+  function onImgLoaded(e) {
+    imgLoaded(getTarget(e));
+  }
+
+  function onImgFailed(e) {
+    imgFailed(getTarget(e));
+  }
+
+  function imgLoaded(img) {
+    addClass(img, 'loaded');
+    imgCompleted(img);
+  }
+
+  function imgFailed(img) {
+    addClass(img, 'failed');
+    imgCompleted(img);
+  }
+
+  function imgCompleted(img) {
+    addClass(img, imgCompleteClass);
+    removeClass(img, 'loading');
+    removeEvents(img, imgEvents);
+  }
+
+  function getImageArray(start, end, imgSelector) {
+    var imgs = [];
+
+    if (!imgSelector) {
+      imgSelector = 'img';
+    }
+
+    while (start <= end) {
+      forEach(slideItems[start].querySelectorAll(imgSelector), function (img) {
+        imgs.push(img);
+      });
+      start++;
+    }
+
+    return imgs;
+  } // check if all visible images are loaded
+  // and update container height if it's done
+
+
+  function doAutoHeight() {
+    var imgs = getImageArray.apply(null, getVisibleSlideRange());
+    raf(function () {
+      imgsLoadedCheck(imgs, updateInnerWrapperHeight);
+    });
+  }
+
+  function imgsLoadedCheck(imgs, cb) {
+    // execute callback function if all images are complete
+    if (imgsComplete) {
+      return cb();
+    } // check image classes
+
+
+    imgs.forEach(function (img, index) {
+      if (!lazyload && img.complete) {
+        imgCompleted(img);
+      } // Check image.complete
+
+
+      if (hasClass(img, imgCompleteClass)) {
+        imgs.splice(index, 1);
+      }
+    }); // execute callback function if selected images are all complete
+
+    if (!imgs.length) {
+      return cb();
+    } // otherwise execute this functiona again
+
+
+    raf(function () {
+      imgsLoadedCheck(imgs, cb);
+    });
+  }
+
+  function additionalUpdates() {
+    doLazyLoad();
+    updateSlideStatus();
+    updateLiveRegion();
+    updateControlsStatus();
+    updateNavStatus();
+  }
+
+  function update_carousel_transition_duration() {
+    if (carousel && autoHeight) {
+      middleWrapper.style[TRANSITIONDURATION] = speed / 1000 + 's';
+    }
+  }
+
+  function getMaxSlideHeight(slideStart, slideRange) {
+    var heights = [];
+
+    for (var i = slideStart, l = Math.min(slideStart + slideRange, slideCountNew); i < l; i++) {
+      heights.push(slideItems[i].offsetHeight);
+    }
+
+    return Math.max.apply(null, heights);
+  } // update inner wrapper height
+  // 1. get the max-height of the visible slides
+  // 2. set transitionDuration to speed
+  // 3. update inner wrapper height to max-height
+  // 4. set transitionDuration to 0s after transition done
+
+
+  function updateInnerWrapperHeight() {
+    var maxHeight = autoHeight ? getMaxSlideHeight(index, items) : getMaxSlideHeight(cloneCount, slideCount),
+        wp = middleWrapper ? middleWrapper : innerWrapper;
+
+    if (wp.style.height !== maxHeight) {
+      wp.style.height = maxHeight + 'px';
+    }
+  } // get the distance from the top edge of the first slide to each slide
+  // (init) => slidePositions
+
+
+  function setSlidePositions() {
+    slidePositions = [0];
+    var attr = horizontal ? 'left' : 'top',
+        attr2 = horizontal ? 'right' : 'bottom',
+        base = slideItems[0].getBoundingClientRect()[attr];
+    forEach(slideItems, function (item, i) {
+      // skip the first slide
+      if (i) {
+        slidePositions.push(item.getBoundingClientRect()[attr] - base);
+      } // add the end edge
+
+
+      if (i === slideCountNew - 1) {
+        slidePositions.push(item.getBoundingClientRect()[attr2] - base);
+      }
+    });
+  } // update slide
+
+
+  function updateSlideStatus() {
+    var range = getVisibleSlideRange(),
+        start = range[0],
+        end = range[1];
+    forEach(slideItems, function (item, i) {
+      // show slides
+      if (i >= start && i <= end) {
+        if (hasAttr(item, 'aria-hidden')) {
+          removeAttrs(item, ['aria-hidden', 'tabindex']);
+          addClass(item, slideActiveClass);
+        } // hide slides
+
+      } else {
+        if (!hasAttr(item, 'aria-hidden')) {
+          setAttrs(item, {
+            'aria-hidden': 'true',
+            'tabindex': '-1'
+          });
+          removeClass(item, slideActiveClass);
+        }
+      }
+    });
+  } // gallery: update slide position
+
+
+  function updateGallerySlidePositions() {
+    var l = index + Math.min(slideCount, items);
+
+    for (var i = slideCountNew; i--;) {
+      var item = slideItems[i];
+
+      if (i >= index && i < l) {
+        // add transitions to visible slides when adjusting their positions
+        addClass(item, 'tns-moving');
+        item.style.left = (i - index) * 100 / items + '%';
+        addClass(item, animateIn);
+        removeClass(item, animateNormal);
+      } else if (item.style.left) {
+        item.style.left = '';
+        addClass(item, animateNormal);
+        removeClass(item, animateIn);
+      } // remove outlet animation
+
+
+      removeClass(item, animateOut);
+    } // removing '.tns-moving'
+
+
+    setTimeout(function () {
+      forEach(slideItems, function (el) {
+        removeClass(el, 'tns-moving');
+      });
+    }, 300);
+  } // set tabindex on Nav
+
+
+  function updateNavStatus() {
+    // get current nav
+    if (nav) {
+      navCurrentIndex = navClicked >= 0 ? navClicked : getCurrentNavIndex();
+      navClicked = -1;
+
+      if (navCurrentIndex !== navCurrentIndexCached) {
+        var navPrev = navItems[navCurrentIndexCached],
+            navCurrent = navItems[navCurrentIndex];
+        setAttrs(navPrev, {
+          'tabindex': '-1',
+          'aria-label': navStr + (navCurrentIndexCached + 1)
+        });
+        removeClass(navPrev, navActiveClass);
+        setAttrs(navCurrent, {
+          'aria-label': navStr + (navCurrentIndex + 1) + navStrCurrent
+        });
+        removeAttrs(navCurrent, 'tabindex');
+        addClass(navCurrent, navActiveClass);
+        navCurrentIndexCached = navCurrentIndex;
+      }
+    }
+  }
+
+  function getLowerCaseNodeName(el) {
+    return el.nodeName.toLowerCase();
+  }
+
+  function isButton(el) {
+    return getLowerCaseNodeName(el) === 'button';
+  }
+
+  function isAriaDisabled(el) {
+    return el.getAttribute('aria-disabled') === 'true';
+  }
+
+  function disEnableElement(isButton, el, val) {
+    if (isButton) {
+      el.disabled = val;
+    } else {
+      el.setAttribute('aria-disabled', val.toString());
+    }
+  } // set 'disabled' to true on controls when reach the edges
+
+
+  function updateControlsStatus() {
+    if (!controls || rewind || loop) {
+      return;
+    }
+
+    var prevDisabled = prevIsButton ? prevButton.disabled : isAriaDisabled(prevButton),
+        nextDisabled = nextIsButton ? nextButton.disabled : isAriaDisabled(nextButton),
+        disablePrev = index <= indexMin ? true : false,
+        disableNext = !rewind && index >= indexMax ? true : false;
+
+    if (disablePrev && !prevDisabled) {
+      disEnableElement(prevIsButton, prevButton, true);
+    }
+
+    if (!disablePrev && prevDisabled) {
+      disEnableElement(prevIsButton, prevButton, false);
+    }
+
+    if (disableNext && !nextDisabled) {
+      disEnableElement(nextIsButton, nextButton, true);
+    }
+
+    if (!disableNext && nextDisabled) {
+      disEnableElement(nextIsButton, nextButton, false);
+    }
+  } // set duration
+
+
+  function resetDuration(el, str) {
+    if (TRANSITIONDURATION) {
+      el.style[TRANSITIONDURATION] = str;
+    }
+  }
+
+  function getSliderWidth() {
+    return fixedWidth ? (fixedWidth + gutter) * slideCountNew : slidePositions[slideCountNew];
+  }
+
+  function getCenterGap(num) {
+    if (num == null) {
+      num = index;
+    }
+
+    var gap = edgePadding ? gutter : 0;
+    return autoWidth ? (viewport - gap - (slidePositions[num + 1] - slidePositions[num] - gutter)) / 2 : fixedWidth ? (viewport - fixedWidth) / 2 : (items - 1) / 2;
+  }
+
+  function getRightBoundary() {
+    var gap = edgePadding ? gutter : 0,
+        result = viewport + gap - getSliderWidth();
+
+    if (center && !loop) {
+      result = fixedWidth ? -(fixedWidth + gutter) * (slideCountNew - 1) - getCenterGap() : getCenterGap(slideCountNew - 1) - slidePositions[slideCountNew - 1];
+    }
+
+    if (result > 0) {
+      result = 0;
+    }
+
+    return result;
+  }
+
+  function getContainerTransformValue(num) {
+    if (num == null) {
+      num = index;
+    }
+
+    var val;
+
+    if (horizontal && !autoWidth) {
+      if (fixedWidth) {
+        val = -(fixedWidth + gutter) * num;
+
+        if (center) {
+          val += getCenterGap();
+        }
+      } else {
+        var denominator = TRANSFORM ? slideCountNew : items;
+
+        if (center) {
+          num -= getCenterGap();
+        }
+
+        val = -num * 100 / denominator;
+      }
+    } else {
+      val = -slidePositions[num];
+
+      if (center && autoWidth) {
+        val += getCenterGap();
+      }
+    }
+
+    if (hasRightDeadZone) {
+      val = Math.max(val, rightBoundary);
+    }
+
+    val += horizontal && !autoWidth && !fixedWidth ? '%' : 'px';
+    return val;
+  }
+
+  function doContainerTransformSilent(val) {
+    resetDuration(container, '0s');
+    doContainerTransform(val);
+  }
+
+  function doContainerTransform(val) {
+    if (val == null) {
+      val = getContainerTransformValue();
+    }
+
+    container.style[transformAttr] = transformPrefix + val + transformPostfix;
+  }
+
+  function animateSlide(number, classOut, classIn, isOut) {
+    var l = number + items;
+
+    if (!loop) {
+      l = Math.min(l, slideCountNew);
+    }
+
+    for (var i = number; i < l; i++) {
+      var item = slideItems[i]; // set item positions
+
+      if (!isOut) {
+        item.style.left = (i - index) * 100 / items + '%';
+      }
+
+      if (animateDelay && TRANSITIONDELAY) {
+        item.style[TRANSITIONDELAY] = item.style[ANIMATIONDELAY] = animateDelay * (i - number) / 1000 + 's';
+      }
+
+      removeClass(item, classOut);
+      addClass(item, classIn);
+
+      if (isOut) {
+        slideItemsOut.push(item);
+      }
+    }
+  } // make transfer after click/drag:
+  // 1. change 'transform' property for mordern browsers
+  // 2. change 'left' property for legacy browsers
+
+
+  var transformCore = function () {
+    return carousel ? function () {
+      resetDuration(container, '');
+
+      if (TRANSITIONDURATION || !speed) {
+        // for morden browsers with non-zero duration or
+        // zero duration for all browsers
+        doContainerTransform(); // run fallback function manually
+        // when duration is 0 / container is hidden
+
+        if (!speed || !isVisible(container)) {
+          onTransitionEnd();
+        }
+      } else {
+        // for old browser with non-zero duration
+        jsTransform(container, transformAttr, transformPrefix, transformPostfix, getContainerTransformValue(), speed, onTransitionEnd);
+      }
+
+      if (!horizontal) {
+        updateContentWrapperHeight();
+      }
+    } : function () {
+      slideItemsOut = [];
+      var eve = {};
+      eve[TRANSITIONEND] = eve[ANIMATIONEND] = onTransitionEnd;
+      removeEvents(slideItems[indexCached], eve);
+      addEvents(slideItems[index], eve);
+      animateSlide(indexCached, animateIn, animateOut, true);
+      animateSlide(index, animateNormal, animateIn); // run fallback function manually
+      // when transition or animation not supported / duration is 0
+
+      if (!TRANSITIONEND || !ANIMATIONEND || !speed || !isVisible(container)) {
+        onTransitionEnd();
+      }
+    };
+  }();
+
+  function render(e, sliderMoved) {
+    if (updateIndexBeforeTransform) {
+      updateIndex();
+    } // render when slider was moved (touch or drag) even though index may not change
+
+
+    if (index !== indexCached || sliderMoved) {
+      // events
+      events.emit('indexChanged', info());
+      events.emit('transitionStart', info());
+
+      if (autoHeight) {
+        doAutoHeight();
+      } // pause autoplay when click or keydown from user
+
+
+      if (animating && e && ['click', 'keydown'].indexOf(e.type) >= 0) {
+        stopAutoplay();
+      }
+
+      running = true;
+      transformCore();
+    }
+  }
+  /*
+   * Transfer prefixed properties to the same format
+   * CSS: -Webkit-Transform => webkittransform
+   * JS: WebkitTransform => webkittransform
+   * @param {string} str - property
+   *
+   */
+
+
+  function strTrans(str) {
+    return str.toLowerCase().replace(/-/g, '');
+  } // AFTER TRANSFORM
+  // Things need to be done after a transfer:
+  // 1. check index
+  // 2. add classes to visible slide
+  // 3. disable controls buttons when reach the first/last slide in non-loop slider
+  // 4. update nav status
+  // 5. lazyload images
+  // 6. update container height
+
+
+  function onTransitionEnd(event) {
+    // check running on gallery mode
+    // make sure trantionend/animationend events run only once
+    if (carousel || running) {
+      events.emit('transitionEnd', info(event));
+
+      if (!carousel && slideItemsOut.length > 0) {
+        for (var i = 0; i < slideItemsOut.length; i++) {
+          var item = slideItemsOut[i]; // set item positions
+
+          item.style.left = '';
+
+          if (ANIMATIONDELAY && TRANSITIONDELAY) {
+            item.style[ANIMATIONDELAY] = '';
+            item.style[TRANSITIONDELAY] = '';
+          }
+
+          removeClass(item, animateOut);
+          addClass(item, animateNormal);
+        }
+      }
+      /* update slides, nav, controls after checking ...
+       * => legacy browsers who don't support 'event'
+       *    have to check event first, otherwise event.target will cause an error
+       * => or 'gallery' mode:
+       *   + event target is slide item
+       * => or 'carousel' mode:
+       *   + event target is container,
+       *   + event.property is the same with transform attribute
+       */
+
+
+      if (!event || !carousel && event.target.parentNode === container || event.target === container && strTrans(event.propertyName) === strTrans(transformAttr)) {
+        if (!updateIndexBeforeTransform) {
+          var indexTem = index;
+          updateIndex();
+
+          if (index !== indexTem) {
+            events.emit('indexChanged', info());
+            doContainerTransformSilent();
+          }
+        }
+
+        if (nested === 'inner') {
+          events.emit('innerLoaded', info());
+        }
+
+        running = false;
+        indexCached = index;
+      }
+    }
+  } // # ACTIONS
+
+
+  function goTo(targetIndex, e) {
+    if (freeze) {
+      return;
+    } // prev slideBy
+
+
+    if (targetIndex === 'prev') {
+      onControlsClick(e, -1); // next slideBy
+    } else if (targetIndex === 'next') {
+      onControlsClick(e, 1); // go to exact slide
+    } else {
+      if (running) {
+        if (preventActionWhenRunning) {
+          return;
+        } else {
+          onTransitionEnd();
+        }
+      }
+
+      var absIndex = getAbsIndex(),
+          indexGap = 0;
+
+      if (targetIndex === 'first') {
+        indexGap = -absIndex;
+      } else if (targetIndex === 'last') {
+        indexGap = carousel ? slideCount - items - absIndex : slideCount - 1 - absIndex;
+      } else {
+        if (typeof targetIndex !== 'number') {
+          targetIndex = parseInt(targetIndex);
+        }
+
+        if (!isNaN(targetIndex)) {
+          // from directly called goTo function
+          if (!e) {
+            targetIndex = Math.max(0, Math.min(slideCount - 1, targetIndex));
+          }
+
+          indexGap = targetIndex - absIndex;
+        }
+      } // gallery: make sure new page won't overlap with current page
+
+
+      if (!carousel && indexGap && Math.abs(indexGap) < items) {
+        var factor = indexGap > 0 ? 1 : -1;
+        indexGap += index + indexGap - slideCount >= indexMin ? slideCount * factor : slideCount * 2 * factor * -1;
+      }
+
+      index += indexGap; // make sure index is in range
+
+      if (carousel && loop) {
+        if (index < indexMin) {
+          index += slideCount;
+        }
+
+        if (index > indexMax) {
+          index -= slideCount;
+        }
+      } // if index is changed, start rendering
+
+
+      if (getAbsIndex(index) !== getAbsIndex(indexCached)) {
+        render(e);
+      }
+    }
+  } // on controls click
+
+
+  function onControlsClick(e, dir) {
+    if (running) {
+      if (preventActionWhenRunning) {
+        return;
+      } else {
+        onTransitionEnd();
+      }
+    }
+
+    var passEventObject;
+
+    if (!dir) {
+      e = getEvent(e);
+      var target = getTarget(e);
+
+      while (target !== controlsContainer && [prevButton, nextButton].indexOf(target) < 0) {
+        target = target.parentNode;
+      }
+
+      var targetIn = [prevButton, nextButton].indexOf(target);
+
+      if (targetIn >= 0) {
+        passEventObject = true;
+        dir = targetIn === 0 ? -1 : 1;
+      }
+    }
+
+    if (rewind) {
+      if (index === indexMin && dir === -1) {
+        goTo('last', e);
+        return;
+      } else if (index === indexMax && dir === 1) {
+        goTo('first', e);
+        return;
+      }
+    }
+
+    if (dir) {
+      index += slideBy * dir;
+
+      if (autoWidth) {
+        index = Math.floor(index);
+      } // pass e when click control buttons or keydown
+
+
+      render(passEventObject || e && e.type === 'keydown' ? e : null);
+    }
+  } // on nav click
+
+
+  function onNavClick(e) {
+    if (running) {
+      if (preventActionWhenRunning) {
+        return;
+      } else {
+        onTransitionEnd();
+      }
+    }
+
+    e = getEvent(e);
+    var target = getTarget(e),
+        navIndex; // find the clicked nav item
+
+    while (target !== navContainer && !hasAttr(target, 'data-nav')) {
+      target = target.parentNode;
+    }
+
+    if (hasAttr(target, 'data-nav')) {
+      var navIndex = navClicked = Number(getAttr(target, 'data-nav')),
+          targetIndexBase = fixedWidth || autoWidth ? navIndex * slideCount / pages : navIndex * items,
+          targetIndex = navAsThumbnails ? navIndex : Math.min(Math.ceil(targetIndexBase), slideCount - 1);
+      goTo(targetIndex, e);
+
+      if (navCurrentIndex === navIndex) {
+        if (animating) {
+          stopAutoplay();
+        }
+
+        navClicked = -1; // reset navClicked
+      }
+    }
+  } // autoplay functions
+
+
+  function setAutoplayTimer() {
+    autoplayTimer = setInterval(function () {
+      onControlsClick(null, autoplayDirection);
+    }, autoplayTimeout);
+    animating = true;
+  }
+
+  function stopAutoplayTimer() {
+    clearInterval(autoplayTimer);
+    animating = false;
+  }
+
+  function updateAutoplayButton(action, txt) {
+    setAttrs(autoplayButton, {
+      'data-action': action
+    });
+    autoplayButton.innerHTML = autoplayHtmlStrings[0] + action + autoplayHtmlStrings[1] + txt;
+  }
+
+  function startAutoplay() {
+    setAutoplayTimer();
+
+    if (autoplayButton) {
+      updateAutoplayButton('stop', autoplayText[1]);
+    }
+  }
+
+  function stopAutoplay() {
+    stopAutoplayTimer();
+
+    if (autoplayButton) {
+      updateAutoplayButton('start', autoplayText[0]);
+    }
+  } // programaitcally play/pause the slider
+
+
+  function play() {
+    if (autoplay && !animating) {
+      startAutoplay();
+      autoplayUserPaused = false;
+    }
+  }
+
+  function pause() {
+    if (animating) {
+      stopAutoplay();
+      autoplayUserPaused = true;
+    }
+  }
+
+  function toggleAutoplay() {
+    if (animating) {
+      stopAutoplay();
+      autoplayUserPaused = true;
+    } else {
+      startAutoplay();
+      autoplayUserPaused = false;
+    }
+  }
+
+  function onVisibilityChange() {
+    if (doc.hidden) {
+      if (animating) {
+        stopAutoplayTimer();
+        autoplayVisibilityPaused = true;
+      }
+    } else if (autoplayVisibilityPaused) {
+      setAutoplayTimer();
+      autoplayVisibilityPaused = false;
+    }
+  }
+
+  function mouseoverPause() {
+    if (animating) {
+      stopAutoplayTimer();
+      autoplayHoverPaused = true;
+    }
+  }
+
+  function mouseoutRestart() {
+    if (autoplayHoverPaused) {
+      setAutoplayTimer();
+      autoplayHoverPaused = false;
+    }
+  } // keydown events on document
+
+
+  function onDocumentKeydown(e) {
+    e = getEvent(e);
+    var keyIndex = [KEYS.LEFT, KEYS.RIGHT].indexOf(e.keyCode);
+
+    if (keyIndex >= 0) {
+      onControlsClick(e, keyIndex === 0 ? -1 : 1);
+    }
+  } // on key control
+
+
+  function onControlsKeydown(e) {
+    e = getEvent(e);
+    var keyIndex = [KEYS.LEFT, KEYS.RIGHT].indexOf(e.keyCode);
+
+    if (keyIndex >= 0) {
+      if (keyIndex === 0) {
+        if (!prevButton.disabled) {
+          onControlsClick(e, -1);
+        }
+      } else if (!nextButton.disabled) {
+        onControlsClick(e, 1);
+      }
+    }
+  } // set focus
+
+
+  function setFocus(el) {
+    el.focus();
+  } // on key nav
+
+
+  function onNavKeydown(e) {
+    e = getEvent(e);
+    var curElement = doc.activeElement;
+
+    if (!hasAttr(curElement, 'data-nav')) {
+      return;
+    } // var code = e.keyCode,
+
+
+    var keyIndex = [KEYS.LEFT, KEYS.RIGHT, KEYS.ENTER, KEYS.SPACE].indexOf(e.keyCode),
+        navIndex = Number(getAttr(curElement, 'data-nav'));
+
+    if (keyIndex >= 0) {
+      if (keyIndex === 0) {
+        if (navIndex > 0) {
+          setFocus(navItems[navIndex - 1]);
+        }
+      } else if (keyIndex === 1) {
+        if (navIndex < pages - 1) {
+          setFocus(navItems[navIndex + 1]);
+        }
+      } else {
+        navClicked = navIndex;
+        goTo(navIndex, e);
+      }
+    }
+  }
+
+  function getEvent(e) {
+    e = e || win.event;
+    return isTouchEvent(e) ? e.changedTouches[0] : e;
+  }
+
+  function getTarget(e) {
+    return e.target || win.event.srcElement;
+  }
+
+  function isTouchEvent(e) {
+    return e.type.indexOf('touch') >= 0;
+  }
+
+  function preventDefaultBehavior(e) {
+    e.preventDefault ? e.preventDefault() : e.returnValue = false;
+  }
+
+  function getMoveDirectionExpected() {
+    return getTouchDirection(toDegree(lastPosition.y - initPosition.y, lastPosition.x - initPosition.x), swipeAngle) === options.axis;
+  }
+
+  function onPanStart(e) {
+    if (running) {
+      if (preventActionWhenRunning) {
+        return;
+      } else {
+        onTransitionEnd();
+      }
+    }
+
+    if (autoplay && animating) {
+      stopAutoplayTimer();
+    }
+
+    panStart = true;
+
+    if (rafIndex) {
+      caf(rafIndex);
+      rafIndex = null;
+    }
+
+    var $ = getEvent(e);
+    events.emit(isTouchEvent(e) ? 'touchStart' : 'dragStart', info(e));
+
+    if (!isTouchEvent(e) && ['img', 'a'].indexOf(getLowerCaseNodeName(getTarget(e))) >= 0) {
+      preventDefaultBehavior(e);
+    }
+
+    lastPosition.x = initPosition.x = $.clientX;
+    lastPosition.y = initPosition.y = $.clientY;
+
+    if (carousel) {
+      translateInit = parseFloat(container.style[transformAttr].replace(transformPrefix, ''));
+      resetDuration(container, '0s');
+    }
+  }
+
+  function onPanMove(e) {
+    if (panStart) {
+      var $ = getEvent(e);
+      lastPosition.x = $.clientX;
+      lastPosition.y = $.clientY;
+
+      if (carousel) {
+        if (!rafIndex) {
+          rafIndex = raf(function () {
+            panUpdate(e);
+          });
+        }
+      } else {
+        if (moveDirectionExpected === '?') {
+          moveDirectionExpected = getMoveDirectionExpected();
+        }
+
+        if (moveDirectionExpected) {
+          preventScroll = true;
+        }
+      }
+
+      if ((typeof e.cancelable !== 'boolean' || e.cancelable) && preventScroll) {
+        e.preventDefault();
+      }
+    }
+  }
+
+  function panUpdate(e) {
+    if (!moveDirectionExpected) {
+      panStart = false;
+      return;
+    }
+
+    caf(rafIndex);
+
+    if (panStart) {
+      rafIndex = raf(function () {
+        panUpdate(e);
+      });
+    }
+
+    if (moveDirectionExpected === '?') {
+      moveDirectionExpected = getMoveDirectionExpected();
+    }
+
+    if (moveDirectionExpected) {
+      if (!preventScroll && isTouchEvent(e)) {
+        preventScroll = true;
+      }
+
+      try {
+        if (e.type) {
+          events.emit(isTouchEvent(e) ? 'touchMove' : 'dragMove', info(e));
+        }
+      } catch (err) {}
+
+      var x = translateInit,
+          dist = getDist(lastPosition, initPosition);
+
+      if (!horizontal || fixedWidth || autoWidth) {
+        x += dist;
+        x += 'px';
+      } else {
+        var percentageX = TRANSFORM ? dist * items * 100 / ((viewport + gutter) * slideCountNew) : dist * 100 / (viewport + gutter);
+        x += percentageX;
+        x += '%';
+      }
+
+      container.style[transformAttr] = transformPrefix + x + transformPostfix;
+    }
+  }
+
+  function onPanEnd(e) {
+    if (panStart) {
+      if (rafIndex) {
+        caf(rafIndex);
+        rafIndex = null;
+      }
+
+      if (carousel) {
+        resetDuration(container, '');
+      }
+
+      panStart = false;
+      var $ = getEvent(e);
+      lastPosition.x = $.clientX;
+      lastPosition.y = $.clientY;
+      var dist = getDist(lastPosition, initPosition);
+
+      if (Math.abs(dist)) {
+        // drag vs click
+        if (!isTouchEvent(e)) {
+          // prevent "click"
+          var target = getTarget(e);
+          addEvents(target, {
+            'click': function preventClick(e) {
+              preventDefaultBehavior(e);
+              removeEvents(target, {
+                'click': preventClick
+              });
+            }
+          });
+        }
+
+        if (carousel) {
+          rafIndex = raf(function () {
+            if (horizontal && !autoWidth) {
+              var indexMoved = -dist * items / (viewport + gutter);
+              indexMoved = dist > 0 ? Math.floor(indexMoved) : Math.ceil(indexMoved);
+              index += indexMoved;
+            } else {
+              var moved = -(translateInit + dist);
+
+              if (moved <= 0) {
+                index = indexMin;
+              } else if (moved >= slidePositions[slideCountNew - 1]) {
+                index = indexMax;
+              } else {
+                var i = 0;
+
+                while (i < slideCountNew && moved >= slidePositions[i]) {
+                  index = i;
+
+                  if (moved > slidePositions[i] && dist < 0) {
+                    index += 1;
+                  }
+
+                  i++;
+                }
+              }
+            }
+
+            render(e, dist);
+            events.emit(isTouchEvent(e) ? 'touchEnd' : 'dragEnd', info(e));
+          });
+        } else {
+          if (moveDirectionExpected) {
+            onControlsClick(e, dist > 0 ? -1 : 1);
+          }
+        }
+      }
+    } // reset
+
+
+    if (options.preventScrollOnTouch === 'auto') {
+      preventScroll = false;
+    }
+
+    if (swipeAngle) {
+      moveDirectionExpected = '?';
+    }
+
+    if (autoplay && !animating) {
+      setAutoplayTimer();
+    }
+  } // === RESIZE FUNCTIONS === //
+  // (slidePositions, index, items) => vertical_conentWrapper.height
+
+
+  function updateContentWrapperHeight() {
+    var wp = middleWrapper ? middleWrapper : innerWrapper;
+    wp.style.height = slidePositions[index + items] - slidePositions[index] + 'px';
+  }
+
+  function getPages() {
+    var rough = fixedWidth ? (fixedWidth + gutter) * slideCount / viewport : slideCount / items;
+    return Math.min(Math.ceil(rough), slideCount);
+  }
+  /*
+   * 1. update visible nav items list
+   * 2. add "hidden" attributes to previous visible nav items
+   * 3. remove "hidden" attrubutes to new visible nav items
+   */
+
+
+  function updateNavVisibility() {
+    if (!nav || navAsThumbnails) {
+      return;
+    }
+
+    if (pages !== pagesCached) {
+      var min = pagesCached,
+          max = pages,
+          fn = showElement;
+
+      if (pagesCached > pages) {
+        min = pages;
+        max = pagesCached;
+        fn = hideElement;
+      }
+
+      while (min < max) {
+        fn(navItems[min]);
+        min++;
+      } // cache pages
+
+
+      pagesCached = pages;
+    }
+  }
+
+  function info(e) {
+    return {
+      container: container,
+      slideItems: slideItems,
+      navContainer: navContainer,
+      navItems: navItems,
+      controlsContainer: controlsContainer,
+      hasControls: hasControls,
+      prevButton: prevButton,
+      nextButton: nextButton,
+      items: items,
+      slideBy: slideBy,
+      cloneCount: cloneCount,
+      slideCount: slideCount,
+      slideCountNew: slideCountNew,
+      index: index,
+      indexCached: indexCached,
+      displayIndex: getCurrentSlide(),
+      navCurrentIndex: navCurrentIndex,
+      navCurrentIndexCached: navCurrentIndexCached,
+      pages: pages,
+      pagesCached: pagesCached,
+      sheet: sheet,
+      isOn: isOn,
+      event: e || {}
+    };
+  }
+
+  return {
+    version: '2.9.4',
+    getInfo: info,
+    events: events,
+    goTo: goTo,
+    play: play,
+    pause: pause,
+    isOn: isOn,
+    updateSliderHeight: updateInnerWrapperHeight,
+    refresh: initSliderTransform,
+    destroy: destroy,
+    rebuild: function () {
+      return tns(extend(options, optionsElements));
+    }
+  };
+};
+
+exports.tns = tns;
+
+
+/***/ }),
+
 /***/ "./node_modules/vue/dist/vue.esm-bundler.js":
 /*!**************************************************!*\
   !*** ./node_modules/vue/dist/vue.esm-bundler.js ***!
@@ -45176,6 +61197,18 @@ module.exports = JSON.parse('{"_args":[["axios@0.21.4","C:\\\\Users\\\\omar\\\\D
 /******/ 				}
 /******/ 			}
 /******/ 			return result;
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	(() => {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = (module) => {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
 /******/ 		};
 /******/ 	})();
 /******/ 	

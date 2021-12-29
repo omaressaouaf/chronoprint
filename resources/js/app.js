@@ -1,12 +1,10 @@
 require("./bootstrap");
-require('bootstrap');
+require("bootstrap");
 
 window.Vue = require("vue").default;
 import { createApp } from "vue";
 
-// ______________________________________________Component global registration______________________________
+// createApp({}).mount("#app");
 
-// ______________________________________________Filters______________________________________________
-
-// ______________________________________________Vue and packages Config___________
-createApp({}).mount("#app");
+/**Theme */
+require("./theme")

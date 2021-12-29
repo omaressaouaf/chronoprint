@@ -1,0 +1,28 @@
+/*
+ * Cartzilla | Bootstrap E-Commerce Template
+ * Copyright 2021 Createx Studio
+ * Theme styles
+ */
+
+// User variables
+@import 'user-variables';
+
+// Configuration & utilities
+@import 'variables';
+@import 'mixins';
+@import 'utilities';
+
+// Bootstrap
+@import 'bootstrap/scss/bootstrap';
+
+// Plugins
+@import "simplebar";
+@import "tiny-slider/dist/tiny-slider.css";
+@import "drift-zoom/dist/drift-basic.min.css";
+
+// Layout & components
+@import 'reboot';
+@import 'components';
+
+// User custom styles
+@import 'user';
