@@ -559,7 +559,7 @@
 
     @include('partials.brands')
 
-    @include('partials.prefooter-cards')
+    @include('partials.contact-cards')
 
 
 @endsection
