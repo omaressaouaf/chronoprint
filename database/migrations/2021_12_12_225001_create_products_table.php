@@ -22,7 +22,6 @@ class CreateProductsTable extends Migration
             $table->float("price");
             $table->integer("stock");
             $table->json("allowed_quantities");
-            $table->boolean("featured")->default(0);
             $table->boolean("popular")->default(0);
             $table->boolean("active")->default(0);
             $table->string("promotion_label")->nullable();

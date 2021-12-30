@@ -13,7 +13,6 @@ class Product extends Model
 
     protected $casts = [
         'allowed_quantities' => 'array',
-        "images" => "array"
     ];
 
     public function attributes()

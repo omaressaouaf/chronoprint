@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Category;
 use App\Models\CategoryGroup;
+use App\Models\Product;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -51,5 +52,13 @@ class ViewServiceProvider extends ServiceProvider
                 ]
             ]);
         });
+
+        View::composer("partials.products.popular", function ($view) {
+            $view->with([
+                "products" => Product::wherePopular(1)->get()
+            ]);
+        });
+
+
     }
 }

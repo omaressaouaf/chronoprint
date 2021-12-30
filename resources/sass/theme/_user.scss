@@ -8,3 +8,24 @@
 .text-sm {
     font-size: small;
 }
+
+// Custom scrollbar
+.has-cool-scrollbar::-webkit-scrollbar {
+    width: 16px !important;
+    height: 14px !important;
+}
+.has-cool-scrollbar::-webkit-scrollbar-thumb {
+    background-color: $gray-400;
+    border: 4px solid transparent;
+    border-radius: 8px;
+    background-clip: padding-box !important;
+}
+
+// Nav Visible Categories
+.nav-visible-categories {
+    max-width: 100vw;
+    overflow: hidden;
+}
+.nav-visible-categories:hover {
+    overflow-x: overlay;
+}

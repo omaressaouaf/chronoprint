@@ -19490,3 +19490,24 @@ html:not([dir=rtl]) .range-slider-ui.noUi-horizontal .noUi-handle {
 .text-sm {
   font-size: small;
 }
+
+.has-cool-scrollbar::-webkit-scrollbar {
+  width: 16px !important;
+  height: 14px !important;
+}
+
+.has-cool-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #dae1e7;
+  border: 4px solid transparent;
+  border-radius: 8px;
+  background-clip: padding-box !important;
+}
+
+.nav-visible-categories {
+  max-width: 100vw;
+  overflow: hidden;
+}
+
+.nav-visible-categories:hover {
+  overflow-x: overlay;
+}
