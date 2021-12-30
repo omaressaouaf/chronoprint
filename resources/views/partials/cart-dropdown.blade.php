@@ -12,7 +12,7 @@
                 <button class="btn-close text-danger" type="button" aria-label="Remove"><span
                         aria-hidden="true">&times;</span></button>
                 <div class="d-flex align-items-center"><a class="flex-shrink-0"
-                        href="shop-single-v1.html"><img src="img/shop/cart/widget/01.jpg" width="64"
+                        href="shop-single-v1.html"><img src="/storage/theme/shop/cart/widget/01.jpg" width="64"
                             alt="Product"></a>
                     <div class="ps-2">
                         <h6 class="widget-product-title">
@@ -32,7 +32,7 @@
                 <button class="btn-close text-danger" type="button" aria-label="Remove"><span
                         aria-hidden="true">&times;</span></button>
                 <div class="d-flex align-items-center"><a class="flex-shrink-0"
-                        href="shop-single-v1.html"><img src="img/shop/cart/widget/02.jpg" width="64"
+                        href="shop-single-v1.html"><img src="/storage/theme/shop/cart/widget/02.jpg" width="64"
                             alt="Product"></a>
                     <div class="ps-2">
                         <h6 class="widget-product-title">
@@ -52,7 +52,7 @@
                 <button class="btn-close text-danger" type="button" aria-label="Remove"><span
                         aria-hidden="true">&times;</span></button>
                 <div class="d-flex align-items-center"><a class="flex-shrink-0"
-                        href="shop-single-v1.html"><img src="img/shop/cart/widget/03.jpg" width="64"
+                        href="shop-single-v1.html"><img src="/storage/theme/shop/cart/widget/03.jpg" width="64"
                             alt="Product"></a>
                     <div class="ps-2">
                         <h6 class="widget-product-title">
@@ -72,7 +72,7 @@
                 <button class="btn-close text-danger" type="button" aria-label="Remove"><span
                         aria-hidden="true">&times;</span></button>
                 <div class="d-flex align-items-center"><a class="flex-shrink-0"
-                        href="shop-single-v1.html"><img src="img/shop/cart/widget/04.jpg" width="64"
+                        href="shop-single-v1.html"><img src="/storage/theme/shop/cart/widget/04.jpg" width="64"
                             alt="Product"></a>
                     <div class="ps-2">
                         <h6 class="widget-product-title">

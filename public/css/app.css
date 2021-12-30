@@ -19483,6 +19483,10 @@ html:not([dir=rtl]) .range-slider-ui.noUi-horizontal .noUi-handle {
     width: 16.66%;
   }
 }
-.footer {
+.bg-accent-light {
   background-color: #1d1c1c !important;
+}
+
+.text-sm {
+  font-size: small;
 }

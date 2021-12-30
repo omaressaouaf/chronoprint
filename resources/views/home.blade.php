@@ -12,19 +12,19 @@
                         <div class="row g-0 ps-1">
                             <div class="col-sm-4 px-2 mb-grid-gutter"><a class="d-block text-center text-decoration-none me-1"
                                    href="shop-grid-ls.html"><img class="d-block rounded mb-3"
-                                         src="img/home/categories/cat-sm01.jpg"
+                                         src="/storage/theme/home/categories/cat-sm01.jpg"
                                          alt="Men">
                                 </a></div>
                             <div class="col-sm-4 px-2 mb-grid-gutter"><a
                                    class="d-block text-center text-decoration-none me-1"
                                    href="shop-grid-ls.html"><img class="d-block rounded mb-3"
-                                         src="img/home/categories/cat-sm02.jpg"
+                                         src="/storage/theme/home/categories/cat-sm02.jpg"
                                          alt="Women">
                                 </a></div>
                             <div class="col-sm-4 px-2 mb-grid-gutter"><a
                                    class="d-block text-center text-decoration-none me-1"
                                    href="shop-grid-ls.html"><img class="d-block rounded mb-3"
-                                         src="img/home/categories/cat-sm03.jpg"
+                                         src="/storage/theme/home/categories/cat-sm03.jpg"
                                          alt="Kids">
                                 </a></div>
                         </div>
@@ -46,7 +46,7 @@
                             data-bs-placement="left"
                             title="Add to wishlist"><i class="ci-heart"></i></button><a
                        class="card-img-top d-block overflow-hidden"
-                       href="shop-single-v1.html"><img src="img/shop/catalog/01.jpg"
+                       href="shop-single-v1.html"><img src="/storage/theme/shop/catalog/01.jpg"
                              alt="Product"></a>
                     <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1"
                            href="#">Sneakers &amp; Keds</a>
@@ -114,7 +114,7 @@
                             data-bs-placement="left"
                             title="Add to wishlist"><i class="ci-heart"></i></button><a
                        class="card-img-top d-block overflow-hidden"
-                       href="shop-single-v1.html"><img src="img/shop/catalog/02.jpg"
+                       href="shop-single-v1.html"><img src="/storage/theme/shop/catalog/02.jpg"
                              alt="Product"></a>
                     <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1"
                            href="#">Women’s T-shirt</a>
@@ -197,7 +197,7 @@
                             data-bs-placement="left"
                             title="Add to wishlist"><i class="ci-heart"></i></button><a
                        class="card-img-top d-block overflow-hidden"
-                       href="shop-single-v1.html"><img src="img/shop/catalog/03.jpg"
+                       href="shop-single-v1.html"><img src="/storage/theme/shop/catalog/03.jpg"
                              alt="Product"></a>
                     <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1"
                            href="#">Women’s Shorts</a>
@@ -266,7 +266,7 @@
                             data-bs-placement="left"
                             title="Add to wishlist"><i class="ci-heart"></i></button><a
                        class="card-img-top d-block overflow-hidden"
-                       href="shop-single-v1.html"><img src="img/shop/catalog/07.jpg"
+                       href="shop-single-v1.html"><img src="/storage/theme/shop/catalog/07.jpg"
                              alt="Product"></a>
                     <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1"
                            href="#">Women's Swimwear</a>
@@ -327,7 +327,7 @@
                             data-bs-placement="left"
                             title="Add to wishlist"><i class="ci-heart"></i></button><a
                        class="card-img-top d-block overflow-hidden"
-                       href="shop-single-v1.html"><img src="img/shop/catalog/04.jpg"
+                       href="shop-single-v1.html"><img src="/storage/theme/shop/catalog/04.jpg"
                              alt="Product"></a>
                     <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1"
                            href="#">Sportswear</a>
@@ -396,7 +396,7 @@
                             data-bs-placement="left"
                             title="Add to wishlist"><i class="ci-heart"></i></button><a
                        class="card-img-top d-block overflow-hidden"
-                       href="shop-single-v1.html"><img src="img/shop/catalog/05.jpg"
+                       href="shop-single-v1.html"><img src="/storage/theme/shop/catalog/05.jpg"
                              alt="Product"></a>
                     <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1"
                            href="#">Men’s Sunglasses</a>
@@ -429,7 +429,7 @@
                             data-bs-placement="left"
                             title="Add to wishlist"><i class="ci-heart"></i></button><a
                        class="card-img-top d-block overflow-hidden"
-                       href="shop-single-v1.html"><img src="img/shop/catalog/06.jpg"
+                       href="shop-single-v1.html"><img src="/storage/theme/shop/catalog/06.jpg"
                              alt="Product"></a>
                     <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1"
                            href="#">Backpacks</a>
@@ -492,7 +492,7 @@
                             data-bs-placement="left"
                             title="Add to wishlist"><i class="ci-heart"></i></button><a
                        class="card-img-top d-block overflow-hidden"
-                       href="shop-single-v1.html"><img src="img/shop/catalog/25.jpg"
+                       href="shop-single-v1.html"><img src="/storage/theme/shop/catalog/25.jpg"
                              alt="Product"></a>
                     <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1"
                            href="#">Women's Sneakers</a>

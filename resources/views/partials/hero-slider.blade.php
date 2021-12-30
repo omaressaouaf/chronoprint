@@ -6,7 +6,7 @@
              style="background-color: #3aafd2;">
             <div class="d-lg-flex justify-content-between align-items-center ps-lg-4"><img
                      class="d-block order-lg-2 me-lg-n5 flex-shrink-0"
-                     src="img/home/hero-slider/01.jpg"
+                     src="/storage/theme/home/hero-slider/01.jpg"
                      alt="Summer Collection">
                 <div class="position-relative mx-auto me-lg-n5 py-5 px-4 mb-lg-5 order-lg-1"
                      style="max-width: 42rem; z-index: 10;">
@@ -26,7 +26,7 @@
              style="background-color: #f5b1b0;">
             <div class="d-lg-flex justify-content-between align-items-center ps-lg-4"><img
                      class="d-block order-lg-2 me-lg-n5 flex-shrink-0"
-                     src="img/home/hero-slider/02.jpg"
+                     src="/storage/theme/home/hero-slider/02.jpg"
                      alt="Women Sportswear">
                 <div class="position-relative mx-auto me-lg-n5 py-5 px-4 mb-lg-5 order-lg-1"
                      style="max-width: 42rem; z-index: 10;">
@@ -46,7 +46,7 @@
              style="background-color: #eba170;">
             <div class="d-lg-flex justify-content-between align-items-center ps-lg-4"><img
                      class="d-block order-lg-2 me-lg-n5 flex-shrink-0"
-                     src="img/home/hero-slider/03.jpg"
+                     src="/storage/theme/home/hero-slider/03.jpg"
                      alt="Men Accessories">
                 <div class="position-relative mx-auto me-lg-n5 py-5 px-4 mb-lg-5 order-lg-1"
                      style="max-width: 42rem; z-index: 10;">

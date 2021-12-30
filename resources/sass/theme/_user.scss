@@ -1,6 +1,10 @@
 //
 // user.scss
 // Use this to write your custom SCSS
-.footer {
+.bg-accent-light {
     background-color: $accent-light !important;
+}
+
+.text-sm {
+    font-size: small;
 }

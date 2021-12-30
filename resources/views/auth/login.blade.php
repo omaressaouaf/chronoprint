@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container my-5">
     <div class="row justify-content-center">
         <div class="col-md-7">
             <div class="card border-0 shadow">
@@ -30,7 +30,7 @@
 
                             </div>
                             @error('email')
-                            <span class="text-danger" style="font-size: small" role="alert">
+                            <span class="text-danger text-sm"  role="alert">
                                 <strong>{{$message}}</strong>
                             </span>
                             @enderror
@@ -49,7 +49,7 @@
                                 </div>
                             </div>
                             @error('password')
-                            <span class="invalid-feedback" style="font-size: small" role="alert">
+                            <span class="invalid-feedback text-sm" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                             @enderror
