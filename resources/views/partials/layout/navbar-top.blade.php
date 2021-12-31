@@ -9,7 +9,7 @@
                  alt="Cartzilla">
         </a>
         <div class="d-none d-lg-block flex-grow-1">
-            @include('partials.products.search-form')
+            @include('partials.shop.search-form')
         </div>
         <div class="navbar-toolbar d-flex flex-shrink-0 align-items-center ms-5">
             <button class="navbar-toggler"

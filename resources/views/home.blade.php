@@ -34,7 +34,7 @@
         </div>
     </section>
 
-    @include('partials.products.popular')
+    @include('partials.shop.popular')
 
     @include('partials.brands')
 

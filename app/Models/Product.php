@@ -3,17 +3,33 @@
 namespace App\Models;
 
 use App\Models\AttributeProduct;
-use App\Traits\HasFirstImage;
+use App\Traits\HasMultiImages;
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Product extends Model
 {
-    use HasFactory , HasFirstImage;
+    use HasFactory, HasMultiImages , Sluggable;
 
     protected $casts = [
         'allowed_quantities' => 'array',
     ];
+
+
+    /**
+     * Return the sluggable configuration array for this model.
+     *
+     * @return array
+     */
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'name'
+            ]
+        ];
+    }
 
     public function attributes()
     {
@@ -30,12 +46,13 @@ class Product extends Model
         return $query->when($search, function ($query) use ($search) {
             return $query->where("title", "like", "%" . $search . "%");
         })
-            ->when($sort, function ($query) use ($sort) {
+            ->when($sort && $sort !== "newest", function ($query) use ($sort) {
                 if (in_array($sort, ["asc", "desc"])) {
                     return $query->orderBy("title", $sort);
                 } elseif ($sort === "popular") {
                     return $query->wherePopular(1);
                 }
+            }, function ($query) {
                 return $query->latest();
             })
             ->paginate(20)

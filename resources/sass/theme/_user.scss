@@ -1,6 +1,7 @@
 //
 // user.scss
 // Use this to write your custom SCSS
+
 .bg-accent-light {
     background-color: $accent-light !important;
 }
@@ -19,13 +20,4 @@
     border: 4px solid transparent;
     border-radius: 8px;
     background-clip: padding-box !important;
-}
-
-// Nav Visible Categories
-.nav-visible-categories {
-    max-width: 100vw;
-    overflow: hidden;
-}
-.nav-visible-categories:hover {
-    overflow-x: overlay;
 }

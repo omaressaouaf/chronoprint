@@ -2,7 +2,7 @@
     <div class="d-flex align-items-center ps-2">
         {{-- Search --}}
         <div class="flex-grow-1 me-5">
-            @include('partials.products.search-form' , ["inputClasses" => "form-control border-0 shadow-none"])
+            @include('partials.shop.search-form' , ["inputClasses" => "form-control border-0 shadow-none"])
         </div>
         {{-- Sort --}}
         <div class="d-flex align-items-center">

@@ -42,7 +42,7 @@ class ViewServiceProvider extends ServiceProvider
             ]);
         });
 
-        View::composer("partials.products.filters", function ($view) {
+        View::composer("partials.shop.filters", function ($view) {
             $view->with([
                 "sortings" => [
                     "newest" => "Newest",
@@ -53,7 +53,7 @@ class ViewServiceProvider extends ServiceProvider
             ]);
         });
 
-        View::composer("partials.products.popular", function ($view) {
+        View::composer("partials.shop.popular", function ($view) {
             $view->with([
                 "products" => Product::wherePopular(1)->get()
             ]);

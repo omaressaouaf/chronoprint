@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-    @include('partials.products.category-hero' , ["category" => $category])
+    @include('partials.shop.category-hero' , ["category" => $category])
     <div class="container pb-5 mb-2 mb-md-4">
-        @include('partials.products.filters' , ["products" => $products])
+        @include('partials.shop.filters' , ["products" => $products])
         @if (request('search'))
             <h5 class="ms-3 mt-5 d-flex gap-2 align-items-center">
                 {{ __('Search results for') }}
@@ -17,7 +17,7 @@
         @endif
         <div class="row pt-3 mx-n2">
             @foreach ($products as $product)
-                @include('partials.products.item' , ["product" => $product])
+                @include('partials.shop.product-item' , ["product" => $product])
             @endforeach
         </div>
         <hr class="my-3">

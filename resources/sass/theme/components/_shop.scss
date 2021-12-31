@@ -129,7 +129,7 @@
       width: 100%;
     }
   }
-  
+
   .product-thumb-overlay {
     display: block;
     position: absolute;
@@ -396,7 +396,7 @@
   position: relative;
   width: 100%;
   margin-top: $product-gallery-thumb-spacing;
-    
+
   @include media-breakpoint-up(sm) {
     margin-left: $product-gallery-thumb-spacing;
   }
@@ -419,7 +419,7 @@
     opacity: 1;
     z-index: 10;
   }
-  &:hover { cursor: crosshair; }
+  // &:hover { cursor: crosshair; }
 }
 @include media-breakpoint-down(sm) {
   .product-gallery { display: block; }

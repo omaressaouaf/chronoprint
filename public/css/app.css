@@ -19190,9 +19190,6 @@ html:not([dir=rtl]) .range-slider-ui.noUi-horizontal .noUi-handle {
   opacity: 1;
   z-index: 10;
 }
-.product-gallery-preview-item:hover {
-  cursor: crosshair;
-}
 
 @media (max-width: 499.98px) {
   .product-gallery {
@@ -19501,13 +19498,4 @@ html:not([dir=rtl]) .range-slider-ui.noUi-horizontal .noUi-handle {
   border: 4px solid transparent;
   border-radius: 8px;
   background-clip: padding-box !important;
-}
-
-.nav-visible-categories {
-  max-width: 100vw;
-  overflow: hidden;
-}
-
-.nav-visible-categories:hover {
-  overflow-x: overlay;
 }

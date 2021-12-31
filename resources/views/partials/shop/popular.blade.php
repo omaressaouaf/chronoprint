@@ -3,7 +3,7 @@
     <div class="row pt-4 mx-n2">
         <!-- Product-->
         @foreach ($products as $product)
-        @include('partials.products.item' , ["product" => $product])
+        @include('partials.shop.product-item' , ["product" => $product])
         @endforeach
     </div>
     <div class="text-center pt-3">

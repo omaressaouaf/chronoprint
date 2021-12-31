@@ -15,13 +15,13 @@
             <a class="topbar-link me-4"
                href="order-tracking.html"
                data-bs-toggle="tooltip"
-               data-bs-placement="right"
+               data-bs-placement="bottom"
                title="{{ __('Contact us') }}"><i class="ci-mail"></i> <span class="d-none d-lg-inline">
                     {{ __('Contact us') }} </span></a>
             <a class="topbar-link me-4"
                href="order-tracking.html"
                data-bs-toggle="tooltip"
-               data-bs-placement="right"
+               data-bs-placement="bottom"
                title="{{ __('About us') }}"><i class="ci-announcement
                "></i> <span
                       class="d-none d-lg-inline"> {{ __('About us') }}

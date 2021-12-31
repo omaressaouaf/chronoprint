@@ -16,11 +16,10 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->text("title");
-            $table->text("slug")->unique();
+            $table->string("slug")->nullable()->unique();
             $table->text("details");
             $table->longText("description")->nullable();
             $table->float("price");
-            $table->integer("stock");
             $table->json("allowed_quantities");
             $table->boolean("popular")->default(0);
             $table->boolean("active")->default(0);
