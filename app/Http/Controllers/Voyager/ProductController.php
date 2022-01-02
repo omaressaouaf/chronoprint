@@ -248,12 +248,13 @@ class ProductController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControl
     private  function convertAndValidateRequest($request)
     {
         $request->merge([
-            "allowed_quantities" => json_decode($request->allowed_quantities)
+            "allowed_quantities" => json_decode($request->allowed_quantities, true)
         ]);
 
         $request->validate([
-            "allowed_quantities" => "nullable|array",
-            "allowed_quantities.*" => "required|numeric"
+            "allowed_quantities" => "required|array",
+            "allowed_quantities.*.value" => "required|numeric",
+            "allowed_quantities.*.price" => "required|numeric"
         ]);
     }
 }

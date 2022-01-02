@@ -2,54 +2,59 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1">
+   <meta charset="utf-8">
+   <meta name="viewport"
+      content="width=device-width, initial-scale=1">
 
-    {{-- SEO Meta Tags --}}
-    <title>{{ config('app.name', 'Laravel') }}</title>
-    <meta name="description"
-          content="Cartzilla - Bootstrap E-commerce Template">
-    <meta name="keywords"
-          content="bootstrap, shop, e-commerce, market, modern, responsive,  business, mobile, bootstrap, html5, css3, js, gallery, slider, touch, creative, clean">
-    <meta name="author"
-          content="Createx Studio">
+   {{-- SEO Meta Tags --}}
+   <title>{{ config('app.name', 'Laravel') }}</title>
+   <meta name="description"
+      content="Cartzilla - Bootstrap E-commerce Template">
+   <meta name="keywords"
+      content="bootstrap, shop, e-commerce, market, modern, responsive,  business, mobile, bootstrap, html5, css3, js, gallery, slider, touch, creative, clean">
+   <meta name="author"
+      content="Createx Studio">
 
-    {{-- CSRF Token --}}
-    <meta name="csrf-token"
-          content="{{ csrf_token() }}">
+   {{-- CSRF Token --}}
+   <meta name="csrf-token"
+      content="{{ csrf_token() }}">
 
-    {{-- Scripts --}}
-    <script src="{{ asset('js/app.js') }}"
-            defer></script>
+   {{-- Scripts --}}
+   <script src="{{ asset('js/app.js') }}"
+      defer></script>
 
-    {{-- Styles --}}
-    <link href="{{ asset('css/app.css') }}"
-          rel="stylesheet">
+   {{-- Styles --}}
+   <link href="{{ asset('css/app.css') }}"
+      rel="stylesheet">
+
+   @livewireStyles
+
 </head>
 
 <body class="handheld-toolbar-enabled">
-    <main class="page-wrapper">
-        <header class="shadow-sm">
+   <main class="page-wrapper">
+      <header class="shadow-sm">
 
-            @include('partials.layout.topbar')
+         @include('partials.layout.topbar')
 
-            @include('partials.layout.navbar')
-        </header>
-        <div class="content">
-            @yield('content')
-        </div>
+         @include('partials.layout.navbar')
+      </header>
+      <div class="content">
+         @yield('content')
+      </div>
 
-    </main>
-    @include('partials.layout.footer')
+   </main>
+   @include('partials.layout.footer')
 
-    @include('partials.layout.toolbar')
+   @include('partials.layout.toolbar')
 
-    <a class="btn-scroll-top"
-       href="#top"
-       data-scroll>
-        <i class="btn-scroll-top-icon ci-arrow-up"></i>
-    </a>
+   <a class="btn-scroll-top"
+      href="#top"
+      data-scroll>
+      <i class="btn-scroll-top-icon ci-arrow-up"></i>
+   </a>
+
+   @livewireScripts
 </body>
 
 </html>

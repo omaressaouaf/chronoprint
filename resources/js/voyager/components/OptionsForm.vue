@@ -77,7 +77,7 @@
           </div>
         </div>
         <div
-          v-if="this.form.requiredFilesProperties.length"
+          v-if="this.form.requiredFilesProperties?.length"
           class="required-files-properties-list-container row col-md-12"
         >
           <ul

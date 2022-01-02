@@ -8,8 +8,8 @@ class ProductController extends Controller
 {
     public function show(Product $product)
     {
-        $product->load("category");
+        $product->load(["category", "attributes"]);
 
-        return view("products.show" , compact("product"));
+        return view("products.show", compact("product"));
     }
 }

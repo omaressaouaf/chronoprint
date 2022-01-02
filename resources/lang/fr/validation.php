@@ -185,6 +185,7 @@ return [
         'username'              => 'nom d\'utilisateur',
         'year'                  => 'année',
         'created_at' => "créé à",
-        'updated_at' => 'mis à jour à'
+        'updated_at' => 'mis à jour à',
+        "allowed_quantities" =>  "quantités autorisées"
     ],
 ];

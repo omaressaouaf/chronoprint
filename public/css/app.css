@@ -19190,6 +19190,9 @@ html:not([dir=rtl]) .range-slider-ui.noUi-horizontal .noUi-handle {
   opacity: 1;
   z-index: 10;
 }
+.product-gallery-preview-item:hover {
+  cursor: crosshair;
+}
 
 @media (max-width: 499.98px) {
   .product-gallery {
