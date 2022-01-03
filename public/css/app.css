@@ -19483,6 +19483,10 @@ html:not([dir=rtl]) .range-slider-ui.noUi-horizontal .noUi-handle {
     width: 16.66%;
   }
 }
+p {
+  font-family: "Rubik", sans-serif !important;
+}
+
 .bg-accent-light {
   background-color: #1d1c1c !important;
 }

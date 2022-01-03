@@ -27,7 +27,25 @@
 
                </div>
             </div>
-
+            <div class="ps-md-5 mt-4">
+               <div class="ps-md-4">
+                  <h3 class="accordion-header ps-md-2"><a class="accordion-button"
+                        href="#product-details"
+                        role="button"
+                        data-bs-toggle="collapse"
+                        aria-expanded="true"
+                        aria-controls="product-details">
+                        {{ __('Product details') }}
+                     </a></h3>
+                  <div class="accordion-collapse collapse show ps-md-2"
+                     id="product-details"
+                     data-bs-parent="#productPanels">
+                     <div class="accordion-body">
+                        {!! $product->details !!}
+                     </div>
+                  </div>
+               </div>
+            </div>
          </div>
 
          {{-- Product info --}}
@@ -53,25 +71,6 @@
                   </div>
                @endif
                <div class="px-lg-4">
-                  <div class="mb-4">
-                     <div>
-                        <h3 class="accordion-header"><a class="accordion-button"
-                              href="#product-details"
-                              role="button"
-                              data-bs-toggle="collapse"
-                              aria-expanded="true"
-                              aria-controls="product-details">
-                              {{ __('Product details') }}
-                           </a></h3>
-                        <div class="accordion-collapse collapse show"
-                           id="product-details"
-                           data-bs-parent="#productPanels">
-                           <div class="accordion-body">
-                              {!! $product->details !!}
-                           </div>
-                        </div>
-                     </div>
-                  </div>
                   {{-- Product Attributes & Quantity calculator --}}
                   @livewire('products.price-calculator', ['product' => $product])
                </div>

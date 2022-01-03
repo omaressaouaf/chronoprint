@@ -10,9 +10,6 @@
           <h4 class="modal-title">Configurez les attributs de votre produit</h4>
         </div>
         <div class="modal-body">
-          <div v-if="message.text" :class="`alert alert-${message.class}`">
-            {{ message.text }}
-          </div>
           <div class="attributes-container">
             <div
               v-for="attribute in allAttributes"
@@ -43,12 +40,16 @@
               class="btn btn-success btn-xs"
               style="margin-left: 40px"
             >
-              Importer des options prédéfinies à partir de l'attribut
+              <i class="voyager-download"></i> Importer des options prédéfinies
+              à partir de l'attribut
             </button>
             <hr />
           </div>
         </div>
         <div class="modal-footer">
+          <div v-if="message.text" :class="`alert alert-${message.class}`">
+            {{ message.text }}
+          </div>
           <button
             v-if="selectedAttributes.length"
             @click="syncAttributesWithProduct"
