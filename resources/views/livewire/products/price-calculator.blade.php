@@ -167,58 +167,29 @@
                         {{ __('upload your logo or any needed file') }}</button>
                   </div>
                @else
-                  @if ($noRequiredFiles)
-                     <div class="file-drop-area mt-3">
+                  @foreach ($requiredFiles as $requiredFileName => $requiredFile)
+                     <div wire:key="{{ $loop->index }}"
+                        class="file-drop-area mt-3">
                         <div class="file-drop-icon ci-cloud-upload"></div>
-                        @if (isset($requiredFiles['recto']))
+                        @if ($requiredFile)
                            <div class="file-drop-preview img-thumbnail rounded">
-                              <img src="{{ $requiredFiles['recto']->temporaryUrl() }}"
-                                 alt="{{ $requiredFiles['recto']->getClientOriginalName() }}">
+                              <img src="{{ $requiredFile->temporaryUrl() }}"
+                                 alt="{{ $requiredFile->getClientOriginalName() }}">
                            </div>
                         @endif
                         <span
                            class="file-drop-message">{{ __('Drag and drop here to upload') }}</span>
                         <input type="file"
-                           wire:model="requiredFiles.recto"
+                           wire:model="requiredFiles.{{ $requiredFileName }}"
                            class="file-drop-input"
-                           id="files-recto">
+                           id="files-{{ $requiredFileName }}">
                         <button type="button"
-                           onclick="document.querySelector('#files-recto').click()"
+                           onclick="document.querySelector('#files-{{ $requiredFileName }}').click()"
                            class="btn btn-accent btn-sm">
-                           {{ __('Select your :filename file', ['filename' => 'recto']) }}
-                        </button>
+                           {{ __('Select your :filename file', ['filename' => $requiredFileName]) }}</button>
                      </div>
-                  @else
-                     @foreach ($selectedOptions as $attributeName => $optionRef)
-                        @if ($option = $product->getOptionByRef($attributeName, $optionRef))
-                           @if (isset($option['requiredFilesProperties']))
-                              @foreach ($option['requiredFilesProperties'] as $requiredFileProperties)
-                                 <div wire:key="{{ $loop->index }}"
-                                    class="file-drop-area mt-3">
-                                    <div class="file-drop-icon ci-cloud-upload"></div>
-                                    @if (isset($requiredFiles[$requiredFileProperties['name']]))
-                                       <div class="file-drop-preview img-thumbnail rounded">
-                                          <img
-                                             src="{{ $requiredFiles[$requiredFileProperties['name']]->temporaryUrl() }}"
-                                             alt="{{ $requiredFiles[$requiredFileProperties['name']]->getClientOriginalName() }}">
-                                       </div>
-                                    @endif
-                                    <span
-                                       class="file-drop-message">{{ __('Drag and drop here to upload') }}</span>
-                                    <input type="file"
-                                       wire:model="requiredFiles.{{ $requiredFileProperties['name'] }}"
-                                       class="file-drop-input"
-                                       id="files-{{ $requiredFileProperties['name'] }}">
-                                    <button type="button"
-                                       onclick="document.querySelector('#files-{{ $requiredFileProperties['name'] }}').click()"
-                                       class="btn btn-accent btn-sm">
-                                       {{ __('Select your :filename file', ['filename' => $requiredFileProperties['name']]) }}</button>
-                                 </div>
-                              @endforeach
-                           @endif
-                        @endif
-                     @endforeach
-                  @endif
+                  @endforeach
+
                @endif
             </div>
             <div class="modal-footer">

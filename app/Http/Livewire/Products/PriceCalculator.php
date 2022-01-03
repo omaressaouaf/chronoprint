@@ -34,12 +34,6 @@ class PriceCalculator extends Component
      */
     public array $requiredFiles = [];
 
-    /**
-     * If there are no required files we should at least show one file
-     * @var bool
-     */
-    public bool $noRequiredFiles = true;
-
     public int|string $selectedQuantityValue;
 
     public bool $designByCompany = false;
@@ -61,8 +55,10 @@ class PriceCalculator extends Component
             "selectedQuantityValue" => "required|numeric",
             'designByCompany' => "required|boolean",
             "totalPrice" => "required|numeric|min:1",
-            "requiredFiles.*" => $file_rules,
-            "designFiles.*" => $file_rules
+            "requiredFiles" => "required_if:designByCompany,false",
+            "requiredFiles.*" => "required_if:designByCompany,false|" . $file_rules,
+            "designFiles" => "nullable",
+            "designFiles.*" => "nullable|" . $file_rules
         ];
     }
 
@@ -78,7 +74,7 @@ class PriceCalculator extends Component
 
         $this->calculatePrices();
 
-        $this->checkIfThereAreNoRequiredFiles();
+        $this->findAndSetRequiredFiles();
     }
 
     public function render()
@@ -117,26 +113,30 @@ class PriceCalculator extends Component
         $this->unitPrice = $this->totalPrice / $quantity["value"];
     }
 
-    public function checkIfThereAreNoRequiredFiles()
+    public function findAndSetRequiredFiles()
     {
-        $this->noRequiredFiles = true;
+        $this->requiredFiles = [];
 
         $this->selectedOptions->each(function ($optionRef, $attributeName) {
             $option = $this->product->getOptionByRef($attributeName, $optionRef);
 
-            if (isset($option['requiredFilesProperties']) && count($option['requiredFilesProperties'])) {
-                $this->noRequiredFiles = false;
-
-                return false;
+            if (isset($option['requiredFilesProperties'])) {
+                foreach ($option['requiredFilesProperties'] as $requiredFileProperties) {
+                    $this->requiredFiles[$requiredFileProperties["name"]] = "";
+                }
             }
         });
+
+        if (!count($this->requiredFiles)) {
+            $this->requiredFiles["recto"] = "";
+        }
     }
 
     public function updatedSelectedOptions()
     {
         $this->calculatePrices();
 
-        $this->checkIfThereAreNoRequiredFiles();
+        $this->findAndSetRequiredFiles();
     }
 
     public function updatedSelectedQuantityValue()
@@ -151,28 +151,7 @@ class PriceCalculator extends Component
 
     public function addToCart()
     {
-        $this->withValidator(function (Validator $validator) {
-            $validator->after(function ($validator) {
-                /**The files are only required if the design is by the user */
-                if (!$this->designByCompany) {
-                    $this->selectedOptions->each(function ($optionRef, $attributeName) use ($validator) {
-                        $option = $this->product->getOptionByRef($attributeName, $optionRef);
-
-                        /** if the option requires files we loop through the requiredFilesProperties
-                         * and we check if $this->requiredFiles does not contain the name of the current required file (ex : recto)
-                         */
-                        if (isset($option["requiredFilesProperties"])) {
-                            foreach ($option["requiredFilesProperties"] as $requiredFileProperty) {
-                                if (!isset($this->requiredFiles[$requiredFileProperty["name"]])) {
-                                    $validator->errors()->add('selectedOptionsRequiredFiles.*', __("The files are required"));
-                                    break;
-                                }
-                            }
-                        }
-                    });
-                }
-            });
-        })->validate();
+        $this->validate();
         // create and persist new cartItem
 
         // upload and associate the files with the cart item
