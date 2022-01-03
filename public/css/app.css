@@ -19487,6 +19487,10 @@ p {
   font-family: "Rubik", sans-serif !important;
 }
 
+.image-zoom {
+  height: 100% !important;
+}
+
 .bg-accent-light {
   background-color: #1d1c1c !important;
 }
