@@ -57,15 +57,6 @@
               placeholder="Nom de fichier"
             />
           </div>
-          <div class="form-group col-md-3">
-            <label class="control-label">Titre de ficher</label>
-            <input
-              ref="requiredFileTitle"
-              type="text"
-              class="form-control"
-              placeholder="Titre de ficher"
-            />
-          </div>
           <div class="form-group col-md-2 form-actions">
             <button
               @click="addFilePropertiesToForm"
@@ -96,10 +87,7 @@
                 ></a>
               </div>
               <h5 class="text-capitalize font-weight-bold">
-                {{ fileProperties.name }} :
-                <span class="font-weight-light ml-5"
-                  >{{ fileProperties.title }}
-                </span>
+                {{ fileProperties.name }}
               </h5>
             </li>
           </ul>
@@ -222,12 +210,9 @@ export default {
     validateRequiredFilesPropertiesForm() {
       this.requiredFilesPropertiesFormError = null;
 
-      if (
-        this.$refs.requiredFileName.value.trim() === "" ||
-        this.$refs.requiredFileTitle.value.trim() === ""
-      ) {
+      if (this.$refs.requiredFileName.value.trim() === "") {
         this.requiredFilesPropertiesFormError =
-          "Les propriétés de fichier sont obligatoires";
+          "La propriété nom de fichier est requis";
 
         return false;
       }
@@ -286,11 +271,9 @@ export default {
 
       this.form.requiredFilesProperties.push({
         name: this.$refs.requiredFileName.value,
-        title: this.$refs.requiredFileTitle.value,
       });
 
       this.$refs.requiredFileName.value = "";
-      this.$refs.requiredFileTitle.value = "";
     },
     deleteFilePropertiesFromForm(index) {
       this.form.requiredFilesProperties.splice(index, 1);

@@ -5,7 +5,7 @@ import stickyNavbar from "./components/sticky-navbar";
 import stuckNavbarMenuToggle from "./components/stuck-navbar-menu-toggle";
 import masonryGrid from "./components/masonry-grid";
 import passwordVisibilityToggle from "./components/password-visibility-toggle";
-import fileDropArea from "./components/file-drop-area";
+// import fileDropArea from "./components/file-drop-area";
 import formValidation from "./components/form-validation";
 import smoothScroll from "./components/smooth-scroll";
 import scrollTopButton from "./components/scroll-top-button";

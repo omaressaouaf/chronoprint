@@ -6,8 +6,8 @@
       <a class="card-img-top d-block overflow-hidden"
          href="{{ route('products.show', ['product' => $product->slug]) }}">
          <img src="{{ $product->first_image }}"
-              class=""
-              alt="{{ $product->name }}">
+            class=""
+            alt="{{ $product->name }}">
       </a>
       <div class="card-body py-2">
          @if ($product->category)
@@ -28,8 +28,9 @@
 
       </div>
       <div class="card-body card-body-hidden">
-         <button class="btn btn-primary btn-sm d-block w-100 mb-2"
-                 type="button"><i class="ci-cart fs-sm me-1"></i>{{ __('To order') }}</button>
+         <a href="{{ route('products.show', ['product' => $product->slug]) }}"
+            class="btn btn-primary btn-sm d-block w-100 mb-2"><i
+               class="ci-cart fs-sm me-1"></i>{{ __('To order') }}</a>
       </div>
    </div>
    <hr class="d-sm-none">

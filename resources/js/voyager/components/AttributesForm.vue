@@ -27,7 +27,6 @@
               <label>{{ attribute.name }}</label>
             </div>
           </div>
-
           <div
             v-for="(selectedAttribute, index) in selectedAttributes"
             :key="selectedAttribute.id"
@@ -46,6 +45,7 @@
             >
               Importer des options prédéfinies à partir de l'attribut
             </button>
+            <hr />
           </div>
         </div>
         <div class="modal-footer">
@@ -71,7 +71,7 @@ export default {
     return {
       product: {},
       allAttributes: [],
-      selectedAttributes: window.product ? window.product.attributes : [],
+      selectedAttributes: window.product ? window.product.attributs : [],
       message: {},
       loading: false,
     };
@@ -95,7 +95,7 @@ export default {
 
         this.product = window.product;
 
-        this.selectedAttributes = [...this.product.attributes];
+        this.selectedAttributes = [...this.product.attributs];
 
         this.mergeSelectedAttributesIntoAllAttributes();
       });

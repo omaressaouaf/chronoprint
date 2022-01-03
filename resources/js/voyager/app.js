@@ -43,4 +43,3 @@ if (document.querySelector("#attribute-options")) {
 
     attributeOptions.mount("#attribute-options");
 }
-

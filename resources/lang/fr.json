@@ -662,5 +662,13 @@
     "Enter the required information for the design": "Entrez les informations requises pour la conception",
     "Unit price": "Prix unitaire",
     "Total price": "Prix total",
-    "Continue here" : "Continuer ici"
+    "Continue here": "Continuer ici",
+    "Import and add to cart": "Importer et ajouter au panier",
+    "Drag and drop here to upload": "Faites glisser et déposez ici pour télécharger",
+    "The files should not exceed 10mb. and they should be jpg, jpeg, gif, png, eps, ai, svg, pdf, zip, tar, rar, cdr, psd": "Les fichiers ne doivent pas dépasser 10 Mo. et ils devraient être jpg, jpeg, gif, png, eps, ai, svg, pdf, zip, goudron, rar, cdr, psd",
+    "The files are required": "Les fichiers sont obligatoires",
+    "Enter the design information (ex: brand name, contact info ...)" : "Entrez les informations de conception (ex: nom de marque, coordonnées ...)",
+    "upload your logo or any needed file" : "téléchargez votre logo ou tout fichier nécessaire",
+    "Design information" : "Les information de conception",
+    "Select your :filename file" : "Sélectionnez votre fichier :filename"
 }

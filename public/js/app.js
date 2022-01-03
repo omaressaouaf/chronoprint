@@ -23700,73 +23700,6 @@ var disableDropdownAutohide = function () {
 
 /***/ }),
 
-/***/ "./resources/js/theme/components/file-drop-area.js":
-/*!*********************************************************!*\
-  !*** ./resources/js/theme/components/file-drop-area.js ***!
-  \*********************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/**
- * Custom file drag and drop area
-*/
-var fileDropArea = function () {
-  var fileArea = document.querySelectorAll('.file-drop-area');
-
-  var _loop = function _loop(i) {
-    var input = fileArea[i].querySelector('.file-drop-input'),
-        message = fileArea[i].querySelector('.file-drop-message'),
-        icon = fileArea[i].querySelector('.file-drop-icon'),
-        button = fileArea[i].querySelector('.file-drop-btn');
-    button.addEventListener('click', function () {
-      input.click();
-    });
-    input.addEventListener('change', function () {
-      if (input.files && input.files[0]) {
-        var reader = new FileReader();
-
-        reader.onload = function (e) {
-          var fileData = e.target.result;
-          var fileName = input.files[0].name;
-          message.innerHTML = fileName;
-
-          if (fileData.startsWith('data:image')) {
-            var image = new Image();
-            image.src = fileData;
-
-            image.onload = function () {
-              icon.className = 'file-drop-preview img-thumbnail rounded';
-              icon.innerHTML = '<img src="' + image.src + '" alt="' + fileName + '">';
-            };
-          } else if (fileData.startsWith('data:video')) {
-            icon.innerHTML = '';
-            icon.className = '';
-            icon.className = 'file-drop-icon ci-video';
-          } else {
-            icon.innerHTML = '';
-            icon.className = '';
-            icon.className = 'file-drop-icon ci-document';
-          }
-        };
-
-        reader.readAsDataURL(input.files[0]);
-      }
-    });
-  };
-
-  for (var i = 0; i < fileArea.length; i++) {
-    _loop(i);
-  }
-}();
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (fileDropArea);
-
-/***/ }),
-
 /***/ "./resources/js/theme/components/filter-list.js":
 /*!******************************************************!*\
   !*** ./resources/js/theme/components/filter-list.js ***!
@@ -24637,34 +24570,33 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_stuck_navbar_menu_toggle__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/stuck-navbar-menu-toggle */ "./resources/js/theme/components/stuck-navbar-menu-toggle.js");
 /* harmony import */ var _components_masonry_grid__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/masonry-grid */ "./resources/js/theme/components/masonry-grid.js");
 /* harmony import */ var _components_password_visibility_toggle__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/password-visibility-toggle */ "./resources/js/theme/components/password-visibility-toggle.js");
-/* harmony import */ var _components_file_drop_area__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/file-drop-area */ "./resources/js/theme/components/file-drop-area.js");
-/* harmony import */ var _components_form_validation__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/form-validation */ "./resources/js/theme/components/form-validation.js");
-/* harmony import */ var _components_smooth_scroll__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/smooth-scroll */ "./resources/js/theme/components/smooth-scroll.js");
-/* harmony import */ var _components_scroll_top_button__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/scroll-top-button */ "./resources/js/theme/components/scroll-top-button.js");
-/* harmony import */ var _components_tooltip__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/tooltip */ "./resources/js/theme/components/tooltip.js");
-/* harmony import */ var _components_popover__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/popover */ "./resources/js/theme/components/popover.js");
-/* harmony import */ var _components_toast__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/toast */ "./resources/js/theme/components/toast.js");
-/* harmony import */ var _components_disable_dropdown_autohide__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/disable-dropdown-autohide */ "./resources/js/theme/components/disable-dropdown-autohide.js");
-/* harmony import */ var _components_carousel__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/carousel */ "./resources/js/theme/components/carousel.js");
-/* harmony import */ var _components_gallery__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/gallery */ "./resources/js/theme/components/gallery.js");
-/* harmony import */ var _components_product_gallery__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/product-gallery */ "./resources/js/theme/components/product-gallery.js");
-/* harmony import */ var _components_image_zoom__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/image-zoom */ "./resources/js/theme/components/image-zoom.js");
-/* harmony import */ var _components_countdown__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/countdown */ "./resources/js/theme/components/countdown.js");
-/* harmony import */ var _components_charts__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/charts */ "./resources/js/theme/components/charts.js");
-/* harmony import */ var _components_video_button__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/video-button */ "./resources/js/theme/components/video-button.js");
-/* harmony import */ var _components_subscription_form__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/subscription-form */ "./resources/js/theme/components/subscription-form.js");
-/* harmony import */ var _components_range_slider__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/range-slider */ "./resources/js/theme/components/range-slider.js");
-/* harmony import */ var _components_filter_list__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./components/filter-list */ "./resources/js/theme/components/filter-list.js");
-/* harmony import */ var _components_data_filter__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./components/data-filter */ "./resources/js/theme/components/data-filter.js");
-/* harmony import */ var _components_label_update__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./components/label-update */ "./resources/js/theme/components/label-update.js");
-/* harmony import */ var _components_radio_tab__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./components/radio-tab */ "./resources/js/theme/components/radio-tab.js");
-/* harmony import */ var _components_credit_card__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./components/credit-card */ "./resources/js/theme/components/credit-card.js");
-/* harmony import */ var _components_master_checkbox__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./components/master-checkbox */ "./resources/js/theme/components/master-checkbox.js");
+/* harmony import */ var _components_form_validation__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/form-validation */ "./resources/js/theme/components/form-validation.js");
+/* harmony import */ var _components_smooth_scroll__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/smooth-scroll */ "./resources/js/theme/components/smooth-scroll.js");
+/* harmony import */ var _components_scroll_top_button__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/scroll-top-button */ "./resources/js/theme/components/scroll-top-button.js");
+/* harmony import */ var _components_tooltip__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/tooltip */ "./resources/js/theme/components/tooltip.js");
+/* harmony import */ var _components_popover__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/popover */ "./resources/js/theme/components/popover.js");
+/* harmony import */ var _components_toast__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/toast */ "./resources/js/theme/components/toast.js");
+/* harmony import */ var _components_disable_dropdown_autohide__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/disable-dropdown-autohide */ "./resources/js/theme/components/disable-dropdown-autohide.js");
+/* harmony import */ var _components_carousel__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/carousel */ "./resources/js/theme/components/carousel.js");
+/* harmony import */ var _components_gallery__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/gallery */ "./resources/js/theme/components/gallery.js");
+/* harmony import */ var _components_product_gallery__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/product-gallery */ "./resources/js/theme/components/product-gallery.js");
+/* harmony import */ var _components_image_zoom__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/image-zoom */ "./resources/js/theme/components/image-zoom.js");
+/* harmony import */ var _components_countdown__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/countdown */ "./resources/js/theme/components/countdown.js");
+/* harmony import */ var _components_charts__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/charts */ "./resources/js/theme/components/charts.js");
+/* harmony import */ var _components_video_button__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/video-button */ "./resources/js/theme/components/video-button.js");
+/* harmony import */ var _components_subscription_form__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/subscription-form */ "./resources/js/theme/components/subscription-form.js");
+/* harmony import */ var _components_range_slider__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/range-slider */ "./resources/js/theme/components/range-slider.js");
+/* harmony import */ var _components_filter_list__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/filter-list */ "./resources/js/theme/components/filter-list.js");
+/* harmony import */ var _components_data_filter__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./components/data-filter */ "./resources/js/theme/components/data-filter.js");
+/* harmony import */ var _components_label_update__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./components/label-update */ "./resources/js/theme/components/label-update.js");
+/* harmony import */ var _components_radio_tab__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./components/radio-tab */ "./resources/js/theme/components/radio-tab.js");
+/* harmony import */ var _components_credit_card__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./components/credit-card */ "./resources/js/theme/components/credit-card.js");
+/* harmony import */ var _components_master_checkbox__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./components/master-checkbox */ "./resources/js/theme/components/master-checkbox.js");
 
 
 
 
-
+ // import fileDropArea from "./components/file-drop-area";
 
 
 

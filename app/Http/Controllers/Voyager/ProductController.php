@@ -223,7 +223,7 @@ class ProductController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControl
             "selectedAttributes.*.pivot.options.*.price" => "required|numeric"
         ]);
 
-        $product->attributes()->detach();
+        $product->attributs()->detach();
 
         foreach ($request->selectedAttributes as $attribute) {
             $optionsWithRef = [];
@@ -239,10 +239,10 @@ class ProductController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControl
 
             $attribute["pivot"]["options"] = $optionsWithRef;
 
-            $product->attributes()->attach($attribute['id'], ["options" => $attribute["pivot"]["options"]]);
+            $product->attributs()->attach($attribute['id'], ["options" => $attribute["pivot"]["options"]]);
         }
 
-        return response()->json(["selectedAttributes" => $product->attributes], 201);
+        return response()->json(["selectedAttributes" => $product->attributs], 201);
     }
 
     private  function convertAndValidateRequest($request)

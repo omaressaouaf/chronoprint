@@ -186,6 +186,8 @@ return [
         'year'                  => 'année',
         'created_at' => "créé à",
         'updated_at' => 'mis à jour à',
-        "allowed_quantities" =>  "quantités autorisées"
+        "allowed_quantities" =>  "quantités autorisées",
+        "selectedOptionsRequiredFiles.*" => "fichier requis",
+        "designFiles.*"  => "ficher de conception"
     ],
 ];

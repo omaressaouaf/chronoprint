@@ -9,12 +9,12 @@ const fileDropArea = (() => {
   for (let i = 0; i < fileArea.length; i++) {
     let input = fileArea[i].querySelector('.file-drop-input'),
         message = fileArea[i].querySelector('.file-drop-message'),
-        icon = fileArea[i].querySelector('.file-drop-icon'),
-        button = fileArea[i].querySelector('.file-drop-btn');
-    
-    button.addEventListener('click', function() {
-      input.click();
-    });
+        icon = fileArea[i].querySelector('.file-drop-icon');
+        // button = fileArea[i].querySelector('.file-drop-btn');
+
+    // button.addEventListener('click', function() {
+    //   input.click();
+    // });
 
     input.addEventListener('change', function() {
       if (input.files && input.files[0]) {

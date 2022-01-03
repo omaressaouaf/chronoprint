@@ -186,6 +186,7 @@ return [
         'year'                  => 'year',
         'created_at' => "created at",
         'updated_at' => 'updated at',
+        "selectedOptionsRequiredFiles.*" => "required file",
+        "designFiles.*"  => "design file"
     ],
-
 ];

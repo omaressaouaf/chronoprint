@@ -10,12 +10,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Product extends Model
 {
-    use HasFactory, HasMultiImages , Sluggable;
+    use HasFactory, HasMultiImages, Sluggable;
 
     protected $casts = [
         'allowed_quantities' => 'array',
     ];
-
 
     /**
      * Return the sluggable configuration array for this model.
@@ -31,7 +30,8 @@ class Product extends Model
         ];
     }
 
-    public function attributes()
+    // attributs = attributes : just changed it because of eloquent
+    public function attributs()
     {
         return $this->belongsToMany(Attribute::class)->withPivot(['options'])->using(AttributeProduct::class);
     }
@@ -39,6 +39,12 @@ class Product extends Model
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function getOptionByRef(string $attributeName, string $optionRef): array
+    {
+        $attribute = $this->attributs->where("name", $attributeName)->first();
+        return collect($attribute->pivot->options)->where("ref", $optionRef)->first();
     }
 
     public function scopeFilterProductsForShop($query, $search, $sort)
