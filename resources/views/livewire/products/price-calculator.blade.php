@@ -73,7 +73,7 @@
             <h5>{{ __('Total price') }} :
                <span>{{ $totalPrice }} Dhs HT </span>
             </h5>
-            <h6 class="text-sm text-danger">{{ __('Unit price') }} :
+            <h6 class="fs-sm text-danger">{{ __('Unit price') }} :
                <span>{{ $unitPrice }} Dhs HT</span>
             </h6>
          </div>

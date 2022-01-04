@@ -43,7 +43,7 @@
 
                                 </div>
                                 @error('email')
-                                    <span class="text-danger text-sm"
+                                    <span class="text-danger fs-xs"
                                           role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

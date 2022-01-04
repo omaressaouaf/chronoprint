@@ -9,7 +9,7 @@
                 {{ __('Search results for') }}
                 <span class="text-info">"{{ request('search') }}"</span>
                 <a href="{{ route('categories.show', ['slug' => request('slug'), 'sort' => request('sort')]) }}">
-                    <i class="text-danger text-sm ms-3 ci-close
+                    <i class="text-danger fs-xs ms-3 ci-close
                     "></i>
                 </a>
             </h5>
