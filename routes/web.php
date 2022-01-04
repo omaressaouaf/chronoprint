@@ -19,14 +19,20 @@ Route::group(['prefix' => 'admin'], function () {
 /**
  * Front routes
  */
-Route::get('/', function () {
-    return view('home');
-})->name("home");
+Route::view('/', "home")->name("home");
 
 Auth::routes();
 
+// Categories (shop)
 Route::get("/categories/{slug}", [CategoryController::class, "show"])->name("categories.show");
 
+// Products
 Route::get("/products/{product:slug}", [ProductController::class, "show"])->name("products.show");
 
-Route::get('/account', [AccountController::class, 'index'])->name('account.index');
+Route::middleware(["auth"])->group(function () {
+    // Account
+    Route::get('/account', [AccountController::class, 'index'])->name('account.index');
+
+    // Cart
+    Route::view("/cart", "cart")->name("cart.index");
+});

@@ -188,6 +188,8 @@ return [
         'updated_at' => 'mis à jour à',
         "allowed_quantities" =>  "quantités autorisées",
         "selectedOptionsRequiredFiles.*" => "fichier requis",
-        "designFiles.*"  => "ficher de conception"
+        "designFiles.*"  => "ficher de conception",
+        "selectedOptionsRequiredFiles" => "fichiers requis",
+        "designFiles" => "fichiers"
     ],
 ];

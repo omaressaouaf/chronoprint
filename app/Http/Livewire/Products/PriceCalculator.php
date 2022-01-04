@@ -2,11 +2,12 @@
 
 namespace App\Http\Livewire\Products;
 
+use App\Models\Cart;
 use App\Models\Product;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Collection;
-use Illuminate\Validation\Validator;
+use Illuminate\Support\Facades\DB;
 
 class PriceCalculator extends Component
 {
@@ -57,7 +58,7 @@ class PriceCalculator extends Component
             "totalPrice" => "required|numeric|min:1",
             "requiredFiles" => "required_if:designByCompany,false",
             "requiredFiles.*" => "required_if:designByCompany,false|" . $file_rules,
-            "designFiles" => "nullable",
+            "designFiles" => "nullable|array|max:5",
             "designFiles.*" => "nullable|" . $file_rules
         ];
     }
@@ -152,10 +153,53 @@ class PriceCalculator extends Component
     public function addToCart()
     {
         $this->validate();
-        // create and persist new cartItem
 
-        // upload and associate the files with the cart item
+        try {
+            DB::beginTransaction();
 
-        // redirect to cart
+            // create and persist new cartItem
+            $cart = Cart::firstOrCreate(
+                ["user_id" => auth()->id()],
+                ["subtotal" => 0.00]
+            );
+
+            $cartItem  = $cart->items()->create([
+                "quantity" => $this->selectedQuantityValue,
+                "subtotal" => $this->totalPrice,
+                "selected_options" => $this->selectedOptions,
+                "design_by_company" => $this->designByCompany,
+                "design_information" => $this->designInformation,
+                "product_id" => $this->product->id
+            ]);
+
+            $cart->subtotal += $this->totalPrice;
+            $cart->save();
+
+            // upload and associate the files with the cart item
+            $filesToUpload = $this->designByCompany ? $this->designFiles : $this->requiredFiles;
+            foreach ($filesToUpload as $key => $file) {
+
+                $path = $file->store(
+                    "carts/$cart->id/items/$cartItem->id",
+                    "public"
+                );
+
+                $cartItem->media()->create([
+                    "name" => $key,
+                    "filename" => $file->hashName(),
+                    "path" => $path,
+                    "mime_type" => $file->getMimeType(),
+                    "size" => $file->getSize()
+                ]);
+            }
+
+            DB::commit();
+
+            // redirect to cart
+            redirect()->route("cart.index");
+        } catch (\Exception $ex) {
+            DB::rollBack();
+            dd("some error : " . $ex->getMessage());
+        }
     }
 }

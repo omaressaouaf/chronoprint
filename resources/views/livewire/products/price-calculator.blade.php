@@ -79,8 +79,7 @@
          </div>
          <div wire:loading
             wire:target="selectedOptions, selectedQuantityValue, designByCompany"
-            class="spinner-border text-accent"
-            role="status">
+            class="spinner-border text-accent">
          </div>
       </div>
       <div>
@@ -112,7 +111,7 @@
       tabindex="-1"
       aria-labelledby="price-calculator-files-upload-modal-label"
       aria-hidden="true">
-      <div class="modal-dialog modal-lg">
+      <div class="modal-dialog modal-lg modal-dialog-scrollable">
          <div class="modal-content">
             <div class="modal-header">
                <h5 class="modal-title"
@@ -124,17 +123,32 @@
                   data-bs-dismiss="modal"
                   aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <div x-data="{ isUploading: false, progress: 0 , }"
+               x-on:livewire-upload-start="isUploading = true"
+               x-on:livewire-upload-finish="isUploading = false ; progress = 0"
+               x-on:livewire-upload-error="isUploading = false ; progress = 0"
+               x-on:livewire-upload-progress="progress = $event.detail.progress"
+               class="modal-body has-cool-scrollbar">
                <div class="alert alert-info d-flex"
                   role="alert">
                   <div class="alert-icon">
                      <i class="ci-announcement"></i>
                   </div>
                   <div>
-                     {{ __('The files should not exceed 10mb. and they should be jpg, jpeg, gif, png, eps, ai, svg, pdf, zip, tar, rar, cdr, psd') }}
+                     {{ __('The files should not exceed 10mb each. and they should be jpg, jpeg, gif, png, eps, ai, svg, pdf, zip, tar, rar, cdr, psd') }}
                   </div>
                </div>
                @include('partials.alerts')
+               <div x-show="isUploading"
+                  class="progress mb-3">
+                  <div class="progress-bar progress-bar-striped progress-bar-animated bg-success"
+                     role="progressbar"
+                     x-bind:style="{width: progress  + '%'}"
+                     x-bind:aria-valuenow="progress"
+                     aria-valuemin="0"
+                     aria-valuemax="100"
+                     x-text="progress + '%'"></div>
+               </div>
                @if ($designByCompany)
                   <div class="form-floating">
                      <textarea wire:model.debounce.500ms="designInformation"
@@ -146,16 +160,25 @@
                         for="fl-textarea">{{ __('Enter the design information (ex: brand name, contact info ...)') }}</label>
                   </div>
                   <div class="file-drop-area mt-3">
-                     <div class="file-drop-icon ci-cloud-upload"></div>
-                     @foreach ($designFiles as $designFile)
-                        <div wire:key="{{ $loop->index }}"
-                           class="file-drop-preview img-thumbnail rounded">
-                           <img src="{{ $designFile->temporaryUrl() }}"
-                              alt="{{ $designFile->getClientOriginalName() }}">
-                        </div>
+                     @if (!$designFiles)
+                        <div class="file-drop-icon ci-cloud-upload"></div>
+                        <span class="file-drop-message">
+                           {{ __('upload your logo or any needed file (max : 5)') }}
+                        </span>
+                     @endif
+                     @foreach ($designFiles as $file)
+                        @if (file_is_image($file))
+                           <div class="file-drop-preview img-thumbnail rounded">
+                              <img src="{{ $file->temporaryUrl() }}"
+                                 alt="{{ $file->getClientOriginalName() }}">
+                           </div>
+                        @else
+                           <div class="file-drop-icon ci-document"></div>
+                        @endif
+                        <span class="file-drop-message">
+                           {{ $file->getClientOriginalName() }}
+                        </span>
                      @endforeach
-                     <span
-                        class="file-drop-message">{{ __('Drag and drop here to upload') }}</span>
                      <input type="file"
                         multiple
                         wire:model="designFiles"
@@ -164,21 +187,31 @@
                      <button onclick="document.querySelector('#design-files').click()"
                         type="button"
                         class="btn btn-accent btn-sm">
-                        {{ __('upload your logo or any needed file') }}</button>
+                        {{ __('Select your files') }}</button>
                   </div>
                @else
-                  @foreach ($requiredFiles as $requiredFileName => $requiredFile)
+                  @foreach ($requiredFiles as $requiredFileName => $file)
                      <div wire:key="{{ $loop->index }}"
                         class="file-drop-area mt-3">
-                        <div class="file-drop-icon ci-cloud-upload"></div>
-                        @if ($requiredFile)
-                           <div class="file-drop-preview img-thumbnail rounded">
-                              <img src="{{ $requiredFile->temporaryUrl() }}"
-                                 alt="{{ $requiredFile->getClientOriginalName() }}">
-                           </div>
+                        @if ($file)
+                           @if (file_is_image($file))
+                              <div class="file-drop-preview img-thumbnail rounded">
+                                 <img src="{{ $file->temporaryUrl() }}"
+                                    alt="{{ $file->getClientOriginalName() }}">
+                              </div>
+                           @else
+                              <div class="file-drop-icon ci-document"></div>
+                           @endif
+                        @else
+                           <div class="file-drop-icon ci-cloud-upload"></div>
                         @endif
-                        <span
-                           class="file-drop-message">{{ __('Drag and drop here to upload') }}</span>
+                        <span class="file-drop-message">
+                           @if ($file)
+                              {{ $file->getClientOriginalName() }}
+                           @else
+                              {{ __('Drag and drop here to upload') }}
+                           @endif
+                        </span>
                         <input type="file"
                            wire:model="requiredFiles.{{ $requiredFileName }}"
                            class="file-drop-input"
@@ -194,8 +227,15 @@
             </div>
             <div class="modal-footer">
                <button wire:click="addToCart"
+                  wire:click="addToCart"
+                  wire:target="addToCart"
+                  wire:loading.attr="disabled"
                   type="button"
-                  class="btn btn-primary submit-button">{{ __('Import and add to cart') }}</button>
+                  class="btn btn-primary submit-button">
+                  <span wire:target="addToCart"
+                     wire:loading
+                     class="spinner-border spinner-border-sm me-2"></span>
+                  {{ __('Import and add to cart') }}</button>
             </div>
          </div>
       </div>

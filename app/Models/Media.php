@@ -4,20 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
-class Cart extends Model
+class Media extends Model
 {
     use HasFactory;
 
     protected $guarded = [];
 
-    public function items()
+    public function model(): MorphTo
     {
-        return $this->hasMany(CartItem::class);
-    }
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
+        return $this->morphTo();
     }
 }

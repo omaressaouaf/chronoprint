@@ -19,14 +19,9 @@
    <meta name="csrf-token"
       content="{{ csrf_token() }}">
 
-   {{-- Scripts --}}
-   <script src="{{ asset('js/app.js') }}"
-      defer></script>
-
    {{-- Styles --}}
    <link href="{{ asset('css/app.css') }}"
       rel="stylesheet">
-
    @livewireStyles
 
 </head>
@@ -54,7 +49,11 @@
       <i class="btn-scroll-top-icon ci-arrow-up"></i>
    </a>
 
+   {{-- Scripts --}}
    @livewireScripts
+   <script src="{{ asset('js/app.js') }}"></script>
+   <script src="//unpkg.com/alpinejs"></script>
+
 </body>
 
 </html>

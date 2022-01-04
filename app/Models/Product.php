@@ -30,7 +30,9 @@ class Product extends Model
         ];
     }
 
-    // attributs = attributes : just changed it because of eloquent
+    /**
+     * attributs = attributes : just changed it because of eloquent's own attributes
+     */
     public function attributs()
     {
         return $this->belongsToMany(Attribute::class)->withPivot(['options'])->using(AttributeProduct::class);
@@ -39,6 +41,11 @@ class Product extends Model
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function cartItems()
+    {
+        return $this->hasMany(CartItem::class);
     }
 
     public function getOptionByRef(string $attributeName, string $optionRef): array

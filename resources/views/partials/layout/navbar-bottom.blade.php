@@ -1,8 +1,7 @@
 <div class="navbar navbar-expand-lg navbar-light navbar-stuck-menu mt-n2 pt-0 pb-2">
    <div class="container">
       <div class="collapse navbar-collapse"
-           id="navbarCollapse"
-           style="width: 100px">
+         id="navbarCollapse">
          <div class="d-flex d-lg-none">
             @include('partials.shop.search-form')
          </div>
@@ -13,23 +12,23 @@
                <a class="nav-link dropdown-toggle ps-lg-0"
                   href="{{ route('categories.show', ['slug' => 'all']) }}"
                   data-bs-toggle="dropdown"><i
-                     class="ci-view-grid me-2"></i>{{ __('All categories') }}
+                     class="ci-menu me-2"></i>{{ __('All categories') }}
                </a>
                <div class="dropdown-menu px-2 pb-4"
-                    style="min-width: 60vw  ; max-width: 60vw;">
+                  style="min-width:50vw">
                   <a href="{{ route('categories.show', ['slug' => 'all']) }}">
-                     <h6 class="fs-base px-3 mt-2">
+                     <h6 class="fs-base ps-2 mt-2">
                         {{ __('All products') }}
                      </h6>
                   </a>
-                  <div class="d-flex  flex-wrap">
+                  <div class="row">
                      @foreach ($categoryGroups as $group)
-                        <div class="mega-dropdown-column pt-3 pt-sm-4 px-2 px-lg-3">
+                        <div class="col-md-4 pt-3 pt-sm-4 ps-2 px-lg-3">
                            <div class="widget widget-links">
-                              <h6 class="fs-base mb-2">
+                              <h6 class="fs-base mb-2 ps-2">
                                  {{ $group->name }}
                               </h6>
-                              <ul class="widget-list">
+                              <ul class="widget-list ps-3">
                                  @foreach ($group->categories as $category)
                                     <li class="widget-list-item mb-1">
                                        <a class="widget-list-link d-flex align-items-start justify-content-between gap-3"
@@ -39,7 +38,7 @@
                                           </span>
                                           @if ($category->promotion_label)
                                              <span
-                                                   class="badge bg-success">{{ $category->promotion_label }}</span>
+                                                class="badge bg-success">{{ $category->promotion_label }}</span>
                                           @endif
                                        </a>
                                     </li>
@@ -74,7 +73,7 @@
                                     </span>
                                     @if ($category->promotion_label)
                                        <span
-                                             class="badge bg-success">{{ $category->promotion_label }}</span>
+                                          class="badge bg-success">{{ $category->promotion_label }}</span>
                                     @endif
                                  </a>
                                  @if ($category->products->count())

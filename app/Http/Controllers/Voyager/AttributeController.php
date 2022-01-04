@@ -279,10 +279,10 @@ class AttributeController extends \TCG\Voyager\Http\Controllers\VoyagerBaseContr
         }
 
         /**My code begins */
-        $attribute_options = Attribute::findOrFail($id)->options;
+        $attributeOptions = Attribute::findOrFail($id)->options;
         /**My code ends */
 
-        return Voyager::view($view, compact('dataType', 'dataTypeContent', 'isModelTranslatable', "attribute_options"));
+        return Voyager::view($view, compact('dataType', 'dataTypeContent', 'isModelTranslatable', "attributeOptions"));
     }
 
     public function create(Request $request)
@@ -318,10 +318,10 @@ class AttributeController extends \TCG\Voyager\Http\Controllers\VoyagerBaseContr
         }
 
         /**My code begins */
-        $attribute_options = [];
+        $attributeOptions = [];
         /**My code ends */
 
-        return Voyager::view($view, compact('dataType', 'dataTypeContent', 'isModelTranslatable', "attribute_options"));
+        return Voyager::view($view, compact('dataType', 'dataTypeContent', 'isModelTranslatable', "attributeOptions"));
     }
 
     public function update(Request $request, $id)

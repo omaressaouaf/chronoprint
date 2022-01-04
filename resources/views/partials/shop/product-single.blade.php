@@ -11,7 +11,7 @@
                         <img class="image-zoom rounded-3"
                            src="{{ $image }}"
                            data-zoom="{{ $image }}"
-                           alt="{{ $product->title }}" >
+                           alt="{{ $product->title }}">
                         <div class="image-zoom-pane"></div>
                      </div>
                   @endforeach

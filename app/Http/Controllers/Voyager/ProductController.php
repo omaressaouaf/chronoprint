@@ -46,10 +46,10 @@ class ProductController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControl
         }
 
         /**My code begins */
-        $product_allowed_quantities = [];
+        $productAllowedQuantities = [];
         /**My code ends */
 
-        return Voyager::view($view, compact('dataType', 'dataTypeContent', 'isModelTranslatable', 'product_allowed_quantities'));
+        return Voyager::view($view, compact('dataType', 'dataTypeContent', 'isModelTranslatable', 'productAllowedQuantities'));
     }
 
     public function store(Request $request)
@@ -142,10 +142,10 @@ class ProductController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControl
         }
 
         /**My code begins */
-        $product_allowed_quantities = Product::findOrFail($id)->allowed_quantities;
+        $productAllowedQuantities = Product::findOrFail($id)->allowed_quantities;
         /**My code ends */
 
-        return Voyager::view($view, compact('dataType', 'dataTypeContent', 'isModelTranslatable', 'product_allowed_quantities'));
+        return Voyager::view($view, compact('dataType', 'dataTypeContent', 'isModelTranslatable', 'productAllowedQuantities'));
     }
 
     public function update(Request $request, $id)
