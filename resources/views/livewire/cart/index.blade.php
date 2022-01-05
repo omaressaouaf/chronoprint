@@ -9,15 +9,15 @@
                      class="ci-arrow-left me-2"></i>{{ __('Continue shopping') }}</a>
             </div>
             <div wire:loading.class="disabled-element"
-               wire:target="removeItem"
+               wire:target="removeCartItem"
                class="position-relative">
                <div wire:loading
-                  wire:target="removeItem"
+                  wire:target="removeCartItem"
                   class="spinner-grow center-loader"
                   role="status">
                </div>
-               @foreach ($cart->items as $item)
-                  <x-cart.item :item="$item"
+               @foreach ($cart->items as $cartItem)
+                  <x-cart.item :cart-item="$cartItem"
                      wire:key="{{ $loop->index }}" />
                @endforeach
             </div>
@@ -28,16 +28,16 @@
 
       @else
          <div class="row justify-content-center pt-lg-4 text-center">
-            <div class="col-lg-7 col-md-7 col-sm-9"><img class="d-block mx-auto mb-5"
+            <div class="col-lg-7 col-md-7 col-12"><img class="d-block mx-auto mb-5"
                   src="/storage/theme/pages/404.png"
                   width="340"
-                  alt="{{ __('Your cart is empty') }}">  
+                  alt="{{ __('Your cart is empty') }}">
                <h3>{{ __('Your cart is empty') }}</h3>
-               <h3 class="h5 fw-normal mb-4">{{__("Check out our products to get inspiration")}}
+               <h3 class="h5 fw-normal mb-4">{{ __('Check out our products to get inspiration') }}
                </h3>
                <a href="{{ route('categories.show', ['slug' => 'all']) }}"
                   class="fs-md mb-4 text-accent">
-                  <u>{{__("All products")}}</u>
+                  <u>{{ __('All products') }}</u>
                </a>
             </div>
          </div>

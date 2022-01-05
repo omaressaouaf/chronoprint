@@ -68,7 +68,7 @@
                </div>
             @endauth
          </div>
-         <x-cart.dropdown />
+         <livewire:cart.dropdown />
       </div>
    </div>
 </div>
