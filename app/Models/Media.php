@@ -16,4 +16,9 @@ class Media extends Model
     {
         return $this->morphTo();
     }
+
+    public function getPathAttribute($value)
+    {
+        return "\\storage\\" . $value;
+    }
 }

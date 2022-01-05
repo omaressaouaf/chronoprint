@@ -74,7 +74,7 @@
                @endif
                <div class="px-lg-4">
                   {{-- Product Attributes & Quantity calculator --}}
-                  @livewire('products.price-calculator', ['product' => $product])
+                  <livewire:products.price-calculator :product="$product" />
                </div>
             </div>
          </div>

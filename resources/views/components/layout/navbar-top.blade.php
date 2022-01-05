@@ -4,7 +4,7 @@
          href="{{ route('home') }}"><img src="/storage/theme/logo-dark.png"
             width="142"
             alt="Cartzilla"></a><a class="navbar-brand d-sm-none flex-shrink-0 me-2"
-         href="index.html"><img src="/storage/theme/logo-icon.png"
+         href="{{ route('home') }}"><img src="/storage/theme/logo-icon.png"
             width="74"
             alt="Cartzilla">
       </a>

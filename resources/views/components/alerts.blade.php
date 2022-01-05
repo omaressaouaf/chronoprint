@@ -1,5 +1,5 @@
 @if ($errors->any())
-   <div class="alert alert-danger alert-dismissible"
+   <div class="alert alert-danger"
       role="alert">
       <ul>
          @foreach ($errors->all() as $error)
@@ -12,10 +12,6 @@
             @endif
          @endforeach
       </ul>
-      <button type="button"
-         class="btn-close"
-         data-bs-dismiss="alert"
-         aria-label="Close"></button>
    </div>
 @endif
 

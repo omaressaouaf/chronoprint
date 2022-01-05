@@ -6,11 +6,9 @@ use Illuminate\View\Component;
 
 class Filters extends Component
 {
-    public $products;
 
-    public function __construct($products)
+    public function __construct(public $products)
     {
-        $this->products = $products;
     }
 
     public function render()

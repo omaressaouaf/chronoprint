@@ -52,7 +52,7 @@ class PriceCalculator extends Component
         $file_rules = "file|max:10240|mimes:jpg,jpeg,png,gif,eps,ai,svg,pdf,zip,tar,rar,cdr,psd";
 
         return [
-            'selectedOptions' => 'required',
+            'selectedOptions' => 'nullable',
             "selectedQuantityValue" => "required|numeric",
             'designByCompany' => "required|boolean",
             "totalPrice" => "required|numeric|min:1",
@@ -172,17 +172,11 @@ class PriceCalculator extends Component
                 "product_id" => $this->product->id
             ]);
 
-            $cart->subtotal += $this->totalPrice;
-            $cart->save();
-
             // upload and associate the files with the cart item
             $filesToUpload = $this->designByCompany ? $this->designFiles : $this->requiredFiles;
             foreach ($filesToUpload as $key => $file) {
 
-                $path = $file->store(
-                    "carts/$cart->id/items/$cartItem->id",
-                    "public"
-                );
+                $path = $file->store($cartItem->mediaRootFolderPath());
 
                 $cartItem->media()->create([
                     "name" => $key,

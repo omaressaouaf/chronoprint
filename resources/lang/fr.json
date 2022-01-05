@@ -672,5 +672,19 @@
     "Design information": "Les information de conception",
     "Select your :filename file": "Sélectionnez votre fichier :filename",
     "Select your files": "Sélectionnez vos fichiers",
-    "Cart": "Panier"
+    "Cart": "Panier",
+    "Products": "Produits",
+    "Continue shopping": "Continuer vos achats",
+    "Proceed to checkout": "Valider la commande",
+    "Note": "Note",
+    "Subtotal": "Total HT",
+    "Total": "Total TTC",
+    "Additional comments": "Commentaires supplémentaires",
+    "Discount": "Remise",
+    "Delivery price": "Prix de livraison",
+    "Apply coupon code": "Appliquer un code promo",
+    "Coupon code": "Code promo",
+    "Apply": "Appliquer",
+    "Free in casablanca" : "Gratuit à casablanca",
+    "Are you sure ?" : "Etes-vous sûr(e) ?"
 }

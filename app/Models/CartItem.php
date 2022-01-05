@@ -2,20 +2,30 @@
 
 namespace App\Models;
 
+use App\Traits\HasMedia;
 use Illuminate\Database\Eloquent\Casts\AsCollection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class CartItem extends Model
 {
-    use HasFactory;
+    use HasFactory, HasMedia;
 
     protected $guarded = [];
 
     protected $casts = [
         "selected_options" => AsCollection::class
     ];
+
+    /**
+     * Return the root folder for all media files of the model
+     *
+     * @return string
+     */
+    public function mediaRootFolderPath(): string
+    {
+        return "cartItems/" . $this->id;
+    }
 
     public function cart()
     {
@@ -25,10 +35,5 @@ class CartItem extends Model
     public function product()
     {
         return $this->belongsTo(Product::class);
-    }
-
-    public function media(): MorphMany
-    {
-        return $this->morphMany(Media::class, "model");
     }
 }

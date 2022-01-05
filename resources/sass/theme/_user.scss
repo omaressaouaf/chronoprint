@@ -3,22 +3,30 @@
 // Use this to write your custom SCSS
 
 p {
- font-family: $font-family-sans-serif !important;
+    font-family: $font-family-sans-serif !important;
 }
 
 .image-zoom {
-    height : 100% !important;
+    height: 100% !important;
 }
 
 .bg-accent-light {
     background-color: $accent-light !important;
 }
 
-.text-sm {
-    font-size: small;
+.disabled-element {
+    opacity: 50%;
+    pointer-events: none;
 }
 
-// Custom scrollbar
+.center-loader {
+    width: 3rem;
+    height: 3rem;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+}
+
 .has-cool-scrollbar::-webkit-scrollbar {
     width: 18px !important;
     height: 14px !important;

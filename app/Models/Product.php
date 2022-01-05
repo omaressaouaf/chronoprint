@@ -25,7 +25,7 @@ class Product extends Model
     {
         return [
             'slug' => [
-                'source' => 'name'
+                'source' => 'title'
             ]
         ];
     }
@@ -48,9 +48,14 @@ class Product extends Model
         return $this->hasMany(CartItem::class);
     }
 
+    public function getAttributeByName(string $attributeName): Attribute
+    {
+        return $this->attributs->where("name", $attributeName)->first();
+    }
+
     public function getOptionByRef(string $attributeName, string $optionRef): array
     {
-        $attribute = $this->attributs->where("name", $attributeName)->first();
+        $attribute = $this->getAttributeByName($attributeName);
         return collect($attribute->pivot->options)->where("ref", $optionRef)->first();
     }
 

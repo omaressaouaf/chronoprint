@@ -19495,8 +19495,17 @@ p {
   background-color: #1d1c1c !important;
 }
 
-.text-sm {
-  font-size: small;
+.disabled-element {
+  opacity: 50%;
+  pointer-events: none;
+}
+
+.center-loader {
+  width: 3rem;
+  height: 3rem;
+  position: absolute;
+  left: 50%;
+  top: 50%;
 }
 
 .has-cool-scrollbar::-webkit-scrollbar {

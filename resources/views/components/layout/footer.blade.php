@@ -8,7 +8,7 @@
                   @foreach ($popularCategories as $category)
                      <li class="widget-list-item"><a class="widget-list-link"
                            href="{{ route('categories.show', ['slug' => $category->slug]) }}">
-                           >{{ $category->name }}</a></li>
+                           {{ $category->name }}</a></li>
                   @endforeach
                </ul>
             </div>
@@ -64,7 +64,7 @@
                         required>
                      <button class="btn btn-primary"
                         type="submit"
-                        name="subscribe">{{__('Subscribe') }}</button>
+                        name="subscribe">{{ __('Subscribe') }}</button>
                   </div>
                   <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
                   <div style="position: absolute; left: -5000px;"
@@ -76,7 +76,7 @@
                   </div>
                   <div class="form-text text-light opacity-50">
                      {{ __('Subscribe to our newsletter to receive early discount offers, updates and new
-                                                 products info') }}
+                                                                      products info') }}
                   </div>
                   <div class="subscription-status"></div>
                </form>

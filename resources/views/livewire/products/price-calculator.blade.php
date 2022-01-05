@@ -71,10 +71,10 @@
       <div class="d-flex justify-content-between">
          <div class="mb-4">
             <h5>{{ __('Total price') }} :
-               <span>{{ $totalPrice }} Dhs HT </span>
+               <span>{{ formatPrice($totalPrice) }} Dhs HT </span>
             </h5>
             <h6 class="fs-sm text-danger">{{ __('Unit price') }} :
-               <span>{{ $unitPrice }} Dhs HT</span>
+               <span>{{ formatPrice($unitPrice) }} Dhs HT</span>
             </h6>
          </div>
          <div wire:loading
