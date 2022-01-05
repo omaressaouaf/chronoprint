@@ -46,8 +46,6 @@
 
    <x-layout.footer />
 
-   <x-layout.toolbar />
-
    <a class="btn-scroll-top"
       href="#top"
       data-scroll>

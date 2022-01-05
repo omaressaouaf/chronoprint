@@ -28,7 +28,7 @@
 
       @else
          <div class="row justify-content-center pt-lg-4 text-center">
-            <div class="col-lg-7 col-md-7 col-12"><img class="d-block mx-auto mb-5"
+            <div class="col-lg-7 col-md-7 col-12 pe-0"><img class="d-block mx-auto mb-5"
                   src="/storage/theme/pages/404.png"
                   width="340"
                   alt="{{ __('Your cart is empty') }}">
