@@ -30,18 +30,23 @@
    <main class="page-wrapper">
       <header class="shadow-sm">
 
-         @include('partials.layout.topbar')
+         <x-layout.topbar />
 
-         @include('partials.layout.navbar')
+         <div class="navbar-sticky bg-light">
+            <x-layout.navbar-top />
+            <x-layout.navbar-bottom />
+         </div>
+
       </header>
       <div class="content">
-         @yield('content')
+         {{ $slot }}
       </div>
 
    </main>
-   @include('partials.layout.footer')
 
-   @include('partials.layout.toolbar')
+   <x-layout.footer />
+
+   <x-layout.toolbar />
 
    <a class="btn-scroll-top"
       href="#top"

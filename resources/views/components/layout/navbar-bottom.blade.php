@@ -3,7 +3,7 @@
       <div class="collapse navbar-collapse"
          id="navbarCollapse">
          <div class="d-flex d-lg-none">
-            @include('partials.shop.search-form')
+            <x-products.search />
          </div>
 
          {{-- All categories- --}}
@@ -95,8 +95,6 @@
                @endif
             @endforeach
          </ul>
-
-
       </div>
    </div>
 </div>

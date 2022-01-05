@@ -138,7 +138,7 @@
                      {{ __('The files should not exceed 10mb each. and they should be jpg, jpeg, gif, png, eps, ai, svg, pdf, zip, tar, rar, cdr, psd') }}
                   </div>
                </div>
-               @include('partials.alerts')
+               <x-alerts />
                <div x-show="isUploading"
                   class="progress mb-3">
                   <div class="progress-bar progress-bar-striped progress-bar-animated bg-success"

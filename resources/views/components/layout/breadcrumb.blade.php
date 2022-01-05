@@ -5,20 +5,18 @@
             <ol
                class="breadcrumb breadcrumb-light flex-lg-nowrap justify-content-center justify-content-lg-start">
                <li class="breadcrumb-item"><a class="text-nowrap"
-                     href="{{ route('home') }}"><i class="ci-home"></i>{{ __('Home') }}</a>
+                     href="{{ route('home') }}"><i
+                        class="ci-home"></i>{{ __('Home') }}</a>
                </li>
-               @if ($product->category)
-                  <li class="breadcrumb-item text-nowrap"><a
-                        href="{{ route('categories.show', ['slug' => $product->category->slug]) }}">{{ $product->category->name }}</a>
-               @endif
-               </li>
+               {{ $slot }}
                <li class="breadcrumb-item text-nowrap active"
-                  aria-current="page">{{ $product->title }}</li>
+                  aria-current="page">{{ $activePage }}</li>
+               </li>
             </ol>
          </nav>
       </div>
       <div class="order-lg-1 pe-lg-4 text-center text-lg-start">
-         <h1 class="h3 text-light mb-0">{{ $product->title }}</h1>
+         <h1 class="h3 text-light mb-0">{{ $activePage }}</h1>
       </div>
    </div>
 </div>

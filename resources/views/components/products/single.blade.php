@@ -1,3 +1,5 @@
+@props(['product'])
+
 <div class="bg-light shadow-lg rounded-3 px-4 py-3 mb-5">
    <div class="px-lg-3">
       <div class="row">

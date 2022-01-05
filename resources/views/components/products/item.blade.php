@@ -1,3 +1,5 @@
+@props(['product'])
+
 <div class="col-lg-3 col-md-4 col-sm-6 col-12 px-2 mb-4">
    <div class="card product-card">
       @if ($product->promotion_label)

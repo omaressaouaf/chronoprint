@@ -1,8 +1,13 @@
-@extends('layouts.app')
+<x-app-layout>
+   <x-layout.breadcrumb :active-page="$product->title">
+      @if ($product->category)
+         <li class="breadcrumb-item text-nowrap"><a
+               href="{{ route('categories.show', ['slug' => $product->category->slug]) }}">{{ $product->category->name }}</a>
+         </li>
+      @endif
+   </x-layout.breadcrumb>
 
-@section('content')
-   @include('partials.shop.product-hero' , ["product" => $product])
    <div class="container">
-      @include('partials.shop.product-single' , ["product" => $product])
+      <x-products.single :product="$product" />
    </div>
-@endsection
+</x-app-layout>
