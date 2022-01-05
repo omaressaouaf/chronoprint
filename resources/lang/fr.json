@@ -689,5 +689,7 @@
     "Are you sure ?": "Etes-vous sûr(e) ?",
     "Your cart is empty": "Votre panier est vide",
     "Check out our products to get inspiration": "Découvrez nos produits pour vous inspirer",
-    "Expand cart" : "Agrandir le panier"
+    "Expand cart" : "Agrandir le panier",
+    "An error occurred. Try again!" : "Une erreur s'est produite. Essayer à nouveau!",
+    "Unknown error occurred. our team has been notified. try again !" : "Une erreur inconnue s'est produite. notre équipe a été prévenue. essayer à nouveau !"
 }

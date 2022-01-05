@@ -16,7 +16,7 @@
 @endif
 
 @if (session('error_message'))
-   <div class="alert alert-danger"
+   <div class="alert alert-danger d-flex"
       role="alert">
       <div class="alert-icon">
          <i class="ci-close-circle"></i>
@@ -26,7 +26,7 @@
 @endif
 
 @if (session('success_message'))
-   <div class="alert alert-success"
+   <div class="alert alert-success d-flex"
       role="alert">
       <div class="alert-icon">
          <i class="ci-check-circle"></i>

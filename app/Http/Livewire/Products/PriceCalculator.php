@@ -8,10 +8,12 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class PriceCalculator extends Component
 {
-    use WithFileUploads;
+    use WithFileUploads, AuthorizesRequests;
 
     public Product $product;
 
@@ -193,7 +195,14 @@ class PriceCalculator extends Component
             redirect()->route("cart.index");
         } catch (\Exception $ex) {
             DB::rollBack();
-            dd("some error : " . $ex->getMessage());
+
+            session()->flash(
+                "error_message",
+                __("Unknown error occurred. our team has been notified. try again !")
+            );
+            Log::error("Exception Happened in Livewire/PriceCalculator@addToCart : ",  [
+                'exception message' => $ex->getMessage()
+            ]);
         }
     }
 }
