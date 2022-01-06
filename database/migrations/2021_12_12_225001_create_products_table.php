@@ -19,7 +19,6 @@ class CreateProductsTable extends Migration
             $table->string("slug")->nullable()->unique();
             $table->text("details");
             $table->longText("description")->nullable();
-            $table->float("price")->nullable();
             $table->float("design_price")->nullable();
             $table->json("allowed_quantities");
             $table->boolean("popular")->default(0);

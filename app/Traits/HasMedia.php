@@ -27,7 +27,7 @@ trait HasMedia
     public static function bootHasMedia(): void
     {
         static::deleted(function ($model) {
-            Storage::deleteDirectory($model->mediaRootFolderPath());
+            Storage::disk("public")->deleteDirectory($model->mediaRootFolderPath());
             Media::where("model_id", $model->id)->delete();
         });
     }

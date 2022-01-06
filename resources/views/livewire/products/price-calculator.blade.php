@@ -48,16 +48,18 @@
                            </select>
                         </div>
                      @endforeach
-                     <div class="col-md-12">
-                        <div class="form-check mt-4">
-                           <input wire:model="designByCompany"
-                              type="checkbox"
-                              class="form-check-input"
-                              id="design-by-company">
-                           <label class="form-label"
-                              for="design-by-company">{{ __('Do you want us to do the design ?') }}</label>
+                     @if (!$editMode)
+                        <div class="col-md-12">
+                           <div class="form-check mt-4">
+                              <input wire:model="designByCompany"
+                                 type="checkbox"
+                                 class="form-check-input"
+                                 id="design-by-company">
+                              <label class="form-label"
+                                 for="design-by-company">{{ __('Do you want us to do the design ?') }}</label>
+                           </div>
                         </div>
-                     </div>
+                     @endif
                   </div>
                </form>
             </div>
@@ -97,7 +99,7 @@
                class="btn btn-primary w-100"
                type="submit">
                <i class="ci-upload fs-lg me-2"></i>
-               {{ __('Import your files') }}
+               {{ __('Transfer your files') }}
             </button>
          @endif
 
@@ -116,7 +118,7 @@
             <div class="modal-header">
                <h5 class="modal-title"
                   id="price-calculator-files-upload-modal-label">
-                  {{ $designByCompany ? __('Design information') : __('Import your files') }}
+                  {{ $designByCompany ? __('Design information') : __('Transfer your files') }}
                </h5>
                <button type="button"
                   class="btn-close"
@@ -138,17 +140,52 @@
                      {{ __('The files should not exceed 10mb each. and they should be jpg, jpeg, gif, png, eps, ai, svg, pdf, zip, tar, rar, cdr, psd') }}
                   </div>
                </div>
-               <x-alerts />
-               <div x-show="isUploading"
-                  class="progress mb-3">
-                  <div class="progress-bar progress-bar-striped progress-bar-animated bg-success"
-                     role="progressbar"
-                     x-bind:style="{width: progress  + '%'}"
-                     x-bind:aria-valuenow="progress"
-                     aria-valuemin="0"
-                     aria-valuemax="100"
-                     x-text="progress + '%'"></div>
-               </div>
+               {{-- Old media --}}
+               @if ($editMode)
+                  <div class="px-3 py-3 border border-1 rounded-3">
+                     <h5 class="mb-4">{{ __('Old files') }}</h5>
+                     @foreach ($oldMedia as $mediaItem)
+                        <div class="mb-3">
+                           @if (!is_numeric($mediaItem->name))
+                              <p class="h6 mb-3 text-capitalize">{{ $mediaItem->name }}</p>
+                           @endif
+                           <div class="position-relative d-inline-block">
+                              <button
+                                 wire:click="deleteOldMediaItemLocally({{ $mediaItem->id }})"
+                                 class="btn btn-link position-absolute top-0 start-100 translate-middle">
+                                 <i
+                                    class="ci ci-trash bg-danger p-2 fs-xs text-white rounded-circle">
+                                 </i>
+                              </button>
+                              @if (file_is_image($mediaItem->filename))
+                                 <img width="120"
+                                    height="120"
+                                    class="rounded-3"
+                                    src="{{ $mediaItem->public_path }}"
+                                    alt="{{ $mediaItem->filename }}">
+                              @else
+                                 <x-base.nofilepreview />
+                              @endif
+                           </div>
+                           <p class="mt-3">
+                              <a href="{{ $mediaItem->public_path }}"
+                                 target="_blank"
+                                 rel="noopener"
+                                 class="text-info text-wrap text-break">
+                                 {{ $mediaItem->filename }}
+                              </a>
+                           </p>
+                        </div>
+                        @if (!$loop->last) <hr class="my-3"> @endif
+                     @endforeach
+                  </div>
+                  <h5 class="mb-4 mt-4 px-1">{{ __('New files') }}</h5>
+               @endif
+
+               <x-base.upload-progress />
+               <x-base.alerts />
+
+               {{-- New Files (requiredFiles / designFiles) --}}
                @if ($designByCompany)
                   <div class="form-floating">
                      <textarea wire:model.debounce.500ms="designInformation"
@@ -166,7 +203,7 @@
                            {{ __('upload your logo or any needed file (max : 5)') }}
                         </span>
                      @endif
-                     @foreach ($designFiles as $file)
+                     @foreach ($designFiles as $index => $file)
                         @if (file_is_image($file))
                            <div class="file-drop-preview img-thumbnail rounded">
                               <img src="{{ $file->temporaryUrl() }}"
@@ -225,7 +262,11 @@
 
                @endif
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer justify-content-between">
+               <small class="fs-sm float-left mb-3">
+                  <a href="#">{{ __('Contact us') }}</a>
+                  {{ __('if your files do not meet our requirements') }}
+               </small>
                <button wire:click="addToCart"
                   wire:click="addToCart"
                   wire:target="addToCart"
@@ -235,9 +276,10 @@
                   <span wire:target="addToCart"
                      wire:loading
                      class="spinner-border spinner-border-sm me-2"></span>
-                  {{ __('Import and add to cart') }}</button>
+                  {{ __('Transfer and add to cart') }}</button>
             </div>
          </div>
       </div>
    </div>
+
 </div>

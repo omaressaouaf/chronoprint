@@ -1,16 +1,20 @@
 <?php
 
+use Illuminate\Http\UploadedFile;
+
 /**
  * Determine wether the file is an image or not
  *
- * @param \File
+ * @param Illuminate\Http\UploadedFile|string $file
  * @return bool
  */
-function file_is_image($file): bool
+function file_is_image(UploadedFile|string $file): bool
 {
+    $fileExtension = gettype($file) === "string" ? pathinfo($file, PATHINFO_EXTENSION)  : $file->extension();
+
     $imageExtensions = ["jpg", "jpeg", "png", "svg"];
 
-    return $file && in_array($file->extension(), $imageExtensions);
+    return $file && in_array($fileExtension, $imageExtensions);
 }
 
 /**

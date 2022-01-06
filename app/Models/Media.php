@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Support\Facades\Storage;
 
 class Media extends Model
 {
@@ -17,8 +18,20 @@ class Media extends Model
         return $this->morphTo();
     }
 
-    public function getPathAttribute($value)
+    public function getPublicPathAttribute()
     {
-        return "\\storage\\" . $value;
+        return "/storage/$this->path";
+    }
+
+    /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    public static function booted(): void
+    {
+        static::deleted(function ($media) {
+            Storage::disk("public")->delete($media->path);
+        });
     }
 }

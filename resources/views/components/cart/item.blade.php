@@ -37,5 +37,11 @@
          <i class="ci-close-circle me-2"></i>
          <span class="fs-sm">{{ __('Remove') }}</span>
       </button>
+      <a href="{{ route('products.show', ['product' => $cartItem->product->slug, 'cartItemId' => $cartItem->id]) }}"
+         class="btn btn-link px-0 text-success">
+         <i class="ci-edit
+         me-2"></i>
+         <span class="fs-sm">{{ __('Edit') }}</span>
+      </a>
    </div>
 </div>

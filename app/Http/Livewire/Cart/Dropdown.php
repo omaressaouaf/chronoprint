@@ -4,7 +4,7 @@ namespace App\Http\Livewire\Cart;
 
 use App\Models\Cart;
 use Livewire\Component;
-use App\Models\CartItem;
+use App\Services\CartService;
 
 class Dropdown extends Component
 {
@@ -19,7 +19,7 @@ class Dropdown extends Component
 
     public function removeCartItem($cartItemId)
     {
-        CartItem::destroy($cartItemId);
+        CartService::removeItemFromCart($cartItemId);
 
         $this->emit('cartChanged');
     }
