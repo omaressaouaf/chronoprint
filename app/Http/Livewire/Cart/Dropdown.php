@@ -16,11 +16,4 @@ class Dropdown extends Component
             "cart" => Cart::where("user_id", auth()->id())->with(["items", "items.product"])->first()
         ]);
     }
-
-    public function removeCartItem($cartItemId)
-    {
-        CartService::removeItemFromCart($cartItemId);
-
-        $this->emit('cartChanged');
-    }
 }

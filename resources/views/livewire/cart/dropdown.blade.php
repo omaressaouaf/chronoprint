@@ -19,14 +19,7 @@
             <div data-simplebar
                data-simplebar-auto-hide="false">
                @foreach ($cart->items as $cartItem)
-                  <div class="widget-cart-item pb-2 border-bottom mb-2">
-                     <button onclick="confirm('{{ __('Are you sure ?') }}')
-                         || event.stopImmediatePropagation()"
-                        wire:click="removeCartItem({{ $cartItem->id }})"
-                        class="btn-close text-danger"
-                        type="button"
-                        aria-label="Remove"><span aria-hidden="true">&times;</span>
-                     </button>
+                  <div class="pb-2 border-bottom mb-2">
                      <div class="d-flex align-items-center">
                         <a class="flex-shrink-0"
                            href="{{ route('products.show', ['product' => $cartItem->product->slug]) }}">
