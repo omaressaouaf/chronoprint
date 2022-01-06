@@ -8,8 +8,6 @@ use App\Services\CartService;
 
 class Index extends Component
 {
-    protected $listeners = ['cartChanged' => 'render'];
-
     public function render()
     {
         return view('livewire.cart.index', [

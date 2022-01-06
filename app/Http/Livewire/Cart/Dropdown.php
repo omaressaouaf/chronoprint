@@ -4,7 +4,6 @@ namespace App\Http\Livewire\Cart;
 
 use App\Models\Cart;
 use Livewire\Component;
-use App\Services\CartService;
 
 class Dropdown extends Component
 {

@@ -32,7 +32,7 @@
       <button onclick="confirm('{{ __('Are you sure ?') }}')
          || event.stopImmediatePropagation()"
          wire:click="removeCartItem({{ $cartItem->id }})"
-         class="btn btn-link px-0 text-danger"
+         class="btn btn-link px-0 text-danger pb-0"
          type="button">
          <i class="ci-close-circle me-2"></i>
          <span class="fs-sm">{{ __('Remove') }}</span>

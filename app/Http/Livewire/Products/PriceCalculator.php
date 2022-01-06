@@ -70,9 +70,7 @@ class PriceCalculator extends Component
             "selectedQuantityValue" => "required|numeric",
             'designByCompany' => "required|boolean",
             "totalPrice" => "required|numeric|min:1",
-            // "requiredFiles" => "required_if:designByCompany,false",
             "requiredFiles.*" => ["nullable", $fileRules],
-            // "designFiles" => "nullable|array|max:5",
             "designFiles.*" => ["nullable", $fileRules]
         ];
     }
@@ -180,6 +178,8 @@ class PriceCalculator extends Component
      */
     public function findAndSetRequiredFiles(): void
     {
+        $this->requiredFiles = [];
+        
         $this->selectedOptions->each(function ($optionRef, $attributeName) {
             $option = $this->product->getOptionByRef($attributeName, $optionRef);
 
@@ -246,7 +246,7 @@ class PriceCalculator extends Component
     {
         $this->withValidator(fn (Validator $validator) => $this->withValidatorClosure($validator))->validate();
 
-        dd("validation succeded");
+        // dd("validation succeded");
         if ($this->editMode) {
             // Edit the cart item and upload new files and delete old media
         } else {
