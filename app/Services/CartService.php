@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Cart;
 use App\Models\CartItem;
+use Exception;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -11,23 +12,40 @@ use Illuminate\Support\Facades\Log;
 class CartService
 {
     /**
+     * @var App\Models\Cart $cart
+     */
+    public Cart $cart;
+
+    /**
+     * Create a new cart instance
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        if (!auth()->check()) {
+            throw new Exception("The cart service requires an authenticated user");
+        }
+
+        $this->cart  = auth()->user()->cart ?? Cart::create([
+            "subtotal" => 0.00,
+            "user_id" => auth()->id()
+        ]);
+    }
+
+    /**
      * Adds item to the auth user's cart
      *
      * @param array $item
      * @param Collection|array $filesToUpload
      * @return bool
      */
-    public static function addItemToCart(array $item, Collection|array $filesToUpload): bool
+    public function addItemToCart(array $item, Collection|array $filesToUpload): bool
     {
         try {
             DB::beginTransaction();
 
-            $cart = Cart::firstOrCreate(
-                ["user_id" => auth()->id()],
-                ["subtotal" => 0.00]
-            );
-
-            $cartItem  = $cart->items()->create($item);
+            $cartItem  = $this->cart->items()->create($item);
 
             foreach ($filesToUpload as $key => $file) {
                 $path = $file->store($cartItem->mediaRootFolderPath(), "public");
@@ -61,8 +79,8 @@ class CartService
      * @param string|int $cartItemId
      * @return void
      */
-    public static function removeItemFromCart(string|int $cartItemId): void
+    public function removeItemFromCart(string|int $cartItemId): void
     {
-        CartItem::destroy($cartItemId);
+        CartItem::where("cart_id" , $this->cart->id)->where("id" , $cartItemId)->delete();
     }
 }

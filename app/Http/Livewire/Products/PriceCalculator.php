@@ -82,7 +82,12 @@ class PriceCalculator extends Component
 
     public function mount()
     {
-        $cartItem = CartItem::find(request("cartItemId"));
+        $cartItem = null;
+        
+        if (auth()->check()) {
+            $cartService = app()->make(CartService::class);
+            $cartItem = $cartService->cart->items()->find(request("cartItemId"));
+        }
 
         /**Check if we are in edit mode */
         if ($cartItem) {
@@ -179,7 +184,7 @@ class PriceCalculator extends Component
     public function findAndSetRequiredFiles(): void
     {
         $this->requiredFiles = [];
-        
+
         $this->selectedOptions->each(function ($optionRef, $attributeName) {
             $option = $this->product->getOptionByRef($attributeName, $optionRef);
 
@@ -240,17 +245,21 @@ class PriceCalculator extends Component
     /**
      * Add item to cart
      *
+     * @param App\Services\CartService $cartService
      * @return void
      */
     public function addToCart(): void
     {
+        if (!auth()->check()) redirect("/login");
+
         $this->withValidator(fn (Validator $validator) => $this->withValidatorClosure($validator))->validate();
 
-        // dd("validation succeded");
+        $cartService = app()->make(CartService::class);
+
         if ($this->editMode) {
             // Edit the cart item and upload new files and delete old media
         } else {
-            $success = CartService::addItemToCart(
+            $success = $cartService->addItemToCart(
                 [
                     "quantity" => $this->selectedQuantityValue,
                     "subtotal" => $this->totalPrice,

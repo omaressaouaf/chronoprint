@@ -141,8 +141,15 @@
                   </div>
                </div>
                {{-- Old media --}}
-               @if ($editMode)
-                  <div class="px-3 py-3 border border-1 rounded-3">
+               @if ($editMode && count($oldMedia))
+                  <div wire:loading.class="disabled-element"
+                     wire:target="deleteOldMediaItemLocally"
+                     class="px-3 py-3 border border-1 rounded-3">
+                     <div wire:loading
+                        wire:target="deleteOldMediaItemLocally"
+                        class="spinner-grow center-loader"
+                        role="status">
+                     </div>
                      <h5 class="mb-4">{{ __('Old files') }}</h5>
                      @foreach ($oldMedia as $mediaItem)
                         <div class="mb-3">
