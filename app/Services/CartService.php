@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Cart;
 use App\Models\CartItem;
+use App\Models\Coupon;
 use App\Models\Media;
 use Exception;
 use Illuminate\Support\Collection;
@@ -99,9 +100,37 @@ class CartService
     }
 
     /**
+     * Applies coupon code to the auth user's cart
+     *
+     * @param string|null $couponCode
+     * @return array
+     */
+    public static function applyCoupon(string|null $couponCode): array
+    {
+        $coupon = Coupon::where("code", $couponCode)->first();
+        if (!$coupon) {
+            return ["msg_type" => "error_message", "msg_content" => __("The coupon doesn't exist or expired")];
+        }
+
+        $authUserCart =  static::getAuthUserCart();
+        if ($authUserCart->coupon_code) {
+            return ["msg_type" => "error_message", "msg_content" => __("The cart already has a coupon applied")];
+        }
+
+        $authUserCart->update([
+            "discount_price" => ($coupon->percent_off * $authUserCart->subtotal) / 100,
+            "coupon_code" => $coupon->code,
+        ]);
+
+        return ["msg_type" => "success_message", "msg_content" => __("The coupon has been applied successfully")];
+    }
+
+    /**
      * Gets the current auth user cart
      *
      * @return App\Models\Cart
+     *
+     * @throws \Exception
      */
     public static function getAuthUserCart(): Cart
     {

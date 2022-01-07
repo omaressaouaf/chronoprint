@@ -85,8 +85,8 @@
          </div>
       </div>
       <div>
-         <x-base.alerts />
          @if ($editMode)
+            <x-base.alerts />
             <button wire:click="handleSubmit"
                wire:target="handleSubmit"
                wire:loading.attr="disabled"

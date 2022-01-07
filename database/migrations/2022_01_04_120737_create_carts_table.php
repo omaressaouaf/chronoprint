@@ -17,7 +17,7 @@ class CreateCartsTable extends Migration
             $table->id();
             $table->float("subtotal");
             $table->float("discount_price")->default(0.00);
-            $table->string("coupon")->nullable();
+            $table->string("coupon_code")->nullable();
             $table->foreignId("user_id")->constrained()->onDelete("cascade")->onUpdate("cascade");
             $table->timestamps();
         });

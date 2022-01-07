@@ -697,5 +697,9 @@
     "New files": "Nouveaux fichiers",
     "5 files is the maximum allowed": "5 fichiers est le maximum autorisé",
     "Update cart item": "Mettre à jour l'article du panier",
-    "The file :file is required": "Le fichier :file est requis"
+    "The file :file is required": "Le fichier :file est requis",
+    "Please provide promo code": "Veuillez fournir le code promo",
+    "The coupon doesn't exist or expired": "Le coupon n'existe pas ou a expiré",
+    "The cart already has a coupon applied": "Le panier a déjà un coupon appliqué",
+    "The coupon has been applied successfully": "Le coupon a été appliqué avec succès"
 }
