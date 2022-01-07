@@ -695,5 +695,7 @@
     "Unknown error occurred. our team has been notified. try again !": "Une erreur inconnue s'est produite. notre équipe a été prévenue. essayer à nouveau !",
     "Old files": "Anciens fichiers",
     "New files": "Nouveaux fichiers",
-    "5 files is the maximum allowed": "5 fichiers est le maximum autorisé"
+    "5 files is the maximum allowed": "5 fichiers est le maximum autorisé",
+    "Update cart item": "Mettre à jour l'article du panier",
+    "The file :file is required": "Le fichier :file est requis"
 }

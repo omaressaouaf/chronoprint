@@ -18,13 +18,12 @@ class Index extends Component
     /**
      * Removes item from cart
      *
-     * @param App\Services\CartService $cartService
      * @param int|string $cartItemId
      * @return void
      */
-    public function removeCartItem(CartService $cartService , int|string $cartItemId) : void
+    public function removeCartItem(int|string $cartItemId) : void
     {
-        $cartService->removeItemFromCart($cartItemId);
+        CartService::removeItemFromCart($cartItemId);
 
         $this->emit('cartChanged');
     }

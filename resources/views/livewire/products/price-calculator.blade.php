@@ -85,13 +85,30 @@
          </div>
       </div>
       <div>
+         <x-base.alerts />
+         @if ($editMode)
+            <button wire:click="handleSubmit"
+               wire:target="handleSubmit"
+               wire:loading.attr="disabled"
+               type="button"
+               class="btn btn-success submit-button w-100 mb-2">
+               <span wire:target="handleSubmit"
+                  wire:loading
+                  class="spinner-border spinner-border-sm me-2">
+               </span>
+               <i wire:target="handleSubmit"
+                  wire:loading.remove
+                  class="ci-check fs-lg me-2"></i>
+               {{ __('Update cart item') }}
+            </button>
+         @endif
          @if ($designByCompany)
             <button data-bs-toggle="modal"
                data-bs-target="#price-calculator-files-upload-modal"
                class="btn btn-accent w-100"
                type="submit">
-               <i class="ci-add-circle fs-lg me-2"></i>
-               {{ __('Continue here') }}
+               <i class="ci-edit fs-lg me-2"></i>
+               {{ __('Design information') }}
             </button>
          @else
             <button data-bs-toggle="modal"
@@ -102,7 +119,6 @@
                {{ __('Transfer your files') }}
             </button>
          @endif
-
       </div>
    </div>
 
@@ -274,16 +290,17 @@
                   <a href="#">{{ __('Contact us') }}</a>
                   {{ __('if your files do not meet our requirements') }}
                </small>
-               <button wire:click="addToCart"
-                  wire:click="addToCart"
-                  wire:target="addToCart"
+               <button wire:click="handleSubmit"
+                  wire:target="handleSubmit"
                   wire:loading.attr="disabled"
                   type="button"
                   class="btn btn-primary submit-button">
-                  <span wire:target="addToCart"
+                  <span wire:target="handleSubmit"
                      wire:loading
-                     class="spinner-border spinner-border-sm me-2"></span>
-                  {{ __('Transfer and add to cart') }}</button>
+                     class="spinner-border spinner-border-sm me-2">
+                  </span>
+                  {{ $editMode ? __('Update cart item') : __('Transfer and add to cart') }}
+               </button>
             </div>
          </div>
       </div>

@@ -4,6 +4,7 @@ namespace App\Traits;
 
 use App\Models\Media;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
 trait HasMedia
@@ -38,4 +39,24 @@ trait HasMedia
      * @return string
      */
     abstract public function mediaRootFolderPath(): string;
+
+    /**
+     * Associates the media item with the model
+     *
+     * @param Illuminate\Http\UploadedFile $file
+     * @param string $mediaItemName
+     * @return void
+     */
+    public function addMediaItem(UploadedFile $file, string $mediaItemName): void
+    {
+        $path = $file->store($this->mediaRootFolderPath(), "public");
+
+        $this->media()->create([
+            "name" => $mediaItemName,
+            "filename" => $file->hashName(),
+            "path" => $path,
+            "mime_type" => $file->getMimeType(),
+            "size" => $file->getSize()
+        ]);
+    }
 }

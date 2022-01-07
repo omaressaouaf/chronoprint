@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Cart;
 use App\Models\CartItem;
+use App\Models\Media;
 use Exception;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -12,51 +13,21 @@ use Illuminate\Support\Facades\Log;
 class CartService
 {
     /**
-     * @var App\Models\Cart $cart
-     */
-    public Cart $cart;
-
-    /**
-     * Create a new cart instance
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        if (!auth()->check()) {
-            throw new Exception("The cart service requires an authenticated user");
-        }
-
-        $this->cart  = auth()->user()->cart ?? Cart::create([
-            "subtotal" => 0.00,
-            "user_id" => auth()->id()
-        ]);
-    }
-
-    /**
      * Adds item to the auth user's cart
      *
-     * @param array $item
+     * @param array $itemData
      * @param Collection|array $filesToUpload
      * @return bool
      */
-    public function addItemToCart(array $item, Collection|array $filesToUpload): bool
+    public static function addItemToCart(array $itemData, Collection|array $filesToUpload): bool
     {
         try {
             DB::beginTransaction();
 
-            $cartItem  = $this->cart->items()->create($item);
+            $cartItem  = static::getAuthUserCart()->items()->create($itemData);
 
             foreach ($filesToUpload as $key => $file) {
-                $path = $file->store($cartItem->mediaRootFolderPath(), "public");
-
-                $cartItem->media()->create([
-                    "name" => $key,
-                    "filename" => $file->hashName(),
-                    "path" => $path,
-                    "mime_type" => $file->getMimeType(),
-                    "size" => $file->getSize()
-                ]);
+                $cartItem->addMediaItem($file, $key);
             }
 
             DB::commit();
@@ -74,13 +45,73 @@ class CartService
     }
 
     /**
+     * Updates cart item
+     *
+     * @param int|sring $cartItemId
+     * @param array $newItemData
+     * @param Collection|array $filesToUpload
+     * @param array $oldMediaIdsToDelete
+     * @return void
+     */
+    public static function updateCartItem(
+        int|string $cartItemId,
+        array $newItemData,
+        Collection|array $filesToUpload,
+        array $oldMediaIdsToDelete
+    ): bool {
+        try {
+            DB::beginTransaction();
+
+            $cartItem  = static::getAuthUserCart()->items()->find($cartItemId);
+            $cartItem->update($newItemData);
+
+            foreach ($filesToUpload as $key => $file) {
+                if ($file) {
+                    $cartItem->addMediaItem($file, $key);
+                }
+            }
+
+            Media::destroy($oldMediaIdsToDelete);
+
+            DB::commit();
+
+            return true;
+        } catch (\Exception $ex) {
+            DB::rollBack();
+
+            Log::error("Exception Happened in CartService@updateCartItem : ",  [
+                'exception message' => $ex->getMessage()
+            ]);
+
+            return false;
+        }
+    }
+
+    /**
      * Removes item from the auth user's cart
      *
      * @param string|int $cartItemId
      * @return void
      */
-    public function removeItemFromCart(string|int $cartItemId): void
+    public static function removeItemFromCart(string|int $cartItemId): void
     {
-        CartItem::where("cart_id" , $this->cart->id)->where("id" , $cartItemId)->delete();
+        CartItem::where("cart_id", static::getAuthUserCart()->id)->where("id", $cartItemId)->delete();
+    }
+
+    /**
+     * Gets the current auth user cart
+     *
+     * @return App\Models\Cart
+     */
+    public static function getAuthUserCart(): Cart
+    {
+        if (!auth()->check()) {
+            throw new Exception("getAuthUserCart needs an authenticated user");
+        }
+
+        return auth()->user()->cart ?? Cart::create([
+            "subtotal" => 0.00,
+            "user_id" => auth()->id()
+        ]);
     }
 }

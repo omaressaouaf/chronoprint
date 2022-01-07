@@ -54,7 +54,7 @@ class PriceCalculator extends Component
      */
     public bool $editMode = false;
 
-    private CartItem $cartItem;
+    public CartItem $cartItem;
 
     public Collection $oldMedia;
 
@@ -82,12 +82,7 @@ class PriceCalculator extends Component
 
     public function mount()
     {
-        $cartItem = null;
-        
-        if (auth()->check()) {
-            $cartService = app()->make(CartService::class);
-            $cartItem = $cartService->cart->items()->find(request("cartItemId"));
-        }
+        $cartItem = auth()->check() ? CartService::getAuthUserCart()->items()->find(request("cartItemId")) :  null;
 
         /**Check if we are in edit mode */
         if ($cartItem) {
@@ -233,8 +228,8 @@ class PriceCalculator extends Component
             } else {
                 foreach ($this->requiredFiles as $requiredFileName => $file) {
                     if (!$file && !$this->oldMedia->where("name", $requiredFileName)->first()) {
-                        $validator->errors()->add($requiredFileName, __("validation.required", [
-                            "attribute" => $requiredFileName
+                        $validator->errors()->add($requiredFileName, __("The file :file is required", [
+                            "file" => $requiredFileName
                         ]));
                     }
                 }
@@ -243,42 +238,37 @@ class PriceCalculator extends Component
     }
 
     /**
-     * Add item to cart
+     * Handles the final step
      *
-     * @param App\Services\CartService $cartService
      * @return void
      */
-    public function addToCart(): void
+    public function handleSubmit(): void
     {
         if (!auth()->check()) redirect("/login");
 
         $this->withValidator(fn (Validator $validator) => $this->withValidatorClosure($validator))->validate();
 
-        $cartService = app()->make(CartService::class);
+        $itemData = [
+            "quantity" => $this->selectedQuantityValue,
+            "subtotal" => $this->totalPrice,
+            "selected_options" => $this->selectedOptions,
+            "design_by_company" => $this->designByCompany,
+            "design_information" => $this->designInformation,
+            "product_id" => $this->product->id
+        ];
+        $filesToUpload = $this->designByCompany ? $this->designFiles : $this->requiredFiles;
 
-        if ($this->editMode) {
-            // Edit the cart item and upload new files and delete old media
+        $success = $this->editMode
+            ? CartService::updateCartItem($this->cartItem->id, $itemData, $filesToUpload, $this->oldMediaIdsToDelete)
+            : CartService::addItemToCart($itemData, $filesToUpload);
+
+        if ($success) {
+            redirect()->route("cart.index");
         } else {
-            $success = $cartService->addItemToCart(
-                [
-                    "quantity" => $this->selectedQuantityValue,
-                    "subtotal" => $this->totalPrice,
-                    "selected_options" => $this->selectedOptions,
-                    "design_by_company" => $this->designByCompany,
-                    "design_information" => $this->designInformation,
-                    "product_id" => $this->product->id
-                ],
-                $this->designByCompany ? $this->designFiles : $this->requiredFiles
+            session()->flash(
+                "error_message",
+                __("Unknown error occurred. our team has been notified. try again !")
             );
-
-            if ($success) {
-                redirect()->route("cart.index");
-            } else {
-                session()->flash(
-                    "error_message",
-                    __("Unknown error occurred. our team has been notified. try again !")
-                );
-            }
         }
     }
 }
