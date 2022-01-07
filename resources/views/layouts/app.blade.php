@@ -19,14 +19,9 @@
    <meta name="csrf-token"
       content="{{ csrf_token() }}">
 
-   {{-- Scripts --}}
-   <script src="{{ asset('js/app.js') }}"
-      defer></script>
-
    {{-- Styles --}}
    <link href="{{ asset('css/app.css') }}"
       rel="stylesheet">
-
    @livewireStyles
 
 </head>
@@ -35,18 +30,21 @@
    <main class="page-wrapper">
       <header class="shadow-sm">
 
-         @include('partials.layout.topbar')
+         <x-layout.topbar />
 
-         @include('partials.layout.navbar')
+         <div class="navbar-sticky bg-light">
+            <x-layout.navbar-top />
+            <x-layout.navbar-bottom />
+         </div>
+
       </header>
       <div class="content">
-         @yield('content')
+         {{ $slot }}
       </div>
 
    </main>
-   @include('partials.layout.footer')
 
-   @include('partials.layout.toolbar')
+   <x-layout.footer />
 
    <a class="btn-scroll-top"
       href="#top"
@@ -54,7 +52,11 @@
       <i class="btn-scroll-top-icon ci-arrow-up"></i>
    </a>
 
+   {{-- Scripts --}}
    @livewireScripts
+   <script src="{{ asset('js/app.js') }}"></script>
+   <script src="//unpkg.com/alpinejs"></script>
+
 </body>
 
 </html>
