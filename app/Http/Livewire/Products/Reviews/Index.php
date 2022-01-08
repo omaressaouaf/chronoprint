@@ -29,7 +29,6 @@ class Index extends Component
 
     public function render()
     {
-        // dump(count($this->product->reviews));
         return view('livewire.products.reviews.index', [
             "reviewsCount" => $this->product->reviews()->count(),
             "reviews" => $this->product->reviews()->whereActive(1)->latest()->with("user")->paginate(10),
