@@ -74,7 +74,7 @@
                   <p class="fs-md mb-2">
                      {{ $review->body }}
                   </p>
-                  @can('delete_review', $review)
+                  @if ($review->user_id === auth()->id())
                      <div class="text-nowrap">
                         <button wire:click="deleteReview({{ $review->id }})"
                            class="btn btn-link ps-0 ms-0"
@@ -82,7 +82,7 @@
                            <i class="ci-trash"></i>
                         </button>
                      </div>
-                  @endcan
+                  @endif
                </div>
             @empty
                <h4>{{ __('No reviews for this product') }}</h4>

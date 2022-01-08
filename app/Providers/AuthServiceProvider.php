@@ -26,9 +26,5 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-
-        Gate::define("delete_review", function (User $user, Review $review) {
-            return $review->user_id === $user->id;
-        });
     }
 }

@@ -62,8 +62,8 @@ class Index extends Component
      */
     public function deleteReview(Review $review): void
     {
-        $this->authorize("delete_review", $review);
-
+        abort_unless($review->user_id === auth()->id() , 403);
+        
         $review->delete();
     }
 }
