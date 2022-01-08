@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use App\Models\AttributeProduct;
 use App\Traits\HasMultiImages;
-use Cviebrock\EloquentSluggable\Sluggable;
+use App\Models\AttributeProduct;
 use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Product extends Model
@@ -46,6 +46,20 @@ class Product extends Model
     public function cartItems()
     {
         return $this->hasMany(CartItem::class);
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    public function getAverageRatingAttribute()
+    {
+        $count = $this->reviews()->count();
+        if (empty($count)) return 0;
+
+        $sum = $this->reviews()->sum('rating');
+        return $sum / $count;
     }
 
     public function getAttributeByName(string $attributeName): Attribute

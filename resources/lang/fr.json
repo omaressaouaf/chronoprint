@@ -701,5 +701,15 @@
     "Please provide promo code": "Veuillez fournir le code promo",
     "The coupon doesn't exist or expired": "Le coupon n'existe pas ou a expiré",
     "The cart already has a coupon applied": "Le panier a déjà un coupon appliqué",
-    "The coupon has been applied successfully": "Le coupon a été appliqué avec succès"
+    "The coupon has been applied successfully": "Le coupon a été appliqué avec succès",
+    "Product reviews": "Evaluation du produit",
+    "Write a review": "Écrire un avis",
+    "Rating": "Évaluation",
+    "Review": "Avis",
+    "Submit your review": "Soumettez votre avis",
+    "star": "astérisque",
+    "stars": "astérisques",
+    "Reviews": "Avis",
+    "Overall rating": "Avis globale",
+    "Thank you for your review. it's now under supervision": "Merci pour votre avis. c'est maintenant sous surveillance"
 }
