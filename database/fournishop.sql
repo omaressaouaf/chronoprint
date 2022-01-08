@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 08, 2022 at 04:33 PM
+-- Generation Time: Jan 08, 2022 at 04:39 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.11
 
@@ -605,8 +605,7 @@ INSERT INTO `permissions` (`id`, `key`, `table_name`, `created_at`, `updated_at`
 (56, 'browse_reviews', 'reviews', '2022-01-08 14:19:27', '2022-01-08 14:19:27'),
 (57, 'read_reviews', 'reviews', '2022-01-08 14:19:27', '2022-01-08 14:19:27'),
 (58, 'edit_reviews', 'reviews', '2022-01-08 14:19:27', '2022-01-08 14:19:27'),
-(60, 'delete_reviews', 'reviews', '2022-01-08 14:19:27', '2022-01-08 14:19:27'),
-(61, 'add_reviews', 'reviews', '2022-01-08 14:32:40', '2022-01-08 14:32:40');
+(60, 'delete_reviews', 'reviews', '2022-01-08 14:19:27', '2022-01-08 14:19:27');
 
 -- --------------------------------------------------------
 
@@ -767,7 +766,8 @@ CREATE TABLE `reviews` (
 --
 
 INSERT INTO `reviews` (`id`, `rating`, `body`, `active`, `product_id`, `user_id`, `created_at`, `updated_at`) VALUES
-(67, 5, 'w', 1, 22, 1, '2022-01-08 14:19:38', '2022-01-08 14:29:55');
+(67, 5, 'w', 1, 22, 1, '2022-01-08 14:19:38', '2022-01-08 14:29:55'),
+(68, 5, 'we', 1, 22, 1, '2022-01-08 14:35:32', '2022-01-08 14:35:32');
 
 -- --------------------------------------------------------
 
@@ -1214,7 +1214,7 @@ ALTER TABLE `product_variant`
 -- AUTO_INCREMENT for table `reviews`
 --
 ALTER TABLE `reviews`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 
 --
 -- AUTO_INCREMENT for table `roles`
