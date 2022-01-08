@@ -56,15 +56,15 @@
                <div class="d-flex justify-content-between align-items-center mb-2 px-3 px-lg-5"><a
                      href="#reviews"
                      data-scroll>
-                     {{$product->average_rating}}
-                     <div class="star-rating"><i
-                           class="star-rating-icon ci-star-filled active"></i><i
-                           class="star-rating-icon ci-star-filled active"></i><i
-                           class="star-rating-icon ci-star-filled active"></i><i
-                           class="star-rating-icon ci-star-filled active"></i><i
-                           class="star-rating-icon ci-star"></i>
-                     </div><span class="d-inline-block fs-sm text-body align-middle mt-1 ms-1">74
-                        Reviews</span>
+                     <div class="star-rating">
+                        @foreach (range(1, 5) as $rating)
+                           <i class="star-rating-icon ci-star-filled @if ($product->average_rating >= $rating) active @endif">
+                           </i>
+                        @endforeach
+                     </div>
+                     <span class="d-inline-block fs-sm text-body align-middle mt-1 ms-1">
+                        {{ count($product->reviews) }} {{ __('Reviews') }}
+                     </span>
                   </a>
                </div>
                @if ($product->promotion_label)
@@ -83,30 +83,33 @@
    </div>
 </div>
 
-{{-- Product description --}}
-@if ($product->description)
-   <section class="container mb-4 mb-lg-5">
-      <ul class="nav nav-tabs"
-         role="tablist">
-         <li class="nav-item"><a class="nav-link p-4 active"
-               href="#reviews"
-               data-bs-toggle="tab"
-               role="tab">{{ __('Product reviews') }}</a></li>
+{{-- Product description and reviews --}}
+
+<section class="container mb-4 mb-lg-5">
+   <ul class="nav nav-tabs"
+      role="tablist">
+      <li class="nav-item"><a class="nav-link p-4 active"
+            href="#reviews"
+            data-bs-toggle="tab"
+            role="tab">{{ __('Product reviews') }}</a></li>
+      @if ($product->description)
          <li class="nav-item"><a class="nav-link p-4"
                href="#details"
                data-bs-toggle="tab"
                role="tab">{{ __('Product description') }}</a></li>
-      </ul>
-      <div class="tab-content pt-2">
-         <div class="tab-pane fade show active"
-            id="reviews"
-            role="tabpanel">
-            <div class="row">
-               <div class="col-lg-12">
-                  <livewire:products.reviews.index :product="$product" />
-               </div>
+      @endif
+   </ul>
+   <div class="tab-content pt-2">
+      <div class="tab-pane fade show active"
+         id="reviews"
+         role="tabpanel">
+         <div class="row">
+            <div class="col-lg-12">
+               <livewire:products.reviews.index :product="$product" />
             </div>
          </div>
+      </div>
+      @if ($product->description)
          <div class="tab-pane fade show"
             id="details"
             role="tabpanel">
@@ -116,6 +119,6 @@
                </div>
             </div>
          </div>
-      </div>
-   </section>
-@endif
+      @endif
+   </div>
+</section>

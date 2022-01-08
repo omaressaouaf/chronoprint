@@ -20,11 +20,11 @@
                href="{{ route('products.show', ['product' => $product->slug]) }}">{{ $product->title }}</a>
          </h3>
          <div class="d-flex justify-content-between">
-            <div class="star-rating"><i class="star-rating-icon ci-star-filled active"></i><i
-                  class="star-rating-icon ci-star-filled active"></i><i
-                  class="star-rating-icon ci-star-filled active"></i><i
-                  class="star-rating-icon ci-star-filled active"></i><i
-                  class="star-rating-icon ci-star"></i>
+            <div class="star-rating">
+               @foreach (range(1, 5) as $rating)
+                  <i class="star-rating-icon ci-star-filled @if ($product->average_rating >= $rating) active @endif">
+                  </i>
+               @endforeach
             </div>
          </div>
 

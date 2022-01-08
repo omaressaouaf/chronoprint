@@ -55,11 +55,11 @@ class Product extends Model
 
     public function getAverageRatingAttribute()
     {
-        $count = $this->reviews()->count();
-        if (empty($count)) return 0;
+        $count = $this->reviews->where("active", 1)->count();
+        if (empty($count))  return 0;
 
-        $sum = $this->reviews()->sum('rating');
-        return $sum / $count;
+        $sum = $this->reviews->where("active", 1)->sum('rating');
+        return round($sum / $count, 2);
     }
 
     public function getAttributeByName(string $attributeName): Attribute

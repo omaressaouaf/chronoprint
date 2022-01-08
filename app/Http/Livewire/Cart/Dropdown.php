@@ -7,7 +7,7 @@ use Livewire\Component;
 
 class Dropdown extends Component
 {
-    protected $listeners = ['cartChanged' => 'render'];
+    protected $listeners = ['cartChanged' => '$refresh'];
 
     public function render()
     {

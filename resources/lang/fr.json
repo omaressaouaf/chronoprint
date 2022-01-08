@@ -711,5 +711,7 @@
     "stars": "astérisques",
     "Reviews": "Avis",
     "Overall rating": "Avis globale",
-    "Thank you for your review. it's now under supervision": "Merci pour votre avis. c'est maintenant sous surveillance"
+    "Thank you for your review": "Merci pour votre avis",
+    "Login to review": "Connectez-vous pour évaluer",
+    "No reviews for this product" : "Pas d'avis pour ce produit"
 }

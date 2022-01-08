@@ -20,7 +20,7 @@ class CategoryController extends Controller
             $products = $category->products();
         }
 
-        $products = $products->filterProductsForShop(request("search"), request("sort"));
+        $products = $products->with("reviews")->filterProductsForShop(request("search"), request("sort"));
 
         return view("categories.show", compact("category", "products"));
     }

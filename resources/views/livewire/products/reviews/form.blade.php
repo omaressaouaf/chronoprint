@@ -24,15 +24,20 @@
                {{ __('Review') }}
                <span class="text-danger">*</span>
             </label>
-            <textarea wire:model.debounce.500ms="review"
+            <textarea wire:model.debounce.500ms="body"
                class="form-control"
                rows="6"
                required></textarea>
          </div>
-         <button class="btn btn-primary btn-shadow d-block w-100"
-            type="submit">
-            {{ __('Submit your review') }}
-         </button>
+         @auth
+            <button class="btn btn-primary btn-shadow d-block w-100"
+               type="submit">
+               {{ __('Submit your review') }}
+            </button>
+         @else
+            <a href="{{ route('login') }}"
+               class="btn btn-primary btn-shadow d-block w-100">{{__("Login to review")}}</a>
+         @endauth
       </form>
    </div>
 </div>

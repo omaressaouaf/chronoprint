@@ -17,7 +17,7 @@ class CreateReviewsTable extends Migration
             $table->id();
             $table->integer("rating")->min(1)->max(5);
             $table->text("body");
-            $table->boolean("approved")->default(1);
+            $table->boolean("active")->default(1);
             $table->foreignId("product_id")->constrained()->onDelete("cascade")->onUpdate("cascade");
             $table->foreignId("user_id")->constrained()->onDelete("cascade")->onUpdate("cascade");
             $table->timestamps();

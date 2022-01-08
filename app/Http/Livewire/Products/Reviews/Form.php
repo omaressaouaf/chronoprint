@@ -11,7 +11,12 @@ class Form extends Component
 
     public int $rating = 5;
 
-    public string $review = "";
+    public string $body = "";
+
+    protected $rules = [
+        "rating" => "required|numeric|min:1|max:5",
+        "body" => "required"
+    ];
 
     public function render()
     {
@@ -25,6 +30,23 @@ class Form extends Component
      */
     public function handleSubmit(): void
     {
-        session()->flash("success_message"  , __("Thank you for your review. it's now under supervision"));
+        if (!auth()->check()) {
+            redirect("login");
+            return;
+        }
+
+        $this->validate();
+
+        $this->product->reviews()->create([
+            "rating" => $this->rating,
+            "body" => $this->body,
+            "user_id" => auth()->id()
+        ]);
+
+        $this->rating = 5;
+        $this->body = "";
+
+        session()->flash("success_message", __("Thank you for your review"));
+        $this->emit("reviewAdded");
     }
 }
