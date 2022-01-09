@@ -730,5 +730,6 @@
     "if something wrong happened, you will be automatically reimbursed. To complete your payment, make sure that your card is active for online transactions. You have few minutes to complete your payment, otherwise the action will be automatically canceled" : "si quelque chose ne va pas, vous serez automatiquement remboursé. Pour finaliser votre paiement, assurez-vous que votre carte est active pour les transactions en ligne. Vous avez quelques minutes pour effectuer votre paiement, sinon l'action sera automatiquement annulée",
     "Add address"  :"Ajoutez adresse",
     "Phone" : "Téléphone",
-    "Address" : "Adresse"
+    "Address" : "Adresse",
+    "Billing email" : "Email de facturation"
 }

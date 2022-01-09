@@ -1,4 +1,6 @@
-<div class="page-title-overlap bg-accent-light pt-4">
+<div class="page-title-overlap bg-accent-light pt-4"
+   style="background: linear-gradient(#000000,#000000d5),url(/storage/theme/breadcrumb-bg.jpg);
+background-size: cover;">
    <div class="container d-lg-flex justify-content-between py-2 py-lg-3">
       <div class="order-lg-2 mb-3 mb-lg-0 pt-lg-2">
          <nav aria-label="breadcrumb">

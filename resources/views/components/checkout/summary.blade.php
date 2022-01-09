@@ -65,7 +65,7 @@
       </div>
    </div>
    <div class="px-3">
-      <div class="row pt-5 pb-3 px-3 bg-white rounded-3 mt-4 rounded-3 shadow-sm">
+      <div class="row pt-5 pb-3 px-3 mt-4 bg-white rounded-3 shadow-sm">
          <div class="mb-5">
             <div class="d-flex">
                <i class="ci-rocket text-primary"

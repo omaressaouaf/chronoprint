@@ -1,17 +1,19 @@
 <section class="col-lg-8">
    <!-- User info-->
    <div
-      class="d-sm-flex justify-content-between align-items-center bg-secondary p-4 rounded-3 mb-grid-gutter">
+      class="d-sm-flex justify-content-between align-items-center bg-white rounded-3 shadow-sm p-4 rounded-3 mb-grid-gutter">
       <div class="d-flex align-items-center">
-         <div class="img-thumbnail rounded-circle position-relative flex-shrink-0">
+         <div class="position-relative flex-shrink-0">
             <img class="rounded-circle"
                src="/storage/{{ auth()->user()->avatar }}"
                width="90"
                alt="{{ auth()->user()->name }}">
          </div>
          <div class="ps-3">
-            <h3 class="fs-base mb-0">{{ auth()->user()->name }}</h3>
-            <span class="text-accent fs-sm">{{ auth()->user()->email }}</span>
+            <h3 class="fs-base mb-1 text-capitalize">{{ auth()->user()->name }}</h3>
+            <span class="text-accent fs-sm">{{ auth()->user()->email }}
+               <span class="fs-xs"> ({{ __('Billing email') }})</span>
+            </span>
          </div>
       </div>
       <a class="btn btn-light btn-sm btn-shadow mt-3 mt-sm-0"
