@@ -65,14 +65,15 @@
       </div>
    </div>
    <div class="px-3">
-      <div class="row pt-5 pb-3 px-3 bg-accent-light rounded-3 mt-4">
+      <div class="row pt-5 pb-3 px-3 bg-white rounded-3 mt-4 rounded-3 shadow-sm">
          <div class="mb-5">
-            <div class="d-flex"><i class="ci-rocket text-primary"
+            <div class="d-flex">
+               <i class="ci-rocket text-primary"
                   style="font-size: 2.25rem;"></i>
                <div class="ps-3">
-                  <h6 class="fs-base text-light mb-1">
+                  <h6 class="fs-base mb-1">
                      Livraison rapide et gratuite à casablanca</h6>
-                  <p class="mb-0 fs-ms text-light opacity-50">
+                  <p class="mb-0 fs-ms text-muted">
                      Livraison gratuite si vous habitez à casablanca
                   </p>
                </div>
@@ -82,8 +83,8 @@
             <div class="d-flex"><i class="ci-currency-exchange text-primary"
                   style="font-size: 2.25rem;"></i>
                <div class="ps-3">
-                  <h6 class="fs-base text-light mb-1">Garantie de remboursement</h6>
-                  <p class="mb-0 fs-ms text-light opacity-50">
+                  <h6 class="fs-base mb-1">Garantie de remboursement</h6>
+                  <p class="mb-0 fs-ms text-muted">
                      Nous retournons l'argent dans les 30 jours
                   </p>
                </div>
@@ -93,8 +94,8 @@
             <div class="d-flex"><i class="ci-support text-primary"
                   style="font-size: 2.25rem;"></i>
                <div class="ps-3">
-                  <h6 class="fs-base text-light mb-1">Service client</h6>
-                  <p class="mb-0 fs-ms text-light opacity-50">
+                  <h6 class="fs-base mb-1">Service client</h6>
+                  <p class="mb-0 fs-ms text-muted">
                      Support client amical pour nos clients
                   </p>
                </div>
@@ -104,10 +105,11 @@
             <div class="d-flex"><i class="ci-card text-primary"
                   style="font-size: 2.25rem;"></i>
                <div class="ps-3">
-                  <h6 class="fs-base text-light mb-1">
+                  <h6 class="fs-base mb-1">
                      Paiement en ligne sécurisé avec CMI</h6>
-                  <p class="mb-0 fs-ms text-light opacity-50">
-                     Nous possédons un certificat SSL / Secure et utilisons la passerelle CMI pour une
+                  <p class="mb-0 fs-ms text-muted">
+                     Nous possédons un certificat SSL / Secure et utilisons la passerelle CMI pour
+                     une
                      grande sécurité
                   </p>
                </div>

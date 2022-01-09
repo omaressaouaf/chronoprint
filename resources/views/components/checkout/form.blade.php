@@ -33,7 +33,7 @@
                </select>
             </div>
             <div class="col-md-3 ps-md-0 mt-2 mt-md-0">
-               <button class="btn btn-primary w-100">Add address</button>
+               <button class="btn btn-primary w-100">{{ __('Add address') }}</button>
             </div>
          </div>
          <div class="px-4 py-3 border rounded-3 position-relative">
@@ -42,10 +42,13 @@
                   class="badge bg-success position-absolute top-0 end-0">{{ __('Free delivery') }}</span>
             </h6>
             <h6 class="mb-3">Omar Essaouaf</h6>
-            <p class="fs-sm mb-1"> <i class="ci-location me-2"></i>NR 75 RUE DAR EL MILOUDI A M
+            <p class="fs-sm mb-1"> <i class="ci-location me-2"></i>{{ __('Address') }}: NR 75
+               RUE DAR EL MILOUDI A M
                , CASABLANCA, Florida,</p>
-            <p class="fs-sm mb-1"><i class="ci-phone me-2"></i>Téléphone: 0625716365</p>
-            <p class="fs-sm"><i class="ci-mail me-2"></i>E-mail: souafomar@gmail.com</p>
+            <p class="fs-sm mb-1"><i class="ci-phone me-2"></i>{{ __('Phone') }}: 0625716365
+            </p>
+            <p class="fs-sm"><i class="ci-mail me-2"></i>{{ __('Email') }}:
+               souafomar@gmail.com</p>
          </div>
       </div>
    </div>
@@ -56,26 +59,41 @@
             <textarea class="form-control"
                id="fl-textarea"
                style="height: 120px;"
-               placeholder="{{ __('Write a comment or instruction about this order ...') }}"></textarea>
-            <label
-               for="fl-textarea">{{ __('Write a comment or instruction about this order ...') }}</label>
+               placeholder="{{ __('Write a comment or instructions about this order') }} ..."></textarea>
+            <label for="fl-textarea">{{ __('Write a comment or instructions about this order') }}
+               ...</label>
          </div>
       </div>
    </div>
-   <h6 class="pt-1 pb-3 mb-3 border-bottom">{{ __('Payment method') }}</h6>
+   <h6 class="pt-1 pb-3 mb-3 border-bottom">{{ __('Payment mode') }}</h6>
    <div class="row">
       <div class="col-md-12">
-         <div class="accordion mb-2"
-            id="payment-method">
+         <div x-data
+            class="accordion mb-2"
+            id="payment-mode">
             <div class="accordion-item">
-               <h3 class="accordion-header"><a class="accordion-button"
-                     href="#card"
-                     data-bs-toggle="collapse"><i
-                        class="ci-card fs-lg me-2 mt-n1 align-middle"></i>Pay
-                     with Credit Card</a></h3>
+               <h3 class="accordion-header">
+                  <a x-on:click="$refs.creditCard.checked = true"
+                     href="#credit-card-collapse"
+                     data-bs-toggle="collapse"
+                     class="accordion-button">
+                     <div class="form-check">
+                        <input class="form-check-input"
+                           checked
+                           type="radio"
+                           x-ref="creditCard"
+                           id="credit-card"
+                           name="payment_mode">
+                        <label class="form-check-label"
+                           for="credit-card">
+                           {{ __('Pay with credit card') }}
+                        </label>
+                     </div>
+                  </a>
+               </h3>
                <div class="accordion-collapse collapse show"
-                  id="card"
-                  data-bs-parent="#payment-method">
+                  id="credit-card-collapse"
+                  data-bs-parent="#payment-mode">
                   <div class="accordion-body">
                      <p class="fs-sm">{{ __('Secure online payment with CMI') }} :
                         <img class="d-inline-block align-middle ms-2"
@@ -118,26 +136,34 @@
                               type="submit">Submit</button>
                         </div>
                      </form>
-                     <p class="fs-sm">In the event of an incident, you will be
-                        automatically
-                        reimbursed.
-                        To complete your payment, make sure that your card is active for online
-                        transactions, that you know your PIN and that your phone is ready to receive
-                        an
-                        SMS from your Bank.
-                        You have 10 minutes to complete your payment, otherwise the action will be
-                        automatically canceled.</p>
+                     <p class="fs-sm">
+                        {{ __('if something wrong happened, you will be automatically reimbursed. To complete your payment, make sure that your card is active for online transactions. You have few minutes to complete your payment, otherwise the action will be automatically canceled') }}
+                     </p>
                   </div>
                </div>
             </div>
             <div class="accordion-item">
-               <h3 class="accordion-header"><a class="accordion-button collapsed"
-                     href="#points"
-                     data-bs-toggle="collapse"><i
-                        class="ci-delivery me-2"></i>{{ __('Cash on Delivery') }}</a></h3>
+               <h3 class="accordion-header">
+                  <a x-on:click="$refs.cash.checked = true"
+                     class="accordion-button collapsed"
+                     href="#cash-collapse"
+                     data-bs-toggle="collapse">
+                     <div class="form-check">
+                        <input class="form-check-input"
+                           type="radio"
+                           x-ref="cash"
+                           id="cash"
+                           name="payment_mode">
+                        <label class="form-check-label"
+                           for="cash">
+                           {{ __('Cash on delivery') }}
+                        </label>
+                     </div>
+                  </a>
+               </h3>
                <div class="accordion-collapse collapse"
-                  id="points"
-                  data-bs-parent="#payment-method">
+                  id="cash-collapse"
+                  data-bs-parent="#payment-mode">
                   <div class="accordion-body">
                      <p class="fs-sm">
                         {{ __('You will pay with cash once the order is confirmed and delivered to your doorsteps') }}
@@ -152,7 +178,7 @@
       <div class="col-md-12">
          <p class="fs-sm">
             <i class="ci-announcement me-2 text-info fw-bold"></i>
-            {{ __('I understand correctly that my document will be printed exactly as it appears here. I cannot make any changes once my order has been placed and I take full responsibility for any typographical or design errors.') }}
+            {{ __('I understand that my files will be printed exactly as it appears here. I cannot make any changes once my order has been placed and I take full responsibility for any of my design errors') }}
          </p>
       </div>
    </div>
