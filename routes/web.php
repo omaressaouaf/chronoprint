@@ -32,7 +32,13 @@ Route::get("/products/{product:slug}", [ProductController::class, "show"])->name
 
 Route::middleware(["auth"])->group(function () {
     // Account
-    Route::get('/account', [AccountController::class, 'index'])->name('account.index');
+    Route::prefix("account")->as("account.")->group(function () {
+        Route::get('/', [AccountController::class, 'index'])->name('index');
+        Route::get('/profile', [AccountController::class, 'profile'])->name('profile');
+        Route::put('/profile', [AccountController::class, 'updateProfile'])->name('profile.update');
+        Route::get('/password', [AccountController::class, 'password'])->name('password');
+        Route::put('/password', [AccountController::class, 'updatePassword'])->name('password.update');
+    });
 
     // Cart
     Route::view("/cart", "cart")->name("cart.index");

@@ -176,6 +176,8 @@ return [
         'name'                  => 'nom',
         'password'              => 'mot de passe',
         'password_confirmation' => 'confirmation du mot de passe',
+        "new_password" => "nouveau mot de passe",
+        "new_password_confirmation" => "confirmation du nouveau mot de passe",
         'phone'                 => 'téléphone',
         'second'                => 'seconde',
         'sex'                   => 'sexe',
