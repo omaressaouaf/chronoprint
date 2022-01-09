@@ -3,7 +3,7 @@
       <div class="collapse navbar-collapse"
          id="navbarCollapse">
          <div class="d-flex d-lg-none">
-            <x-products.search />
+            <x-products.search class="rounded" />
          </div>
 
          {{-- All categories- --}}

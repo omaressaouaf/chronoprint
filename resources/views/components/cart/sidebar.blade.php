@@ -56,7 +56,7 @@
          @endif
       </div>
       <a class="btn btn-primary btn-shadow d-block w-100 mt-4"
-         href="checkout-details.html">
+         href="{{ route('checkout.index') }}">
          <i class="ci-card fs-lg me-2"></i>
          {{ __('Proceed to checkout') }}
       </a>

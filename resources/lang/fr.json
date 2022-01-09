@@ -713,5 +713,9 @@
     "Overall rating": "Avis globale",
     "Thank you for your review": "Merci pour votre avis",
     "Login to review": "Connectez-vous pour évaluer",
-    "No reviews for this product" : "Pas d'avis pour ce produit"
+    "No reviews for this product": "Pas d'avis pour ce produit",
+    "Order summary": "Sommaire de la commande",
+    "Checkout": "Validation de commande",
+    "Edit profile" : "Editer le profil",
+    "Complete your order" : "Complétez votre commande"
 }

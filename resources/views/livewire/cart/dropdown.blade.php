@@ -63,7 +63,7 @@
                </div>
             </div>
             <a class="btn btn-primary btn-sm d-block w-100"
-               href="checkout-details.html">
+               href="{{ route('checkout.index') }}">
                <i class="ci-card me-2 fs-base align-middle"></i>{{ __('Proceed to checkout') }}
             </a>
          </div>

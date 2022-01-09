@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\Voyager\ProductController as VoyagerProductController;
 
 /**
@@ -19,9 +20,9 @@ Route::group(['prefix' => 'admin'], function () {
 /**
  * Front routes
  */
-Route::view('/', "home")->name("home");
-
 Auth::routes();
+
+Route::view('/', "home")->name("home");
 
 // Categories (shop)
 Route::get("/categories/{slug}", [CategoryController::class, "show"])->name("categories.show");
@@ -35,4 +36,8 @@ Route::middleware(["auth"])->group(function () {
 
     // Cart
     Route::view("/cart", "cart")->name("cart.index");
+
+    //checkout
+    Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+    Route::post("/checkout", [CheckoutController::class, "store"])->name("checkout.store");
 });
