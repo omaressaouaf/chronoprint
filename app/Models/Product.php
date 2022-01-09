@@ -2,15 +2,15 @@
 
 namespace App\Models;
 
-use App\Traits\HasMultiImages;
 use App\Models\AttributeProduct;
+use App\Traits\HasVoyagerMultiImages;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Product extends Model
 {
-    use HasFactory, HasMultiImages, Sluggable;
+    use HasFactory, HasVoyagerMultiImages, Sluggable;
 
     protected $casts = [
         'allowed_quantities' => 'array',

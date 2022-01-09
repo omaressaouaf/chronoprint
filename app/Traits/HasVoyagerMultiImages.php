@@ -2,7 +2,7 @@
 
 namespace App\Traits;
 
-trait HasMultiImages
+trait HasVoyagerMultiImages
 {
     /**
      * Get the first image path in an array of images prefixed with storage
@@ -11,7 +11,7 @@ trait HasMultiImages
      */
     public function getFirstImageAttribute(): string
     {
-        return $this->images  ? "\\storage\\" . json_decode($this->images)[0] : "/storage/products/placeholder.jpg";
+        return $this->images  ? "\\storage\\" . json_decode($this->images)[0] : "/storage/products/default.jpg";
     }
 
     /**
@@ -21,7 +21,7 @@ trait HasMultiImages
      */
     public function getAllImagesAttribute(): array
     {
-        if (!$this->images) return  ["/storage/products/placeholder.jpg"];
+        if (!$this->images) return  ["/storage/products/default.jpg"];
 
         $images = [];
 
