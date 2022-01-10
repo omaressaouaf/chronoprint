@@ -28,29 +28,46 @@
       <div class="col-sm-12">
          <div class="row mb-3">
             <div class="col-md-9">
-               <select class="form-select"
+               <select x-show="authUserAddresses.length"
+                  x-on:change="setSelectedAddress($event.target.value)"
+                  class="form-select"
                   id="checkout-country">
-                  <option>New York . main street No.223. souafomar@gmail.com</option>
-                  <option>New York . main street No.223. souafomar@gmail.com</option>
+                  <template x-for="address in authUserAddresses">
+                     <option x-text="address.city + ' ' + address.line + ' ' + address.phone"
+                        x-bind:value="address.id"
+                        class="text-capitalize">
+                     </option>
+                  </template>
                </select>
             </div>
             <div class="col-md-3 ps-md-0 mt-2 mt-md-0">
-               <button class="btn btn-primary w-100">{{ __('Add address') }}</button>
+               <button data-bs-target="#address-form-modal"
+                  data-bs-toggle="modal"
+                  class="btn btn-primary w-100">{{ __('Add address') }}</button>
+               <livewire:addresses.form />
             </div>
          </div>
-         <div class="px-4 py-3 border rounded-3 position-relative">
+         <div x-show="selectedAddress.id"
+            class="px-4 py-3 border rounded-3 position-relative">
             <h6>
-               <span
+               <span x-show="selectedAddress.city == 'casablanca'"
                   class="badge bg-success position-absolute top-0 end-0">{{ __('Free delivery') }}</span>
             </h6>
-            <h6 class="mb-3">Omar Essaouaf</h6>
-            <p class="fs-sm mb-1"> <i class="ci-location me-2"></i>{{ __('Address') }}: NR 75
-               RUE DAR EL MILOUDI A M
-               , CASABLANCA, Florida,</p>
-            <p class="fs-sm mb-1"><i class="ci-phone me-2"></i>{{ __('Phone') }}: 0625716365
+            <h6 x-text="selectedAddress.name"
+               class="mb-3">
+            </h6>
+            <p class="fs-sm mb-1"> <i class="ci-location me-2"></i>
+               {{ __('Address') }}:
+               <span
+                  x-text="selectedAddress.city + ' ' + selectedAddress.line + ' ' + selectedAddress.zip"
+                  class="text-capitalize"></span>
+            </p>
+            <p class="fs-sm mb-1"><i class="ci-phone me-2"></i>{{ __('Phone') }}:
+               <span x-text="selectedAddress.phone"></span>
             </p>
             <p class="fs-sm"><i class="ci-mail me-2"></i>{{ __('Email') }}:
-               souafomar@gmail.com</p>
+               <span x-text="selectedAddress.email"></span>
+            </p>
          </div>
       </div>
    </div>
@@ -139,7 +156,9 @@
                         </div>
                      </form>
                      <p class="fs-sm">
-                        {{ __('if something wrong happened, you will be automatically reimbursed. To complete your payment, make sure that your card is active for online transactions. You have few minutes to complete your payment, otherwise the action will be automatically canceled') }}
+                        {{ __('if something wrong happened, you will be automatically reimbursed. To complete your
+                                                                                                                                                                                                                                                                                                                                                                                                                                                payment, make sure that your card is active for online transactions. You have few minutes to
+                                                                                                                                                                                                                                                                                                                                                                                                                                                complete your payment, otherwise the action will be automatically canceled') }}
                      </p>
                   </div>
                </div>
@@ -180,7 +199,8 @@
       <div class="col-md-12">
          <p class="fs-sm">
             <i class="ci-announcement me-2 text-info fw-bold"></i>
-            {{ __('I understand that my files will be printed exactly as it appears here. I cannot make any changes once my order has been placed and I take full responsibility for any of my design errors') }}
+            {{ __('I understand that my files will be printed exactly as it appears here. I cannot make any changes once
+                                                                                                                                                                                                                        my order has been placed and I take full responsibility for any of my design errors') }}
          </p>
       </div>
    </div>

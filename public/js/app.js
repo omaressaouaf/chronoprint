@@ -6176,6 +6176,51 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./resources/js/alpine/checkout.js":
+/*!*****************************************!*\
+  !*** ./resources/js/alpine/checkout.js ***!
+  \*****************************************/
+/***/ (() => {
+
+Alpine.data("checkout", function (authUserAddresses) {
+  var _authUserAddresses$;
+
+  return {
+    authUserAddresses: authUserAddresses,
+    selectedAddress: (_authUserAddresses$ = authUserAddresses[0]) !== null && _authUserAddresses$ !== void 0 ? _authUserAddresses$ : {},
+    init: function init() {
+      var _this = this;
+
+      Livewire.on("addressAdded", function (newAddress) {
+        _this.authUserAddresses.unshift(newAddress);
+
+        _this.setSelectedAddress(newAddress.id);
+      });
+    },
+    setSelectedAddress: function setSelectedAddress(addressId) {
+      this.selectedAddress = this.authUserAddresses.find(function (address) {
+        return address.id == addressId;
+      });
+    }
+  };
+});
+
+/***/ }),
+
+/***/ "./resources/js/alpine/index.js":
+/*!**************************************!*\
+  !*** ./resources/js/alpine/index.js ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _checkout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./checkout */ "./resources/js/alpine/checkout.js");
+/* harmony import */ var _checkout__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_checkout__WEBPACK_IMPORTED_MODULE_0__);
+
+
+/***/ }),
+
 /***/ "./resources/js/app.js":
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
@@ -6185,6 +6230,10 @@ module.exports = {
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.esm.js");
+
+document.addEventListener("alpine:init", function () {
+  __webpack_require__(/*! ./alpine */ "./resources/js/alpine/index.js");
+});
 
 __webpack_require__(/*! ./theme */ "./resources/js/theme/index.js");
 

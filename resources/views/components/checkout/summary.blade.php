@@ -31,7 +31,7 @@
                </div>
             @endforeach
          </div>
-         <ul class="list-unstyled fs-sm pb-2 border-bottom">
+         <ul class="list-unstyled fs-sm">
             <li class="d-flex justify-content-between align-items-center">
                <span class="me-2">{{ __('Subtotal') }}:
                </span>
@@ -43,25 +43,42 @@
                <span class="text-end text-success">{{ $cart->discount_price }}<small>
                      Dhs</small></span>
             </li>
-            <li class="d-flex justify-content-between align-items-center">
+            <li x-bind:class="selectedAddress.city == 'casablanca' && 'text-success'"
+               class="d-flex justify-content-between align-items-center">
                <span class="me-2">{{ __('Delivery price') }}:
                </span>
-               <span class="text-end">{{ (float) setting('cart.delivery_price') }}<small>
-                     Dhs</small></span>
+               <span class="text-end">
+                  <span
+                     x-text="selectedAddress.city =='casablanca' ? 0 : {{ (float) setting('cart.delivery_price') }}">
+                  </span>
+                  <small>Dhs</small>
+               </span>
             </li>
             <li class="d-flex justify-content-between align-items-center">
                <span class="me-2">{{ __('TVA') }}:
                </span>
-               <span class="text-end">{{ $cart->getTaxPrice() }}<small> Dhs</small></span>
+               <span class="text-end">
+                  <span x-text="selectedAddress.city =='casablanca'
+                      ? {{ $cart->getTaxPrice() }}
+                      : {{ $cart->getTaxPrice(setting('cart.delivery_price')) }}">
+                  </span>
+                  <small> Dhs</small>
+               </span>
             </li>
             <li class="d-flex justify-content-between align-items-center">
                <span class="me-2 h6">{{ __('Total') }}:
                </span>
-               <span class="text-end h6">{{ $cart->getTotal() }}<small> Dhs</small></span>
+               <span class="text-end h6">
+                  <span x-text="selectedAddress.city =='casablanca'
+                  ? {{ $cart->getTotal() }}
+                  : {{ $cart->getTotal(setting('cart.delivery_price')) }}">
+                  </span>
+                  <small> Dhs</small>
+               </span>
             </li>
          </ul>
-         <h3 class="fw-normal text-center my-4">{{ $cart->getTotal() }}<small> Dhs TTC</small>
-         </h3>
+         {{-- <h3 class="fw-normal text-center my-4">{{ $cart->getTotal() }}<small> Dhs TTC</small>
+         </h3> --}}
       </div>
    </div>
    <div class="px-3">
