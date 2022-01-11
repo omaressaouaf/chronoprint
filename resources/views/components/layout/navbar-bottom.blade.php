@@ -94,6 +94,18 @@
                   </li>
                @endif
             @endforeach
+            @auth
+               <li class="nav-item d-lg-none">
+                  <form action="{{ route('logout') }}"
+                     method="POST">
+                     @csrf
+                     <button
+                        class="btn btn-link nav-link d-flex align-items-start justify-content-between gap-3">
+                        {{ __('Log out') }}
+                     </button>
+                  </form>
+               </li>
+            @endauth
          </ul>
       </div>
    </div>

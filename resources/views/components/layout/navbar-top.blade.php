@@ -23,7 +23,8 @@
          </a>
          <div class="account navbar-tool dropdown ms-1 ms-lg-0 me-n1 me-lg-2">
             <a class="d-flex align-items-center"
-               href="{{ auth()->check() ? route('account.index') : route('login') }}">
+               href="#"
+               data-bs-toggle="dropdown">
                <div class="navbar-tool-icon-box">
                   <i class="navbar-tool-icon ci-user"></i>
                </div>

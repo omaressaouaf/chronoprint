@@ -1,10 +1,12 @@
 <x-app-layout>
-   <x-layout.breadcrumb :active-page="__($activePage)">
-      <li class="breadcrumb-item text-nowrap">
-         <a href="{{ route('account.index') }}">
-            {{ __('Account') }}
-         </a>
-      </li>
+   <x-layout.breadcrumb :active-page="__($activePage ? $activePage : 'Account')">
+      @if ($activePage)
+         <li class="breadcrumb-item text-nowrap">
+            <a href="{{ route('account.index') }}">
+               {{ __('Account') }}
+            </a>
+         </li>
+      @endif
    </x-layout.breadcrumb>
 
    <div class="container pb-5 mb-2 mb-md-4">
