@@ -1,4 +1,4 @@
-<x-account-layout :title="__('Update your password')">
+<x-account-layout :title="__('Update your password')" active-page="Password">
    <form action="{{ route('account.password.update') }}"
       method="POST">
       @csrf

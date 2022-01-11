@@ -38,6 +38,8 @@ Route::middleware(["auth"])->group(function () {
         Route::put('/profile', [AccountController::class, 'updateProfile'])->name('profile.update');
         Route::get('/password', [AccountController::class, 'password'])->name('password');
         Route::put('/password', [AccountController::class, 'updatePassword'])->name('password.update');
+        Route::get('/addresses', [AccountController::class, 'addresses'])->name('addresses');
+        Route::delete('/addresses/{address}', [AccountController::class, 'destroyAddress'])->name('addresses.destroy');
     });
 
     // Cart

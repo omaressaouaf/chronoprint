@@ -728,7 +728,7 @@
     "You will pay with cash once the order is confirmed and delivered to your doorsteps": "Vous paierez en espèces une fois la commande confirmée et livrée à votre porte",
     "I understand that my files will be printed exactly as it appears here. I cannot make any changes once my order has been placed and I take full responsibility for any of my design errors": "Je comprends que mes fichiers seront imprimés exactement comme il apparaît ici. Je ne peux apporter aucune modification une fois ma commande passée et j'assume l'entière responsabilité de mes erreurs de conception",
     "if something wrong happened, you will be automatically reimbursed. To complete your payment, make sure that your card is active for online transactions. You have few minutes to complete your payment, otherwise the action will be automatically canceled": "si quelque chose ne va pas, vous serez automatiquement remboursé. Pour finaliser votre paiement, assurez-vous que votre carte est active pour les transactions en ligne. Vous avez quelques minutes pour effectuer votre paiement, sinon l'action sera automatiquement annulée",
-    "Add address": "Ajoutez l'adresse",
+    "Add address": "Ajoutez une adresse",
     "Phone": "Téléphone",
     "Address": "Adresse",
     "Billing email": "Email de facturation",
@@ -744,5 +744,6 @@
     "City": "Ville",
     "ZIP code": "Code postal",
     "Address Line": "Ligne d'adresse",
-    "Address added successfully": "Adresse ajoutée avec succès"
+    "Address added successfully": "Adresse ajoutée avec succès",
+    "Manage your delivery addresses": "Gérer vos adresses de livraison"
 }

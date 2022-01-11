@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Address;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -50,5 +51,24 @@ class AccountController extends Controller
         $authUser->save();
 
         return back()->with('success_message', __('Updated successfully'));
+    }
+
+    public function addresses()
+    {
+        /** @var \App\Models\User */
+        $authUser =  auth()->user();
+
+        return view("account.addresses", [
+            "addresses" => $authUser->addresses()->latest()->get()
+        ]);
+    }
+
+    public function destroyAddress(Address $address)
+    {
+        $this->authorize("delete_address", $address);
+
+        $address->delete();
+
+        return back();
     }
 }

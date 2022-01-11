@@ -1,4 +1,4 @@
-<x-account-layout :title="__('Update your profile info')">
+<x-account-layout :title="__('Update your profile info')" active-page="Profile">
    <form action="{{ route('account.profile.update') }}"
       method="POST">
       @csrf

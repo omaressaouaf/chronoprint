@@ -33,7 +33,7 @@
                   class="form-select"
                   id="checkout-country">
                   <template x-for="address in authUserAddresses">
-                     <option x-text="address.city + ' ' + address.line + ' ' + address.phone"
+                     <option x-text="address.city + ', ' + address.line + ', ' + address.phone"
                         x-bind:value="address.id"
                         class="text-capitalize">
                      </option>
@@ -44,8 +44,8 @@
                <button data-bs-target="#address-form-modal"
                   data-bs-toggle="modal"
                   class="btn btn-primary w-100">{{ __('Add address') }}</button>
-               <livewire:addresses.form />
             </div>
+            <livewire:addresses.form />
          </div>
          <div x-show="selectedAddress.id"
             class="px-4 py-3 border rounded-3 position-relative">
@@ -59,7 +59,7 @@
             <p class="fs-sm mb-1"> <i class="ci-location me-2"></i>
                {{ __('Address') }}:
                <span
-                  x-text="selectedAddress.city + ' ' + selectedAddress.line + ' ' + selectedAddress.zip"
+                  x-text="selectedAddress.city + ', ' + selectedAddress.line + ', ' + selectedAddress.zip"
                   class="text-capitalize"></span>
             </p>
             <p class="fs-sm mb-1"><i class="ci-phone me-2"></i>{{ __('Phone') }}:
@@ -157,8 +157,8 @@
                      </form>
                      <p class="fs-sm">
                         {{ __('if something wrong happened, you will be automatically reimbursed. To complete your
-                                                                                                                                                                                                                                                                                                                                                                                                                                                payment, make sure that your card is active for online transactions. You have few minutes to
-                                                                                                                                                                                                                                                                                                                                                                                                                                                complete your payment, otherwise the action will be automatically canceled') }}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                payment, make sure that your card is active for online transactions. You have few minutes to
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                complete your payment, otherwise the action will be automatically canceled') }}
                      </p>
                   </div>
                </div>
@@ -199,8 +199,7 @@
       <div class="col-md-12">
          <p class="fs-sm">
             <i class="ci-announcement me-2 text-info fw-bold"></i>
-            {{ __('I understand that my files will be printed exactly as it appears here. I cannot make any changes once
-                                                                                                                                                                                                                        my order has been placed and I take full responsibility for any of my design errors') }}
+            {{ __('I understand that my files will be printed exactly as it appears here. I cannot make any changes once my order has been placed and I take full responsibility for any of my design errors') }}
          </p>
       </div>
    </div>

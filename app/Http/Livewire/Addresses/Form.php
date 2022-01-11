@@ -6,6 +6,8 @@ use Livewire\Component;
 
 class Form extends Component
 {
+    public bool $shouldEmit = true;
+
     public string $name = "";
 
     public string $phone = "";
@@ -32,6 +34,11 @@ class Form extends Component
         return view('livewire.addresses.form');
     }
 
+    public function mount(bool $shouldEmit)
+    {
+        $this->shouldEmit = $shouldEmit;
+    }
+
     /**
      * Adds an address
      *
@@ -56,6 +63,10 @@ class Form extends Component
 
         session()->flash("success_message", __("Address added successfully"));
 
-        $this->emit("addressAdded", $address);
+        if ($this->shouldEmit) {
+            $this->emit("addressAdded", $address);
+        } else {
+            redirect()->route("account.addresses");
+        }
     }
 }

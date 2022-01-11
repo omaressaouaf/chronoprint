@@ -1,8 +1,8 @@
 <x-app-layout>
-   <x-layout.breadcrumb :active-page="__('Profile')">
+   <x-layout.breadcrumb :active-page="__($activePage)">
       <li class="breadcrumb-item text-nowrap">
          <a href="{{ route('account.index') }}">
-            {{ __('Profile') }}
+            {{ __('Account') }}
          </a>
       </li>
    </x-layout.breadcrumb>
@@ -56,7 +56,7 @@
                      </li>
                      <li class="border-bottom mb-0">
                         <a class="nav-link-style d-flex align-items-center px-4 py-3 {{ request()->is('account/addresses') ? 'active' : '' }}"
-                           href="account-address.html">
+                           href="{{ route('account.addresses') }}">
                            <i class="ci-location opacity-60 me-2"></i>{{ __('Addresses') }}
                         </a>
                      </li>
