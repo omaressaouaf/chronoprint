@@ -34,7 +34,7 @@ class Form extends Component
         return view('livewire.addresses.form');
     }
 
-    public function mount(bool $shouldEmit)
+    public function mount(bool $shouldEmit = true)
     {
         $this->shouldEmit = $shouldEmit;
     }

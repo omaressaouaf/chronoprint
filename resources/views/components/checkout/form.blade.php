@@ -17,7 +17,7 @@
          </div>
       </div>
       <a class="btn btn-light btn-sm btn-shadow mt-3 mt-sm-0"
-         href="account-profile.html">
+         href="{{ route('account.profile') }}">
          <i class="ci-edit me-2"></i>
          {{ __('Edit profile') }}
       </a>
@@ -157,8 +157,8 @@
                      </form>
                      <p class="fs-sm">
                         {{ __('if something wrong happened, you will be automatically reimbursed. To complete your
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                payment, make sure that your card is active for online transactions. You have few minutes to
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                complete your payment, otherwise the action will be automatically canceled') }}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        payment, make sure that your card is active for online transactions. You have few minutes to
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        complete your payment, otherwise the action will be automatically canceled') }}
                      </p>
                   </div>
                </div>
