@@ -21,7 +21,7 @@ class CreateOrderItemsTable extends Migration
             $table->boolean("design_by_company")->default(0);
             $table->text("design_information")->nullable();
             $table->foreignId("order_id")->constrained()->onDelete("cascade")->onUpdate("cascade");
-            $table->foreignId("product_id")->constrained()->onDelete("set null")->onUpdate("cascade");
+            $table->foreignId("product_id")->nullable()->constrained()->onDelete("set null")->onUpdate("cascade");
             $table->timestamps();
         });
     }

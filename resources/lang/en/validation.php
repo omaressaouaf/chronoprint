@@ -189,6 +189,7 @@ return [
         "selectedOptionsRequiredFiles.*" => "required file",
         "designFiles.*"  => "design file",
         "selectedOptionsRequiredFiles" => "required files",
-        "designFiles" => "files"
+        "designFiles" => "files",
+        "address_id" => "address"
     ],
 ];

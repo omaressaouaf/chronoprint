@@ -22,190 +22,161 @@
          {{ __('Edit profile') }}
       </a>
    </div>
-
-   <h6 class="pt-1 pb-3 mb-3 border-bottom">{{ __('Delivery address') }}</h6>
-   <div class="row mb-4">
-      <div class="col-sm-12">
-         <div class="row mb-3">
-            <div class="col-md-9">
-               <select x-show="authUserAddresses.length"
-                  x-on:change="setSelectedAddress($event.target.value)"
-                  class="form-select"
-                  id="checkout-country">
-                  <template x-for="address in authUserAddresses">
-                     <option x-text="address.city + ', ' + address.line + ', ' + address.phone"
-                        x-bind:value="address.id"
-                        class="text-capitalize">
-                     </option>
-                  </template>
-               </select>
+   <form action="/checkout"
+      method="POST">
+      @csrf
+      <x-base.alerts />
+      <h6 class="pt-1 pb-3 mb-3 border-bottom">{{ __('Delivery address') }}</h6>
+      <div class="row mb-4">
+         <div class="col-sm-12">
+            <div class="row mb-3">
+               <div class="col-md-9">
+                  <select x-show="authUserAddresses.length"
+                     x-on:change="setSelectedAddress($event.target.value)"
+                     name="address_id"
+                     class="form-select"
+                     id="checkout-country">
+                     <template x-for="address in authUserAddresses">
+                        <option x-text="address.city + ', ' + address.line + ', ' + address.phone"
+                           x-bind:value="address.id"
+                           class="text-capitalize">
+                        </option>
+                     </template>
+                  </select>
+               </div>
+               <div class="col-md-3 ps-md-0 mt-2 mt-md-0">
+                  <button data-bs-target="#address-form-modal"
+                     data-bs-toggle="modal"
+                     type="button"
+                     class="btn btn-primary w-100">{{ __('Add address') }}</button>
+               </div>
             </div>
-            <div class="col-md-3 ps-md-0 mt-2 mt-md-0">
-               <button data-bs-target="#address-form-modal"
-                  data-bs-toggle="modal"
-                  class="btn btn-primary w-100">{{ __('Add address') }}</button>
+            <div x-show="selectedAddress.id"
+               class="px-4 py-3 border rounded-3 position-relative">
+               <h6>
+                  <span x-show="selectedAddress.city == 'casablanca'"
+                     class="badge bg-success position-absolute top-0 end-0">{{ __('Free delivery') }}</span>
+               </h6>
+               <h6 x-text="selectedAddress.name"
+                  class="mb-3">
+               </h6>
+               <p class="fs-sm mb-1"> <i class="ci-location me-2"></i>{{ __('Address') }}:
+                  <span
+                     x-text="selectedAddress.city + ', ' + selectedAddress.line + ', ' + selectedAddress.zip"
+                     class="text-capitalize"></span>
+               </p>
+               <p class="fs-sm mb-1"><i class="ci-phone me-2"></i>{{ __('Phone') }}:
+                  <span x-text="selectedAddress.phone"></span>
+               </p>
+               <p class="fs-sm"><i class="ci-mail me-2"></i>{{ __('Email') }}:
+                  <span x-text="selectedAddress.email"></span>
+               </p>
             </div>
-            <livewire:addresses.form />
-         </div>
-         <div x-show="selectedAddress.id"
-            class="px-4 py-3 border rounded-3 position-relative">
-            <h6>
-               <span x-show="selectedAddress.city == 'casablanca'"
-                  class="badge bg-success position-absolute top-0 end-0">{{ __('Free delivery') }}</span>
-            </h6>
-            <h6 x-text="selectedAddress.name"
-               class="mb-3">
-            </h6>
-            <p class="fs-sm mb-1"> <i class="ci-location me-2"></i>
-               {{ __('Address') }}:
-               <span
-                  x-text="selectedAddress.city + ', ' + selectedAddress.line + ', ' + selectedAddress.zip"
-                  class="text-capitalize"></span>
-            </p>
-            <p class="fs-sm mb-1"><i class="ci-phone me-2"></i>{{ __('Phone') }}:
-               <span x-text="selectedAddress.phone"></span>
-            </p>
-            <p class="fs-sm"><i class="ci-mail me-2"></i>{{ __('Email') }}:
-               <span x-text="selectedAddress.email"></span>
-            </p>
          </div>
       </div>
-   </div>
-   <h6 class="pt-1 pb-3 mb-3 border-bottom">{{ __('Additional information') }}</h6>
-   <div class="row mb-4">
-      <div class="col-sm-12">
-         <div class="form-floating">
-            <textarea class="form-control"
-               id="fl-textarea"
-               style="height: 120px;"
-               placeholder="{{ __('Write a comment or instructions about this order') }} ..."></textarea>
-            <label for="fl-textarea">{{ __('Write a comment or instructions about this order') }}
-               ...</label>
+      <h6 class="pt-1 pb-3 mb-3 border-bottom">{{ __('Additional information') }}</h6>
+      <div class="row mb-4">
+         <div class="col-sm-12">
+            <div class="form-floating">
+               <textarea name="additional_information"
+                  class="form-control"
+                  id="fl-textarea"
+                  style="height: 120px;"
+                  placeholder="{{ __('Write a comment or instructions about this order') }} ..."></textarea>
+               <label
+                  for="fl-textarea">{{ __('Write a comment or instructions about this order') }}
+                  ...</label>
+            </div>
          </div>
       </div>
-   </div>
-   <h6 class="pt-1 pb-3 mb-3 border-bottom">{{ __('Payment mode') }}</h6>
-   <div class="row">
-      <div class="col-md-12">
-         <div x-data
-            class="accordion mb-2"
-            id="payment-mode">
-            <div class="accordion-item">
-               <h3 class="accordion-header">
-                  <a x-on:click="$refs.creditCard.checked = true"
-                     href="#credit-card-collapse"
-                     data-bs-toggle="collapse"
-                     class="accordion-button">
-                     <div class="form-check">
-                        <input class="form-check-input"
-                           checked
-                           type="radio"
-                           x-ref="creditCard"
+      <h6 class="pt-1 pb-3 mb-3 border-bottom">{{ __('Payment mode') }}</h6>
+      <div class="row">
+         <div class="col-md-12">
+            <div class="accordion mb-2"
+               id="payment-mode">
+               <div class="accordion-item border-bottom">
+                  <div class="accordion-header border-bottom p-3">
+                     <div class="form-check"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#credit-card-collapse"
+                        aria-expanded="true">
+                        <input name="payment_mode"
+                           value="credit_card"
                            id="credit-card"
-                           name="payment_mode">
-                        <label class="form-check-label"
+                           class="form-check-input"
+                           type="radio"
+                           checked>
+                        <label class="form-check-label fw-medium"
                            for="credit-card">
                            {{ __('Pay with credit card') }}
+                           <i class="ci-card text-muted fs-lg mt-n1 ms-2"></i>
                         </label>
                      </div>
-                  </a>
-               </h3>
-               <div class="accordion-collapse collapse show"
-                  id="credit-card-collapse"
-                  data-bs-parent="#payment-mode">
-                  <div class="accordion-body">
-                     <p class="fs-sm">{{ __('Secure online payment with CMI') }} :
-                        <img class="d-inline-block align-middle ms-2"
-                           src="/storage/theme/cards.png"
-                           width="187"
-                           alt="Cerdit Cards">
-                     </p>
-                     <div class="credit-card-wrapper"></div>
-                     <form class="credit-card-form row d-none">
-                        <div class="mb-3 col-sm-6">
-                           <input class="form-control"
-                              type="text"
-                              name="number"
-                              placeholder="Card Number"
-                              required>
-                        </div>
-                        <div class="mb-3 col-sm-6">
-                           <input class="form-control"
-                              type="text"
-                              name="name"
-                              placeholder="Full Name"
-                              required>
-                        </div>
-                        <div class="mb-3 col-sm-3">
-                           <input class="form-control"
-                              type="text"
-                              name="expiry"
-                              placeholder="MM/YY"
-                              required>
-                        </div>
-                        <div class="mb-3 col-sm-3">
-                           <input class="form-control"
-                              type="text"
-                              name="cvc"
-                              placeholder="CVC"
-                              required>
-                        </div>
-                        <div class="col-sm-6">
-                           <button class="btn btn-outline-primary d-block w-100 mt-0"
-                              type="submit">Submit</button>
-                        </div>
-                     </form>
-                     <p class="fs-sm">
-                        {{ __('if something wrong happened, you will be automatically reimbursed. To complete your
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        payment, make sure that your card is active for online transactions. You have few minutes to
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        complete your payment, otherwise the action will be automatically canceled') }}
-                     </p>
+                  </div>
+                  <div class="accordion-collapse collapse show"
+                     id="credit-card-collapse"
+                     data-bs-parent="#payment-mode">
+                     <div class="accordion-body">
+                        <p class="fs-sm">{{ __('Secure online payment with CMI') }} :
+                           <img class="d-inline-block align-middle ms-2"
+                              src="/storage/theme/cards.png"
+                              width="187"
+                              alt="Cerdit Cards">
+                        </p>
+                        <img src="/storage/theme/credit_card.svg"
+                           width="300"
+                           height="300"
+                           class="mb-3"
+                           alt="carte bancaire">
+                        <p class="fs-sm">
+                           {{ __('if something wrong happened, you will be automatically reimbursed. To complete your payment, make sure that your card is active for online transactions. You have few minutes to complete your payment, otherwise the action will be automatically canceled') }}
+                        </p>
+                     </div>
                   </div>
                </div>
-            </div>
-            <div class="accordion-item">
-               <h3 class="accordion-header">
-                  <a x-on:click="$refs.cash.checked = true"
-                     class="accordion-button collapsed"
-                     href="#cash-collapse"
-                     data-bs-toggle="collapse">
-                     <div class="form-check">
-                        <input class="form-check-input"
-                           type="radio"
-                           x-ref="cash"
+               <div class="accordion-item">
+                  <div class="accordion-header border-bottom p-3">
+                     <div class="form-check"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#cash-collapse"
+                        aria-expanded="true">
+                        <input name="payment_mode"
+                           value="cash"
                            id="cash"
-                           name="payment_mode">
-                        <label class="form-check-label"
+                           class="form-check-input"
+                           type="radio">
+                        <label class="form-check-label fw-medium"
                            for="cash">
                            {{ __('Cash on delivery') }}
+                           <i class="ci-delivery text-muted fs-lg mt-n1 ms-2"></i>
                         </label>
                      </div>
-                  </a>
-               </h3>
-               <div class="accordion-collapse collapse"
-                  id="cash-collapse"
-                  data-bs-parent="#payment-mode">
-                  <div class="accordion-body">
-                     <p class="fs-sm">
-                        {{ __('You will pay with cash once the order is confirmed and delivered to your doorsteps') }}
-                     </p>
+                  </div>
+                  <div class="accordion-collapse collapse"
+                     id="cash-collapse"
+                     data-bs-parent="#payment-mode">
+                     <div class="accordion-body">
+                        <p class="fs-sm">
+                           {{ __('You will pay with cash once the order is confirmed and delivered to your doorsteps') }}
+                        </p>
+                     </div>
                   </div>
                </div>
             </div>
          </div>
       </div>
-   </div>
-   <div class="row mt-4 px-1">
-      <div class="col-md-12">
-         <p class="fs-sm">
-            <i class="ci-announcement me-2 text-info fw-bold"></i>
-            {{ __('I understand that my files will be printed exactly as it appears here. I cannot make any changes once my order has been placed and I take full responsibility for any of my design errors') }}
-         </p>
+      <div class="row mt-4 px-1">
+         <div class="col-md-12">
+            <p class="fs-sm">
+               <i class="ci-announcement me-2 text-info fw-bold"></i>
+               {{ __('I understand that my files will be printed exactly as it appears here. I cannot make any changes once my order has been placed and I take full responsibility for any of my design errors') }}
+            </p>
+         </div>
       </div>
-   </div>
-   <button type="submit"
-      class="btn btn-primary d-block w-100 mt-4">
-      {{ __('Complete your order') }}
-   </button>
-
+      <button type="submit"
+         class="btn btn-primary d-block w-100 mt-4">
+         {{ __('Complete your order') }}
+      </button>
+   </form>
+   <livewire:addresses.form />
 </section>

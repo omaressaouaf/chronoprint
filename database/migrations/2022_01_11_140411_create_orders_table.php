@@ -27,9 +27,10 @@ class CreateOrdersTable extends Migration
             $table->float("delivery_price");
             $table->float("tax_price");
             $table->float("total");
-            $table->enum("status", ["pending", "processing", "shipped", "delivered", "cancelled", "failed"]);
+            $table->enum("status", ["pending", "processing", "shipped", "delivered", "cancelled", "failed"])->default("pending");
             $table->enum("payment_mode", ["cash", "credit_card"]);
             $table->boolean("paid")->default(0);
+            $table->text("additional_information")->nullable();
             $table->foreignId("user_id")->nullable()->constrained()->onDelete("set null")->onUpdate("cascade");
             $table->timestamps();
         });

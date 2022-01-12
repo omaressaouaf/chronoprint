@@ -26,7 +26,7 @@ import filterList from "./components/filter-list";
 import dataFilter from "./components/data-filter";
 import labelUpdate from "./components/label-update";
 import radioTab from "./components/radio-tab";
-import creditCard from "./components/credit-card";
+// import creditCard from "./components/credit-card";
 import masterCheckbox from "./components/master-checkbox";
 
 

@@ -14,6 +14,25 @@ use Illuminate\Support\Facades\Log;
 class CartService
 {
     /**
+     * Gets the current auth user cart
+     *
+     * @return App\Models\Cart
+     *
+     * @throws \Exception
+     */
+    public static function getAuthUserCart(): Cart
+    {
+        if (!auth()->check()) {
+            throw new Exception("getAuthUserCart needs an authenticated user");
+        }
+
+        return auth()->user()->cart ?? Cart::create([
+            "subtotal" => 0.00,
+            "user_id" => auth()->id()
+        ]);
+    }
+
+    /**
      * Adds item to the auth user's cart
      *
      * @param array $itemData
@@ -123,24 +142,5 @@ class CartService
         ]);
 
         return ["msg_type" => "success_message", "msg_content" => __("The coupon has been applied successfully")];
-    }
-
-    /**
-     * Gets the current auth user cart
-     *
-     * @return App\Models\Cart
-     *
-     * @throws \Exception
-     */
-    public static function getAuthUserCart(): Cart
-    {
-        if (!auth()->check()) {
-            throw new Exception("getAuthUserCart needs an authenticated user");
-        }
-
-        return auth()->user()->cart ?? Cart::create([
-            "subtotal" => 0.00,
-            "user_id" => auth()->id()
-        ]);
     }
 }

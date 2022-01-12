@@ -18,9 +18,26 @@ class Media extends Model
         return $this->morphTo();
     }
 
-    public function getPublicPathAttribute()
+    public function getPublicPathAttribute(): string
     {
         return "/storage/$this->path";
+    }
+
+    /**
+     * Moves the media item to a new model and location
+     *
+     * @param Illuminate\Database\Eloquent\Model $model
+     * @return void
+     */
+    public function moveToModel(Model $model): void
+    {
+        $newPath = $model->mediaRootFolderPath() . "/" . $this->filename;
+        Storage::disk("public")->move($this->path, $newPath);
+
+        $this->model_type = $model::class;
+        $this->model_id = $model->id;
+        $this->path = $newPath;
+        $this->save();
     }
 
     /**

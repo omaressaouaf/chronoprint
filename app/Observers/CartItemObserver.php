@@ -7,8 +7,6 @@ use App\Models\CartItem;
 
 class CartItemObserver
 {
-    public $afterCommit = true;
-
     /**
      * Increase mutation type
      *
@@ -56,7 +54,7 @@ class CartItemObserver
 
         $newSubtotal = $mutationType === static::$INCREASE_SUBTOTAL
             ?  $cart->subtotal + $cartItem->subtotal
-            : $cart->subtotal  - $cartItem->subtotal;
+            : $cart->subtotal - $cartItem->subtotal;
 
         $cart->update([
             "subtotal" => $newSubtotal

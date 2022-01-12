@@ -17,7 +17,7 @@
                <div class="dropdown-menu px-2 pb-4"
                   style="min-width:65vw">
                   <a href="{{ route('categories.show', ['slug' => 'all']) }}">
-                     <h6 class="fs-base ps-2 mt-2">
+                     <h6 class="fs-base ps-lg-2 mt-2">
                         {{ __('All products') }}
                      </h6>
                   </a>

@@ -46,6 +46,9 @@ Route::middleware(["auth"])->group(function () {
     Route::view("/cart", "cart")->name("cart.index");
 
     //checkout
-    Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
-    Route::post("/checkout", [CheckoutController::class, "store"])->name("checkout.store");
+    Route::prefix("checkout")->as("checkout.")->group(function () {
+        Route::get('/', [CheckoutController::class, 'index'])->name('index');
+        Route::post("/", [CheckoutController::class, "store"])->name("store");
+        Route::get("/complete", [CheckoutController::class, "complete"])->name("complete");
+    });
 });
