@@ -3,9 +3,10 @@
 namespace App\Traits;
 
 use App\Models\Media;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 trait HasMedia
 {
@@ -28,8 +29,10 @@ trait HasMedia
     public static function bootHasMedia(): void
     {
         static::deleted(function ($model) {
-            Storage::disk("public")->deleteDirectory($model->mediaRootFolderPath());
-            Media::where("model_id", $model->id)->delete();
+            DB::afterCommit(function () use($model) {
+                Storage::disk("public")->deleteDirectory($model->mediaRootFolderPath());
+                Media::where("model_id", $model->id)->delete();
+            });
         });
     }
 

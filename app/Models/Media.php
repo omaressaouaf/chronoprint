@@ -41,6 +41,26 @@ class Media extends Model
     }
 
     /**
+     * Copies the media item to a new model and location
+     *
+     * @param Illuminate\Database\Eloquent\Model $model
+     * @return void
+     */
+    public function copyToModel(Model $model): void
+    {
+        $newPath = $model->mediaRootFolderPath() . "/" . $this->filename;
+        Storage::disk("public")->copy($this->path, $newPath);
+
+        $newMediaItem = $this->replicate(["model_type", "model_id", "path"])->fill([
+            "model_type" => $model::class,
+            "model_id" => $model->id,
+            "path" => $newPath
+        ]);
+
+        $newMediaItem->save();
+    }
+
+    /**
      * The "booted" method of the model.
      *
      * @return void

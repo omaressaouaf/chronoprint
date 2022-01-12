@@ -54,7 +54,7 @@ class CheckoutService
                 $orderItem = $order->items()->create($orderItemData);
 
                 foreach ($cartItem->media as $mediaItem) {
-                    $mediaItem->moveToModel($orderItem);
+                    $mediaItem->copyToModel($orderItem);
                 }
 
                 $cartItem->delete();

@@ -1,5 +1,6 @@
 <div class="topbar topbar-dark bg-accent"
-     style="min-height: 70px">
+     style="min-height: 70px"
+     >
     <div class="container">
         <div class="topbar-text text-nowrap d-inline-block"><i class="ci-support"></i><span
                   class="text-muted me-1 d-none d-lg-inline">{{ __('Customer support') }}</span><a
