@@ -3,6 +3,7 @@
 namespace App\View\Components\Layout;
 
 use App\Models\CategoryGroup;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\View\Component;
 
 class NavbarBottom extends Component
