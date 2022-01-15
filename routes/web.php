@@ -7,13 +7,17 @@ use App\Http\Controllers\AccountController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\Voyager\InvoiceController;
 use App\Http\Controllers\Voyager\ProductController as VoyagerProductController;
 
 /**
  * Admin routes
  */
-Route::group(['prefix' => 'admin'], function () {
-    Route::put("/products/{product}/attributes", [VoyagerProductController::class, "syncAttributes"]);
+Route::prefix("admin")->group(function () {
+    Route::middleware("auth")->group(function() {
+        Route::put("/products/{product}/attributes", [VoyagerProductController::class, "syncAttributes"]);
+        Route::get("/invoices/{order}" , InvoiceController::class)->name("invoices.index");
+    });
     Voyager::routes();
 });
 

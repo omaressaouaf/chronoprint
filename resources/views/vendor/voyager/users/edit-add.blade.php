@@ -50,6 +50,11 @@
                                 <input type="email" class="form-control" id="email" name="email" placeholder="{{ __('voyager::generic.email') }}"
                                        value="{{ old('email', $dataTypeContent->email ?? '') }}">
                             </div>
+                            <div class="form-group">
+                                <label for="phone">Téléphone</label>
+                                <input  class="form-control" id="phone" name="phone" placeholder="Téléphone"
+                                       value="{{ old('phone', $dataTypeContent->phone ?? '') }}">
+                            </div>
 
                             <div class="form-group">
                                 <label for="password">{{ __('voyager::generic.password') }}</label>

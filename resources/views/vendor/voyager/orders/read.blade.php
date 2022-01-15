@@ -8,6 +8,9 @@
       <i class="{{ $dataType->icon }}"></i> {{ __('voyager::generic.viewing') }}
       {{ ucfirst($dataType->getTranslatedAttribute('display_name_singular')) }} &nbsp;
 
+      <a rel="noopener" target="_blank" href="{{route("invoices.index" , ["order" => $order->id])}}" class="btn btn-danger mr-2">
+         <i class="glyphicon glyphicon-print mr-1"></i> <span class="hidden-xs hidden-sm">Facture</span>
+      </a>
       @can('edit', $dataTypeContent)
          <a href="{{ route('voyager.' . $dataType->slug . '.edit', $dataTypeContent->getKey()) }}"
             class="btn btn-info">
@@ -131,12 +134,13 @@
                            @endif
                            @if (count($orderItem->media))
                               <hr>
-                              <button class="btn btn-link font-weight-bold p-0" data-toggle="collapse"
-                                 data-target="#files-collapse-{{$orderItem->id}}">
+                              <button class="btn btn-link font-weight-bold p-0"
+                                 data-toggle="collapse"
+                                 data-target="#files-collapse-{{ $orderItem->id }}">
                                  <u class="text-info">Les fichiers pour ce produit</u>
                               </button>
 
-                              <div id="files-collapse-{{$orderItem->id}}"
+                              <div id="files-collapse-{{ $orderItem->id }}"
                                  class="collapse mt-3">
                                  @foreach ($orderItem->media as $mediaItem)
                                     <div>
@@ -208,7 +212,7 @@
             <div class="card mt-4">
                <div class="card-body">
                   <div class="d-flex align-items-center justify-content-between">
-                     <h4>Client</h4>
+                     <h4>Commander par</h4>
                   </div>
                   <hr>
                   <div>
@@ -224,20 +228,34 @@
                                  {{ $order->user->name }}
                               </a>
                            </u>
+                           @if($order->user->email)
                            <p class="mt-2 text-muted">Email de facturation :
                               {{ $order->user->email }}
                            </p>
+                           @endif
                         </div>
                      </div>
                   </div>
                   <hr>
-                  <h5>Adresse</h5>
-                  <p><i class="voyager-mail"></i> {{ $order->address_email }}</p>
-                  <p><i class="voyager-phone"></i> {{ $order->address_phone }} </p>
-                  <p><i class="voyager-location"></i>
-                     {{ $order->address_city }}, {{ $order->address_line }},
-                     {{ $order->address_zip }}
-                  </p>
+                  <h5 class="mb-4">Adresse de livraison</h5>
+                  <div class="font-weight-bold">
+                     <p>
+                        <i class="voyager-person mr-2"></i>{{ $order->address_name }}
+                     </p>
+                     <p>
+                        <i class="voyager-phone mr-2"></i>{{ $order->address_phone }}
+                     </p>
+                     @if ($order->address_email)
+                        <p>
+                           <i class="voyager-mail mr-2"></i>{{ $order->address_email }}
+                        </p>
+                     @endif
+                     <p>
+                        <i class="voyager-location mr-1"></i>
+                        {{ ucwords($order->address_city) }}, {{ $order->address_line }},
+                        {{ $order->address_zip }}
+                     </p>
+                  </div>
                </div>
             </div>
             @if ($order->additional_information)
