@@ -18,9 +18,6 @@
     <link rel="shortcut icon" href="{{ Voyager::image($admin_favicon) }}" type="image/png">
     @endif
 
-    <!-- Scripts -->
-    <script src="{{ asset('voyager/js/app.js') }}" defer></script>
-
     <!-- App CSS -->
     <link rel="stylesheet" href="{{ voyager_asset('css/app.css') }}">
 

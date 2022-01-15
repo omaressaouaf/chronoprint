@@ -33,7 +33,7 @@ class CheckoutService
             $deliveryPrice = $authUserAddress->city === 'casablanca' ? 0 : (float)setting("cart.delivery_price");
 
             $order = $authUser->orders()->create([
-                'address_name' => $authUserAddress->email,
+                'address_name' => $authUserAddress->name,
                 "address_phone" => $authUserAddress->phone,
                 'address_email' => $authUserAddress->email,
                 "address_city" => $authUserAddress->city,

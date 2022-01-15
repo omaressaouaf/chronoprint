@@ -749,8 +749,16 @@
     "Checkout your orders": "Voir vos commandes",
     "Account menu": "Menu du compte",
     "Thank you for your order": "Nous vous remercions de votre commande",
-    "Your order has been placed and will be processed as soon as possible" : "Votre commande a été passée et sera traitée dans les plus brefs délais",
-    "You will be receiving an email shortly with confirmation of your order" : "Vous recevrez un email sous peu avec la confirmation de votre commande",
-    "Go back shopping" : "Retourner pour acheter",
-    "Unknown" : "Inconnue"
+    "Your order has been placed and will be processed as soon as possible": "Votre commande a été passée et sera traitée dans les plus brefs délais",
+    "You will be receiving an email shortly with confirmation of your order": "Vous recevrez un email sous peu avec la confirmation de votre commande",
+    "Go back shopping": "Retourner pour acheter",
+    "Unknown": "Inconnue",
+    "pending": "en attente",
+    "processing" : "en traitement",
+    "shipped" : "expédié",
+    "delivered" : "livré",
+    "cancelled" : "annulé",
+    "failed" : "manqué",
+    "cash": "en espèces",
+    "credit_card": "carte bancaire"
 }
