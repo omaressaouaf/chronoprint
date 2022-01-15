@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 15, 2022 at 07:14 PM
+-- Generation Time: Jan 15, 2022 at 07:52 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.11
 
@@ -119,13 +119,6 @@ CREATE TABLE `carts` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `carts`
---
-
-INSERT INTO `carts` (`id`, `subtotal`, `discount_price`, `coupon_code`, `user_id`, `created_at`, `updated_at`) VALUES
-(45, 0.00, 0.00, NULL, 1, '2022-01-15 12:57:44', '2022-01-15 12:57:44');
 
 -- --------------------------------------------------------
 
@@ -358,7 +351,7 @@ INSERT INTO `data_rows` (`id`, `data_type_id`, `field`, `type`, `display_name`, 
 (108, 11, 'created_at', 'timestamp', 'Passé à', 0, 1, 1, 0, 0, 1, '{}', 20),
 (109, 11, 'updated_at', 'timestamp', 'Updated At', 0, 0, 0, 0, 0, 0, '{}', 21),
 (110, 11, 'order_belongsto_user_relationship', 'relationship', 'Commander par', 0, 0, 1, 0, 0, 1, '{\"model\":\"App\\\\Models\\\\User\",\"table\":\"users\",\"type\":\"belongsTo\",\"column\":\"user_id\",\"key\":\"id\",\"label\":\"email\",\"pivot_table\":\"addresses\",\"pivot\":\"0\",\"taggable\":\"0\"}', 3),
-(111, 1, 'phone', 'text', 'Téléphone', 1, 1, 1, 1, 1, 1, '{}', 5);
+(111, 1, 'phone', 'text', 'Téléphone', 1, 1, 1, 1, 1, 1, '{\"validation\":{\"rule\":\"unique:users\"}}', 5);
 
 -- --------------------------------------------------------
 
@@ -389,7 +382,7 @@ CREATE TABLE `data_types` (
 --
 
 INSERT INTO `data_types` (`id`, `name`, `slug`, `display_name_singular`, `display_name_plural`, `icon`, `model_name`, `policy_name`, `controller`, `description`, `generate_permissions`, `server_side`, `details`, `created_at`, `updated_at`) VALUES
-(1, 'users', 'users', 'Utilisateur', 'Utilisateurs', 'voyager-person', 'TCG\\Voyager\\Models\\User', 'TCG\\Voyager\\Policies\\UserPolicy', 'TCG\\Voyager\\Http\\Controllers\\VoyagerUserController', NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"desc\",\"default_search_key\":null,\"scope\":null}', '2021-12-15 19:47:30', '2022-01-15 16:53:49'),
+(1, 'users', 'users', 'Utilisateur', 'Utilisateurs', 'voyager-person', 'TCG\\Voyager\\Models\\User', 'TCG\\Voyager\\Policies\\UserPolicy', 'TCG\\Voyager\\Http\\Controllers\\VoyagerUserController', NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"desc\",\"default_search_key\":null,\"scope\":null}', '2021-12-15 19:47:30', '2022-01-15 17:49:28'),
 (2, 'menus', 'menus', 'Menu', 'Menus', 'voyager-list', 'TCG\\Voyager\\Models\\Menu', NULL, '', '', 1, 0, NULL, '2021-12-15 19:47:30', '2021-12-15 19:47:30'),
 (3, 'roles', 'roles', 'Rôle', 'Rôles', 'voyager-lock', 'TCG\\Voyager\\Models\\Role', NULL, 'TCG\\Voyager\\Http\\Controllers\\VoyagerRoleController', NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"desc\",\"default_search_key\":null,\"scope\":null}', '2021-12-15 19:47:30', '2022-01-14 16:09:49'),
 (4, 'categories', 'categories', 'Catégorie', 'Catégories', 'voyager-categories', 'App\\Models\\Category', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2021-12-15 19:49:46', '2022-01-14 16:08:30'),
@@ -434,19 +427,6 @@ CREATE TABLE `media` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `media`
---
-
-INSERT INTO `media` (`id`, `model_type`, `model_id`, `name`, `filename`, `path`, `mime_type`, `size`, `created_at`, `updated_at`) VALUES
-(151, 'App\\Models\\OrderItem', 53, '0', 'kXBamvyhBcM0j9Tl7UojLbTPuypIWT7n89t2Yq2E.jpg', 'orderItems/53/kXBamvyhBcM0j9Tl7UojLbTPuypIWT7n89t2Yq2E.jpg', 'image/jpeg', 32898, '2022-01-12 20:58:41', '2022-01-12 20:58:41'),
-(152, 'App\\Models\\OrderItem', 53, '1', 'BAgwIwGAwOLjBOsjHZkIyE2vEcrp9DTPKHtFZdGH.jpg', 'orderItems/53/BAgwIwGAwOLjBOsjHZkIyE2vEcrp9DTPKHtFZdGH.jpg', 'image/jpeg', 264822, '2022-01-12 20:58:41', '2022-01-12 20:58:41'),
-(153, 'App\\Models\\OrderItem', 53, '2', 'QHsfZQvQCLSUn2rRCkcyYmhD2z2EVgRr0pbWodq7.jpg', 'orderItems/53/QHsfZQvQCLSUn2rRCkcyYmhD2z2EVgRr0pbWodq7.jpg', 'image/jpeg', 181697, '2022-01-12 20:58:41', '2022-01-12 20:58:41'),
-(155, 'App\\Models\\OrderItem', 54, '0', 'zVVFSy1uKuZmeKbSmvtbUT3NWGEdT0Wfgn0RdtpW.jpg', 'orderItems/54/zVVFSy1uKuZmeKbSmvtbUT3NWGEdT0Wfgn0RdtpW.jpg', 'image/jpeg', 31373, '2022-01-14 13:23:43', '2022-01-14 13:23:43'),
-(159, 'App\\Models\\OrderItem', 55, 'recto', 'tR8VORUJN7rUBCybCvbImY9sGRCrHEyS7Gsp1g0v.jpg', 'orderItems/55/tR8VORUJN7rUBCybCvbImY9sGRCrHEyS7Gsp1g0v.jpg', 'image/jpeg', 215773, '2022-01-15 11:40:50', '2022-01-15 11:40:50'),
-(160, 'App\\Models\\OrderItem', 55, 'verso', 'EAALzCIa7CMmULEeRHWYbMPMHO1H4mM03LrdhlXH.jpg', 'orderItems/55/EAALzCIa7CMmULEeRHWYbMPMHO1H4mM03LrdhlXH.jpg', 'image/jpeg', 284256, '2022-01-15 11:40:50', '2022-01-15 11:40:50'),
-(161, 'App\\Models\\OrderItem', 56, '0', 'W4x6KwE4rx8XVAQ10thmGIw7rIAj5yikMRtA8bSG.pdf', 'orderItems/56/W4x6KwE4rx8XVAQ10thmGIw7rIAj5yikMRtA8bSG.pdf', 'application/pdf', 549834, '2022-01-15 11:40:50', '2022-01-15 11:40:50');
 
 -- --------------------------------------------------------
 
@@ -603,16 +583,6 @@ CREATE TABLE `orders` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `orders`
---
-
-INSERT INTO `orders` (`id`, `address_name`, `address_phone`, `address_email`, `address_city`, `address_zip`, `address_line`, `subtotal`, `discount_price`, `coupon_code`, `delivery_price`, `tax_price`, `total`, `status`, `payment_mode`, `paid`, `additional_information`, `user_id`, `created_at`, `updated_at`) VALUES
-(78, 'Omar essaouaf', '+212625716365', 'souafomar@gmail.com', 'casablanca', '20000', 'NR 75 RUE DAR EL MILOUDI A M , CASABLANCA, Florida', 110.00, 0.00, NULL, 0.00, 22.00, 132.00, 'delivered', 'credit_card', 0, 'some extra info', 1, '2022-01-12 20:58:41', '2022-01-14 20:15:21'),
-(79, 'Salah bidaouia', '+212625736524', 'jagerefyky@mailinator.com', 'afourar', '20000', 'Fifth street', 310.00, 62.00, '-20off', 39.00, 57.40, 344.40, 'processing', 'cash', 1, NULL, 1, '2022-01-14 13:23:00', '2022-01-14 20:24:27'),
-(80, 'omar essaouaf', '+212625716365', 'souafomar@gmail.com', 'casablanca', '20000', 'NR 75 RUE DAR EL MILOUDI A M , CASABLANCA, Florida', 410.00, 0.00, NULL, 0.00, 82.00, 492.00, 'pending', 'credit_card', 0, 'i want my order delivered afternoon', 1, '2022-01-15 11:40:50', '2022-01-15 11:40:50'),
-(81, 'Test', '222', 'test@gmail.com', 'casablanca', '20000', 'New york fifth street', 310.00, 0.00, NULL, 0.00, 62.00, 372.00, 'pending', 'credit_card', 0, NULL, NULL, '2022-01-15 16:57:34', '2022-01-15 16:57:34');
-
 -- --------------------------------------------------------
 
 --
@@ -631,17 +601,6 @@ CREATE TABLE `order_items` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `order_items`
---
-
-INSERT INTO `order_items` (`id`, `quantity`, `subtotal`, `selected_options`, `design_by_company`, `design_information`, `order_id`, `product_id`, `created_at`, `updated_at`) VALUES
-(53, 100, 110.00, '{\"size\":\"514ac787-1a7b-4b3c-8dc5-e85d32e13b91AqrOzwwpx5\",\"material\":\"784887c7-86a5-4b46-b3dd-d041c2cb8368aegwWJSQR3\",\"papier\":\"fd926107-f388-4f58-8373-e5e6709fcaa7PGIXIouR3g\",\"type_de_coin\":\"d68254a4-70f3-4ccc-aa7f-f103c65c2a2cj4UMpE46Dd\",\"impression\":\"0734d37c-21f7-4cdd-8423-2a59393a9a1drBPfU5zhP0\"}', 1, 'brand info', 78, 22, '2022-01-12 20:58:41', '2022-01-12 20:58:41'),
-(54, 100, 310.00, '{\"size\":\"42a272c2-3c01-4c09-b4f3-d056234594d7mpjN5kmIxT\",\"impression\":\"f6b6fdee-3a0a-4883-bf1d-5e7661612db3MD1sSeNCLT\",\"papier\":\"b04bb509-8bcb-402c-98ac-a976dd4f6ba3DWs6vGRJn5\",\"type_de_coin\":\"c51900d1-ba2b-45eb-8755-974485b75bebevDa90suZY\"}', 1, 'brand info : sourceup email : sourceup@gmail.com phone : 2434', 79, 31, '2022-01-14 13:23:43', '2022-01-14 13:23:43'),
-(55, 100, 300.00, '{\"size\":\"42a272c2-3c01-4c09-b4f3-d056234594d7mpjN5kmIxT\",\"impression\":\"1b919a16-9682-4aae-ba13-4cb2cad76355MmAYJ5hSg7\",\"papier\":\"b04bb509-8bcb-402c-98ac-a976dd4f6ba3DWs6vGRJn5\",\"type_de_coin\":\"c51900d1-ba2b-45eb-8755-974485b75bebevDa90suZY\"}', 0, '', 80, 31, '2022-01-15 11:40:50', '2022-01-15 11:40:50'),
-(56, 100, 110.00, '{\"size\":\"514ac787-1a7b-4b3c-8dc5-e85d32e13b91AqrOzwwpx5\",\"material\":\"784887c7-86a5-4b46-b3dd-d041c2cb8368aegwWJSQR3\",\"papier\":\"fd926107-f388-4f58-8373-e5e6709fcaa7PGIXIouR3g\",\"type_de_coin\":\"d68254a4-70f3-4ccc-aa7f-f103c65c2a2cj4UMpE46Dd\",\"impression\":\"0734d37c-21f7-4cdd-8423-2a59393a9a1drBPfU5zhP0\"}', 1, 'Brand info : sourceup', 80, 22, '2022-01-15 11:40:50', '2022-01-15 11:40:50'),
-(57, 100, 310.00, '{\"size\":\"42a272c2-3c01-4c09-b4f3-d056234594d7mpjN5kmIxT\",\"impression\":\"f6b6fdee-3a0a-4883-bf1d-5e7661612db3MD1sSeNCLT\",\"papier\":\"b04bb509-8bcb-402c-98ac-a976dd4f6ba3DWs6vGRJn5\",\"type_de_coin\":\"c51900d1-ba2b-45eb-8755-974485b75bebevDa90suZY\"}', 1, '', 81, 31, '2022-01-15 16:57:34', '2022-01-15 16:57:34');
 
 -- --------------------------------------------------------
 
@@ -1009,7 +968,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `role_id`, `name`, `email`, `phone`, `avatar`, `email_verified_at`, `password`, `remember_token`, `settings`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Omar Essaouaf', 'omar@gmail.com', '+212 55 4 92 23 90', 'users/default.png', NULL, '$2y$10$FOIQztJ7gw2njjftxHGvJ.OyEGW6V8Xtc.fznfO6UaN6h8TBZZvkC', 'ENk5CdcnUnQly75Ke3y6y3i6Q7o0GUcqqw40S8nbQGGTe3YhoEfB1IZuxl5A', NULL, '2021-12-15 19:48:01', '2022-01-09 16:16:11');
+(1, 1, 'Omar Essaouaf', 'omar@gmail.com', '+212 55 4 92 23 90', 'users/default.png', NULL, '$2y$10$FOIQztJ7gw2njjftxHGvJ.OyEGW6V8Xtc.fznfO6UaN6h8TBZZvkC', 'VI4zbJFvpGq8kyFiR4hFzsku6jozhlgTTanxiDRtrVkdAjCLHfMsyimAnGfb', NULL, '2021-12-15 19:48:01', '2022-01-09 16:16:11'),
+(5, 2, 'Keely Navarro', 'rupaqyr@mailinator.com', '+1 (761) 659-3092', 'users/default.png', NULL, '$2y$10$UMlyASkPd1.uRUcGxUhDXOh6xjuwjmtup04mb4XTHGEQ9USCB4LRq', NULL, NULL, '2022-01-15 17:47:27', '2022-01-15 17:47:27'),
+(6, 2, 'Declan Kennedy', 'fuwecihony@mailinator.com', '+1 (649) 881-8307', 'users/default.png', NULL, '$2y$10$XEB7IDvhyr0Km1qi/wgsP.IldlqSn47rMosDjNlvas9/hu2mR44x2', NULL, NULL, '2022-01-15 17:48:16', '2022-01-15 17:49:47');
 
 -- --------------------------------------------------------
 
@@ -1242,6 +1203,7 @@ ALTER TABLE `translations`
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `users_email_unique` (`email`),
+  ADD UNIQUE KEY `phone` (`phone`),
   ADD KEY `users_role_id_foreign` (`role_id`);
 
 --
@@ -1290,7 +1252,7 @@ ALTER TABLE `carts`
 -- AUTO_INCREMENT for table `cart_items`
 --
 ALTER TABLE `cart_items`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=145;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=147;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -1332,7 +1294,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `media`
 --
 ALTER TABLE `media`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=162;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=172;
 
 --
 -- AUTO_INCREMENT for table `menus`
@@ -1356,13 +1318,13 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
 
 --
 -- AUTO_INCREMENT for table `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- AUTO_INCREMENT for table `permissions`
@@ -1416,7 +1378,7 @@ ALTER TABLE `translations`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `variants`
