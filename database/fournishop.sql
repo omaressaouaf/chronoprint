@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 08, 2022 at 04:39 PM
+-- Generation Time: Jan 15, 2022 at 07:14 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.11
 
@@ -20,6 +20,33 @@ SET time_zone = "+00:00";
 --
 -- Database: `fournishop`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `addresses`
+--
+
+CREATE TABLE `addresses` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `city` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `line` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `zip` int(11) DEFAULT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `addresses`
+--
+
+INSERT INTO `addresses` (`id`, `name`, `phone`, `email`, `city`, `line`, `zip`, `user_id`, `created_at`, `updated_at`) VALUES
+(40, 'omar essaouaf', '+212625716365', 'souafomar@gmail.com', 'casablanca', 'NR 75 RUE DAR EL MILOUDI A M , CASABLANCA, Florida', 20000, 1, '2022-01-12 15:18:03', '2022-01-12 15:18:03'),
+(41, 'Albert Einstein', '+212625736524', 'jagerefyky@mailinator.com', 'afourar', 'Fifth street', 20000, 1, '2022-01-12 15:20:07', '2022-01-12 15:20:07');
 
 -- --------------------------------------------------------
 
@@ -71,7 +98,11 @@ INSERT INTO `attribute_product` (`id`, `attribute_id`, `product_id`, `options`, 
 (289, 60, 22, '[{\"name\":\"mat\",\"price\":0,\"requiredFilesProperties\":[],\"ref\":\"784887c7-86a5-4b46-b3dd-d041c2cb8368aegwWJSQR3\"},{\"name\":\"sync\",\"price\":0.3,\"requiredFilesProperties\":[],\"ref\":\"43e74b4a-eef3-42de-a8fb-23f8613d48e4w4veH8mqIC\"}]', NULL, NULL),
 (290, 63, 22, '[{\"name\":\"standard\",\"price\":0,\"requiredFilesProperties\":[],\"ref\":\"fd926107-f388-4f58-8373-e5e6709fcaa7PGIXIouR3g\"},{\"name\":\"Rigide\",\"price\":0.2,\"requiredFilesProperties\":[],\"ref\":\"14e8ff8e-8bc1-4a4c-9fe1-061b95fc636cmr84OSnLvW\"}]', NULL, NULL),
 (291, 64, 22, '[{\"name\":\"normal\",\"price\":0,\"requiredFilesProperties\":[],\"ref\":\"d68254a4-70f3-4ccc-aa7f-f103c65c2a2cj4UMpE46Dd\"},{\"name\":\"teron\",\"price\":0.1,\"requiredFilesProperties\":[],\"ref\":\"89f5834c-de3a-4d5a-a375-7a58dd3e2addipyCO220wc\"}]', NULL, NULL),
-(292, 61, 22, '[{\"name\":\"recto\",\"price\":0,\"requiredFilesProperties\":[{\"name\":\"recto\"}],\"ref\":\"0734d37c-21f7-4cdd-8423-2a59393a9a1drBPfU5zhP0\"},{\"name\":\"recto verso\",\"price\":0,\"requiredFilesProperties\":[{\"name\":\"recto\"},{\"name\":\"verso\"}],\"ref\":\"4623588f-4b1d-4ac8-b420-7c7c0a4f1a0eiRYySidnhU\"}]', NULL, NULL);
+(292, 61, 22, '[{\"name\":\"recto\",\"price\":0,\"requiredFilesProperties\":[{\"name\":\"recto\"}],\"ref\":\"0734d37c-21f7-4cdd-8423-2a59393a9a1drBPfU5zhP0\"},{\"name\":\"recto verso\",\"price\":0,\"requiredFilesProperties\":[{\"name\":\"recto\"},{\"name\":\"verso\"}],\"ref\":\"4623588f-4b1d-4ac8-b420-7c7c0a4f1a0eiRYySidnhU\"}]', NULL, NULL),
+(297, 59, 31, '[{\"name\":\"10cm\",\"price\":2,\"ref\":\"42a272c2-3c01-4c09-b4f3-d056234594d7mpjN5kmIxT\"},{\"name\":\"20cm\",\"price\":22,\"ref\":\"32b91dba-3a65-4884-91d8-6f4218e546bdFeFZDoNS14\"}]', NULL, NULL),
+(298, 61, 31, '[{\"name\":\"recto\",\"price\":0,\"requiredFilesProperties\":[{\"name\":\"Recto\"}],\"ref\":\"f6b6fdee-3a0a-4883-bf1d-5e7661612db3MD1sSeNCLT\"},{\"name\":\"recto verso\",\"price\":0,\"requiredFilesProperties\":[{\"name\":\"recto\"},{\"name\":\"verso\"}],\"ref\":\"1b919a16-9682-4aae-ba13-4cb2cad76355MmAYJ5hSg7\"}]', NULL, NULL),
+(299, 63, 31, '[{\"name\":\"standard\",\"price\":0,\"requiredFilesProperties\":[],\"ref\":\"b04bb509-8bcb-402c-98ac-a976dd4f6ba3DWs6vGRJn5\"},{\"name\":\"Rigide\",\"price\":0.2,\"requiredFilesProperties\":[],\"ref\":\"7896dee8-6248-4093-977e-4ee9b2850463CRucBEz0Mz\"}]', NULL, NULL),
+(300, 64, 31, '[{\"name\":\"normal\",\"price\":0,\"requiredFilesProperties\":[],\"ref\":\"c51900d1-ba2b-45eb-8755-974485b75bebevDa90suZY\"},{\"name\":\"teron\",\"price\":0.1,\"requiredFilesProperties\":[],\"ref\":\"fb877013-11e5-41c8-9470-e2e3088479c3NZXfR6BQn1\"}]', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -94,7 +125,7 @@ CREATE TABLE `carts` (
 --
 
 INSERT INTO `carts` (`id`, `subtotal`, `discount_price`, `coupon_code`, `user_id`, `created_at`, `updated_at`) VALUES
-(14, 100.00, 20.00, '-20off', 1, '2022-01-07 12:57:18', '2022-01-08 13:32:35');
+(45, 0.00, 0.00, NULL, 1, '2022-01-15 12:57:44', '2022-01-15 12:57:44');
 
 -- --------------------------------------------------------
 
@@ -114,14 +145,6 @@ CREATE TABLE `cart_items` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `cart_items`
---
-
-INSERT INTO `cart_items` (`id`, `quantity`, `subtotal`, `selected_options`, `design_by_company`, `design_information`, `cart_id`, `product_id`, `created_at`, `updated_at`) VALUES
-(113, 57, 85.00, '[]', 0, '', 14, 30, '2022-01-07 13:06:40', '2022-01-07 16:31:30'),
-(115, 100, 120.00, '{\"size\":\"514ac787-1a7b-4b3c-8dc5-e85d32e13b91AqrOzwwpx5\",\"material\":\"784887c7-86a5-4b46-b3dd-d041c2cb8368aegwWJSQR3\",\"papier\":\"14e8ff8e-8bc1-4a4c-9fe1-061b95fc636cmr84OSnLvW\",\"type_de_coin\":\"d68254a4-70f3-4ccc-aa7f-f103c65c2a2cj4UMpE46Dd\",\"impression\":\"4623588f-4b1d-4ac8-b420-7c7c0a4f1a0eiRYySidnhU\"}', 0, '', 14, 22, '2022-01-07 13:35:02', '2022-01-08 13:32:35');
 
 -- --------------------------------------------------------
 
@@ -313,7 +336,29 @@ INSERT INTO `data_rows` (`id`, `data_type_id`, `field`, `type`, `display_name`, 
 (85, 10, 'created_at', 'timestamp', 'Créé à', 0, 1, 1, 0, 0, 0, '{}', 9),
 (86, 10, 'updated_at', 'timestamp', 'Updated At', 0, 0, 0, 0, 0, 0, '{}', 10),
 (88, 10, 'review_belongsto_product_relationship', 'relationship', 'Produit', 0, 1, 1, 0, 0, 0, '{\"model\":\"App\\\\Models\\\\Product\",\"table\":\"products\",\"type\":\"belongsTo\",\"column\":\"product_id\",\"key\":\"id\",\"label\":\"title\",\"pivot_table\":\"attribute_product\",\"pivot\":\"0\",\"taggable\":\"0\"}', 7),
-(89, 10, 'review_belongsto_user_relationship', 'relationship', 'Utilisateur', 0, 1, 1, 0, 0, 0, '{\"model\":\"App\\\\Models\\\\User\",\"table\":\"users\",\"type\":\"belongsTo\",\"column\":\"user_id\",\"key\":\"id\",\"label\":\"name\",\"pivot_table\":\"attribute_product\",\"pivot\":\"0\",\"taggable\":\"0\"}', 8);
+(89, 10, 'review_belongsto_user_relationship', 'relationship', 'Utilisateur', 0, 1, 1, 0, 0, 0, '{\"model\":\"App\\\\Models\\\\User\",\"table\":\"users\",\"type\":\"belongsTo\",\"column\":\"user_id\",\"key\":\"id\",\"label\":\"name\",\"pivot_table\":\"attribute_product\",\"pivot\":\"0\",\"taggable\":\"0\"}', 8),
+(90, 11, 'id', 'text', 'ID', 1, 1, 1, 0, 0, 1, '{}', 1),
+(91, 11, 'address_name', 'text', 'Nom', 1, 1, 1, 0, 0, 1, '{}', 4),
+(92, 11, 'address_phone', 'text', 'Téléphone', 1, 1, 1, 0, 0, 1, '{}', 5),
+(93, 11, 'address_email', 'text', 'Email', 1, 1, 1, 0, 0, 1, '{}', 6),
+(94, 11, 'address_city', 'text', 'Ville', 1, 1, 1, 0, 0, 1, '{}', 7),
+(95, 11, 'address_zip', 'number', 'Code postal', 1, 0, 1, 0, 0, 1, '{}', 8),
+(96, 11, 'address_line', 'text_area', 'Adresse Ligne', 1, 1, 1, 0, 0, 1, '{}', 9),
+(97, 11, 'subtotal', 'number', 'Total HT', 1, 1, 1, 0, 0, 1, '{}', 10),
+(98, 11, 'discount_price', 'number', 'Remise', 1, 0, 1, 0, 0, 1, '{}', 11),
+(99, 11, 'coupon_code', 'text', 'Coupon utilisé', 0, 0, 1, 0, 0, 1, '{}', 12),
+(100, 11, 'delivery_price', 'number', 'Prix de livraison', 1, 0, 1, 0, 0, 1, '{}', 13),
+(101, 11, 'tax_price', 'number', 'Prix de TVA', 1, 0, 1, 0, 0, 1, '{}', 14),
+(102, 11, 'total', 'number', 'Total TTC', 1, 1, 1, 0, 0, 1, '{}', 15),
+(103, 11, 'status', 'select_dropdown', 'Statut', 1, 1, 1, 1, 0, 1, '{\"options\":{\"pending\":\"en attente\",\"processing\":\"en traitement\",\"shipped\":\"exp\\u00e9di\\u00e9\",\"delivered\":\"livr\\u00e9\",\"cancelled\":\"annul\\u00e9\"}}', 16),
+(104, 11, 'payment_mode', 'text', 'Mode de paiement', 1, 1, 1, 0, 0, 1, '{}', 17),
+(105, 11, 'paid', 'checkbox', 'Payé', 1, 1, 1, 1, 0, 1, '{\"on\":\"oui\",\"off\":\"non\",\"checked\":true}', 18),
+(106, 11, 'additional_information', 'text', 'Information additionnelle', 0, 0, 1, 0, 0, 1, '{}', 19),
+(107, 11, 'user_id', 'text', 'User Id', 0, 0, 1, 0, 0, 1, '{}', 2),
+(108, 11, 'created_at', 'timestamp', 'Passé à', 0, 1, 1, 0, 0, 1, '{}', 20),
+(109, 11, 'updated_at', 'timestamp', 'Updated At', 0, 0, 0, 0, 0, 0, '{}', 21),
+(110, 11, 'order_belongsto_user_relationship', 'relationship', 'Commander par', 0, 0, 1, 0, 0, 1, '{\"model\":\"App\\\\Models\\\\User\",\"table\":\"users\",\"type\":\"belongsTo\",\"column\":\"user_id\",\"key\":\"id\",\"label\":\"email\",\"pivot_table\":\"addresses\",\"pivot\":\"0\",\"taggable\":\"0\"}', 3),
+(111, 1, 'phone', 'text', 'Téléphone', 1, 1, 1, 1, 1, 1, '{}', 5);
 
 -- --------------------------------------------------------
 
@@ -344,15 +389,16 @@ CREATE TABLE `data_types` (
 --
 
 INSERT INTO `data_types` (`id`, `name`, `slug`, `display_name_singular`, `display_name_plural`, `icon`, `model_name`, `policy_name`, `controller`, `description`, `generate_permissions`, `server_side`, `details`, `created_at`, `updated_at`) VALUES
-(1, 'users', 'users', 'User', 'Users', 'voyager-person', 'TCG\\Voyager\\Models\\User', 'TCG\\Voyager\\Policies\\UserPolicy', 'TCG\\Voyager\\Http\\Controllers\\VoyagerUserController', NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"desc\",\"default_search_key\":null,\"scope\":null}', '2021-12-15 19:47:30', '2021-12-16 23:52:56'),
+(1, 'users', 'users', 'Utilisateur', 'Utilisateurs', 'voyager-person', 'TCG\\Voyager\\Models\\User', 'TCG\\Voyager\\Policies\\UserPolicy', 'TCG\\Voyager\\Http\\Controllers\\VoyagerUserController', NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"desc\",\"default_search_key\":null,\"scope\":null}', '2021-12-15 19:47:30', '2022-01-15 16:53:49'),
 (2, 'menus', 'menus', 'Menu', 'Menus', 'voyager-list', 'TCG\\Voyager\\Models\\Menu', NULL, '', '', 1, 0, NULL, '2021-12-15 19:47:30', '2021-12-15 19:47:30'),
-(3, 'roles', 'roles', 'Role', 'Roles', 'voyager-lock', 'TCG\\Voyager\\Models\\Role', NULL, 'TCG\\Voyager\\Http\\Controllers\\VoyagerRoleController', NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"desc\",\"default_search_key\":null,\"scope\":null}', '2021-12-15 19:47:30', '2021-12-15 20:42:16'),
-(4, 'categories', 'categories', 'Category', 'Categories', NULL, 'App\\Models\\Category', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2021-12-15 19:49:46', '2021-12-30 19:21:48'),
-(5, 'category_groups', 'category-groups', 'Category Group', 'Category Groups', NULL, 'App\\Models\\CategoryGroup', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2021-12-15 19:51:02', '2021-12-29 17:27:50'),
-(7, 'products', 'products', 'Product', 'Products', NULL, 'App\\Models\\Product', NULL, 'App\\Http\\Controllers\\Voyager\\ProductController', NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2021-12-15 19:57:26', '2022-01-06 09:38:24'),
-(8, 'attributes', 'attributes', 'Attribute', 'Attributes', NULL, 'App\\Models\\Attribute', NULL, 'App\\Http\\Controllers\\Voyager\\AttributeController', NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2021-12-15 20:02:09', '2021-12-21 21:37:21'),
-(9, 'coupons', 'coupons', 'Coupon', 'Coupons', NULL, 'App\\Models\\Coupon', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2021-12-21 20:26:23', '2022-01-07 14:16:33'),
-(10, 'reviews', 'reviews', 'Review', 'Reviews', NULL, 'App\\Models\\Review', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2022-01-08 14:19:27', '2022-01-08 14:32:39');
+(3, 'roles', 'roles', 'Rôle', 'Rôles', 'voyager-lock', 'TCG\\Voyager\\Models\\Role', NULL, 'TCG\\Voyager\\Http\\Controllers\\VoyagerRoleController', NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"desc\",\"default_search_key\":null,\"scope\":null}', '2021-12-15 19:47:30', '2022-01-14 16:09:49'),
+(4, 'categories', 'categories', 'Catégorie', 'Catégories', 'voyager-categories', 'App\\Models\\Category', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2021-12-15 19:49:46', '2022-01-14 16:08:30'),
+(5, 'category_groups', 'category-groups', 'Catégorie groupe', 'Catégorie groupes', 'voyager-list', 'App\\Models\\CategoryGroup', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2021-12-15 19:51:02', '2022-01-14 16:07:48'),
+(7, 'products', 'products', 'Produit', 'Produits', 'voyager-book', 'App\\Models\\Product', NULL, 'App\\Http\\Controllers\\Voyager\\ProductController', NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2021-12-15 19:57:26', '2022-01-14 16:22:03'),
+(8, 'attributes', 'attributes', 'Attribut', 'Attributs', 'voyager-params', 'App\\Models\\Attribute', NULL, 'App\\Http\\Controllers\\Voyager\\AttributeController', NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2021-12-15 20:02:09', '2022-01-14 16:11:11'),
+(9, 'coupons', 'coupons', 'Coupon', 'Coupons', 'voyager-pie-graph', 'App\\Models\\Coupon', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2021-12-21 20:26:23', '2022-01-14 16:16:39'),
+(10, 'reviews', 'reviews', 'Avis', 'Avis', 'voyager-star-two', 'App\\Models\\Review', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2022-01-08 14:19:27', '2022-01-14 16:12:09'),
+(11, 'orders', 'orders', 'Commande', 'Commandes', 'voyager-bag', 'App\\Models\\Order', NULL, 'App\\Http\\Controllers\\Voyager\\OrderController', NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2022-01-14 13:32:36', '2022-01-15 12:59:19');
 
 -- --------------------------------------------------------
 
@@ -394,10 +440,13 @@ CREATE TABLE `media` (
 --
 
 INSERT INTO `media` (`id`, `model_type`, `model_id`, `name`, `filename`, `path`, `mime_type`, `size`, `created_at`, `updated_at`) VALUES
-(116, 'App\\Models\\CartItem', 113, 'recto', 'm5PlEojE0XOScDXMVEEHgqJvPlbrJPET0LqlbZam.jpg', 'cartItems/113/m5PlEojE0XOScDXMVEEHgqJvPlbrJPET0LqlbZam.jpg', 'image/jpeg', 101876, '2022-01-07 13:11:16', '2022-01-07 13:11:16'),
-(117, 'App\\Models\\CartItem', 114, '0', 'hXCbHpGQrXzVAphQzx8nlPIvkP8GwmKoircNqBqb.png', 'cartItems/114/hXCbHpGQrXzVAphQzx8nlPIvkP8GwmKoircNqBqb.png', 'image/png', 37633, '2022-01-07 13:18:37', '2022-01-07 13:18:37'),
-(118, 'App\\Models\\CartItem', 115, 'recto', 'cjWv3Khx8u45fe67fSSmnW6AWCAWMepXEuUcXvNg.jpg', 'cartItems/115/cjWv3Khx8u45fe67fSSmnW6AWCAWMepXEuUcXvNg.jpg', 'image/jpeg', 45824, '2022-01-07 13:35:02', '2022-01-07 13:35:02'),
-(122, 'App\\Models\\CartItem', 115, 'verso', 'UfKFit4luRRIS4z1xzwp9v7YopduhbuUsW0Ml82e.jpg', 'cartItems/115/UfKFit4luRRIS4z1xzwp9v7YopduhbuUsW0Ml82e.jpg', 'image/jpeg', 199532, '2022-01-07 19:29:40', '2022-01-07 19:29:40');
+(151, 'App\\Models\\OrderItem', 53, '0', 'kXBamvyhBcM0j9Tl7UojLbTPuypIWT7n89t2Yq2E.jpg', 'orderItems/53/kXBamvyhBcM0j9Tl7UojLbTPuypIWT7n89t2Yq2E.jpg', 'image/jpeg', 32898, '2022-01-12 20:58:41', '2022-01-12 20:58:41'),
+(152, 'App\\Models\\OrderItem', 53, '1', 'BAgwIwGAwOLjBOsjHZkIyE2vEcrp9DTPKHtFZdGH.jpg', 'orderItems/53/BAgwIwGAwOLjBOsjHZkIyE2vEcrp9DTPKHtFZdGH.jpg', 'image/jpeg', 264822, '2022-01-12 20:58:41', '2022-01-12 20:58:41'),
+(153, 'App\\Models\\OrderItem', 53, '2', 'QHsfZQvQCLSUn2rRCkcyYmhD2z2EVgRr0pbWodq7.jpg', 'orderItems/53/QHsfZQvQCLSUn2rRCkcyYmhD2z2EVgRr0pbWodq7.jpg', 'image/jpeg', 181697, '2022-01-12 20:58:41', '2022-01-12 20:58:41'),
+(155, 'App\\Models\\OrderItem', 54, '0', 'zVVFSy1uKuZmeKbSmvtbUT3NWGEdT0Wfgn0RdtpW.jpg', 'orderItems/54/zVVFSy1uKuZmeKbSmvtbUT3NWGEdT0Wfgn0RdtpW.jpg', 'image/jpeg', 31373, '2022-01-14 13:23:43', '2022-01-14 13:23:43'),
+(159, 'App\\Models\\OrderItem', 55, 'recto', 'tR8VORUJN7rUBCybCvbImY9sGRCrHEyS7Gsp1g0v.jpg', 'orderItems/55/tR8VORUJN7rUBCybCvbImY9sGRCrHEyS7Gsp1g0v.jpg', 'image/jpeg', 215773, '2022-01-15 11:40:50', '2022-01-15 11:40:50'),
+(160, 'App\\Models\\OrderItem', 55, 'verso', 'EAALzCIa7CMmULEeRHWYbMPMHO1H4mM03LrdhlXH.jpg', 'orderItems/55/EAALzCIa7CMmULEeRHWYbMPMHO1H4mM03LrdhlXH.jpg', 'image/jpeg', 284256, '2022-01-15 11:40:50', '2022-01-15 11:40:50'),
+(161, 'App\\Models\\OrderItem', 56, '0', 'W4x6KwE4rx8XVAQ10thmGIw7rIAj5yikMRtA8bSG.pdf', 'orderItems/56/W4x6KwE4rx8XVAQ10thmGIw7rIAj5yikMRtA8bSG.pdf', 'application/pdf', 549834, '2022-01-15 11:40:50', '2022-01-15 11:40:50');
 
 -- --------------------------------------------------------
 
@@ -447,15 +496,15 @@ CREATE TABLE `menu_items` (
 
 INSERT INTO `menu_items` (`id`, `menu_id`, `title`, `url`, `target`, `icon_class`, `color`, `parent_id`, `order`, `created_at`, `updated_at`, `route`, `parameters`) VALUES
 (1, 1, 'Tableau de bord', '', '_self', 'voyager-boat', '#000000', NULL, 1, '2021-12-15 19:47:30', '2021-12-15 20:28:32', 'voyager.dashboard', 'null'),
-(2, 1, 'Médias', '', '_self', 'voyager-images', '#000000', NULL, 6, '2021-12-15 19:47:30', '2021-12-21 20:29:36', 'voyager.media.index', 'null'),
+(2, 1, 'Médias', '', '_self', 'voyager-images', '#000000', NULL, 6, '2021-12-15 19:47:30', '2022-01-14 13:35:12', 'voyager.media.index', 'null'),
 (3, 1, 'Utilisateurs', '', '_self', 'voyager-people', '#000000', 17, 2, '2021-12-15 19:47:30', '2021-12-15 20:28:49', 'voyager.users.index', 'null'),
 (4, 1, 'Rôles', '', '_self', 'voyager-lock', '#000000', 17, 1, '2021-12-15 19:47:30', '2021-12-15 20:24:33', 'voyager.roles.index', 'null'),
-(5, 1, 'Outils Développeur', '', '_self', 'voyager-tools', '#000000', NULL, 7, '2021-12-15 19:47:30', '2021-12-21 20:29:36', NULL, ''),
+(5, 1, 'Outils Développeur', '', '_self', 'voyager-tools', '#000000', NULL, 7, '2021-12-15 19:47:30', '2022-01-14 13:35:12', NULL, ''),
 (6, 1, 'Générateur de menus', '', '_self', 'voyager-list', '#000000', 5, 1, '2021-12-15 19:47:30', '2021-12-15 20:27:40', 'voyager.menus.index', 'null'),
 (7, 1, 'Base de données', '', '_self', 'voyager-data', '#000000', 5, 2, '2021-12-15 19:47:30', '2021-12-15 20:27:57', 'voyager.database.index', 'null'),
 (8, 1, 'Compass', '', '_self', 'voyager-compass', NULL, 5, 3, '2021-12-15 19:47:30', '2021-12-15 20:08:24', 'voyager.compass.index', NULL),
 (9, 1, 'BREAD', '', '_self', 'voyager-bread', NULL, 5, 4, '2021-12-15 19:47:30', '2021-12-15 20:08:24', 'voyager.bread.index', NULL),
-(10, 1, 'Réglages', '', '_self', 'voyager-settings', '#000000', NULL, 8, '2021-12-15 19:47:30', '2021-12-21 20:29:36', 'voyager.settings.index', 'null'),
+(10, 1, 'Réglages', '', '_self', 'voyager-settings', '#000000', NULL, 8, '2021-12-15 19:47:30', '2022-01-14 13:35:12', 'voyager.settings.index', 'null'),
 (11, 1, 'Catégories', '', '_self', 'voyager-categories', '#000000', 16, 2, '2021-12-15 19:49:47', '2021-12-15 20:23:40', 'voyager.categories.index', 'null'),
 (12, 1, 'Groupes', '', '_self', 'voyager-list', '#000000', 16, 1, '2021-12-15 19:51:02', '2021-12-15 20:30:32', 'voyager.category-groups.index', 'null'),
 (14, 1, 'Produits', '', '_self', 'voyager-book', '#000000', 18, 3, '2021-12-15 19:57:26', '2022-01-08 14:20:24', 'voyager.products.index', 'null'),
@@ -463,9 +512,10 @@ INSERT INTO `menu_items` (`id`, `menu_id`, `title`, `url`, `target`, `icon_class
 (16, 1, 'Gestion catégories', '', '_self', 'voyager-categories', '#000000', NULL, 3, '2021-12-15 20:11:35', '2021-12-21 20:28:07', NULL, ''),
 (17, 1, 'Gestion utilisateurs', '', '_self', 'voyager-people', '#000000', NULL, 2, '2021-12-15 20:12:36', '2021-12-15 20:22:43', NULL, ''),
 (18, 1, 'Gestion produits', '', '_self', 'voyager-book', '#000000', NULL, 4, '2021-12-15 20:13:59', '2021-12-21 20:28:07', NULL, ''),
-(19, 1, 'Coupons', '', '_self', 'voyager-pie-graph', '#000000', 20, 1, '2021-12-21 20:26:23', '2021-12-21 20:36:05', 'voyager.coupons.index', 'null'),
+(19, 1, 'Coupons', '', '_self', 'voyager-pie-graph', '#000000', 20, 1, '2021-12-21 20:26:23', '2022-01-14 16:16:09', 'voyager.coupons.index', 'null'),
 (20, 1, 'Gestion commandes', '', '_self', 'voyager-bag', '#000000', NULL, 5, '2021-12-21 20:29:10', '2021-12-21 20:29:29', NULL, ''),
-(21, 1, 'Avis', '', '_self', 'voyager-star-two', '#000000', 18, 2, '2022-01-08 14:19:27', '2022-01-08 14:21:39', 'voyager.reviews.index', 'null');
+(21, 1, 'Avis', '', '_self', 'voyager-star-two', '#000000', 18, 2, '2022-01-08 14:19:27', '2022-01-08 14:21:39', 'voyager.reviews.index', 'null'),
+(22, 1, 'Commandes', '', '_self', 'voyager-bag', '#000000', 20, 2, '2022-01-14 13:32:37', '2022-01-14 13:35:12', 'voyager.orders.index', 'null');
 
 -- --------------------------------------------------------
 
@@ -519,7 +569,79 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (37, '2022_01_04_120737_create_carts_table', 4),
 (38, '2022_01_04_125945_create_cart_items_table', 4),
 (39, '2022_01_04_142559_create_media_table', 4),
-(43, '2022_01_08_113052_create_reviews_table', 5);
+(43, '2022_01_08_113052_create_reviews_table', 5),
+(45, '2022_01_09_204330_create_addresses_table', 6),
+(53, '2022_01_11_140411_create_orders_table', 7),
+(54, '2022_01_11_143019_create_order_items_table', 7);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `orders`
+--
+
+CREATE TABLE `orders` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `address_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `address_phone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `address_email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `address_city` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `address_zip` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `address_line` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `subtotal` double(8,2) NOT NULL,
+  `discount_price` double(8,2) NOT NULL DEFAULT 0.00,
+  `coupon_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `delivery_price` double(8,2) NOT NULL,
+  `tax_price` double(8,2) NOT NULL,
+  `total` double(8,2) NOT NULL,
+  `status` enum('pending','processing','shipped','delivered','cancelled','failed') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pending',
+  `payment_mode` enum('cash','credit_card') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `paid` tinyint(1) NOT NULL DEFAULT 0,
+  `additional_information` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`id`, `address_name`, `address_phone`, `address_email`, `address_city`, `address_zip`, `address_line`, `subtotal`, `discount_price`, `coupon_code`, `delivery_price`, `tax_price`, `total`, `status`, `payment_mode`, `paid`, `additional_information`, `user_id`, `created_at`, `updated_at`) VALUES
+(78, 'Omar essaouaf', '+212625716365', 'souafomar@gmail.com', 'casablanca', '20000', 'NR 75 RUE DAR EL MILOUDI A M , CASABLANCA, Florida', 110.00, 0.00, NULL, 0.00, 22.00, 132.00, 'delivered', 'credit_card', 0, 'some extra info', 1, '2022-01-12 20:58:41', '2022-01-14 20:15:21'),
+(79, 'Salah bidaouia', '+212625736524', 'jagerefyky@mailinator.com', 'afourar', '20000', 'Fifth street', 310.00, 62.00, '-20off', 39.00, 57.40, 344.40, 'processing', 'cash', 1, NULL, 1, '2022-01-14 13:23:00', '2022-01-14 20:24:27'),
+(80, 'omar essaouaf', '+212625716365', 'souafomar@gmail.com', 'casablanca', '20000', 'NR 75 RUE DAR EL MILOUDI A M , CASABLANCA, Florida', 410.00, 0.00, NULL, 0.00, 82.00, 492.00, 'pending', 'credit_card', 0, 'i want my order delivered afternoon', 1, '2022-01-15 11:40:50', '2022-01-15 11:40:50'),
+(81, 'Test', '222', 'test@gmail.com', 'casablanca', '20000', 'New york fifth street', 310.00, 0.00, NULL, 0.00, 62.00, 372.00, 'pending', 'credit_card', 0, NULL, NULL, '2022-01-15 16:57:34', '2022-01-15 16:57:34');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `order_items`
+--
+
+CREATE TABLE `order_items` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `subtotal` double(8,2) NOT NULL,
+  `selected_options` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`selected_options`)),
+  `design_by_company` tinyint(1) NOT NULL DEFAULT 0,
+  `design_information` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `order_id` bigint(20) UNSIGNED NOT NULL,
+  `product_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `order_items`
+--
+
+INSERT INTO `order_items` (`id`, `quantity`, `subtotal`, `selected_options`, `design_by_company`, `design_information`, `order_id`, `product_id`, `created_at`, `updated_at`) VALUES
+(53, 100, 110.00, '{\"size\":\"514ac787-1a7b-4b3c-8dc5-e85d32e13b91AqrOzwwpx5\",\"material\":\"784887c7-86a5-4b46-b3dd-d041c2cb8368aegwWJSQR3\",\"papier\":\"fd926107-f388-4f58-8373-e5e6709fcaa7PGIXIouR3g\",\"type_de_coin\":\"d68254a4-70f3-4ccc-aa7f-f103c65c2a2cj4UMpE46Dd\",\"impression\":\"0734d37c-21f7-4cdd-8423-2a59393a9a1drBPfU5zhP0\"}', 1, 'brand info', 78, 22, '2022-01-12 20:58:41', '2022-01-12 20:58:41'),
+(54, 100, 310.00, '{\"size\":\"42a272c2-3c01-4c09-b4f3-d056234594d7mpjN5kmIxT\",\"impression\":\"f6b6fdee-3a0a-4883-bf1d-5e7661612db3MD1sSeNCLT\",\"papier\":\"b04bb509-8bcb-402c-98ac-a976dd4f6ba3DWs6vGRJn5\",\"type_de_coin\":\"c51900d1-ba2b-45eb-8755-974485b75bebevDa90suZY\"}', 1, 'brand info : sourceup email : sourceup@gmail.com phone : 2434', 79, 31, '2022-01-14 13:23:43', '2022-01-14 13:23:43'),
+(55, 100, 300.00, '{\"size\":\"42a272c2-3c01-4c09-b4f3-d056234594d7mpjN5kmIxT\",\"impression\":\"1b919a16-9682-4aae-ba13-4cb2cad76355MmAYJ5hSg7\",\"papier\":\"b04bb509-8bcb-402c-98ac-a976dd4f6ba3DWs6vGRJn5\",\"type_de_coin\":\"c51900d1-ba2b-45eb-8755-974485b75bebevDa90suZY\"}', 0, '', 80, 31, '2022-01-15 11:40:50', '2022-01-15 11:40:50'),
+(56, 100, 110.00, '{\"size\":\"514ac787-1a7b-4b3c-8dc5-e85d32e13b91AqrOzwwpx5\",\"material\":\"784887c7-86a5-4b46-b3dd-d041c2cb8368aegwWJSQR3\",\"papier\":\"fd926107-f388-4f58-8373-e5e6709fcaa7PGIXIouR3g\",\"type_de_coin\":\"d68254a4-70f3-4ccc-aa7f-f103c65c2a2cj4UMpE46Dd\",\"impression\":\"0734d37c-21f7-4cdd-8423-2a59393a9a1drBPfU5zhP0\"}', 1, 'Brand info : sourceup', 80, 22, '2022-01-15 11:40:50', '2022-01-15 11:40:50'),
+(57, 100, 310.00, '{\"size\":\"42a272c2-3c01-4c09-b4f3-d056234594d7mpjN5kmIxT\",\"impression\":\"f6b6fdee-3a0a-4883-bf1d-5e7661612db3MD1sSeNCLT\",\"papier\":\"b04bb509-8bcb-402c-98ac-a976dd4f6ba3DWs6vGRJn5\",\"type_de_coin\":\"c51900d1-ba2b-45eb-8755-974485b75bebevDa90suZY\"}', 1, '', 81, 31, '2022-01-15 16:57:34', '2022-01-15 16:57:34');
 
 -- --------------------------------------------------------
 
@@ -605,7 +727,13 @@ INSERT INTO `permissions` (`id`, `key`, `table_name`, `created_at`, `updated_at`
 (56, 'browse_reviews', 'reviews', '2022-01-08 14:19:27', '2022-01-08 14:19:27'),
 (57, 'read_reviews', 'reviews', '2022-01-08 14:19:27', '2022-01-08 14:19:27'),
 (58, 'edit_reviews', 'reviews', '2022-01-08 14:19:27', '2022-01-08 14:19:27'),
-(60, 'delete_reviews', 'reviews', '2022-01-08 14:19:27', '2022-01-08 14:19:27');
+(60, 'delete_reviews', 'reviews', '2022-01-08 14:19:27', '2022-01-08 14:19:27'),
+(62, 'browse_orders', 'orders', '2022-01-14 13:32:37', '2022-01-14 13:32:37'),
+(63, 'read_orders', 'orders', '2022-01-14 13:32:37', '2022-01-14 13:32:37'),
+(64, 'edit_orders', 'orders', '2022-01-14 13:32:37', '2022-01-14 13:32:37'),
+(66, 'delete_orders', 'orders', '2022-01-14 13:32:37', '2022-01-14 13:32:37'),
+(67, 'add_reviews', 'reviews', '2022-01-14 16:12:09', '2022-01-14 16:12:09'),
+(68, 'add_orders', 'orders', '2022-01-14 16:20:35', '2022-01-14 16:20:35');
 
 -- --------------------------------------------------------
 
@@ -676,7 +804,11 @@ INSERT INTO `permission_role` (`permission_id`, `role_id`) VALUES
 (56, 1),
 (57, 1),
 (58, 1),
-(60, 1);
+(60, 1),
+(62, 1),
+(63, 1),
+(64, 1),
+(66, 1);
 
 -- --------------------------------------------------------
 
@@ -727,8 +859,9 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `title`, `slug`, `details`, `description`, `allowed_quantities`, `popular`, `active`, `promotion_label`, `meta_title`, `meta_description`, `meta_keywords`, `category_id`, `images`, `created_at`, `updated_at`, `design_price`) VALUES
-(22, 'Quo omnis ad Nam ex', 'something', 'Les cartes de visite classiques WePrint offrent un excellent rapport qualité/prix tout en simplicité et élégance. Ces cartes de visite proposent de nombreuses options pour mettre en valeur votre marque.', '<p style=\"border: 0px; margin: 0px 0px 1.5em; padding: 0px; color: #3a3a3a; font-family: Lato, sans-serif; font-size: 19px;\">If you&rsquo;re thinking of starting a blog of your own, but just don&rsquo;t have a clue on what to blog about, then fear not!</p>\r\n<p style=\"border: 0px; margin: 0px 0px 1.5em; padding: 0px; color: #3a3a3a; font-family: Lato, sans-serif; font-size: 19px;\">In this article, I have included a whole load of blog examples from a wide variety of different niches, all run on different&nbsp;<a style=\"border: 0px; margin: 0px; padding: 0px; background-color: transparent; transition: color 0.1s ease-in-out 0s, background-color 0.1s ease-in-out 0s; text-decoration-line: none; color: #951a82;\" href=\"https://makeawebsitehub.com/choose-right-blogging-platform/\">blogging platforms</a>&nbsp;like WordPress, Joomla! and Drupal.</p>\r\n<p style=\"border: 0px; margin: 0px 0px 1.5em; padding: 0px; color: #3a3a3a; font-family: Lato, sans-serif; font-size: 19px;\">Since the beginning of the internet, millions and millions and millions of blogs have been created. Many have died due to lost interest or their owners giving up on the idea, while others have thrived and continue to grow,&nbsp;<a style=\"border: 0px; margin: 0px; padding: 0px; background-color: transparent; transition: color 0.1s ease-in-out 0s, background-color 0.1s ease-in-out 0s; text-decoration-line: none; color: #951a82;\" href=\"https://makeawebsitehub.com/how-to-make-money-blogging/\" target=\"_blank\" rel=\"noopener noreferrer\">making money</a>&nbsp;and earning their owners a steady income. It&rsquo;s a constant evolution of content that keeps people coming back for more, especially if these blogs contact highly resourceful material that people find useful and interesting.</p>\r\n<p style=\"border: 0px; margin: 0px 0px 1.5em; padding: 0px; color: #3a3a3a; font-family: Lato, sans-serif; font-size: 19px;\">Each example listed in this blog post are all different in some way and all bring something unique to their readers &amp; subscribers. I want to show you what is possible and how you can take inspiration from them and create an awesome blog of your own.</p>\r\n<p style=\"border: 0px; margin: 0px 0px 1.5em; padding: 0px; color: #3a3a3a; font-family: Lato, sans-serif; font-size: 19px;\">Some of these blogs make over $100k a month, others are just a hobby for their owners, but all have the same purpose&nbsp;at their core&hellip; the love of writing and sharing information.</p>\r\n<h3 style=\"border: 0px; margin: 0px 0px 20px; padding: 0px; font-family: Lato, sans-serif; font-size: 35px; line-height: 1.2em; color: #016c9e;\">Want to Start Your Own Blog?</h3>\r\n<p style=\"border: 0px; margin: 0px 0px 1.5em; padding: 0px; color: #3a3a3a; font-family: Lato, sans-serif; font-size: 19px;\">Remember that it doesn&rsquo;t cost the earth to start your own blog. You can be up and running for as little as $2.95 p/m with Bluehost.</p>\r\n<p style=\"border: 0px; margin: 0px 0px 1.5em; padding: 0px; color: #3a3a3a; font-family: Lato, sans-serif; font-size: 19px;\"><a style=\"border: 0px; margin: 0px; padding: 0px; background-color: transparent; transition: color 0.1s ease-in-out 0s, background-color 0.1s ease-in-out 0s; text-decoration-line: none; color: #951a82;\" href=\"https://makeawebsitehub.com/go/bluehost\" target=\"_blank\" rel=\"noopener noreferrer\">Bluehost</a>&nbsp;offer web hosting, Free SSL, Email, web builder and a&nbsp;<a style=\"border: 0px; margin: 0px; padding: 0px; background-color: transparent; transition: color 0.1s ease-in-out 0s, background-color 0.1s ease-in-out 0s; text-decoration-line: none; color: #951a82;\" href=\"https://makeawebsitehub.com/go/bluehost\" target=\"_blank\" rel=\"nofollow noopener\">FREE DOMAIN</a>.</p>', '[{\"value\":100,\"price\":100},{\"value\":200,\"price\":170}]', 0, 0, '-50%', 'Aut placeat obcaeca', 'Commodi consequatur', 'Dolorem sequi rerum', NULL, '[\"products\\\\December2021\\\\WgjgXLvfiHI951kWMyqy.jpg\",\"products\\\\December2021\\\\yaf696B2aQHddFc2X3ak.jpg\"]', '2021-12-30 17:40:12', '2022-01-06 09:39:50', 10),
-(30, 'Necessitatibus error', 'necessitatibus-error', 'Autem consectetur vo', NULL, '[{\"value\":57,\"price\":85},{\"value\":10,\"price\":29}]', 0, 0, 'Ducimus ab nisi et', 'Qui iure ipsa irure', 'Aut sed repellendus', 'Sint soluta veritati', 1, '[\"products\\\\January2022\\\\nEw6R7d3OeGN0iaeYlcm.jpg\"]', '2022-01-05 13:54:48', '2022-01-05 13:54:48', 211);
+(22, 'Large Sac', 'something', 'Les cartes de visite classiques WePrint offrent un excellent rapport qualité/prix tout en simplicité et élégance. Ces cartes de visite proposent de nombreuses options pour mettre en valeur votre marque.', '<p style=\"border: 0px; margin: 0px 0px 1.5em; padding: 0px; color: #3a3a3a; font-family: Lato, sans-serif; font-size: 19px;\">If you&rsquo;re thinking of starting a blog of your own, but just don&rsquo;t have a clue on what to blog about, then fear not!</p>\r\n<p style=\"border: 0px; margin: 0px 0px 1.5em; padding: 0px; color: #3a3a3a; font-family: Lato, sans-serif; font-size: 19px;\">In this article, I have included a whole load of blog examples from a wide variety of different niches, all run on different&nbsp;<a style=\"border: 0px; margin: 0px; padding: 0px; background-color: transparent; transition: color 0.1s ease-in-out 0s, background-color 0.1s ease-in-out 0s; text-decoration-line: none; color: #951a82;\" href=\"https://makeawebsitehub.com/choose-right-blogging-platform/\">blogging platforms</a>&nbsp;like WordPress, Joomla! and Drupal.</p>\r\n<p style=\"border: 0px; margin: 0px 0px 1.5em; padding: 0px; color: #3a3a3a; font-family: Lato, sans-serif; font-size: 19px;\">Since the beginning of the internet, millions and millions and millions of blogs have been created. Many have died due to lost interest or their owners giving up on the idea, while others have thrived and continue to grow,&nbsp;<a style=\"border: 0px; margin: 0px; padding: 0px; background-color: transparent; transition: color 0.1s ease-in-out 0s, background-color 0.1s ease-in-out 0s; text-decoration-line: none; color: #951a82;\" href=\"https://makeawebsitehub.com/how-to-make-money-blogging/\" target=\"_blank\" rel=\"noopener noreferrer\">making money</a>&nbsp;and earning their owners a steady income. It&rsquo;s a constant evolution of content that keeps people coming back for more, especially if these blogs contact highly resourceful material that people find useful and interesting.</p>\r\n<p style=\"border: 0px; margin: 0px 0px 1.5em; padding: 0px; color: #3a3a3a; font-family: Lato, sans-serif; font-size: 19px;\">Each example listed in this blog post are all different in some way and all bring something unique to their readers &amp; subscribers. I want to show you what is possible and how you can take inspiration from them and create an awesome blog of your own.</p>\r\n<p style=\"border: 0px; margin: 0px 0px 1.5em; padding: 0px; color: #3a3a3a; font-family: Lato, sans-serif; font-size: 19px;\">Some of these blogs make over $100k a month, others are just a hobby for their owners, but all have the same purpose&nbsp;at their core&hellip; the love of writing and sharing information.</p>\r\n<h3 style=\"border: 0px; margin: 0px 0px 20px; padding: 0px; font-family: Lato, sans-serif; font-size: 35px; line-height: 1.2em; color: #016c9e;\">Want to Start Your Own Blog?</h3>\r\n<p style=\"border: 0px; margin: 0px 0px 1.5em; padding: 0px; color: #3a3a3a; font-family: Lato, sans-serif; font-size: 19px;\">Remember that it doesn&rsquo;t cost the earth to start your own blog. You can be up and running for as little as $2.95 p/m with Bluehost.</p>\r\n<p style=\"border: 0px; margin: 0px 0px 1.5em; padding: 0px; color: #3a3a3a; font-family: Lato, sans-serif; font-size: 19px;\"><a style=\"border: 0px; margin: 0px; padding: 0px; background-color: transparent; transition: color 0.1s ease-in-out 0s, background-color 0.1s ease-in-out 0s; text-decoration-line: none; color: #951a82;\" href=\"https://makeawebsitehub.com/go/bluehost\" target=\"_blank\" rel=\"noopener noreferrer\">Bluehost</a>&nbsp;offer web hosting, Free SSL, Email, web builder and a&nbsp;<a style=\"border: 0px; margin: 0px; padding: 0px; background-color: transparent; transition: color 0.1s ease-in-out 0s, background-color 0.1s ease-in-out 0s; text-decoration-line: none; color: #951a82;\" href=\"https://makeawebsitehub.com/go/bluehost\" target=\"_blank\" rel=\"nofollow noopener\">FREE DOMAIN</a>.</p>', '[{\"value\":100,\"price\":100},{\"value\":200,\"price\":170}]', 0, 0, '-50%', 'Aut placeat obcaeca', 'Commodi consequatur', 'Dolorem sequi rerum', NULL, '[\"products\\\\January2022\\\\ZT0H3nLALDaENM7kRylr.png\"]', '2021-12-30 17:40:12', '2022-01-09 12:56:03', 10),
+(30, 'Necessitatibus error', 'necessitatibus-error', 'Autem consectetur vo', NULL, '[{\"value\":57,\"price\":85},{\"value\":10,\"price\":29}]', 0, 0, 'Ducimus ab nisi et', 'Qui iure ipsa irure', 'Aut sed repellendus', 'Sint soluta veritati', 1, '[\"products\\\\January2022\\\\nEw6R7d3OeGN0iaeYlcm.jpg\"]', '2022-01-05 13:54:48', '2022-01-05 13:54:48', 211),
+(31, 'Cartes de voeux', 'cartes-de-voeux', 'Que ce soit pour célébrer une fête ou un événement interne à votre entreprise, vos cartes de vœux reflèteront votre image de marque et renforceront le message qu’elles délivrent, grâce à un très large choix de supports et de finitions.', NULL, '[{\"value\":100,\"price\":100},{\"value\":200,\"price\":200},{\"value\":300,\"price\":250}]', 1, 1, '-20off', 'Nihil aut in lorem f', 'wewe', 'wewe', 6, '[\"products\\\\January2022\\\\Zh31A7yrs23yNw7NPjKR.png\"]', '2022-01-08 17:35:16', '2022-01-08 17:35:16', 10);
 
 -- --------------------------------------------------------
 
@@ -766,8 +899,13 @@ CREATE TABLE `reviews` (
 --
 
 INSERT INTO `reviews` (`id`, `rating`, `body`, `active`, `product_id`, `user_id`, `created_at`, `updated_at`) VALUES
-(67, 5, 'w', 1, 22, 1, '2022-01-08 14:19:38', '2022-01-08 14:29:55'),
-(68, 5, 'we', 1, 22, 1, '2022-01-08 14:35:32', '2022-01-08 14:35:32');
+(70, 5, 'This is a an awesome product !\n', 1, 22, 1, '2022-01-08 16:54:20', '2022-01-08 16:54:20'),
+(71, 5, 'this product is amazing ....', 1, 31, 1, '2022-01-08 17:37:27', '2022-01-08 17:37:27'),
+(72, 4, 'I recommend this product to everyone !', 1, 31, 1, '2022-01-08 17:37:46', '2022-01-08 17:37:46'),
+(73, 1, 'Good product', 1, 31, 1, '2022-01-08 17:37:56', '2022-01-08 17:37:56'),
+(74, 5, 'Amazing !!!', 1, 31, 1, '2022-01-08 17:38:07', '2022-01-08 17:38:07'),
+(76, 3, 'cool', 1, 31, 1, '2022-01-08 19:32:24', '2022-01-08 19:32:24'),
+(78, 2, 'cvvb', 1, 31, 1, '2022-01-11 11:53:41', '2022-01-11 16:21:44');
 
 -- --------------------------------------------------------
 
@@ -856,6 +994,7 @@ CREATE TABLE `users` (
   `role_id` bigint(20) UNSIGNED DEFAULT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `avatar` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT 'users/default.png',
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -869,9 +1008,8 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `role_id`, `name`, `email`, `avatar`, `email_verified_at`, `password`, `remember_token`, `settings`, `created_at`, `updated_at`) VALUES
-(1, 1, 'omar', 'omar@gmail.com', 'users/default.png', NULL, '$2y$10$rxOtwSGGbhzYJY4tXg9z8OgxNqR4RatBW/eTIqWMoT/jPqVDDNh1S', 'BxZ9rRSpnhTo5aPrWzURpTcoCCGDGy5BGbjjgWXT2nHFMalmkBAfTqlY49ql', NULL, '2021-12-15 19:48:01', '2021-12-20 20:01:59'),
-(3, 1, 'salah', 'salah@gmail.com', 'users/default.png', NULL, '$2y$10$nbjZPyGQOTUUuqht4mAsleiApBA1IUg6aunzZxJnuuq38wTowfndK', NULL, NULL, '2021-12-20 20:02:29', '2021-12-20 20:02:29');
+INSERT INTO `users` (`id`, `role_id`, `name`, `email`, `phone`, `avatar`, `email_verified_at`, `password`, `remember_token`, `settings`, `created_at`, `updated_at`) VALUES
+(1, 1, 'Omar Essaouaf', 'omar@gmail.com', '+212 55 4 92 23 90', 'users/default.png', NULL, '$2y$10$FOIQztJ7gw2njjftxHGvJ.OyEGW6V8Xtc.fznfO6UaN6h8TBZZvkC', 'ENk5CdcnUnQly75Ke3y6y3i6Q7o0GUcqqw40S8nbQGGTe3YhoEfB1IZuxl5A', NULL, '2021-12-15 19:48:01', '2022-01-09 16:16:11');
 
 -- --------------------------------------------------------
 
@@ -901,6 +1039,13 @@ CREATE TABLE `variants` (
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `addresses`
+--
+ALTER TABLE `addresses`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `addresses_user_id_foreign` (`user_id`);
 
 --
 -- Indexes for table `attributes`
@@ -1003,6 +1148,21 @@ ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `orders_user_id_foreign` (`user_id`);
+
+--
+-- Indexes for table `order_items`
+--
+ALTER TABLE `order_items`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `order_items_order_id_foreign` (`order_id`),
+  ADD KEY `order_items_product_id_foreign` (`product_id`);
+
+--
 -- Indexes for table `password_resets`
 --
 ALTER TABLE `password_resets`
@@ -1103,6 +1263,12 @@ ALTER TABLE `variants`
 --
 
 --
+-- AUTO_INCREMENT for table `addresses`
+--
+ALTER TABLE `addresses`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+
+--
 -- AUTO_INCREMENT for table `attributes`
 --
 ALTER TABLE `attributes`
@@ -1112,19 +1278,19 @@ ALTER TABLE `attributes`
 -- AUTO_INCREMENT for table `attribute_product`
 --
 ALTER TABLE `attribute_product`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=293;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=301;
 
 --
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT for table `cart_items`
 --
 ALTER TABLE `cart_items`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=116;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=145;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -1148,13 +1314,13 @@ ALTER TABLE `coupons`
 -- AUTO_INCREMENT for table `data_rows`
 --
 ALTER TABLE `data_rows`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=112;
 
 --
 -- AUTO_INCREMENT for table `data_types`
 --
 ALTER TABLE `data_types`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -1166,7 +1332,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `media`
 --
 ALTER TABLE `media`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=123;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=162;
 
 --
 -- AUTO_INCREMENT for table `menus`
@@ -1178,19 +1344,31 @@ ALTER TABLE `menus`
 -- AUTO_INCREMENT for table `menu_items`
 --
 ALTER TABLE `menu_items`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+
+--
+-- AUTO_INCREMENT for table `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
+
+--
+-- AUTO_INCREMENT for table `order_items`
+--
+ALTER TABLE `order_items`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -1202,7 +1380,7 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `product_variant`
@@ -1214,7 +1392,7 @@ ALTER TABLE `product_variant`
 -- AUTO_INCREMENT for table `reviews`
 --
 ALTER TABLE `reviews`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
 
 --
 -- AUTO_INCREMENT for table `roles`
@@ -1238,7 +1416,7 @@ ALTER TABLE `translations`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `variants`
@@ -1249,6 +1427,12 @@ ALTER TABLE `variants`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `addresses`
+--
+ALTER TABLE `addresses`
+  ADD CONSTRAINT `addresses_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `attribute_product`
@@ -1287,6 +1471,19 @@ ALTER TABLE `data_rows`
 --
 ALTER TABLE `menu_items`
   ADD CONSTRAINT `menu_items_menu_id_foreign` FOREIGN KEY (`menu_id`) REFERENCES `menus` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `orders`
+--
+ALTER TABLE `orders`
+  ADD CONSTRAINT `orders_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+--
+-- Constraints for table `order_items`
+--
+ALTER TABLE `order_items`
+  ADD CONSTRAINT `order_items_order_id_foreign` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `order_items_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Constraints for table `permission_role`
