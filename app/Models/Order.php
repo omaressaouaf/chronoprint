@@ -22,4 +22,18 @@ class Order extends Model
             "name" => __("Unknown")
         ]);
     }
+
+    /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    public static function booted(): void
+    {
+        static::deleting(function ($order) {
+            foreach ($order->items as $orderItem) {
+                $orderItem->delete();
+            }
+        });
+    }
 }
