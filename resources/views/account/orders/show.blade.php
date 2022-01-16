@@ -29,8 +29,6 @@
                            </div>
                         @endforeach
                      </div>
-                     <div class="fs-sm"><span class="text-muted me-2">Color:</span>White
-                        &amp; Blue</div>
                   </div>
                </div>
                <div class="pt-2 ps-sm-3 mx-auto mx-sm-0 text-center">
