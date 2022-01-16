@@ -4,9 +4,7 @@ window.Vue = require("vue").default;
 import { createApp } from "vue";
 
 if (document.querySelector("#product-attributes")) {
-    const productAttributes = createApp({
-
-    });
+    const productAttributes = createApp({});
 
     productAttributes.component(
         "attributes-form",
@@ -21,9 +19,7 @@ if (document.querySelector("#product-attributes")) {
 }
 
 if (document.querySelector("#product-allowed-quantities")) {
-    const productAllowedQuantities = createApp({
-
-    });
+    const productAllowedQuantities = createApp({});
 
     productAllowedQuantities.component(
         "quantities-form",
@@ -42,4 +38,15 @@ if (document.querySelector("#attribute-options")) {
     );
 
     attributeOptions.mount("#attribute-options");
+}
+
+if (document.querySelector("#notifications-dropdown")) {
+    const notificationsDropdown = createApp({});
+
+    notificationsDropdown.component(
+        "notifications-list",
+        require("./components/NotificationsList.vue").default
+    );
+
+    notificationsDropdown.mount("#notifications-dropdown");
 }

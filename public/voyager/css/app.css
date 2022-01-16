@@ -395,3 +395,35 @@
 .justify-content-center {
   justify-content: center !important;
 }
+
+.rounded-full {
+  border-radius: 50% !important;
+}
+
+.dropdown-menu,
+.navbar .dropdown.profile .dropdown-menu {
+  position: absolute !important;
+  left: -200px !important;
+}
+
+.notifications-dropdowm-menu {
+  width: 310px !important;
+}
+.notifications-dropdowm-menu .btn-delete-notifications {
+  position: absolute;
+  top: 0;
+  right: 0;
+  text-decoration: none !important;
+}
+.notifications-dropdowm-menu .notification-icon {
+  border-radius: 50%;
+  padding: 12px 15px;
+}
+.notifications-dropdowm-menu .notification-content {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.075);
+}
+.notifications-dropdowm-menu .notification-title {
+  font-weight: bolder;
+  color: rgba(29, 28, 28, 0.774);
+  white-space: break-spaces;
+}
