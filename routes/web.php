@@ -14,9 +14,9 @@ use App\Http\Controllers\Voyager\ProductController as VoyagerProductController;
  * Admin routes
  */
 Route::prefix("admin")->group(function () {
-    Route::middleware("auth")->group(function() {
+    Route::middleware("auth")->group(function () {
         Route::put("/products/{product}/attributes", [VoyagerProductController::class, "syncAttributes"]);
-        Route::get("/invoices/{order}" , InvoiceController::class)->name("invoices.index");
+        Route::get("/invoices/{order}", InvoiceController::class)->name("invoices.index");
     });
     Voyager::routes();
 });
@@ -37,7 +37,8 @@ Route::get("/products/{product:slug}", [ProductController::class, "show"])->name
 Route::middleware(["auth"])->group(function () {
     // Account
     Route::prefix("account")->as("account.")->group(function () {
-        Route::get('/', [AccountController::class, 'index'])->name('index');
+        Route::get('/orders', [AccountController::class, 'orders'])->name('orders');
+        Route::get('/orders/{id}', [AccountController::class, 'showOrder'])->name('orders.show');
         Route::get('/profile', [AccountController::class, 'profile'])->name('profile');
         Route::put('/profile', [AccountController::class, 'updateProfile'])->name('profile.update');
         Route::get('/password', [AccountController::class, 'password'])->name('password');

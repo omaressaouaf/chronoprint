@@ -2,15 +2,31 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use App\Models\Address;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class AccountController extends Controller
 {
-    public function index()
+    public function orders()
     {
-        return view('account.index');
+        /** @var \App\Models\User */
+        $authUser =  auth()->user();
+
+        return view('account.orders.index', [
+            "orders" => $authUser->orders()->paginate(5)
+        ]);
+    }
+
+    public function showOrder($id)
+    {
+        return view('account.orders.show', [
+            "order" => Order::where("id", $id)
+                ->where("user_id", auth()->id())
+                ->with("items", "items.product", "items.product.attributs")
+                ->firstOrFail()
+        ]);
     }
 
     public function profile()

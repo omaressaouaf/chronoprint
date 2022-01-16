@@ -278,7 +278,7 @@
                </td>
                <td class="text-center">{{ $orderItem->quantity }}</td>
                <td class="text-right pr-0">
-                  {{ formatPrice($orderItem->subtotal) }} Dhs
+                  {{ format_price($orderItem->subtotal) }} Dhs
                </td>
             </tr>
          @endforeach
@@ -288,7 +288,7 @@
                class="border-0"></td>
             <td class="text-right pl-0">Total HT</td>
             <td class="text-right pr-0">
-               {{ formatPrice($order->subtotal) }} Dhs
+               {{ format_price($order->subtotal) }} Dhs
             </td>
          </tr>
 
@@ -297,7 +297,7 @@
                class="border-0"></td>
             <td class="text-right pl-0">Livraison</td>
             <td class="text-right pr-0">
-               {{ formatPrice($order->delivery_price) }} Dhs
+               {{ format_price($order->delivery_price) }} Dhs
             </td>
          </tr>
          <tr>
@@ -305,7 +305,7 @@
                class="border-0"></td>
             <td class="text-right pl-0">Remise</td>
             <td class="text-right pr-0">
-               {{ formatPrice($order->discount_price) }} Dhs
+               {{ format_price($order->discount_price) }} Dhs
             </td>
          </tr>
          <tr>
@@ -313,7 +313,7 @@
                class="border-0"></td>
             <td class="text-right pl-0">TVA</td>
             <td class="text-right pr-0">
-               {{ formatPrice($order->tax_price) }} Dhs
+               {{ format_price($order->tax_price) }} Dhs
             </td>
          </tr>
          <tr>
@@ -321,7 +321,7 @@
                class="border-0"></td>
             <td class="text-right pl-0">Total TTC</td>
             <td class="text-right pr-0 total-amount">
-               {{ formatPrice($order->total) }} Dhs
+               {{ format_price($order->total) }} Dhs
             </td>
          </tr>
       </tbody>

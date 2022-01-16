@@ -1,13 +1,5 @@
 <x-app-layout>
-   <x-layout.breadcrumb :active-page="__($activePage ? $activePage : 'Account')">
-      @if ($activePage)
-         <li class="breadcrumb-item text-nowrap">
-            <a href="{{ route('account.index') }}">
-               {{ __('Account') }}
-            </a>
-         </li>
-      @endif
-   </x-layout.breadcrumb>
+   <x-layout.breadcrumb :active-page="__($activePage)" />
 
    <div class="container pb-5 mb-2 mb-md-4">
       <div class="row">
@@ -40,10 +32,12 @@
                   </div>
                   <ul class="list-unstyled mb-0">
                      <li class="border-bottom mb-0">
-                        <a class="nav-link-style d-flex align-items-center px-4 py-3 {{ request()->is('account') ? 'active' : '' }}"
-                           href="{{ route('account.index') }}">
+                        <a class="nav-link-style d-flex align-items-center px-4 py-3 {{ request()->is('account/orders') ? 'active' : '' }}"
+                           href="{{ route('account.orders') }}">
                            <i class="ci-bag opacity-60 me-2"></i>{{ __('Orders') }}
-                           <span class="fs-sm text-muted ms-auto">1</span></a>
+                           <span
+                              class="fs-sm text-muted ms-auto">{{ count(auth()->user()->orders) }}</span>
+                           </a>
                      </li>
                   </ul>
                   <div class="bg-secondary px-4 py-3">

@@ -4,24 +4,24 @@
    <div class="py-2 px-xl-2">
       <div class="d-flex justify-content-between mb-2 pb-1 border-bottom">
          <h6 class="mb-3 pb-1">{{ __('Subtotal') }}</h6>
-         <h6 class="fw-normal">{{ formatPrice($cart->subtotal) }} <small>Dhs</small></h6>
+         <h6 class="fw-normal">{{ format_price($cart->subtotal) }} <small>Dhs</small></h6>
       </div>
       @if ($cart->discount_price)
          <div class="d-flex justify-content-between mb-2 pb-1 border-bottom">
             <h6 class="mb-3 pb-1">{{ __('Discount') }}</h6>
-            <h6 class="fw-normal text-success">- {{ formatPrice($cart->discount_price) }}
+            <h6 class="fw-normal text-success">- {{ format_price($cart->discount_price) }}
                <small>Dhs</small>
             </h6>
          </div>
       @endif
       <div class="d-flex justify-content-between mb-2 pb-1 border-bottom">
          <h6 class="mb-3 pb-1">{{ __('TVA') }}</h6>
-         <h6 class="fw-normal">+ {{ formatPrice($cart->getTaxPrice()) }} <small>Dhs</small>
+         <h6 class="fw-normal">+ {{ format_price($cart->getTaxPrice()) }} <small>Dhs</small>
          </h6>
       </div>
       <div class="d-flex justify-content-between mb-4 pb-1 border-bottom">
          <h6 class="mb-3 pb-1">{{ __('Total') }}</h6>
-         <h5 class="fw-normal">{{ formatPrice($cart->getTotal()) }} <small>Dhs</small></h5>
+         <h5 class="fw-normal">{{ format_price($cart->getTotal()) }} <small>Dhs</small></h5>
       </div>
       <x-base.alerts />
       <div class="accordion"

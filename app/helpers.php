@@ -23,7 +23,7 @@ function file_is_image(UploadedFile|string $file): bool
  * @param float
  * @return float
  */
-function formatPrice($price): float
+function format_price($price): float
 {
     return round((float)$price, 2);
 }

@@ -44,7 +44,7 @@
                <div class="dropdown-menu dropdown-menu-end">
                   <li>
                      <a class="dropdown-item"
-                        href="{{ route('account.index') }}">{{ __('Account') }}</a>
+                        href="{{ route('account.orders') }}">{{ __('Account') }}</a>
                   </li>
                   <li>
                      <a href="#"

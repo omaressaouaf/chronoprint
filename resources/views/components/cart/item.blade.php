@@ -21,7 +21,7 @@
                {{ $cartItem->product->getOptionByRef($attributeName, $optionRef)['name'] }}
             </div>
          @endforeach
-         <div class="fs-lg text-accent pt-2">{{ formatPrice($cartItem->subtotal) }} <small>Dhs
+         <div class="fs-lg text-accent pt-2">{{ format_price($cartItem->subtotal) }} <small>Dhs
                HT</small></div>
       </div>
    </div>

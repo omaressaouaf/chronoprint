@@ -57,7 +57,7 @@
             <div class="d-flex flex-wrap justify-content-between align-items-center pb-3">
                <div class="fs-sm me-2 py-2">
                   <span class="text-muted">{{ __('Total') }}:</span>
-                  <span class="text-accent ms-1">{{ formatPrice($cart->getTotal()) }}
+                  <span class="text-accent ms-1">{{ format_price($cart->getTotal()) }}
                      <small>Dhs</small>
                   </span>
                </div>

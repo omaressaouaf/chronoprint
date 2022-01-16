@@ -760,5 +760,8 @@
     "cancelled" : "annulé",
     "failed" : "manqué",
     "cash": "en espèces",
-    "credit_card": "carte bancaire"
+    "credit_card": "carte bancaire",
+    "Order" : "Commande",
+    "Passed at" : "Passé à",
+    "Status" : "Statut"
 }
