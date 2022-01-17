@@ -20,7 +20,7 @@ class SendToAdminsOrderPlacedNotification
         $admins = User::whereRelation("role", "name", "admin")->get();
 
         Notification::send($admins, new OrderNotification(
-            "Une nouvelle commande #{$event->order->id} a été passée. vous pouvez le gérer en cliquant sur le bouton ci-dessous",
+            "Une nouvelle commande #{$event->order->id} a été passée",
             url("/admin/orders/{$event->order->id}"),
             notifyLocally: true
         ));

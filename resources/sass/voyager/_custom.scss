@@ -20,7 +20,7 @@
 }
 
 .notifications-dropdowm-menu {
-    width: 310px !important;
+    width: 320px !important;
 
     .btn-delete-notifications {
         position: absolute;
@@ -43,4 +43,16 @@
         color: #555555;
         white-space: break-spaces;
     }
+}
+
+// Scroll bar
+.has-cool-scrollbar::-webkit-scrollbar {
+    width: 18px !important;
+    height: 14px !important;
+}
+.has-cool-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #aeb4be;
+    border: 4px solid transparent;
+    border-radius: 8px;
+    background-clip: padding-box !important;
 }

@@ -38,7 +38,10 @@
       <ul class="nav navbar-nav @if (__('voyager::generic.is_rtl') == 'true') navbar-left @else navbar-right @endif">
          <li class="dropdown"
             id="notifications-dropdown">
-            <notifications-list> </notifications-list>
+            <notifications-list :notifications-list="{{ $notifications }}"
+               :auth-user="{{ auth()->user() }}"
+               :app-name="'{{ config('app.name') }}'">
+            </notifications-list>
          </li>
          <li class="dropdown profile">
             <a href="#"

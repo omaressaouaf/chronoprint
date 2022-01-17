@@ -28,6 +28,7 @@
     "dependencies": {
         "card": "^2.5.4",
         "chartist": "^0.11.4",
+        "dayjs": "^1.10.7",
         "drift-zoom": "^1.4.5",
         "imagesloaded": "^4.1.4",
         "lg-fullscreen.js": "^1.2.0",

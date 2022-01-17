@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\OrderPlaced;
 use TCG\Voyager\Facades\Voyager;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -9,6 +10,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\Voyager\MediaController;
 use App\Http\Controllers\Voyager\InvoiceController;
+use App\Http\Controllers\Voyager\NotificationController;
 use App\Http\Controllers\Voyager\ProductController as VoyagerProductController;
 
 /**
@@ -16,9 +18,18 @@ use App\Http\Controllers\Voyager\ProductController as VoyagerProductController;
  */
 Route::prefix("admin")->group(function () {
     Route::middleware("auth")->as("admin.")->group(function () {
+        // Products
         Route::put("/products/{product}/attributes", [VoyagerProductController::class, "syncAttributes"]);
+
+        // Invoices
         Route::get("/invoices/{order}", InvoiceController::class)->name("invoices.index");
+
+        // Media
         Route::get("/media/{media}", [MediaController::class, "download"])->name("media.download");
+
+        // Notifications
+        Route::delete('/notifications', [NotificationController::class, 'deleteNotifications']);
+        Route::put('/notifications', [NotificationController::class, 'markNotifications']);
     });
     Voyager::routes();
 });

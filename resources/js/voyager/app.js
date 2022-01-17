@@ -2,6 +2,11 @@ require("../bootstrap");
 
 window.Vue = require("vue").default;
 import { createApp } from "vue";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+dayjs.extend(relativeTime);
+import "dayjs/locale/fr";
+dayjs.locale("fr");
 
 if (document.querySelector("#product-attributes")) {
     const productAttributes = createApp({});
@@ -43,10 +48,18 @@ if (document.querySelector("#attribute-options")) {
 if (document.querySelector("#notifications-dropdown")) {
     const notificationsDropdown = createApp({});
 
+    notificationsDropdown.config.globalProperties.$filters = {
+        formateDateToTimeAgo(dt) {
+            return dayjs(dt).fromNow();
+        },
+    };
+
     notificationsDropdown.component(
         "notifications-list",
         require("./components/NotificationsList.vue").default
     );
 
     notificationsDropdown.mount("#notifications-dropdown");
+
 }
+

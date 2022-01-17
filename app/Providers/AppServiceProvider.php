@@ -2,9 +2,8 @@
 
 namespace App\Providers;
 
-use App\Models\CartItem;
-use App\Observers\CartItemObserver;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -28,6 +27,13 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::useBootstrap();
 
-        CartItem::observe(CartItemObserver::class);
+        View::composer("voyager::dashboard.navbar", function ($view) {
+            /** @var \App\Models\User */
+            $authUser = auth()->user();
+            
+            $view->with([
+                'notifications' => $authUser->notifications()->latest()->take(15)->get()
+            ]);
+        });
     }
 }

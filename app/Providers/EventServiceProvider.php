@@ -2,12 +2,14 @@
 
 namespace App\Providers;
 
+use App\Models\CartItem;
 use App\Events\OrderPlaced;
 use App\Events\OrderStatusChanged;
-use App\Listeners\SendToAdminsOrderPlacedNotification;
-use App\Listeners\SendToUserOrderPlacedNotification;
-use App\Listeners\SendToUserOrderStatusChangedNotification;
+use App\Observers\CartItemObserver;
 use Illuminate\Auth\Events\Registered;
+use App\Listeners\SendToUserOrderPlacedNotification;
+use App\Listeners\SendToAdminsOrderPlacedNotification;
+use App\Listeners\SendToUserOrderStatusChangedNotification;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -38,6 +40,6 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        CartItem::observe(CartItemObserver::class);
     }
 }
