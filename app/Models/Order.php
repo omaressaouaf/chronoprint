@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Events\OrderStatusChanged;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Order extends Model
 {
@@ -33,6 +34,12 @@ class Order extends Model
         static::deleting(function ($order) {
             foreach ($order->items as $orderItem) {
                 $orderItem->delete();
+            }
+        });
+
+        static::updated(function($order) {
+            if($order->status === 'shipped' || $order->status === 'cancelled') {
+                OrderStatusChanged::dispatch($order);
             }
         });
     }

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use TCG\Voyager\Models\Role;
 
 class User extends \TCG\Voyager\Models\User
 {
@@ -54,5 +55,10 @@ class User extends \TCG\Voyager\Models\User
     public function orders()
     {
         return $this->hasMany(Order::class);
+    }
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
     }
 }

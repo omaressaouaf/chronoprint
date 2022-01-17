@@ -164,7 +164,7 @@
          </div>
          <div class="pb-4 fs-xs text-light opacity-50 text-center text-md-start">©
             {{ __('All rights reserved') }}.
-            {{ setting('site.title') }}
+            {{ config('app.name') }}
          </div>
       </div>
    </div>

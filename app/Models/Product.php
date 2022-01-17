@@ -90,4 +90,18 @@ class Product extends Model
             ->paginate(20)
             ->withQueryString();
     }
+
+    /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    public static function booted(): void
+    {
+        static::deleting(function ($product) {
+            foreach ($product->cartItems as $cartItem) {
+                $cartItem->delete();
+            }
+        });
+    }
 }

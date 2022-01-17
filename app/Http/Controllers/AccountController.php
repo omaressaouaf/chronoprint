@@ -15,11 +15,11 @@ class AccountController extends Controller
         $authUser =  auth()->user();
 
         return view('account.orders.index', [
-            "orders" => $authUser->orders()->paginate(5)
+            "orders" => $authUser->orders()->latest()->paginate(5)
         ]);
     }
 
-    public function showOrder($id)
+    public function showOrder(int|string $id)
     {
         return view('account.orders.show', [
             "order" => Order::where("id", $id)

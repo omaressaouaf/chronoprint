@@ -752,7 +752,7 @@
     "Your order has been placed and will be processed as soon as possible": "Votre commande a été passée et sera traitée dans les plus brefs délais",
     "You will be receiving an email shortly with confirmation of your order": "Vous recevrez un email sous peu avec la confirmation de votre commande",
     "Go back shopping": "Retourner pour acheter",
-    "Unknown": "Inconnue",
+    "Unknown": "Inconnue (peut-être supprimé)",
     "pending": "en attente",
     "processing" : "en traitement",
     "shipped" : "expédié",

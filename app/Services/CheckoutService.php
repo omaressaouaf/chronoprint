@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Events\OrderPlaced;
 use App\Models\Cart;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -68,7 +69,7 @@ class CheckoutService
 
             DB::commit();
 
-            //TODO:  Dispatch Event
+            OrderPlaced::dispatch($order);
 
             return ["msg_type" => "success_message", "msg_content" => __("Thank you for your order")];
         } catch (\Exception $ex) {

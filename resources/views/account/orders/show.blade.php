@@ -1,7 +1,23 @@
 <x-account-layout :title="__('Checkout your orders')"
    active-page="Orders">
    <div>
-      <h5 class="mb-4 ps-1">{{ __('Order') }} #{{ $order->id }}</h5>
+      <div class="d-flex justify-content-between align-items-start">
+         <h5 class="mb-4 ps-1">{{ __('Order') }} #{{ $order->id }}</h5>
+         <h5>
+            <span
+               class="badge
+               @if (in_array($order->status, ['pending', 'failed']))
+               bg-danger
+               @elseif(in_array($order->status, ['shipped', 'delivered']))
+               bg-success
+               @else
+               bg-info
+               @endif
+               m-0">
+               {{ __($order->status) }}
+            </span>
+         </h5>
+      </div>
       <div class="pb-0">
          @foreach ($order->items as $orderItem)
             <div class="d-sm-flex justify-content-between mb-4 pb-3 pb-sm-2 border-bottom">
@@ -43,7 +59,8 @@
          @endforeach
       </div>
       <!-- Footer-->
-      <div class="modal-footer flex-wrap justify-content-between bg-secondary fs-md">
+      <div
+         class="modal-footer d-flex flex-column flex-md-row justify-content-between bg-secondary fs-md">
          <div class="px-2 py-1">
             <span class="text-muted">{{ __('Subtotal') }} :
             </span><span>{{ format_price($order->subtotal) }}
@@ -56,6 +73,14 @@
                <small>Dhs</small>
             </span>
          </div>
+         @if ($order->discount_price)
+            <div class="px-2 py-1">
+               <span class="text-muted">{{ __('Discount') }} :
+               </span><span>{{ format_price($order->discount_price) }}
+                  <small>Dhs</small>
+               </span>
+            </div>
+         @endif
          <div class="px-2 py-1">
             <span class="text-muted">{{ __('TVA') }} :
             </span><span>{{ format_price($order->tax_price) }}

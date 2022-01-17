@@ -197,7 +197,7 @@
          <tr>
             <td class="px-0">
                <p class="seller-name">
-                  <strong>{{ setting('site.title') }}</strong>
+                  <strong>{{ config('app.name') }}</strong>
                </p>
 
                @if (setting('site.address'))

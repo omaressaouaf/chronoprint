@@ -29,6 +29,9 @@ class OrderItem extends Model
 
     public function product()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Product::class)->withDefault([
+            "slug" => __("Unknown"),
+            "title" => __("Unknown")
+        ]);
     }
 }

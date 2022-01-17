@@ -406,6 +406,19 @@
   left: -200px !important;
 }
 
+.notification-badge {
+  position: absolute !important;
+  right: 3px !important;
+  bottom: 30px !important;
+  background-color: #46be8a !important;
+  z-index: 100 !important;
+}
+
+.notification-toggle-icon {
+  color: #555555;
+  margin-top: -5px;
+}
+
 .notifications-dropdowm-menu {
   width: 310px !important;
 }
@@ -424,6 +437,6 @@
 }
 .notifications-dropdowm-menu .notification-title {
   font-weight: bolder;
-  color: rgba(29, 28, 28, 0.774);
+  color: #555555;
   white-space: break-spaces;
 }
