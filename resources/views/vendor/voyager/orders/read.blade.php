@@ -8,7 +8,10 @@
       <i class="{{ $dataType->icon }}"></i> {{ __('voyager::generic.viewing') }}
       {{ ucfirst($dataType->getTranslatedAttribute('display_name_singular')) }} &nbsp;
 
-      <a rel="noopener" target="_blank" href="{{route("invoices.index" , ["order" => $order->id])}}" class="btn btn-danger mr-2">
+      <a rel="noopener"
+         target="_blank"
+         href="{{ route('admin.invoices.index', ['order' => $order->id]) }}"
+         class="btn btn-danger mr-2">
          <i class="glyphicon glyphicon-print mr-1"></i> <span class="hidden-xs hidden-sm">Facture</span>
       </a>
       @can('edit', $dataTypeContent)
@@ -163,6 +166,12 @@
                                           class="text-info text-wrap text-break">
                                           {{ $mediaItem->filename }}
                                        </a>
+                                       <br>
+                                       <br>
+                                       <a href="{{ route('admin.media.download', ['media' => $mediaItem->id]) }}"
+                                          class="text-primary text-wrap text-break">
+                                          <i class="voyager-download"></i> Télécharger
+                                       </a>
                                     </div>
                                     <br>
                                  @endforeach
@@ -170,7 +179,7 @@
                            @endif
                         </div>
                         <div class="col-md-2">
-                           <p>{{ $orderItem->quantity }} Quantité</p>
+                           <p>{{ $orderItem->quantity }} Qté</p>
                         </div>
                         <div class="col-md-2 font-weight-bold">
                            <p>{{ $orderItem->subtotal }} Dhs HT</p>
@@ -228,10 +237,10 @@
                                  {{ $order->user->name }}
                               </a>
                            </u>
-                           @if($order->user->email)
-                           <p class="mt-2 text-muted">Email de facturation :
-                              {{ $order->user->email }}
-                           </p>
+                           @if ($order->user->email)
+                              <p class="mt-2 text-muted">Email de facturation :
+                                 {{ $order->user->email }}
+                              </p>
                            @endif
                         </div>
                      </div>

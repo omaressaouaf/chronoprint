@@ -23,6 +23,11 @@ class Media extends Model
         return "/storage/$this->path";
     }
 
+    public function getStoragePathAttribute(): string
+    {
+        return "/public/$this->path";
+    }
+
     /**
      * Moves the media item to a new model and location
      *
