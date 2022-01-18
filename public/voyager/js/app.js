@@ -19773,7 +19773,7 @@ var _hoisted_8 = ["onClick"];
 
 var _hoisted_9 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-    "class": "voyager-download"
+    "class": "voyager-download mr-2"
   }, null, -1
   /* HOISTED */
   );

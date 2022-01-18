@@ -40,7 +40,7 @@
               class="btn btn-success btn-xs"
               style="margin-left: 40px"
             >
-              <i class="voyager-download"></i> Importer des options prédéfinies
+              <i class="voyager-download mr-2"></i> Importer des options prédéfinies
               à partir de l'attribut
             </button>
             <hr />
