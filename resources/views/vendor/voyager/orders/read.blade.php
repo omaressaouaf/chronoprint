@@ -238,7 +238,7 @@
                               </a>
                            </u>
                            @if ($order->user->email)
-                              <p class="mt-2 text-muted">Email de facturation :
+                              <p class="mt-2 text-muted">
                                  {{ $order->user->email }}
                               </p>
                            @endif

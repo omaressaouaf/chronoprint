@@ -12,7 +12,6 @@
          <div class="ps-3">
             <h3 class="fs-base mb-1 text-capitalize">{{ auth()->user()->name }}</h3>
             <span class="text-accent fs-sm">{{ auth()->user()->email }}
-               <span class="fs-xs"> ({{ __('Billing email') }})</span>
             </span>
          </div>
       </div>

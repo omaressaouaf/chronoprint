@@ -25,5 +25,5 @@ function file_is_image(UploadedFile|string $file): bool
  */
 function format_price($price): float
 {
-    return round((float)$price, 2);
+    return number_format((float)$price, 2 , "." , "");
 }

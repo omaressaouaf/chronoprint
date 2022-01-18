@@ -237,7 +237,7 @@
 
                @if($order->user->email)
                <p class="buyer-phone">
-                  Email de facturation : {{ $order->user->email }}
+                  {{ $order->user->email }}
                </p>
                @endif
             </td>
