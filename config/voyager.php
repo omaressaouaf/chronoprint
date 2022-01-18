@@ -145,6 +145,8 @@ return [
 
         'widgets' => [
             'TCG\\Voyager\\Widgets\\UserDimmer',
+            "App\View\Voyager\Widgets\ProductDimmer",
+            "App\View\Voyager\Widgets\OrderDimmer"
         ],
 
     ],

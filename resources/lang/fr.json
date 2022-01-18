@@ -772,5 +772,6 @@
     "Send message" : "Envoyer le message",
     "Please provide a title of your request"  : "Merci de donner un titre à votre demande",
     "Please describe in detail your request" : "Veuillez décrire en détail votre demande",
-    "Your email was sent successfully" : "Votre E-mail a été envoyé avec succès"
+    "Your email was sent successfully" : "Votre E-mail a été envoyé avec succès",
+    "View all :resources" : "Voir tous les :resources"
 }
