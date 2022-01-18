@@ -21,6 +21,9 @@
                      wire:key="{{ $loop->index }}" />
                @endforeach
             </div>
+            <h3 class="fs-sm mt-4">
+               <i class="ci-announcement me-2 text-info"></i>{{__("Any items older than one day will be deleted because of storage occupying")}}
+            </h3>
          </section>
          <aside class="col-lg-4 pt-4 pt-lg-0 ps-xl-5">
             <x-cart.sidebar :cart="$cart" />

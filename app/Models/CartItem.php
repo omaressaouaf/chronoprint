@@ -3,13 +3,14 @@
 namespace App\Models;
 
 use App\Traits\HasMedia;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Prunable;
 use Illuminate\Database\Eloquent\Casts\AsCollection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
 class CartItem extends Model
 {
-    use HasFactory, HasMedia;
+    use HasFactory, HasMedia, Prunable;
 
     protected $guarded = [];
 
@@ -25,6 +26,16 @@ class CartItem extends Model
     public function mediaRootFolderPath(): string
     {
         return "cartItems/" . $this->id;
+    }
+
+    /**
+     * Get the prunable model query.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function prunable()
+    {
+        return static::where('created_at', '<=', now()->subDay());
     }
 
     public function cart()
