@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 15, 2022 at 07:52 PM
+-- Generation Time: Jan 18, 2022 at 02:32 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.11
 
@@ -99,10 +99,10 @@ INSERT INTO `attribute_product` (`id`, `attribute_id`, `product_id`, `options`, 
 (290, 63, 22, '[{\"name\":\"standard\",\"price\":0,\"requiredFilesProperties\":[],\"ref\":\"fd926107-f388-4f58-8373-e5e6709fcaa7PGIXIouR3g\"},{\"name\":\"Rigide\",\"price\":0.2,\"requiredFilesProperties\":[],\"ref\":\"14e8ff8e-8bc1-4a4c-9fe1-061b95fc636cmr84OSnLvW\"}]', NULL, NULL),
 (291, 64, 22, '[{\"name\":\"normal\",\"price\":0,\"requiredFilesProperties\":[],\"ref\":\"d68254a4-70f3-4ccc-aa7f-f103c65c2a2cj4UMpE46Dd\"},{\"name\":\"teron\",\"price\":0.1,\"requiredFilesProperties\":[],\"ref\":\"89f5834c-de3a-4d5a-a375-7a58dd3e2addipyCO220wc\"}]', NULL, NULL),
 (292, 61, 22, '[{\"name\":\"recto\",\"price\":0,\"requiredFilesProperties\":[{\"name\":\"recto\"}],\"ref\":\"0734d37c-21f7-4cdd-8423-2a59393a9a1drBPfU5zhP0\"},{\"name\":\"recto verso\",\"price\":0,\"requiredFilesProperties\":[{\"name\":\"recto\"},{\"name\":\"verso\"}],\"ref\":\"4623588f-4b1d-4ac8-b420-7c7c0a4f1a0eiRYySidnhU\"}]', NULL, NULL),
-(297, 59, 31, '[{\"name\":\"10cm\",\"price\":2,\"ref\":\"42a272c2-3c01-4c09-b4f3-d056234594d7mpjN5kmIxT\"},{\"name\":\"20cm\",\"price\":22,\"ref\":\"32b91dba-3a65-4884-91d8-6f4218e546bdFeFZDoNS14\"}]', NULL, NULL),
-(298, 61, 31, '[{\"name\":\"recto\",\"price\":0,\"requiredFilesProperties\":[{\"name\":\"Recto\"}],\"ref\":\"f6b6fdee-3a0a-4883-bf1d-5e7661612db3MD1sSeNCLT\"},{\"name\":\"recto verso\",\"price\":0,\"requiredFilesProperties\":[{\"name\":\"recto\"},{\"name\":\"verso\"}],\"ref\":\"1b919a16-9682-4aae-ba13-4cb2cad76355MmAYJ5hSg7\"}]', NULL, NULL),
-(299, 63, 31, '[{\"name\":\"standard\",\"price\":0,\"requiredFilesProperties\":[],\"ref\":\"b04bb509-8bcb-402c-98ac-a976dd4f6ba3DWs6vGRJn5\"},{\"name\":\"Rigide\",\"price\":0.2,\"requiredFilesProperties\":[],\"ref\":\"7896dee8-6248-4093-977e-4ee9b2850463CRucBEz0Mz\"}]', NULL, NULL),
-(300, 64, 31, '[{\"name\":\"normal\",\"price\":0,\"requiredFilesProperties\":[],\"ref\":\"c51900d1-ba2b-45eb-8755-974485b75bebevDa90suZY\"},{\"name\":\"teron\",\"price\":0.1,\"requiredFilesProperties\":[],\"ref\":\"fb877013-11e5-41c8-9470-e2e3088479c3NZXfR6BQn1\"}]', NULL, NULL);
+(301, 59, 31, '[{\"name\":\"10cm\",\"price\":2,\"ref\":\"42a272c2-3c01-4c09-b4f3-d056234594d7mpjN5kmIxT\"},{\"name\":\"20cm\",\"price\":22,\"ref\":\"32b91dba-3a65-4884-91d8-6f4218e546bdFeFZDoNS14\"}]', NULL, NULL),
+(302, 61, 31, '[{\"name\":\"recto\",\"price\":0,\"requiredFilesProperties\":[{\"name\":\"Recto\"}],\"ref\":\"f6b6fdee-3a0a-4883-bf1d-5e7661612db3MD1sSeNCLT\"},{\"name\":\"recto verso\",\"price\":0,\"requiredFilesProperties\":[{\"name\":\"recto\"},{\"name\":\"verso\"}],\"ref\":\"1b919a16-9682-4aae-ba13-4cb2cad76355MmAYJ5hSg7\"}]', NULL, NULL),
+(303, 63, 31, '[{\"name\":\"standard\",\"price\":0,\"requiredFilesProperties\":[],\"ref\":\"b04bb509-8bcb-402c-98ac-a976dd4f6ba3DWs6vGRJn5\"},{\"name\":\"Rigide\",\"price\":0.2,\"requiredFilesProperties\":[],\"ref\":\"7896dee8-6248-4093-977e-4ee9b2850463CRucBEz0Mz\"}]', NULL, NULL),
+(304, 64, 31, '[{\"name\":\"normal\",\"price\":0,\"requiredFilesProperties\":[],\"ref\":\"c51900d1-ba2b-45eb-8755-974485b75bebevDa90suZY\"},{\"name\":\"teron\",\"price\":0.1,\"requiredFilesProperties\":[],\"ref\":\"fb877013-11e5-41c8-9470-e2e3088479c3NZXfR6BQn1\"}]', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -119,6 +119,13 @@ CREATE TABLE `carts` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `carts`
+--
+
+INSERT INTO `carts` (`id`, `subtotal`, `discount_price`, `coupon_code`, `user_id`, `created_at`, `updated_at`) VALUES
+(52, 310.00, 0.00, NULL, 1, '2022-01-17 14:31:54', '2022-01-17 14:31:59');
 
 -- --------------------------------------------------------
 
@@ -138,6 +145,13 @@ CREATE TABLE `cart_items` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `cart_items`
+--
+
+INSERT INTO `cart_items` (`id`, `quantity`, `subtotal`, `selected_options`, `design_by_company`, `design_information`, `cart_id`, `product_id`, `created_at`, `updated_at`) VALUES
+(155, 100, 310.00, '{\"size\":\"42a272c2-3c01-4c09-b4f3-d056234594d7mpjN5kmIxT\",\"impression\":\"f6b6fdee-3a0a-4883-bf1d-5e7661612db3MD1sSeNCLT\",\"papier\":\"b04bb509-8bcb-402c-98ac-a976dd4f6ba3DWs6vGRJn5\",\"type_de_coin\":\"c51900d1-ba2b-45eb-8755-974485b75bebevDa90suZY\"}', 1, '', 52, 31, '2022-01-17 14:31:59', '2022-01-17 14:31:59');
 
 -- --------------------------------------------------------
 
@@ -428,6 +442,16 @@ CREATE TABLE `media` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `media`
+--
+
+INSERT INTO `media` (`id`, `model_type`, `model_id`, `name`, `filename`, `path`, `mime_type`, `size`, `created_at`, `updated_at`) VALUES
+(176, 'App\\Models\\OrderItem', 63, 'recto', 'AwbzEfo3IT8Qk4XwaHpKKKsqCqIxC7CmETTHyzXb.jpg', 'orderItems/63/AwbzEfo3IT8Qk4XwaHpKKKsqCqIxC7CmETTHyzXb.jpg', 'image/jpeg', 215773, '2022-01-16 18:23:32', '2022-01-16 18:23:32'),
+(177, 'App\\Models\\OrderItem', 63, 'verso', 'c9z6imPOWLYVltaNV5xKBfUayfSW9hOIgBCEFhSm.jpg', 'orderItems/63/c9z6imPOWLYVltaNV5xKBfUayfSW9hOIgBCEFhSm.jpg', 'image/jpeg', 284256, '2022-01-16 18:23:32', '2022-01-16 18:23:32'),
+(178, 'App\\Models\\OrderItem', 64, '0', 'eKjfGTQuMpwmPTTcp6jIARdPU6ljIpsyd2mQm8Jv.pdf', 'orderItems/64/eKjfGTQuMpwmPTTcp6jIARdPU6ljIpsyd2mQm8Jv.pdf', 'application/pdf', 549834, '2022-01-16 18:23:32', '2022-01-16 18:23:32'),
+(179, 'App\\Models\\OrderItem', 64, '1', 'hIF3zQPteKQ6YHOl86DkwLTdsAWhhNmsEN63gwO7.jpg', 'orderItems/64/hIF3zQPteKQ6YHOl86DkwLTdsAWhhNmsEN63gwO7.jpg', 'image/jpeg', 163125, '2022-01-16 18:23:32', '2022-01-16 18:23:32');
+
 -- --------------------------------------------------------
 
 --
@@ -552,7 +576,33 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (43, '2022_01_08_113052_create_reviews_table', 5),
 (45, '2022_01_09_204330_create_addresses_table', 6),
 (53, '2022_01_11_140411_create_orders_table', 7),
-(54, '2022_01_11_143019_create_order_items_table', 7);
+(54, '2022_01_11_143019_create_order_items_table', 7),
+(55, '2022_01_16_173721_create_notifications_table', 8);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `notifications`
+--
+
+CREATE TABLE `notifications` (
+  `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `notifiable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `notifiable_id` bigint(20) UNSIGNED NOT NULL,
+  `data` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `read_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `notifications`
+--
+
+INSERT INTO `notifications` (`id`, `type`, `notifiable_type`, `notifiable_id`, `data`, `read_at`, `created_at`, `updated_at`) VALUES
+('5706bf97-2a9c-4838-87be-eb911111cc3a', 'App\\Notifications\\OrderNotification', 'App\\Models\\User', 1, '{\"url\":\"http:\\/\\/localhost:8000\\/admin\\/orders\\/86\",\"message\":\"Une nouvelle commande #86 a \\u00e9t\\u00e9 pass\\u00e9e\"}', '2022-01-17 14:19:49', '2022-01-17 14:19:24', '2022-01-17 14:19:49'),
+('ad77376c-220d-42f1-aa75-459291b2db4c', 'App\\Notifications\\OrderNotification', 'App\\Models\\User', 1, '{\"url\":\"http:\\/\\/localhost:8000\\/admin\\/orders\\/87\",\"message\":\"Une nouvelle commande #87 a \\u00e9t\\u00e9 pass\\u00e9e\"}', '2022-01-17 14:20:40', '2022-01-17 14:20:22', '2022-01-17 14:20:40');
 
 -- --------------------------------------------------------
 
@@ -583,6 +633,17 @@ CREATE TABLE `orders` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`id`, `address_name`, `address_phone`, `address_email`, `address_city`, `address_zip`, `address_line`, `subtotal`, `discount_price`, `coupon_code`, `delivery_price`, `tax_price`, `total`, `status`, `payment_mode`, `paid`, `additional_information`, `user_id`, `created_at`, `updated_at`) VALUES
+(83, 'omar essaouaf', '+212625716365', 'souafomar@gmail.com', 'casablanca', '20000', 'NR 75 RUE DAR EL MILOUDI A M , CASABLANCA, Florida', 420.00, 0.00, NULL, 0.00, 84.00, 504.00, 'shipped', 'credit_card', 0, NULL, 1, '2022-01-16 11:09:35', '2022-01-16 18:21:24'),
+(84, 'Albert Einstein', '+212625736524', 'jagerefyky@mailinator.com', 'afourar', '20000', 'Fifth street', 296.00, 0.00, NULL, 39.00, 67.00, 402.00, 'processing', 'credit_card', 0, NULL, 1, '2022-01-16 11:15:48', '2022-01-16 12:01:50'),
+(85, 'Albert Einstein', '+212625736524', 'jagerefyky@mailinator.com', 'afourar', '20000', 'Fifth street', 480.00, 96.00, '-20off', 39.00, 84.60, 507.60, 'shipped', 'cash', 0, 'Please delivery my order as soon as possible', 1, '2022-01-16 18:23:32', '2022-01-18 10:53:43'),
+(86, 'omar essaouaf', '+212625716365', 'souafomar@gmail.com', 'casablanca', '20000', 'NR 75 RUE DAR EL MILOUDI A M , CASABLANCA, Florida', 310.00, 0.00, NULL, 0.00, 62.00, 372.00, 'pending', 'credit_card', 0, NULL, 1, '2022-01-17 14:19:19', '2022-01-17 14:19:19'),
+(87, 'omar essaouaf', '+212625716365', 'souafomar@gmail.com', 'casablanca', '20000', 'NR 75 RUE DAR EL MILOUDI A M , CASABLANCA, Florida', 110.00, 0.00, NULL, 0.00, 22.00, 132.00, 'shipped', 'credit_card', 0, NULL, 1, '2022-01-17 14:20:17', '2022-01-17 14:21:13');
+
 -- --------------------------------------------------------
 
 --
@@ -601,6 +662,19 @@ CREATE TABLE `order_items` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `order_items`
+--
+
+INSERT INTO `order_items` (`id`, `quantity`, `subtotal`, `selected_options`, `design_by_company`, `design_information`, `order_id`, `product_id`, `created_at`, `updated_at`) VALUES
+(60, 100, 310.00, '{\"size\":\"42a272c2-3c01-4c09-b4f3-d056234594d7mpjN5kmIxT\",\"impression\":\"f6b6fdee-3a0a-4883-bf1d-5e7661612db3MD1sSeNCLT\",\"papier\":\"b04bb509-8bcb-402c-98ac-a976dd4f6ba3DWs6vGRJn5\",\"type_de_coin\":\"c51900d1-ba2b-45eb-8755-974485b75bebevDa90suZY\"}', 1, '', 83, 31, '2022-01-16 11:09:35', '2022-01-16 11:09:35'),
+(61, 100, 110.00, '{\"size\":\"514ac787-1a7b-4b3c-8dc5-e85d32e13b91AqrOzwwpx5\",\"material\":\"784887c7-86a5-4b46-b3dd-d041c2cb8368aegwWJSQR3\",\"papier\":\"fd926107-f388-4f58-8373-e5e6709fcaa7PGIXIouR3g\",\"type_de_coin\":\"d68254a4-70f3-4ccc-aa7f-f103c65c2a2cj4UMpE46Dd\",\"impression\":\"0734d37c-21f7-4cdd-8423-2a59393a9a1drBPfU5zhP0\"}', 1, '', 83, 22, '2022-01-16 11:09:35', '2022-01-16 11:09:35'),
+(62, 57, 296.00, '[]', 1, '', 84, NULL, '2022-01-16 11:15:48', '2022-01-16 11:15:48'),
+(63, 100, 300.00, '{\"size\":\"42a272c2-3c01-4c09-b4f3-d056234594d7mpjN5kmIxT\",\"impression\":\"1b919a16-9682-4aae-ba13-4cb2cad76355MmAYJ5hSg7\",\"papier\":\"b04bb509-8bcb-402c-98ac-a976dd4f6ba3DWs6vGRJn5\",\"type_de_coin\":\"c51900d1-ba2b-45eb-8755-974485b75bebevDa90suZY\"}', 0, '', 85, 31, '2022-01-16 18:23:32', '2022-01-16 18:23:32'),
+(64, 200, 180.00, '{\"size\":\"514ac787-1a7b-4b3c-8dc5-e85d32e13b91AqrOzwwpx5\",\"material\":\"784887c7-86a5-4b46-b3dd-d041c2cb8368aegwWJSQR3\",\"papier\":\"fd926107-f388-4f58-8373-e5e6709fcaa7PGIXIouR3g\",\"type_de_coin\":\"d68254a4-70f3-4ccc-aa7f-f103c65c2a2cj4UMpE46Dd\",\"impression\":\"0734d37c-21f7-4cdd-8423-2a59393a9a1drBPfU5zhP0\"}', 1, 'Brand : Source Up', 85, 22, '2022-01-16 18:23:32', '2022-01-16 18:23:32'),
+(65, 100, 310.00, '{\"size\":\"42a272c2-3c01-4c09-b4f3-d056234594d7mpjN5kmIxT\",\"impression\":\"f6b6fdee-3a0a-4883-bf1d-5e7661612db3MD1sSeNCLT\",\"papier\":\"b04bb509-8bcb-402c-98ac-a976dd4f6ba3DWs6vGRJn5\",\"type_de_coin\":\"c51900d1-ba2b-45eb-8755-974485b75bebevDa90suZY\"}', 1, '', 86, 31, '2022-01-17 14:19:19', '2022-01-17 14:19:19'),
+(66, 100, 110.00, '{\"size\":\"514ac787-1a7b-4b3c-8dc5-e85d32e13b91AqrOzwwpx5\",\"material\":\"784887c7-86a5-4b46-b3dd-d041c2cb8368aegwWJSQR3\",\"papier\":\"fd926107-f388-4f58-8373-e5e6709fcaa7PGIXIouR3g\",\"type_de_coin\":\"d68254a4-70f3-4ccc-aa7f-f103c65c2a2cj4UMpE46Dd\",\"impression\":\"0734d37c-21f7-4cdd-8423-2a59393a9a1drBPfU5zhP0\"}', 1, '', 87, 22, '2022-01-17 14:20:17', '2022-01-17 14:20:17');
 
 -- --------------------------------------------------------
 
@@ -690,9 +764,7 @@ INSERT INTO `permissions` (`id`, `key`, `table_name`, `created_at`, `updated_at`
 (62, 'browse_orders', 'orders', '2022-01-14 13:32:37', '2022-01-14 13:32:37'),
 (63, 'read_orders', 'orders', '2022-01-14 13:32:37', '2022-01-14 13:32:37'),
 (64, 'edit_orders', 'orders', '2022-01-14 13:32:37', '2022-01-14 13:32:37'),
-(66, 'delete_orders', 'orders', '2022-01-14 13:32:37', '2022-01-14 13:32:37'),
-(67, 'add_reviews', 'reviews', '2022-01-14 16:12:09', '2022-01-14 16:12:09'),
-(68, 'add_orders', 'orders', '2022-01-14 16:20:35', '2022-01-14 16:20:35');
+(66, 'delete_orders', 'orders', '2022-01-14 13:32:37', '2022-01-14 13:32:37');
 
 -- --------------------------------------------------------
 
@@ -819,7 +891,6 @@ CREATE TABLE `products` (
 
 INSERT INTO `products` (`id`, `title`, `slug`, `details`, `description`, `allowed_quantities`, `popular`, `active`, `promotion_label`, `meta_title`, `meta_description`, `meta_keywords`, `category_id`, `images`, `created_at`, `updated_at`, `design_price`) VALUES
 (22, 'Large Sac', 'something', 'Les cartes de visite classiques WePrint offrent un excellent rapport qualité/prix tout en simplicité et élégance. Ces cartes de visite proposent de nombreuses options pour mettre en valeur votre marque.', '<p style=\"border: 0px; margin: 0px 0px 1.5em; padding: 0px; color: #3a3a3a; font-family: Lato, sans-serif; font-size: 19px;\">If you&rsquo;re thinking of starting a blog of your own, but just don&rsquo;t have a clue on what to blog about, then fear not!</p>\r\n<p style=\"border: 0px; margin: 0px 0px 1.5em; padding: 0px; color: #3a3a3a; font-family: Lato, sans-serif; font-size: 19px;\">In this article, I have included a whole load of blog examples from a wide variety of different niches, all run on different&nbsp;<a style=\"border: 0px; margin: 0px; padding: 0px; background-color: transparent; transition: color 0.1s ease-in-out 0s, background-color 0.1s ease-in-out 0s; text-decoration-line: none; color: #951a82;\" href=\"https://makeawebsitehub.com/choose-right-blogging-platform/\">blogging platforms</a>&nbsp;like WordPress, Joomla! and Drupal.</p>\r\n<p style=\"border: 0px; margin: 0px 0px 1.5em; padding: 0px; color: #3a3a3a; font-family: Lato, sans-serif; font-size: 19px;\">Since the beginning of the internet, millions and millions and millions of blogs have been created. Many have died due to lost interest or their owners giving up on the idea, while others have thrived and continue to grow,&nbsp;<a style=\"border: 0px; margin: 0px; padding: 0px; background-color: transparent; transition: color 0.1s ease-in-out 0s, background-color 0.1s ease-in-out 0s; text-decoration-line: none; color: #951a82;\" href=\"https://makeawebsitehub.com/how-to-make-money-blogging/\" target=\"_blank\" rel=\"noopener noreferrer\">making money</a>&nbsp;and earning their owners a steady income. It&rsquo;s a constant evolution of content that keeps people coming back for more, especially if these blogs contact highly resourceful material that people find useful and interesting.</p>\r\n<p style=\"border: 0px; margin: 0px 0px 1.5em; padding: 0px; color: #3a3a3a; font-family: Lato, sans-serif; font-size: 19px;\">Each example listed in this blog post are all different in some way and all bring something unique to their readers &amp; subscribers. I want to show you what is possible and how you can take inspiration from them and create an awesome blog of your own.</p>\r\n<p style=\"border: 0px; margin: 0px 0px 1.5em; padding: 0px; color: #3a3a3a; font-family: Lato, sans-serif; font-size: 19px;\">Some of these blogs make over $100k a month, others are just a hobby for their owners, but all have the same purpose&nbsp;at their core&hellip; the love of writing and sharing information.</p>\r\n<h3 style=\"border: 0px; margin: 0px 0px 20px; padding: 0px; font-family: Lato, sans-serif; font-size: 35px; line-height: 1.2em; color: #016c9e;\">Want to Start Your Own Blog?</h3>\r\n<p style=\"border: 0px; margin: 0px 0px 1.5em; padding: 0px; color: #3a3a3a; font-family: Lato, sans-serif; font-size: 19px;\">Remember that it doesn&rsquo;t cost the earth to start your own blog. You can be up and running for as little as $2.95 p/m with Bluehost.</p>\r\n<p style=\"border: 0px; margin: 0px 0px 1.5em; padding: 0px; color: #3a3a3a; font-family: Lato, sans-serif; font-size: 19px;\"><a style=\"border: 0px; margin: 0px; padding: 0px; background-color: transparent; transition: color 0.1s ease-in-out 0s, background-color 0.1s ease-in-out 0s; text-decoration-line: none; color: #951a82;\" href=\"https://makeawebsitehub.com/go/bluehost\" target=\"_blank\" rel=\"noopener noreferrer\">Bluehost</a>&nbsp;offer web hosting, Free SSL, Email, web builder and a&nbsp;<a style=\"border: 0px; margin: 0px; padding: 0px; background-color: transparent; transition: color 0.1s ease-in-out 0s, background-color 0.1s ease-in-out 0s; text-decoration-line: none; color: #951a82;\" href=\"https://makeawebsitehub.com/go/bluehost\" target=\"_blank\" rel=\"nofollow noopener\">FREE DOMAIN</a>.</p>', '[{\"value\":100,\"price\":100},{\"value\":200,\"price\":170}]', 0, 0, '-50%', 'Aut placeat obcaeca', 'Commodi consequatur', 'Dolorem sequi rerum', NULL, '[\"products\\\\January2022\\\\ZT0H3nLALDaENM7kRylr.png\"]', '2021-12-30 17:40:12', '2022-01-09 12:56:03', 10),
-(30, 'Necessitatibus error', 'necessitatibus-error', 'Autem consectetur vo', NULL, '[{\"value\":57,\"price\":85},{\"value\":10,\"price\":29}]', 0, 0, 'Ducimus ab nisi et', 'Qui iure ipsa irure', 'Aut sed repellendus', 'Sint soluta veritati', 1, '[\"products\\\\January2022\\\\nEw6R7d3OeGN0iaeYlcm.jpg\"]', '2022-01-05 13:54:48', '2022-01-05 13:54:48', 211),
 (31, 'Cartes de voeux', 'cartes-de-voeux', 'Que ce soit pour célébrer une fête ou un événement interne à votre entreprise, vos cartes de vœux reflèteront votre image de marque et renforceront le message qu’elles délivrent, grâce à un très large choix de supports et de finitions.', NULL, '[{\"value\":100,\"price\":100},{\"value\":200,\"price\":200},{\"value\":300,\"price\":250}]', 1, 1, '-20off', 'Nihil aut in lorem f', 'wewe', 'wewe', 6, '[\"products\\\\January2022\\\\Zh31A7yrs23yNw7NPjKR.png\"]', '2022-01-08 17:35:16', '2022-01-08 17:35:16', 10);
 
 -- --------------------------------------------------------
@@ -923,7 +994,8 @@ INSERT INTO `settings` (`id`, `key`, `display_name`, `value`, `details`, `type`,
 (12, 'site.email', 'Email', 'fournishop01@gmail.com', NULL, 'text', 7, 'Site'),
 (13, 'site.phone', 'Téléphone', '+212 23 22 33', NULL, 'text', 8, 'Site'),
 (16, 'cart.delivery_price', 'Prix de livraison', '39', '{\r\n    \"type\" : \"number\"\r\n}', 'text', 9, 'Cart'),
-(17, 'cart.tax', 'TVA', '20', NULL, 'text', 10, 'Cart');
+(17, 'cart.tax', 'TVA', '20', NULL, 'text', 10, 'Cart'),
+(18, 'site.about', 'À propos de nous', '<p>&nbsp;</p>\r\n<h2 class=\"h3 pb-3\" style=\"box-sizing: border-box; margin-top: 0px; margin-bottom: 0.75rem; font-weight: 500; line-height: 1.2; color: #373f50; font-size: 1.75rem; -webkit-font-smoothing: antialiased; font-family: Rubik, sans-serif; padding-bottom: 1rem !important;\">Search, Select, Buy online</h2>\r\n<p style=\"box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem; font-family: Arial, Helvetica, sans-serif; text-align: justify;\"><span style=\"box-sizing: border-box; color: #333333; font-family: montserratbold, sans-serif !important;\"><span style=\"box-sizing: border-box; font-size: 20px;\"><span style=\"box-sizing: border-box; font-family: arial, helvetica, sans-serif;\">Bienvenue sur 24hprint.ma, une imprimerie en ligne marocaine&nbsp;d&eacute;di&eacute;e aux produits imprim&eacute;s.</span></span></span></p>\r\n<ul style=\"box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem; font-family: Arial, Helvetica, sans-serif;\">\r\n<li style=\"box-sizing: border-box; text-align: justify;\"><span style=\"box-sizing: border-box; font-size: 16px;\"><span style=\"box-sizing: border-box; font-family: arial, helvetica, sans-serif;\">Choisissez un&nbsp; produit, personnalisez-le en utilisant nos mod&egrave;les et notre studio de conception, et passez votre commande.</span></span></li>\r\n<li style=\"box-sizing: border-box; text-align: justify;\"><span style=\"box-sizing: border-box; font-size: 16px;\"><span style=\"box-sizing: border-box; font-family: arial, helvetica, sans-serif;\">Plusieurs solutions de livraisons vous sont propos&eacute;es et le paiement se fait par cartes de cr&eacute;dit, virement bancaire ou esp&egrave;ce.</span></span></li>\r\n</ul>\r\n<p style=\"box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem; font-family: Arial, Helvetica, sans-serif; text-align: justify;\"><span style=\"box-sizing: border-box; font-size: 16px;\"><span style=\"box-sizing: border-box; font-family: arial, helvetica, sans-serif;\"><em style=\"box-sizing: border-box;\">En cas de demande sp&eacute;cifique ou d&rsquo;aide particuli&egrave;re, nous sommes &agrave; votre service pour vous guider et pour vous apporter tout compl&eacute;ment d&rsquo;information dont vous auriez besoin.</em></span></span></p>\r\n<p style=\"box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem; font-family: Arial, Helvetica, sans-serif; text-align: justify;\"><span style=\"box-sizing: border-box; color: #008000;\"><span style=\"box-sizing: border-box; font-size: 20px;\"><span style=\"box-sizing: border-box; color: #333333; font-family: montserratbold, sans-serif !important;\"><span style=\"box-sizing: border-box; font-family: arial, helvetica, sans-serif;\">Particuliers ou Professionnels, enregistrez-vous gratuitement, le web-to-print de 24hprint.ma est fait pour vous.</span></span></span></span></p>\r\n<p style=\"box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem; font-family: Arial, Helvetica, sans-serif; text-align: justify;\">&nbsp;</p>\r\n<p style=\"box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem; font-family: Arial, Helvetica, sans-serif; text-align: justify;\"><span style=\"box-sizing: border-box; font-size: 20px;\"><span style=\"box-sizing: border-box; font-family: arial, helvetica, sans-serif;\"><span style=\"box-sizing: border-box; color: #333333; font-family: montserratbold, sans-serif !important;\"><u style=\"box-sizing: border-box;\">Innovation et Engagement</u></span></span></span></p>\r\n<p style=\"box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem; font-family: Arial, Helvetica, sans-serif; text-align: justify;\"><span style=\"box-sizing: border-box; font-size: 16px;\"><span style=\"box-sizing: border-box; font-family: arial, helvetica, sans-serif;\">Notre site internet est, avec notre page&nbsp;<a style=\"box-sizing: border-box; color: #4a4a4a; text-decoration-line: none; background-color: transparent; transition: all 0.3s ease 0s;\" href=\"https://www.facebook.com/stpmultipress/\">Facebook</a>, la vitrine digitale de notre soci&eacute;t&eacute;.</span></span></p>\r\n<p style=\"box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem; font-family: Arial, Helvetica, sans-serif; text-align: justify;\"><span style=\"box-sizing: border-box; font-size: 16px;\"><span style=\"box-sizing: border-box; font-family: arial, helvetica, sans-serif;\">Depuis sa cr&eacute;ation, celle-ci n&rsquo;a cess&eacute; de faire cro&icirc;tre son potentiel pour vous offrir le meilleur de l&rsquo;imprimerie en s&rsquo;appuyant sur ses 2 valeurs de base&nbsp;:<span style=\"box-sizing: border-box; color: #333333; font-family: montserratbold, sans-serif !important;\">&nbsp;Innovation et Engagement.</span></span></span><span style=\"box-sizing: border-box; font-size: 16px;\"><span style=\"box-sizing: border-box; font-family: arial, helvetica, sans-serif;\">&nbsp;</span></span><br style=\"box-sizing: border-box;\" />&nbsp;</p>\r\n<p style=\"box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem; font-family: Arial, Helvetica, sans-serif; text-align: justify;\"><span style=\"box-sizing: border-box; font-size: 16px;\">au 1er Septembre 2020,</span><u style=\"box-sizing: border-box;\"></u></p>\r\n<p style=\"box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem; font-family: Arial, Helvetica, sans-serif; text-align: justify;\"><span style=\"box-sizing: border-box; font-size: 16px;\"><span style=\"box-sizing: border-box; font-family: arial, helvetica, sans-serif;\">. 35&nbsp;employ&eacute;s,</span></span></p>\r\n<p style=\"box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem; font-family: Arial, Helvetica, sans-serif; text-align: justify;\"><span style=\"box-sizing: border-box; font-size: 16px;\"><span style=\"box-sizing: border-box; font-family: arial, helvetica, sans-serif;\">. 15&nbsp;millions dh de Chiffre d\'affaires</span></span></p>\r\n<p style=\"box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem; font-family: Arial, Helvetica, sans-serif; text-align: justify;\"><span style=\"box-sizing: border-box; font-size: 16px;\"><span style=\"box-sizing: border-box; font-family: arial, helvetica, sans-serif;\">. 19 machines de production travaillant en 2 &eacute;quipes,&nbsp;</span></span></p>\r\n<p style=\"box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem; font-family: Arial, Helvetica, sans-serif; text-align: justify;\"><span style=\"box-sizing: border-box; font-size: 16px;\"><span style=\"box-sizing: border-box; font-family: arial, helvetica, sans-serif;\">. Plus de 2500&nbsp;clients actifs (du public et du priv&eacute;, de tous secteurs d\'activit&eacute;s),</span></span></p>\r\n<p style=\"box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem; font-family: Arial, Helvetica, sans-serif; text-align: justify;\"><span style=\"box-sizing: border-box; font-size: 16px;\"><span style=\"box-sizing: border-box; font-family: arial, helvetica, sans-serif;\">. Plus de 3000 Commandes par an,</span></span></p>\r\n<p style=\"box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem; font-family: Arial, Helvetica, sans-serif; text-align: justify;\"><span style=\"box-sizing: border-box; font-size: 16px;\"><span style=\"box-sizing: border-box; font-family: arial, helvetica, sans-serif;\">. Plus de 98% de Clients satisfaits,&nbsp;</span></span></p>\r\n<p style=\"box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem; font-family: Arial, Helvetica, sans-serif; text-align: justify;\">&nbsp;</p>\r\n<p style=\"box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem; font-family: Arial, Helvetica, sans-serif; text-align: justify;\"><span style=\"box-sizing: border-box; font-size: 16px;\"><span style=\"box-sizing: border-box; font-family: arial, helvetica, sans-serif;\"><span style=\"box-sizing: border-box; color: #333333; font-family: montserratbold, sans-serif !important;\"><em style=\"box-sizing: border-box;\">- Service de qualit&eacute;</em></span></span></span></p>\r\n<p style=\"box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem; font-family: Arial, Helvetica, sans-serif; text-align: justify;\"><span style=\"box-sizing: border-box; font-size: 16px;\"><span style=\"box-sizing: border-box; font-family: arial, helvetica, sans-serif;\">Notre &eacute;quipe se tient &agrave; votre disposition pour r&eacute;pondre de mani&egrave;re comp&eacute;tente et rapide &agrave; vos questions et vous proposer des solutions personnalis&eacute;es afin de satisfaire vos exigences.</span></span></p>\r\n<p style=\"box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem; font-family: Arial, Helvetica, sans-serif; text-align: justify;\"><span style=\"box-sizing: border-box; font-size: 16px;\"><span style=\"box-sizing: border-box; font-family: arial, helvetica, sans-serif;\"><span style=\"box-sizing: border-box; color: #333333; font-family: montserratbold, sans-serif !important;\"><em style=\"box-sizing: border-box;\">- Qualit&eacute; d\'impression</em></span></span></span></p>\r\n<p style=\"box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem; font-family: Arial, Helvetica, sans-serif; text-align: justify;\"><span style=\"box-sizing: border-box; font-size: 16px;\"><span style=\"box-sizing: border-box; font-family: arial, helvetica, sans-serif;\">Quels que soient nos outils (offset, jet d\'encre, laser), nous vous offrons une qualit&eacute; d\'impression&nbsp;sur une grande vari&eacute;t&eacute; de supports (papiers, cartons, adh&eacute;sif...).</span></span></p>\r\n<p style=\"box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem; font-family: Arial, Helvetica, sans-serif; text-align: justify;\">&nbsp;</p>\r\n<p style=\"box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem; font-family: Arial, Helvetica, sans-serif; text-align: justify;\"><span style=\"box-sizing: border-box; font-size: 16px;\"><span style=\"box-sizing: border-box; font-family: arial, helvetica, sans-serif;\"><span style=\"box-sizing: border-box; color: #333333; font-family: montserratbold, sans-serif !important;\"><em style=\"box-sizing: border-box;\">- Pas de frais cach&eacute;s</em></span></span></span></p>\r\n<p style=\"box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem; font-family: Arial, Helvetica, sans-serif; text-align: justify;\"><span style=\"box-sizing: border-box; font-size: 16px;\"><span style=\"box-sizing: border-box; font-family: arial, helvetica, sans-serif;\">Vous avez un acc&egrave;s clair &agrave; l\'ensemble des prix dans notre boutique en ligne. Les frais de livraison sont toujours d&eacute;taill&eacute;s au moment de la confirmation de commande<a style=\"box-sizing: border-box; color: #4a4a4a; text-decoration-line: none; background-color: transparent; transition: all 0.3s ease 0s;\" href=\"http://www.saxoprint.fr/budget-transparent\">.</a></span></span></p>', NULL, 'rich_text_box', 11, 'Site');
 
 -- --------------------------------------------------------
 
@@ -968,9 +1040,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `role_id`, `name`, `email`, `phone`, `avatar`, `email_verified_at`, `password`, `remember_token`, `settings`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Omar Essaouaf', 'omar@gmail.com', '+212 55 4 92 23 90', 'users/default.png', NULL, '$2y$10$FOIQztJ7gw2njjftxHGvJ.OyEGW6V8Xtc.fznfO6UaN6h8TBZZvkC', 'VI4zbJFvpGq8kyFiR4hFzsku6jozhlgTTanxiDRtrVkdAjCLHfMsyimAnGfb', NULL, '2021-12-15 19:48:01', '2022-01-09 16:16:11'),
-(5, 2, 'Keely Navarro', 'rupaqyr@mailinator.com', '+1 (761) 659-3092', 'users/default.png', NULL, '$2y$10$UMlyASkPd1.uRUcGxUhDXOh6xjuwjmtup04mb4XTHGEQ9USCB4LRq', NULL, NULL, '2022-01-15 17:47:27', '2022-01-15 17:47:27'),
-(6, 2, 'Declan Kennedy', 'fuwecihony@mailinator.com', '+1 (649) 881-8307', 'users/default.png', NULL, '$2y$10$XEB7IDvhyr0Km1qi/wgsP.IldlqSn47rMosDjNlvas9/hu2mR44x2', NULL, NULL, '2022-01-15 17:48:16', '2022-01-15 17:49:47');
+(1, 1, 'Omar Essaouaf', 'omar@gmail.com', '+212 55 4 92 23 90', 'users/default.png', NULL, '$2y$10$FOIQztJ7gw2njjftxHGvJ.OyEGW6V8Xtc.fznfO6UaN6h8TBZZvkC', 'Q9Y8dHUVQDqUtrb8wcTkwyib2ZuyFm05UO2ZJFyLqyuNL9t13SYl8vBR3eGB', NULL, '2021-12-15 19:48:01', '2022-01-09 16:16:11'),
+(5, 2, 'Keely Navarro', 'rupaqyr@mailinator.com', '+1 (761) 659-3092', 'users/default.png', NULL, '$2y$10$UMlyASkPd1.uRUcGxUhDXOh6xjuwjmtup04mb4XTHGEQ9USCB4LRq', NULL, NULL, '2022-01-15 17:47:27', '2022-01-16 18:12:25'),
+(6, 2, 'Declan Kennedy', 'fuwecihony@mailinator.com', '+1 (649) 881-8307', 'users/default.png', NULL, '$2y$10$XEB7IDvhyr0Km1qi/wgsP.IldlqSn47rMosDjNlvas9/hu2mR44x2', NULL, NULL, '2022-01-15 17:48:16', '2022-01-15 17:49:47'),
+(7, 2, 'test', 'test@gmail.com', '2232323', 'users/default.png', NULL, '$2y$10$FfTFvig7POEpfXqNvflNJumHtPVakmfR9MOl82voIu0aLQNPBPQRe', NULL, NULL, '2022-01-16 17:27:01', '2022-01-16 17:27:01');
 
 -- --------------------------------------------------------
 
@@ -1109,6 +1182,13 @@ ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `notifications`
+--
+ALTER TABLE `notifications`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `notifications_notifiable_type_notifiable_id_index` (`notifiable_type`,`notifiable_id`);
+
+--
 -- Indexes for table `orders`
 --
 ALTER TABLE `orders`
@@ -1240,19 +1320,19 @@ ALTER TABLE `attributes`
 -- AUTO_INCREMENT for table `attribute_product`
 --
 ALTER TABLE `attribute_product`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=301;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=305;
 
 --
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT for table `cart_items`
 --
 ALTER TABLE `cart_items`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=147;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=156;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -1294,7 +1374,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `media`
 --
 ALTER TABLE `media`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=172;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=181;
 
 --
 -- AUTO_INCREMENT for table `menus`
@@ -1312,19 +1392,19 @@ ALTER TABLE `menu_items`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
 
 --
 -- AUTO_INCREMENT for table `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 
 --
 -- AUTO_INCREMENT for table `permissions`
@@ -1342,7 +1422,7 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `product_variant`
@@ -1360,13 +1440,13 @@ ALTER TABLE `reviews`
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `settings`
 --
 ALTER TABLE `settings`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `translations`
@@ -1378,7 +1458,7 @@ ALTER TABLE `translations`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `variants`
