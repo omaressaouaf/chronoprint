@@ -6,14 +6,14 @@ use App\Models\Product;
 use Livewire\Component;
 use App\Models\CartItem;
 use App\Services\CartService;
-use Livewire\WithFileUploads;
+use App\Traits\WithLivewireFileUploads;
 use Illuminate\Support\Collection;
 use Illuminate\Validation\Validator;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class PriceCalculator extends Component
 {
-    use WithFileUploads, AuthorizesRequests;
+    use WithLivewireFileUploads, AuthorizesRequests;
 
     public Product $product;
 
