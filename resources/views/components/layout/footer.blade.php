@@ -17,33 +17,31 @@
             <div class="widget widget-links widget-light pb-2 mb-4">
                <h3 class="widget-title text-light">{{ __('Account') }}</h3>
                <ul class="widget-list">
-                  <li class="widget-list-item"><a class="widget-list-link"
-                        href="#">Your account</a></li>
-                  <li class="widget-list-item"><a class="widget-list-link"
-                        href="#">Shipping rates &amp;
-                        policies</a></li>
-                  <li class="widget-list-item"><a class="widget-list-link"
-                        href="#">Refunds &amp;
-                        replacements</a></li>
-                  <li class="widget-list-item"><a class="widget-list-link"
-                        href="#">Order tracking</a></li>
-                  <li class="widget-list-item"><a class="widget-list-link"
-                        href="#">Delivery info</a></li>
-                  <li class="widget-list-item"><a class="widget-list-link"
-                        href="#">Taxes &amp; fees</a></li>
+                  @auth
+                     <li class="widget-list-item"><a class="widget-list-link"
+                           href="{{ route('cart.index') }}">{{ __('Cart') }}</a></li>
+                     <li class="widget-list-item"><a class="widget-list-link"
+                           href="{{ route('account.orders') }}">{{ __('Orders') }}</a></li>
+                     <li class="widget-list-item"><a class="widget-list-link"
+                           href="{{ route('account.profile') }}">{{ __('Profile') }}</a></li>
+                     <li class="widget-list-item"><a class="widget-list-link"
+                           href="{{ route('account.addresses') }}">{{ __('Addresses') }}</a></li>
+                  @else
+                     <li class="widget-list-item"><a class="widget-list-link"
+                           href="{{ route('login') }}">{{ __('Login') }}</a></li>
+                     <li class="widget-list-item"><a class="widget-list-link"
+                           href="{{ route('register') }}">{{ __('Register') }}</a></li>
+                  @endauth
+
                </ul>
             </div>
             <div class="widget widget-links widget-light pb-2 mb-4">
                <h3 class="widget-title text-light">{{ __('About us') }}</h3>
                <ul class="widget-list">
                   <li class="widget-list-item"><a class="widget-list-link"
-                        href="#">About company</a></li>
+                        href="{{ route('about') }}">{{ __('About us') }}</a></li>
                   <li class="widget-list-item"><a class="widget-list-link"
-                        href="#">Our team</a></li>
-                  <li class="widget-list-item"><a class="widget-list-link"
-                        href="#">Careers</a></li>
-                  <li class="widget-list-item"><a class="widget-list-link"
-                        href="#">News</a></li>
+                        href="{{ route('contact.index') }}">{{ __('Contact us') }}</a></li>
                </ul>
             </div>
          </div>
@@ -75,8 +73,7 @@
                         tabindex="-1">
                   </div>
                   <div class="form-text text-light opacity-50">
-                     {{ __('Subscribe to our newsletter to receive early discount offers, updates and new
-                                                                      products info') }}
+                     {{ __('Subscribe to our newsletter to receive early discount offers, updates and new products info') }}
                   </div>
                   <div class="subscription-status"></div>
                </form>

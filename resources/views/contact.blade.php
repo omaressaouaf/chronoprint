@@ -9,8 +9,8 @@
             <a class="card h-100"
                href="#map"
                data-scroll>
-               <div class="card-body text-center"><i
-                     class="ci-location h3 mt-2 mb-4 text-primary"></i>
+               <div class="card-body text-center">
+                  <i class="ci-location fs-3 mt-2 mb-4 text-primary"></i>
                   <h3 class="h6 mb-2">{{ __('Main address') }}</h3>
                   <p class="fs-sm text-muted">{{ setting('site.address') }}</p>
                </div>
@@ -19,7 +19,7 @@
          <div class="col-xl-3 col-sm-6 mb-grid-gutter">
             <div class="card h-100">
                <div class="card-body text-center"><i
-                     class="ci-navigation h3 mt-2 mb-4 text-primary"></i>
+                     class="ci-navigation fs-3 mt-2 mb-4 text-primary"></i>
                   <h3 class="h6 mb-3">{{ __('Visit our other website') }}</h3>
                   <ul class="list-unstyled fs-sm mb-0">
                      <li class="mb-0">
@@ -39,7 +39,7 @@
          </div>
          <div class="col-xl-3 col-sm-6 mb-grid-gutter">
             <div class="card h-100">
-               <div class="card-body text-center"><i class="ci-phone h3 mt-2 mb-4 text-primary"></i>
+               <div class="card-body text-center"><i class="ci-phone fs-3 mt-2 mb-4 text-primary"></i>
                   <h3 class="h6 mb-3">{{ __('Phone') }}</h3>
                   <ul class="list-unstyled fs-sm mb-0">
                      <li class="mb-0">
@@ -56,7 +56,7 @@
          <div class="col-xl-3 col-sm-6 mb-grid-gutter">
             <div class="card h-100">
                <div class="card-body text-center">
-                  <i class="ci-mail h3 mt-2 mb-4 text-primary"></i>
+                  <i class="ci-mail fs-3 mt-2 mb-4 text-primary"></i>
                   <h3 class="h6 mb-3">{{ __('Email addresses') }}</h3>
                   <ul class="list-unstyled fs-sm mb-0">
                      <li>

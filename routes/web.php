@@ -42,8 +42,9 @@ Route::prefix("admin")->group(function () {
  */
 Auth::routes();
 
-// Home
+// Home & About
 Route::view('/', "home")->name("home");
+Route::view("/about" , "about")->name("about");
 
 // Contact
 Route::get("/contact", [ContactController::class, "index"])->name("contact.index");

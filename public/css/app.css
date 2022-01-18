@@ -19483,7 +19483,7 @@ html:not([dir=rtl]) .range-slider-ui.noUi-horizontal .noUi-handle {
     width: 16.66%;
   }
 }
-p {
+h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6, p, span, em, u {
   font-family: "Rubik", sans-serif !important;
 }
 

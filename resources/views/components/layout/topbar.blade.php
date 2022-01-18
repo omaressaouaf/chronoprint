@@ -20,14 +20,13 @@
                class="d-none d-lg-inline">
                {{ __('Contact us') }} </span></a>
          <a class="topbar-link me-4"
-            href="order-tracking.html"
+            href="{{ route('about') }}"
             data-bs-toggle="tooltip"
             data-bs-placement="bottom"
             title="{{ __('About us') }}"><i class="ci-announcement
                "></i> <span
                class="d-none d-lg-inline"> {{ __('About us') }}
             </span></a>
-
       </div>
    </div>
 </div>
