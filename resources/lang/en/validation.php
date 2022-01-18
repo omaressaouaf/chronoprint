@@ -190,6 +190,7 @@ return [
         "designFiles.*"  => "design file",
         "selectedOptionsRequiredFiles" => "required files",
         "designFiles" => "files",
-        "address_id" => "address"
+        "address_id" => "address",
+        "subject" => "subject"
     ],
 ];

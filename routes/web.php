@@ -8,6 +8,7 @@ use App\Http\Controllers\AccountController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Voyager\MediaController;
 use App\Http\Controllers\Voyager\InvoiceController;
 use App\Http\Controllers\Voyager\NotificationController;
@@ -34,12 +35,19 @@ Route::prefix("admin")->group(function () {
     Voyager::routes();
 });
 
+/*---------------------------------------------------------------------------------------------------------*/
+
 /**
  * Front routes
  */
 Auth::routes();
 
+// Home
 Route::view('/', "home")->name("home");
+
+// Contact
+Route::get("/contact", [ContactController::class, "index"])->name("contact.index");
+Route::post("/contact", [ContactController::class, "store"])->name("contact.store");
 
 // Categories (shop)
 Route::get("/categories/{slug}", [CategoryController::class, "show"])->name("categories.show");

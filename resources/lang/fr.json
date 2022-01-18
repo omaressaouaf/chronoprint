@@ -762,5 +762,15 @@
     "credit_card": "carte bancaire",
     "Order" : "Commande",
     "Passed at" : "Passé à",
-    "Status" : "Statut"
+    "Status" : "Statut",
+    "Main address" : "Adresse principal",
+    "Contact" : "Contact",
+    "Support" : "Support",
+    "Send us a message" : "Envoie-nous un message",
+    "Subject" : "Sujet",
+    "Message" : "Message",
+    "Send message" : "Envoyer le message",
+    "Please provide a title of your request"  : "Merci de donner un titre à votre demande",
+    "Please describe in detail your request" : "Veuillez décrire en détail votre demande",
+    "Your email was sent successfully" : "Votre E-mail a été envoyé avec succès"
 }

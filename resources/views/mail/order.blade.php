@@ -1,5 +1,5 @@
 @component('mail::message')
-# Introduction
+# Notification de commande
 
 {{$message}}
 

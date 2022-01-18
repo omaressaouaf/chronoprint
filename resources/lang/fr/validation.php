@@ -193,6 +193,7 @@ return [
         "designFiles.*"  => "ficher de conception",
         "selectedOptionsRequiredFiles" => "fichiers requis",
         "designFiles" => "fichiers",
-        "address_id" => "adresse"
+        "address_id" => "adresse",
+        "subject" => "sujet"
     ],
 ];
