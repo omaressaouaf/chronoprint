@@ -57,7 +57,7 @@ class SettingsTableSeeder extends Seeder
                 'id' => 6,
                 'key' => 'admin.title',
                 'display_name' => "Titre de la zone d'administration",
-                'value' => 'Mr.Print administration',
+                'value' => 'Mr.Print',
                 'details' => '',
                 'type' => 'text',
                 'order' => 1,
