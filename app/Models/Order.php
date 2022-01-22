@@ -37,9 +37,11 @@ class Order extends Model
             }
         });
 
-        static::updated(function($order) {
-            if($order->status === 'shipped' || $order->status === 'cancelled') {
-                OrderStatusChanged::dispatch($order);
+        static::updated(function ($order) {
+            if ($order->isDirty('status')) {
+                if ($order->status === 'shipped' || $order->status === 'cancelled') {
+                    OrderStatusChanged::dispatch($order);
+                }
             }
         });
     }
