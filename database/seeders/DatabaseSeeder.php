@@ -13,7 +13,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
         $this->call(DataTypesTableSeeder::class);
         $this->call(DataRowsTableSeeder::class);
         $this->call(MenusTableSeeder::class);
@@ -22,5 +21,6 @@ class DatabaseSeeder extends Seeder
         $this->call(PermissionsTableSeeder::class);
         $this->call(PermissionRoleTableSeeder::class);
         $this->call(SettingsTableSeeder::class);
+        $this->call(UserSeeder::class);
     }
 }

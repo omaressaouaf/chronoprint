@@ -19,28 +19,6 @@ class SettingsTableSeeder extends Seeder
         \DB::table('settings')->delete();
 
         \DB::table('settings')->insert(array(
-            0 =>
-            array(
-                'id' => 1,
-                'key' => 'site.title',
-                'display_name' => 'Titre du site',
-                'value' => 'Fournishop',
-                'details' => '',
-                'type' => 'text',
-                'order' => 1,
-                'group' => 'Site',
-            ),
-            1 =>
-            array(
-                'id' => 2,
-                'key' => 'site.description',
-                'display_name' => 'Description du site',
-                'value' => 'Site Description',
-                'details' => '',
-                'type' => 'text',
-                'order' => 2,
-                'group' => 'Site',
-            ),
             2 =>
             array(
                 'id' => 3,
@@ -79,7 +57,7 @@ class SettingsTableSeeder extends Seeder
                 'id' => 6,
                 'key' => 'admin.title',
                 'display_name' => "Titre de la zone d'administration",
-                'value' => 'Voyager',
+                'value' => 'Mr.Print administration',
                 'details' => '',
                 'type' => 'text',
                 'order' => 1,
@@ -90,7 +68,7 @@ class SettingsTableSeeder extends Seeder
                 'id' => 7,
                 'key' => 'admin.description',
                 'display_name' => "Description de la zone d'administration",
-                'value' => 'Welcome to Voyager. The Missing Admin for Laravel',
+                'value' => "Bienvenue dans l'administration de Mr.Print",
                 'details' => '',
                 'type' => 'text',
                 'order' => 2,
