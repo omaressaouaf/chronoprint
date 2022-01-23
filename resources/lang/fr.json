@@ -668,8 +668,8 @@
     "The files should not exceed 10mb each. and they should be jpg, jpeg, gif, png, eps, ai, svg, pdf, zip, tar, rar, cdr, psd": "Les fichiers ne doivent pas dépasser 10 Mo chacun. et ils devraient être jpg, jpeg, gif, png, eps, ai, svg, pdf, zip, goudron, rar, cdr, psd",
     "if your files do not meet our requirements": "si vos fichiers ne répondent pas à nos exigences",
     "The files are required": "Les fichiers sont obligatoires",
-    "Enter the design information (ex: brand name, contact info ...)": "Entrez les informations de conception (ex: nom de marque, coordonnées ...)",
-    "upload your logo or any needed file (max : 5)": "téléchargez votre logo ou tout fichier nécessaire (max : 5)",
+    "Enter the design information (ex: brand name, contact info, colors ...)": "Entrez les informations de conception (ex: nom de marque, coordonnées, couleurs ...)",
+    "upload the needed files for the design (max : 5)": "télécharger les fichiers nécessaires pour la conception (max : 5)",
     "Design information": "Les information de conception",
     "Select your :filename file": "Sélectionnez votre fichier :filename",
     "Select your files": "Sélectionnez vos fichiers",
@@ -774,5 +774,7 @@
     "Please describe in detail your request": "Veuillez décrire en détail votre demande",
     "Your email was sent successfully": "Votre E-mail a été envoyé avec succès",
     "View all :resources": "Voir tous les :resources",
-    "Any items older than one day will be deleted because of storage occupying": "Tous les éléments de plus d'un jour seront supprimés en raison de l'occupation de l'espace de stockage"
+    "Any items older than one day will be deleted because of storage occupying": "Tous les éléments de plus d'un jour seront supprimés en raison de l'occupation de l'espace de stockage",
+    "Graphic services" : "Services graphiques",
+    "More details" : "Plus de détails"
 }

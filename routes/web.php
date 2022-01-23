@@ -1,6 +1,5 @@
 <?php
 
-use App\Events\OrderPlaced;
 use TCG\Voyager\Facades\Voyager;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -9,6 +8,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\GraphicServiceController;
 use App\Http\Controllers\Voyager\MediaController;
 use App\Http\Controllers\Voyager\InvoiceController;
 use App\Http\Controllers\Voyager\NotificationController;
@@ -50,8 +50,9 @@ Route::view("/about" , "about")->name("about");
 Route::get("/contact", [ContactController::class, "index"])->name("contact.index");
 Route::post("/contact", [ContactController::class, "store"])->name("contact.store");
 
-// Categories (shop)
+// Categories & Graphic services (shop)
 Route::get("/categories/{slug}", [CategoryController::class, "show"])->name("categories.show");
+Route::get("/graphic-services" , GraphicServiceController::class)->name("graphic-services");
 
 // Products
 Route::get("/products/{product:slug}", [ProductController::class, "show"])->name("products.show");

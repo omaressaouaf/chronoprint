@@ -132,7 +132,10 @@
                                        Les informations de conception :
                                     </span>
                                  </h5>
-                                 {{ $orderItem->design_information }}
+                                 <span class="font-weight-bold"
+                                    style="white-space: pre-line">
+                                    {{ $orderItem->design_information }}
+                                 </span>
                               @endif
                            @endif
                            @if (count($orderItem->media))
@@ -275,7 +278,8 @@
                      </div>
                      <hr>
                      <div>
-                        <p class="font-weight-bold">{{ $order->additional_information }}</p>
+                        <p class="font-weight-bold"
+                           style="white-space: pre-line">{{ $order->additional_information }}</p>
                      </div>
                   </div>
                </div>

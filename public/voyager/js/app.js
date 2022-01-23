@@ -45427,7 +45427,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _AttributesForm_vue_vue_type_template_id_6e27298a_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AttributesForm.vue?vue&type=template&id=6e27298a&scoped=true */ "./resources/js/voyager/components/AttributesForm.vue?vue&type=template&id=6e27298a&scoped=true");
 /* harmony import */ var _AttributesForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AttributesForm.vue?vue&type=script&lang=js */ "./resources/js/voyager/components/AttributesForm.vue?vue&type=script&lang=js");
 /* harmony import */ var _AttributesForm_vue_vue_type_style_index_0_id_6e27298a_scoped_true_lang_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./AttributesForm.vue?vue&type=style&index=0&id=6e27298a&scoped=true&lang=scss */ "./resources/js/voyager/components/AttributesForm.vue?vue&type=style&index=0&id=6e27298a&scoped=true&lang=scss");
-/* harmony import */ var C_Users_omar_Desktop_freelance_fournishop_project_fournishop_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+/* harmony import */ var C_Users_omar_Desktop_freelance_mrprint_project_mrprint_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
@@ -45435,7 +45435,7 @@ __webpack_require__.r(__webpack_exports__);
 ;
 
 
-const __exports__ = /*#__PURE__*/(0,C_Users_omar_Desktop_freelance_fournishop_project_fournishop_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__["default"])(_AttributesForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_AttributesForm_vue_vue_type_template_id_6e27298a_scoped_true__WEBPACK_IMPORTED_MODULE_0__.render],['__scopeId',"data-v-6e27298a"],['__file',"resources/js/voyager/components/AttributesForm.vue"]])
+const __exports__ = /*#__PURE__*/(0,C_Users_omar_Desktop_freelance_mrprint_project_mrprint_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__["default"])(_AttributesForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_AttributesForm_vue_vue_type_template_id_6e27298a_scoped_true__WEBPACK_IMPORTED_MODULE_0__.render],['__scopeId',"data-v-6e27298a"],['__file',"resources/js/voyager/components/AttributesForm.vue"]])
 /* hot reload */
 if (false) {}
 
@@ -45457,13 +45457,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _NotificationsList_vue_vue_type_template_id_35e23fb2__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./NotificationsList.vue?vue&type=template&id=35e23fb2 */ "./resources/js/voyager/components/NotificationsList.vue?vue&type=template&id=35e23fb2");
 /* harmony import */ var _NotificationsList_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NotificationsList.vue?vue&type=script&lang=js */ "./resources/js/voyager/components/NotificationsList.vue?vue&type=script&lang=js");
-/* harmony import */ var C_Users_omar_Desktop_freelance_fournishop_project_fournishop_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+/* harmony import */ var C_Users_omar_Desktop_freelance_mrprint_project_mrprint_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
 
 ;
-const __exports__ = /*#__PURE__*/(0,C_Users_omar_Desktop_freelance_fournishop_project_fournishop_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_NotificationsList_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_NotificationsList_vue_vue_type_template_id_35e23fb2__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/voyager/components/NotificationsList.vue"]])
+const __exports__ = /*#__PURE__*/(0,C_Users_omar_Desktop_freelance_mrprint_project_mrprint_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_NotificationsList_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_NotificationsList_vue_vue_type_template_id_35e23fb2__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/voyager/components/NotificationsList.vue"]])
 /* hot reload */
 if (false) {}
 
@@ -45486,7 +45486,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _OptionsForm_vue_vue_type_template_id_f927907a_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./OptionsForm.vue?vue&type=template&id=f927907a&scoped=true */ "./resources/js/voyager/components/OptionsForm.vue?vue&type=template&id=f927907a&scoped=true");
 /* harmony import */ var _OptionsForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./OptionsForm.vue?vue&type=script&lang=js */ "./resources/js/voyager/components/OptionsForm.vue?vue&type=script&lang=js");
 /* harmony import */ var _OptionsForm_vue_vue_type_style_index_0_id_f927907a_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./OptionsForm.vue?vue&type=style&index=0&id=f927907a&scoped=true&lang=css */ "./resources/js/voyager/components/OptionsForm.vue?vue&type=style&index=0&id=f927907a&scoped=true&lang=css");
-/* harmony import */ var C_Users_omar_Desktop_freelance_fournishop_project_fournishop_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+/* harmony import */ var C_Users_omar_Desktop_freelance_mrprint_project_mrprint_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
@@ -45494,7 +45494,7 @@ __webpack_require__.r(__webpack_exports__);
 ;
 
 
-const __exports__ = /*#__PURE__*/(0,C_Users_omar_Desktop_freelance_fournishop_project_fournishop_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__["default"])(_OptionsForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_OptionsForm_vue_vue_type_template_id_f927907a_scoped_true__WEBPACK_IMPORTED_MODULE_0__.render],['__scopeId',"data-v-f927907a"],['__file',"resources/js/voyager/components/OptionsForm.vue"]])
+const __exports__ = /*#__PURE__*/(0,C_Users_omar_Desktop_freelance_mrprint_project_mrprint_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__["default"])(_OptionsForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_OptionsForm_vue_vue_type_template_id_f927907a_scoped_true__WEBPACK_IMPORTED_MODULE_0__.render],['__scopeId',"data-v-f927907a"],['__file',"resources/js/voyager/components/OptionsForm.vue"]])
 /* hot reload */
 if (false) {}
 
@@ -45517,7 +45517,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _QuantitiesForm_vue_vue_type_template_id_a174e6c8_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./QuantitiesForm.vue?vue&type=template&id=a174e6c8&scoped=true */ "./resources/js/voyager/components/QuantitiesForm.vue?vue&type=template&id=a174e6c8&scoped=true");
 /* harmony import */ var _QuantitiesForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./QuantitiesForm.vue?vue&type=script&lang=js */ "./resources/js/voyager/components/QuantitiesForm.vue?vue&type=script&lang=js");
 /* harmony import */ var _QuantitiesForm_vue_vue_type_style_index_0_id_a174e6c8_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./QuantitiesForm.vue?vue&type=style&index=0&id=a174e6c8&scoped=true&lang=css */ "./resources/js/voyager/components/QuantitiesForm.vue?vue&type=style&index=0&id=a174e6c8&scoped=true&lang=css");
-/* harmony import */ var C_Users_omar_Desktop_freelance_fournishop_project_fournishop_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+/* harmony import */ var C_Users_omar_Desktop_freelance_mrprint_project_mrprint_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
@@ -45525,7 +45525,7 @@ __webpack_require__.r(__webpack_exports__);
 ;
 
 
-const __exports__ = /*#__PURE__*/(0,C_Users_omar_Desktop_freelance_fournishop_project_fournishop_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__["default"])(_QuantitiesForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_QuantitiesForm_vue_vue_type_template_id_a174e6c8_scoped_true__WEBPACK_IMPORTED_MODULE_0__.render],['__scopeId',"data-v-a174e6c8"],['__file',"resources/js/voyager/components/QuantitiesForm.vue"]])
+const __exports__ = /*#__PURE__*/(0,C_Users_omar_Desktop_freelance_mrprint_project_mrprint_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__["default"])(_QuantitiesForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_QuantitiesForm_vue_vue_type_template_id_a174e6c8_scoped_true__WEBPACK_IMPORTED_MODULE_0__.render],['__scopeId',"data-v-a174e6c8"],['__file',"resources/js/voyager/components/QuantitiesForm.vue"]])
 /* hot reload */
 if (false) {}
 

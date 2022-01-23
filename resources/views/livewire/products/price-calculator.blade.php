@@ -48,7 +48,7 @@
                            </select>
                         </div>
                      @endforeach
-                     @if (!$editMode)
+                     @if (!$editMode && !$product->category?->is_graphic_service)
                         <div class="col-md-12">
                            <div class="form-check mt-4">
                               <input wire:model="designByCompany"
@@ -210,20 +210,18 @@
 
                {{-- New Files (requiredFiles / designFiles) --}}
                @if ($designByCompany)
-                  <div class="form-floating">
+                  <div>
                      <textarea wire:model.debounce.500ms="designInformation"
                         class="form-control"
                         id="fl-textarea"
                         style="height: 120px;"
-                        placeholder="{{ __('Enter the design information (ex: brand name, contact info ...)') }}"></textarea>
-                     <label
-                        for="fl-textarea">{{ __('Enter the design information (ex: brand name, contact info ...)') }}</label>
+                        placeholder="{{ __('Enter the design information (ex: brand name, contact info, colors ...)') }}"></textarea>
                   </div>
                   <div class="file-drop-area mt-3">
                      @if (!$designFiles)
                         <div class="file-drop-icon ci-cloud-upload"></div>
                         <span class="file-drop-message">
-                           {{ __('upload your logo or any needed file (max : 5)') }}
+                           {{ __('upload the needed files for the design (max : 5)') }}
                         </span>
                      @endif
                      @foreach ($designFiles as $index => $file)

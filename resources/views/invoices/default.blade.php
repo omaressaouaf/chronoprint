@@ -331,7 +331,7 @@
       La mode de paiment : {{ __($order->payment_mode) }}
    </p>
    @if ($order->additional_information)
-      <p>
+      <p  style="white-space: pre-line">
          Information additionnelle : {{ $order->additional_information }}
       </p>
    @endif

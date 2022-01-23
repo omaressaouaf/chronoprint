@@ -100,6 +100,7 @@ class PriceCalculator extends Component
                 $this->selectedOptions->put($attribute->name, $attribute->pivot->options[0]["ref"]);
             });
             $this->selectedQuantityValue = $this->product->allowed_quantities[0]["value"];
+            $this->designByCompany = $this->product->category?->is_graphic_service ?? false;
         }
 
         $this->calculatePrices();

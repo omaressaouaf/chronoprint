@@ -11,7 +11,14 @@
             <div class="topbar-text">{{ __('Fast and free delivery in casablanca') }}</div>
          </div>
       </div>
-      <div class="ms-3 text-nowrap">
+      <div class="text-nowrap">
+         <a class="topbar-link me-4"
+            href="{{ route('graphic-services') }}"
+            data-bs-toggle="tooltip"
+            data-bs-placement="bottom"
+            title="{{ __('Graphic services') }}"><i class="ci-edit"></i> <span
+               class="d-none d-lg-inline">
+               {{ __('Graphic services') }} </span></a>
          <a class="topbar-link me-4"
             href="{{ route('contact.index') }}"
             data-bs-toggle="tooltip"
@@ -19,14 +26,6 @@
             title="{{ __('Contact us') }}"><i class="ci-mail"></i> <span
                class="d-none d-lg-inline">
                {{ __('Contact us') }} </span></a>
-         <a class="topbar-link me-4"
-            href="{{ route('about') }}"
-            data-bs-toggle="tooltip"
-            data-bs-placement="bottom"
-            title="{{ __('About us') }}"><i class="ci-announcement
-               "></i> <span
-               class="d-none d-lg-inline"> {{ __('About us') }}
-            </span></a>
       </div>
    </div>
 </div>

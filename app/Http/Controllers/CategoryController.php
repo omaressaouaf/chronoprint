@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\Category;
+use Illuminate\Database\Eloquent\Builder;
 
 class CategoryController extends Controller
 {
@@ -14,7 +15,9 @@ class CategoryController extends Controller
                 "name" => __("All products"),
                 "slug" => "all"
             ];
-            $products = Product::query();
+            $products = Product::whereDoesntHave('category', function (Builder $query) {
+                $query->where('is_graphic_service', true);
+            });
         } else {
             $category = Category::whereSlug($slug)->firstOrFail();
             $products = $category->products();

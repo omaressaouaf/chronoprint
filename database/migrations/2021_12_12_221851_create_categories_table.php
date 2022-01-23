@@ -19,11 +19,13 @@ class CreateCategoriesTable extends Migration
             $table->string("name");
             $table->string("slug")->nullable()->unique();
             $table->string("promotion_label")->nullable();
+            $table->boolean("is_graphic_service")->default(0);
+            $table->text("image")->nullable();
             $table->text("meta_title")->nullable();
             $table->text("meta_description")->nullable();
             $table->text("meta_keywords")->nullable();
-            $table->unsignedBigInteger("group_id");
-            $table->foreign("group_id")->references("id")->on("category_groups")->onDelete("cascade")->onUpdate("cascade");
+            $table->unsignedBigInteger("group_id")->nullable();
+            $table->foreign("group_id")->references("id")->on("category_groups")->onDelete("set null")->onUpdate("cascade");
             $table->timestamps();
         });
     }

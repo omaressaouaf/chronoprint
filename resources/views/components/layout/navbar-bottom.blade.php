@@ -94,6 +94,12 @@
                   </li>
                @endif
             @endforeach
+            <li class="nav-item d-lg-none">
+               <a href="{{ route('graphic-services') }}"
+                  class="btn btn-link nav-link d-flex align-items-start justify-content-between gap-3">
+                  {{ __('Graphic services') }}
+               </a>
+            </li>
             @auth
                <li class="nav-item d-lg-none">
                   <form action="{{ route('logout') }}"
