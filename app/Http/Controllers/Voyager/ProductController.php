@@ -7,7 +7,6 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use TCG\Voyager\Facades\Voyager;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Gate;
 use TCG\Voyager\Events\BreadDataAdded;
 use TCG\Voyager\Events\BreadDataUpdated;
 

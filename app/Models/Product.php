@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\AttributeProduct;
 use App\Traits\HasVoyagerMultiImages;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -73,9 +74,14 @@ class Product extends Model
         return collect($attribute->pivot->options)->where("ref", $optionRef)->first();
     }
 
+    public function scopeActive($query)
+    {
+        $query->where('active', true);
+    }
+
     public function scopeFilterProductsForShop($query, $search, $sort)
     {
-        return $query->when($search, function ($query) use ($search) {
+        return $query->active()->when($search, function ($query) use ($search) {
             return $query->where("title", "like", "%" . $search . "%");
         })
             ->when($sort && $sort !== "newest", function ($query) use ($sort) {
