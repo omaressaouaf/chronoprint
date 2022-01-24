@@ -104,7 +104,7 @@
          @endif
          @if ($designByCompany)
             <button data-bs-toggle="modal"
-               data-bs-target="#price-calculator-files-upload-modal"
+               data-bs-target="@auth #price-calculator-files-upload-modal @else #auth-modal @endauth"
                class="btn btn-accent w-100"
                type="submit">
                <i class="ci-edit fs-lg me-2"></i>
@@ -112,7 +112,7 @@
             </button>
          @else
             <button data-bs-toggle="modal"
-               data-bs-target="#price-calculator-files-upload-modal"
+               data-bs-target="@auth #price-calculator-files-upload-modal @else #auth-modal @endauth"
                class="btn btn-primary w-100"
                type="submit">
                <i class="ci-upload fs-lg me-2"></i>

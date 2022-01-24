@@ -35,8 +35,9 @@
                {{ __('Submit your review') }}
             </button>
          @else
-            <a href="{{ route('login') }}"
-               class="btn btn-primary btn-shadow d-block w-100">{{__("Login to review")}}</a>
+            <a data-bs-toggle="modal"
+               data-bs-target="#auth-modal"
+               class="btn btn-primary btn-shadow d-block w-100">{{ __('Login to review') }}</a>
          @endauth
       </form>
    </div>

@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
 use App\Models\User;
-use Illuminate\Foundation\Auth\RegistersUsers;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Route;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends Controller
 {
@@ -41,6 +42,15 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
+    public function redirectTo()
+    {
+        if (!Route::is("register")) {
+            return url()->previous();
+        }
+
+        return $this->redirectTo;
+    }
+
     /**
      * Get a validator for an incoming registration request.
      *
@@ -49,12 +59,21 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            "phone" => ['required', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        $validator = Validator::make($data, [
+            'register_name' => ['required', 'string', 'max:255'],
+            'register_email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
+            'register_phone' => ['required', "string", "unique:users,phone"],
+            'register_password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
+
+        $validator->setAttributeNames([
+            "register_name" => __("validation.attributes.name"),
+            'register_email' => __('validation.attributes.email'),
+            "register_phone" => __("validation.attributes.phone"),
+            'register_password' => __('validation.attributes.password'),
+        ]);
+
+        return $validator;
     }
 
     /**
@@ -66,10 +85,10 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            "phone" => $data["phone"],
-            'password' => Hash::make($data['password']),
+            'name' => $data['register_name'],
+            'email' => $data['register_email'],
+            "phone" => $data["register_phone"],
+            'password' => Hash::make($data['register_password']),
         ]);
     }
 }

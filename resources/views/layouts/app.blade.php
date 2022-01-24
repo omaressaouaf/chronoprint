@@ -29,21 +29,16 @@
 <body class="handheld-toolbar-enabled">
    <main class="page-wrapper">
       <header class="shadow-sm">
-
          <x-layout.topbar />
-
          <div class="navbar-sticky bg-light">
             <x-layout.navbar-top />
             <x-layout.navbar-bottom />
          </div>
-
       </header>
       <div class="content">
          {{ $slot }}
       </div>
-
    </main>
-
    <x-layout.footer />
 
    <a class="btn-scroll-top"
@@ -56,6 +51,26 @@
    @livewireScripts
    <script src="{{ asset('js/app.js') }}"></script>
    <script src="//unpkg.com/alpinejs"></script>
+
+
+   @if (!Route::is('login') && !Route::is('register'))
+      <x-auth.modal />
+      <script>
+         const authModal = new bootstrap.Modal(document.querySelector('#auth-modal'));
+         const authTab = new bootstrap.Tab(document.querySelector('#auth-tab a[href="#register"]'))
+      </script>
+      @error('email')
+         <script>
+            authModal.show();
+         </script>
+      @enderror
+      @if ($errors->has('register_name') || $errors->has('register_email') || $errors->has('register_phone') || $errors->has('register_password')))
+         <script>
+            authModal.show();
+            authTab.show();
+         </script>
+      @endif
+   @endif
 
 </body>
 
