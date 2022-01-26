@@ -1,12 +1,16 @@
 <div class="navbar navbar-expand-lg navbar-light">
    <div class="container">
       <a class="navbar-brand d-none d-sm-block flex-shrink-0"
-         href="{{ route('home') }}"><img src="/storage/theme/logo-dark.png"
+         href="{{ route('home') }}">
+         <img src="/storage/{{ setting('site.logo') }}"
             width="142"
-            alt="Cartzilla"></a><a class="navbar-brand d-sm-none flex-shrink-0 me-2"
-         href="{{ route('home') }}"><img src="/storage/theme/logo-icon.png"
+            alt="Logo de site">
+      </a>
+      <a class="navbar-brand d-sm-none flex-shrink-0 me-2"
+         href="{{ route('home') }}">
+         <img src="/storage/{{ setting('admin.icon_image') }}"
             width="74"
-            alt="Cartzilla">
+            alt="Logo de site">
       </a>
       <div class="d-none d-lg-block flex-grow-1">
          <x-products.search />
