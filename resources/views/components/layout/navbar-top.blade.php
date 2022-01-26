@@ -1,30 +1,21 @@
 <div class="navbar navbar-expand-lg navbar-light">
    <div class="container">
-      <a class="navbar-brand d-none d-sm-block flex-shrink-0"
+      <a class="navbar-brand d-sm-block flex-shrink-0"
          href="{{ route('home') }}">
          <img src="/storage/{{ setting('site.logo') }}"
             width="142"
             alt="Logo de site">
       </a>
-      <a class="navbar-brand d-sm-none flex-shrink-0 me-2"
+      {{-- <a class="navbar-brand d-sm-none flex-shrink-0 me-2"
          href="{{ route('home') }}">
          <img src="/storage/{{ setting('admin.icon_image') }}"
             width="74"
             alt="Logo de site">
-      </a>
+      </a> --}}
       <div class="d-none d-lg-block flex-grow-1">
          <x-products.search />
       </div>
-      <div class="navbar-toolbar d-flex flex-shrink-0 align-items-center ms-5">
-         <button class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarCollapse"><span class="navbar-toggler-icon"></span></button><a
-            class="navbar-tool navbar-stuck-toggler"
-            href="#">
-            <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-menu"></i>
-            </div>
-         </a>
+      <div class="navbar-toolbar d-flex flex-shrink-0 align-items-center ms-md-5">
          <div class="account navbar-tool dropdown ms-1 ms-lg-0 me-n1 me-lg-2">
             <a class="d-flex align-items-center"
                href="#"
