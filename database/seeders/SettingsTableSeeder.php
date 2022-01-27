@@ -155,7 +155,18 @@ class SettingsTableSeeder extends Seeder
             ),
             14 =>
             array(
-                'id' => 18,
+                'id' => 20,
+                'key' => 'site.address',
+                'display_name' => 'Adresse',
+                'value' => 'Anfa',
+                'details' => NULL,
+                'type' => 'text',
+                'order' => 10,
+                'group' => 'Site',
+            ),
+            15 =>
+            array(
+                'id' => 19,
                 'key' => 'site.about',
                 'display_name' => 'À propos de nous',
                 'value' => '<p>&nbsp;</p>
