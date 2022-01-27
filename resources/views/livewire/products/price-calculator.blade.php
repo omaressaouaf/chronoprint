@@ -285,7 +285,7 @@
             </div>
             <div class="modal-footer justify-content-between">
                <small class="fs-sm float-left mb-3">
-                  <a href="#">{{ __('Contact us') }}</a>
+                  <a href="{{ route('contact.index') }}">{{ __('Contact us') }}</a>
                   {{ __('if your files do not meet our requirements') }}
                </small>
                <button wire:click="handleSubmit"
