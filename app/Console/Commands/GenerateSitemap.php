@@ -3,7 +3,6 @@
 namespace App\Console\Commands;
 
 use Illuminate\Support\Str;
-use Spatie\Crawler\Crawler;
 use Spatie\Sitemap\Tags\Url;
 use Illuminate\Console\Command;
 use Psr\Http\Message\UriInterface;

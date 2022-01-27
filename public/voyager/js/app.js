@@ -19299,7 +19299,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       var _this4 = this;
 
       this.loading = true;
-      axios.put("/admin/products/".concat(this.product.id, "/attributes"), {
+      axios.put("/admin/products/".concat(this.product.slug, "/attributes"), {
         selectedAttributes: this.selectedAttributes
       }).then(function (res) {
         _this4.selectedAttributes = res.data.selectedAttributes;
@@ -19853,8 +19853,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)("alert alert-".concat($data.message["class"]))
   }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.message.text), 3
   /* TEXT, CLASS */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.selectedAttributes.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
-    key: 1,
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     onClick: _cache[1] || (_cache[1] = function () {
       return $options.syncAttributesWithProduct && $options.syncAttributesWithProduct.apply($options, arguments);
     }),
@@ -19863,7 +19862,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "btn btn-primary"
   }, [$data.loading ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("i", _hoisted_15)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _hoisted_16], 8
   /* PROPS */
-  , _hoisted_14)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])]);
+  , _hoisted_14)])])])]);
 }
 
 /***/ }),

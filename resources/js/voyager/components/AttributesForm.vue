@@ -51,7 +51,6 @@
             {{ message.text }}
           </div>
           <button
-            v-if="selectedAttributes.length"
             @click="syncAttributesWithProduct"
             :disabled="loading"
             type="button"
@@ -128,7 +127,7 @@ export default {
     syncAttributesWithProduct() {
       this.loading = true;
       axios
-        .put(`/admin/products/${this.product.id}/attributes`, {
+        .put(`/admin/products/${this.product.slug}/attributes`, {
           selectedAttributes: this.selectedAttributes,
         })
         .then((res) => {
