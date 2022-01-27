@@ -161,7 +161,7 @@
          <tr>
             <td class="border-0 pl-0"
                width="69%">
-               <img src="storage/theme/logo-dark.png"
+               <img src="storage/{{setting("site.logo")}}"
                alt="logo"
                height="50">
             </td>
