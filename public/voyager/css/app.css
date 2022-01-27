@@ -404,6 +404,11 @@
   background-color: #eeeeee;
 }
 
+.btn-primary, .bg-primary {
+  background-color: #fe696a !important;
+  border-color: #fe696a !important;
+}
+
 .dropdown-menu,
 .navbar .dropdown.profile .dropdown-menu {
   position: absolute !important;
