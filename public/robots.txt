@@ -1,2 +1,13 @@
+# *
 User-agent: *
-Disallow:
+Allow: /
+Disallow: /admin/
+Disallow: /account/
+Disallow: /cart
+Disallow: /password/
+
+# Host
+Host: https://mr-print.ma/
+
+# Sitemaps
+Sitemap: https://mr-print.ma/sitemap.xml
