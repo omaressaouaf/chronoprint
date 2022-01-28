@@ -5,9 +5,9 @@ namespace App\Models;
 use App\Models\AttributeProduct;
 use App\Traits\HasVoyagerMultiImages;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Storage;
 
 class Product extends Model
 {
@@ -107,6 +107,9 @@ class Product extends Model
         static::deleting(function ($product) {
             foreach ($product->cartItems as $cartItem) {
                 $cartItem->delete();
+            }
+            foreach (json_decode($product->images) as $image) {
+                Storage::disk("public")->delete($image);
             }
         });
     }
