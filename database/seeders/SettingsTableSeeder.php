@@ -112,7 +112,7 @@ class SettingsTableSeeder extends Seeder
                 'id' => 12,
                 'key' => 'site.email',
                 'display_name' => 'Email',
-                'value' => 'fournishop01@gmail.com',
+                'value' => 'mrprint.ma@gmail.com',
                 'details' => NULL,
                 'type' => 'text',
                 'order' => 7,
