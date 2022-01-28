@@ -115,7 +115,7 @@ class CartService
      */
     public static function removeItemFromCart(string|int $cartItemId): void
     {
-        CartItem::where("cart_id", static::getAuthUserCart()->id)->where("id", $cartItemId)->delete();
+        CartItem::where("cart_id", static::getAuthUserCart()->id)->where("id", $cartItemId)->first()->delete();
     }
 
     /**
