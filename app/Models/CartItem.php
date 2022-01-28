@@ -35,7 +35,7 @@ class CartItem extends Model
      */
     public function prunable()
     {
-        return static::where('created_at', '<=', now()->subMinute());
+        return static::where('created_at', '<=', now()->subDay());
     }
 
     public function cart()

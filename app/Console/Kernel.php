@@ -15,7 +15,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('model:prune')->everyMinute();
+        $schedule->command('model:prune')->dailyAt("04:00");
         $schedule->command('sitemap:generate')->daily();
     }
 
