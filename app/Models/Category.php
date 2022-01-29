@@ -10,6 +10,8 @@ class Category extends Model
 {
     use HasFactory, Sluggable;
 
+    protected $guarded = [];
+
     /**
      * Return the sluggable configuration array for this model.
      *
@@ -27,5 +29,10 @@ class Category extends Model
     public function products()
     {
         return $this->hasMany(Product::class);
+    }
+
+    public function getImageAttribute($value)
+    {
+        return $value ?? "/products/default.jpg";
     }
 }
