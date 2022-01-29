@@ -31,8 +31,8 @@ class Category extends Model
         return $this->hasMany(Product::class);
     }
 
-    public function getImageAttribute($value)
+    public function getPublicImageAttribute()
     {
-        return $value ?? "/products/default.jpg";
+        return $this->image ? "/storage/{$this->image}" : "/storage/products/default.jpg";
     }
 }

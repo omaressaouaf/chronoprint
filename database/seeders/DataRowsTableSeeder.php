@@ -433,7 +433,7 @@ class DataRowsTableSeeder extends Seeder
                 'add' => 1,
                 'delete' => 1,
                 'details' => '{}',
-                'order' => 7,
+                'order' => 9,
             ),
             26 => 
             array (
@@ -449,7 +449,7 @@ class DataRowsTableSeeder extends Seeder
                 'add' => 1,
                 'delete' => 1,
                 'details' => '{}',
-                'order' => 8,
+                'order' => 10,
             ),
             27 => 
             array (
@@ -465,7 +465,7 @@ class DataRowsTableSeeder extends Seeder
                 'add' => 1,
                 'delete' => 1,
                 'details' => '{}',
-                'order' => 9,
+                'order' => 11,
             ),
             28 => 
             array (
@@ -497,7 +497,7 @@ class DataRowsTableSeeder extends Seeder
                 'add' => 0,
                 'delete' => 0,
                 'details' => '{}',
-                'order' => 10,
+                'order' => 12,
             ),
             30 => 
             array (
@@ -513,7 +513,7 @@ class DataRowsTableSeeder extends Seeder
                 'add' => 0,
                 'delete' => 0,
                 'details' => '{}',
-                'order' => 11,
+                'order' => 13,
             ),
             31 => 
             array (
@@ -1633,7 +1633,7 @@ class DataRowsTableSeeder extends Seeder
                 'add' => 1,
                 'delete' => 1,
                 'details' => '{"on":"oui","off":"non"}',
-                'order' => 6,
+                'order' => 7,
             ),
             101 => 
             array (
@@ -1649,7 +1649,7 @@ class DataRowsTableSeeder extends Seeder
                 'add' => 1,
                 'delete' => 1,
                 'details' => '{}',
-                'order' => 7,
+                'order' => 8,
             ),
         ));
         

@@ -14,7 +14,7 @@
                   <a class="d-block overflow-hidden rounded-3"
                      href="{{ route('categories.show', ['slug' => $category->slug]) }}">
                      <img class="d-block w-100"
-                        src="/storage/{{ $category->image }}"
+                        src="{{ $category->public_image }}"
                         alt="{{ $category->name }}">
                   </a>
                   <div class="card-body">
