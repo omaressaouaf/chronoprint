@@ -20,7 +20,7 @@ use App\Http\Controllers\Voyager\ProductController as VoyagerProductController;
 Route::prefix("admin")->group(function () {
     Route::middleware("auth")->as("admin.")->group(function () {
         // Products
-        Route::put("/products/{product}/attributes", [VoyagerProductController::class, "syncAttributes"]);
+        Route::put("/products/{id}/attributes", [VoyagerProductController::class, "syncAttributes"]);
 
         // Invoices
         Route::get("/invoices/{order}", InvoiceController::class)->name("invoices.index");

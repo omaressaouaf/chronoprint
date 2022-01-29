@@ -6,8 +6,8 @@
    <meta name="viewport"
       content="width=device-width, initial-scale=1">
 
-   {{-- SEO Meta Tags --}}
-   <title>{{ config('app.name', 'Laravel') }}</title>
+   {{-- SEO --}}
+   <title>{{ config('app.name') }}</title>
    <meta name="description"
       content="Cartzilla - Bootstrap E-commerce Template">
    <meta name="keywords"
@@ -56,14 +56,14 @@
             <span class="handheld-toolbar-icon">
                <i class="ci-menu"></i>
             </span>
-            <span class="handheld-toolbar-label">{{__("Menu")}}</span>
+            <span class="handheld-toolbar-label">{{ __('Menu') }}</span>
          </a>
          <a class="d-table-cell handheld-toolbar-item"
             href="{{ route('account.orders') }}">
             <span class="handheld-toolbar-icon">
                <i class="ci-user"></i>
             </span>
-            <span class="handheld-toolbar-label">{{__("Account")}}</span>
+            <span class="handheld-toolbar-label">{{ __('Account') }}</span>
          </a>
       </div>
    </div>

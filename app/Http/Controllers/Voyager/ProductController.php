@@ -210,8 +210,10 @@ class ProductController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControl
     }
 
 
-    public function syncAttributes(Request $request, Product $product)
+    public function syncAttributes(Request $request, string|int $id)
     {
+        $product = Product::findOrFail($id);
+
         $this->authorize('edit', $product);
 
         $request->validate([
