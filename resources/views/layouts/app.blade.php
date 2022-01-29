@@ -7,13 +7,57 @@
       content="width=device-width, initial-scale=1">
 
    {{-- SEO --}}
-   <title>{{ config('app.name') }}</title>
-   <meta name="description"
-      content="Cartzilla - Bootstrap E-commerce Template">
-   <meta name="keywords"
-      content="bootstrap, shop, e-commerce, market, modern, responsive,  business, mobile, bootstrap, html5, css3, js, gallery, slider, touch, creative, clean">
+   <title>
+      {{ $constructedTitle }}
+   </title>
+   <meta content="{{ $description }}"
+      name="description">
    <meta name="author"
-      content="Createx Studio">
+      content="{{ config('app.name') }}">
+   <link rel="canonical"
+      href="{{ $canonical }}" />
+   <meta property="og:locale"
+      content="{{ str_replace('_', '-', app()->getLocale()) }}" />
+   <meta property="og:type"
+      content="article" />
+   <meta property="og:title"
+      content="{{ $constructedTitle }}" />
+   <meta property="og:description"
+      content="{{ $description }}" />
+   @if (setting('site.logo'))
+      <meta property="og:image"
+         content="/storage/{{ setting('site.logo') }}" />
+   @endif
+   <meta property="og:url"
+      content="{{ $canonical }}" />
+   <meta name="twitter:card"
+      content="summary_large_image" />
+   <meta property="og:site_name"
+      content="{{ config('app.name') }}" />
+   <meta name="twitter:image:alt"
+      content="{{ config('app.name') }} Logo" />
+   <meta name="keywords"
+      content="{{ $keywords }}" />
+   <meta name="google-site-verification"
+      content="google verification here" />
+   <script type="application/ld+json">
+      {
+         "@context": "https://schema.org",
+         "@type": "LocalBusiness",
+         "name": "{{ config('app.name') }}",
+         "image": "/storage/{{ setting('site.logo') }}",
+         "@id": "https://mr-print.ma/",
+         "url": "https://mr-print.ma/",
+         "telephone": "{{ setting('site.phone') }}",
+         "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "{{ setting('site.address') }}",
+            "addressLocality": "Casablanca",
+            "postalCode": "",
+            "addressCountry": "MA"
+         }
+      }
+   </script>
 
    {{-- CSRF Token --}}
    <meta name="csrf-token"

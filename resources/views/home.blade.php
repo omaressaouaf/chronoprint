@@ -6,5 +6,5 @@
    <x-home.brands />
 
    <x-home.contact-cards />
-   
+
 </x-app-layout>
