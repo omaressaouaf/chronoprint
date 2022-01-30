@@ -18,4 +18,5 @@
          </div>
       </section>
    </main>
+   <x-home.contact-cards />
 </x-app-layout>
