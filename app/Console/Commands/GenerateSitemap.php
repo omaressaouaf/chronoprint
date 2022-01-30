@@ -41,25 +41,36 @@ class GenerateSitemap extends Command
      */
     public function handle()
     {
+        $this->line('Begin crawling ...');
+
         SitemapGenerator::create(config('app.url'))
             ->shouldCrawl(function (UriInterface $url) {
-                $excludedPaths = [
-                    "/admin",
-                    "/account",
-                    "/cart",
-                    "/password/reset",
+                $excludedPathRoots = [
+                    "/admin/",
+                    "/account/",
                 ];
 
-                return !Str::contains($url->getPath(), $excludedPaths);
+                $excludedPaths = [
+                    "/cart",
+                    "/password/reset"
+                ];
+
+                return !Str::contains($url->getPath(), $excludedPathRoots)
+                    && !in_array($url->getPath(), $excludedPaths);
             })
             ->hasCrawled(function (Url $url) {
+                $this->info("Crawled {$url->url}");
+
                 # Ignore if URL includes query string
                 if (Str::contains($url->url, '?')) {
+                    $this->comment("Excluded {$url->url}");
                     return;
                 }
 
                 return $url;
             })
             ->writeToFile(public_path('sitemap.xml'));
+
+        $this->info('Generated sitemap successfully');
     }
 }
