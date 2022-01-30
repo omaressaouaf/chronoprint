@@ -1,4 +1,5 @@
-<x-app-layout>
+<x-app-layout title="Votre compte"
+   canonical="account/profile">
    <x-layout.breadcrumb :active-page="__($activePage)" />
 
    <div class="container pb-5 mb-2 mb-md-4">
@@ -37,7 +38,7 @@
                            <i class="ci-bag opacity-60 me-2"></i>{{ __('Orders') }}
                            <span
                               class="fs-sm text-muted ms-auto">{{ count(auth()->user()->orders) }}</span>
-                           </a>
+                        </a>
                      </li>
                   </ul>
                   <div class="bg-secondary px-4 py-3">

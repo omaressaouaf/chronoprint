@@ -1,4 +1,7 @@
-<x-app-layout>
+<x-app-layout :title="$product->meta_title ?? $product->title"
+   :description="$product->meta_description"
+   :keywords="$product->meta_keywords"
+   :canonical="'products/' . $product->slug">
    <x-layout.breadcrumb :active-page="$product->title">
       @if ($product->category)
          <li class="breadcrumb-item text-nowrap">

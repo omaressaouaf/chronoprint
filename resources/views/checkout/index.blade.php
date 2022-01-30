@@ -1,4 +1,6 @@
-<x-app-layout>
+<x-app-layout title="Validation de commande"
+   description="Livraison gratuite pour votre produits d'impression au maroc. Commandez maintenant en ligne"
+   canonical="checkout/">
    <x-layout.breadcrumb :active-page="__('Checkout')" />
 
    <div class="container pb-5 mb-2 mb-md-4">

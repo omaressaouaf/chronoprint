@@ -1,4 +1,5 @@
-<x-app-layout>
+<x-app-layout title="Merci pour la commande"
+   canonical="checkout/complete">
    <div class="container pb-5 mb-sm-4">
       <div class="pt-5">
          <div class="card py-3 mt-sm-3">

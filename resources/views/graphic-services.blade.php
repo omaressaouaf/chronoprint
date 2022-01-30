@@ -1,4 +1,6 @@
-<x-app-layout>
+<x-app-layout title="Services graphiques - Conception Logo - Création de Visuels"
+   description="Nous offrons d'excellents services graphiques tels que la conception de logo senior et junior. et création et modification de vidéos visuelles et de produits numériques"
+   canonical="graphic-services">
    <x-layout.breadcrumb :dark="false"
       :active-page="__('Graphic services')" />
 

@@ -1,4 +1,6 @@
-<x-app-layout>
+<x-app-layout title="Contact"
+   description="Contactez-nous à tout moment pour l'impression de vos cartes de visite, Flyers, Catalogues.."
+   canonical="contact">
    <x-layout.breadcrumb :dark="false"
       :active-page="__('Contact us')" />
 

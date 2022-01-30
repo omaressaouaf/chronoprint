@@ -88,29 +88,20 @@
 <section class="container mb-4 mb-lg-5">
    <ul class="nav nav-tabs"
       role="tablist">
-      <li class="nav-item"><a class="nav-link p-4 active"
-            href="#reviews"
-            data-bs-toggle="tab"
-            role="tab">{{ __('Product reviews') }}</a></li>
       @if ($product->description)
-         <li class="nav-item"><a class="nav-link p-4"
+         <li class="nav-item"><a class="nav-link p-4 active"
                href="#details"
                data-bs-toggle="tab"
                role="tab">{{ __('Product description') }}</a></li>
       @endif
+      <li class="nav-item"><a class="nav-link p-4 @if (!$product->description) active @endif"
+            href="#reviews"
+            data-bs-toggle="tab"
+            role="tab">{{ __('Product reviews') }}</a></li>
    </ul>
    <div class="tab-content pt-2">
-      <div class="tab-pane fade show active"
-         id="reviews"
-         role="tabpanel">
-         <div class="row">
-            <div class="col-lg-12">
-               <livewire:products.reviews.index :product="$product" />
-            </div>
-         </div>
-      </div>
       @if ($product->description)
-         <div class="tab-pane fade show"
+         <div class="tab-pane fade show active"
             id="details"
             role="tabpanel">
             <div class="row">
@@ -120,5 +111,14 @@
             </div>
          </div>
       @endif
+      <div class="tab-pane fade show @if (!$product->description) active @endif"
+         id="reviews"
+         role="tabpanel">
+         <div class="row">
+            <div class="col-lg-12">
+               <livewire:products.reviews.index :product="$product" />
+            </div>
+         </div>
+      </div>
    </div>
 </section>

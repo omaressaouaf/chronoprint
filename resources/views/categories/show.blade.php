@@ -1,4 +1,7 @@
-<x-app-layout>
+<x-app-layout :title="$category->slug === 'all' ? '' : $category->meta_title ?? $category->name"
+   :description="$category->slug === 'all' ? '' : $category->meta_description"
+   :keywords="$category->slug === 'all' ? '' : $category->meta_keywords"
+   :canonical="'categories/' . $category->slug">
    <x-layout.breadcrumb :active-page="$category->name" />
    <div class="container pb-5 mb-2 mb-md-4">
       <x-products.filters :products="$products" />
