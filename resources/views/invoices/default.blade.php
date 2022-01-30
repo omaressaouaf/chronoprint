@@ -159,19 +159,21 @@
    <table class="table">
       <tbody>
          <tr>
-            <td class="border-0 pl-0"
-               width="69%">
-               <img src="storage/{{setting("site.logo")}}"
-               alt="logo"
-               height="50">
-            </td>
+            @if (setting('site.logo'))
+               <td class="border-0 pl-0"
+                  width="69%">
+                  <img src="storage/{{ setting('site.logo') }}"
+                     alt="logo"
+                     height="50">
+               </td>
+            @endif
             <td class="border-0 pl-0">
                <p>Commande ID :
                   <strong>#{{ $order->id }}</strong>
                </p>
-               <p>Passé À : <strong>{{ $order->created_at->format("Y-m-d h:i") }}</strong>
+               <p>Passé À : <strong>{{ $order->created_at->format('Y-m-d h:i') }}</strong>
                </p>
-               <p>Date de facture : <strong>{{ now()->format("Y-m-d h:i") }}</strong>
+               <p>Date de facture : <strong>{{ now()->format('Y-m-d h:i') }}</strong>
                </p>
             </td>
          </tr>
@@ -235,10 +237,10 @@
                   </p>
                @endif
 
-               @if($order->user->email)
-               <p class="buyer-phone">
-                  {{ $order->user->email }}
-               </p>
+               @if ($order->user->email)
+                  <p class="buyer-phone">
+                     {{ $order->user->email }}
+                  </p>
                @endif
             </td>
          </tr>
@@ -331,7 +333,7 @@
       La mode de paiment : {{ __($order->payment_mode) }}
    </p>
    @if ($order->additional_information)
-      <p  style="white-space: pre-line">
+      <p style="white-space: pre-line">
          Information additionnelle : {{ $order->additional_information }}
       </p>
    @endif
