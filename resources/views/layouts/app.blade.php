@@ -37,7 +37,7 @@
    <meta name="twitter:image:alt"
       content="{{ config('app.name') }} Logo" />
    <meta name="keywords"
-      content="mrprint, mr print, mr.print, mr. print, MrPrint, Mr Print, Mr.Print, Mr. print, mrprint imprimerie, mrprint siteweb, mrprint en ligne, Mr.Print imprimerie, Mr.Print siteweb, imprimerie en ligne, imprimerie en ligne maroc, imprimerie en ligne casablanca, imprimerie en ligne pas cher, impression au maroc, impression à casablanca, impression numérique, impression offset{{ $keywords ? ', ' . $keywords : '' }}" />
+      content="chronoprint, chrono print, ChronoPrint, Chrono Print, chronoprint imprimerie, chronoprint siteweb, chronoprint en ligne, ChronoPrint imprimerie, ChronoPrint siteweb, imprimerie en ligne, imprimerie en ligne maroc, imprimerie en ligne casablanca, imprimerie en ligne pas cher, impression au maroc, impression à casablanca, impression numérique, impression offset{{ $keywords ? ', ' . $keywords : '' }}" />
    <script type="application/ld+json">
       {
          "@context": "https://schema.org",
