@@ -2,7 +2,9 @@
    <div class="container">
       <a class="navbar-brand d-sm-block flex-shrink-0"
          href="{{ route('home') }}">
-         <img src="/storage/theme/logo.svg"
+         <img src="/storage/{{setting("site.logo")}}"
+            width="142"
+            id="logo"
             alt="Logo de site">
       </a>
       {{-- <a class="navbar-brand d-sm-none flex-shrink-0 me-2"
