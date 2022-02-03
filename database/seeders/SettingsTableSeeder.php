@@ -112,7 +112,7 @@ class SettingsTableSeeder extends Seeder
                 'id' => 12,
                 'key' => 'site.email',
                 'display_name' => 'Email',
-                'value' => 'mrprint.ma@gmail.com',
+                'value' => 'contact@chronoprint.ma',
                 'details' => NULL,
                 'type' => 'text',
                 'order' => 7,
