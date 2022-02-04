@@ -23,8 +23,10 @@ class ContactController extends Controller
             "message" => "required"
         ]);
 
-        Mail::to(setting("site.email"))->send(new ContactMail(
-            $request->only(["name" , "phone" , "email" , "subject" , "message"])
+        $to = setting("site.contact_email") ?? setting("site.main_email");
+
+        Mail::to($to)->send(new ContactMail(
+            $request->only(["name", "phone", "email", "subject", "message"])
         ));
 
         return back()->with("success_message", __("Your email was sent successfully"));

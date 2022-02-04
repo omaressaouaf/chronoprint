@@ -110,9 +110,9 @@ class SettingsTableSeeder extends Seeder
             10 =>
             array(
                 'id' => 12,
-                'key' => 'site.email',
-                'display_name' => 'Email',
-                'value' => 'contact@chronoprint.ma',
+                'key' => 'site.main_email',
+                'display_name' => 'Email principal',
+                'value' => 'chronoprint.ma@gmail.com',
                 'details' => NULL,
                 'type' => 'text',
                 'order' => 7,
@@ -121,9 +121,9 @@ class SettingsTableSeeder extends Seeder
             11 =>
             array(
                 'id' => 13,
-                'key' => 'site.phone',
-                'display_name' => 'Téléphone',
-                'value' => '+212 23 22 33',
+                'key' => 'site.contact_email',
+                'display_name' => 'Email du contact',
+                'value' => 'contact@chronoprint.ma',
                 'details' => NULL,
                 'type' => 'text',
                 'order' => 8,
@@ -131,7 +131,18 @@ class SettingsTableSeeder extends Seeder
             ),
             12 =>
             array(
-                'id' => 16,
+                'id' => 14,
+                'key' => 'site.phone',
+                'display_name' => 'Téléphone',
+                'value' => '+212 23 22 33',
+                'details' => NULL,
+                'type' => 'text',
+                'order' => 9,
+                'group' => 'Site',
+            ),
+            13 =>
+            array(
+                'id' => 17,
                 'key' => 'cart.delivery_price',
                 'display_name' => 'Prix de livraison',
                 'value' => '39',
@@ -139,23 +150,23 @@ class SettingsTableSeeder extends Seeder
 "type" : "number"
 }',
                 'type' => 'text',
-                'order' => 9,
-                'group' => 'Cart',
-            ),
-            13 =>
-            array(
-                'id' => 17,
-                'key' => 'cart.tax',
-                'display_name' => 'TVA',
-                'value' => '20',
-                'details' => NULL,
-                'type' => 'text',
                 'order' => 10,
                 'group' => 'Cart',
             ),
             14 =>
             array(
-                'id' => 20,
+                'id' => 18,
+                'key' => 'cart.tax',
+                'display_name' => 'TVA',
+                'value' => '20',
+                'details' => NULL,
+                'type' => 'text',
+                'order' => 11,
+                'group' => 'Cart',
+            ),
+            15 =>
+            array(
+                'id' => 21,
                 'key' => 'site.address',
                 'display_name' => 'Adresse',
                 'value' => 'Anfa',
@@ -164,7 +175,7 @@ class SettingsTableSeeder extends Seeder
                 'order' => 10,
                 'group' => 'Site',
             ),
-            15 =>
+            16 =>
             array(
                 'id' => 19,
                 'key' => 'site.about',
@@ -199,7 +210,7 @@ class SettingsTableSeeder extends Seeder
 <p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem; font-family: Arial, Helvetica, sans-serif; text-align: justify;"><span style="box-sizing: border-box; font-size: 16px;"><span style="box-sizing: border-box; font-family: arial, helvetica, sans-serif;">Vous avez un acc&egrave;s clair &agrave; l\'ensemble des prix dans notre boutique en ligne. Les frais de livraison sont toujours d&eacute;taill&eacute;s au moment de la confirmation de commande<a style="box-sizing: border-box; color: #4a4a4a; text-decoration-line: none; background-color: transparent; transition: all 0.3s ease 0s;" href="http://www.saxoprint.fr/budget-transparent">.</a></span></span></p>',
                 'details' => NULL,
                 'type' => 'rich_text_box',
-                'order' => 11,
+                'order' => 12,
                 'group' => 'Site',
             ),
         ));

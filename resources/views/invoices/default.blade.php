@@ -213,7 +213,10 @@
                </p>
 
                <p class="seller-address">
-                  Email : {{ setting('site.email') }}
+                  Email principal : {{ setting('site.main_email') }}
+               </p>
+               <p class="seller-address">
+                  Email du contact : {{ setting('site.contact_email') }}
                </p>
             </td>
             <td class="border-0"></td>

@@ -62,18 +62,22 @@
                   <i class="ci-mail fs-3 mt-2 mb-4 text-primary"></i>
                   <h3 class="h6 mb-3">{{ __('Email addresses') }}</h3>
                   <ul class="list-unstyled fs-sm mb-0">
-                     <li>
-                        <span class="text-muted me-1">{{ __('Contact') }}:</span>
-                        <a class="nav-link-style"
-                           href="mailto:{{ setting('site.email') }}">{{ setting('site.email') }}
-                        </a>
-                     </li>
-                     <li class="mb-0">
-                        <span class="text-muted me-1">{{ __('Support') }}</span>
-                        <a class="nav-link-style"
-                           href="mailto:support@example.com">support@example.com
-                        </a>
-                     </li>
+                     @if (setting('site.main_email'))
+                        <li class="mb-0">
+                           <span class="text-muted me-1">{{ __('Main') }}</span>
+                           <a class="nav-link-style"
+                              href="mailto:{{ setting('site.main_email') }}">{{ setting('site.main_email') }}
+                           </a>
+                        </li>
+                     @endif
+                     @if (setting('site.contact_email'))
+                        <li>
+                           <span class="text-muted me-1">{{ __('Contact') }}:</span>
+                           <a class="nav-link-style"
+                              href="mailto:{{ setting('site.contact_email') }}">{{ setting('site.contact_email') }}
+                           </a>
+                        </li>
+                     @endif
                   </ul>
                </div>
             </div>
