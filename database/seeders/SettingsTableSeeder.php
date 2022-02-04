@@ -19,17 +19,6 @@ class SettingsTableSeeder extends Seeder
         \DB::table('settings')->delete();
 
         \DB::table('settings')->insert(array(
-            2 =>
-            array(
-                'id' => 3,
-                'key' => 'site.logo',
-                'display_name' => 'Logo du site',
-                'value' => '',
-                'details' => '',
-                'type' => 'image',
-                'order' => 3,
-                'group' => 'Site',
-            ),
             3 =>
             array(
                 'id' => 4,
@@ -49,51 +38,7 @@ class SettingsTableSeeder extends Seeder
                 'value' => '',
                 'details' => '',
                 'type' => 'image',
-                'order' => 5,
-                'group' => 'Admin',
-            ),
-            5 =>
-            array(
-                'id' => 6,
-                'key' => 'admin.title',
-                'display_name' => "Titre de la zone d'administration",
-                'value' => 'ChronoPrint',
-                'details' => '',
-                'type' => 'text',
-                'order' => 1,
-                'group' => 'Admin',
-            ),
-            6 =>
-            array(
-                'id' => 7,
-                'key' => 'admin.description',
-                'display_name' => "Description de la zone d'administration",
-                'value' => "Bienvenue dans l'administration de ChronoPrint",
-                'details' => '',
-                'type' => 'text',
-                'order' => 2,
-                'group' => 'Admin',
-            ),
-            7 =>
-            array(
-                'id' => 8,
-                'key' => 'admin.loader',
-                'display_name' => "Spinner de zone d'administration",
-                'value' => '',
-                'details' => '',
-                'type' => 'image',
-                'order' => 3,
-                'group' => 'Admin',
-            ),
-            8 =>
-            array(
-                'id' => 9,
-                'key' => 'admin.icon_image',
-                'display_name' => "Image de l'icône de l'administration",
-                'value' => '',
-                'details' => '',
-                'type' => 'image',
-                'order' => 4,
+                'order' => 31,
                 'group' => 'Admin',
             ),
             9 =>
@@ -104,7 +49,7 @@ class SettingsTableSeeder extends Seeder
                 'value' => NULL,
                 'details' => '',
                 'type' => 'text',
-                'order' => 1,
+                'order' => 30,
                 'group' => 'Admin',
             ),
             10 =>

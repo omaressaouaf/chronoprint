@@ -1,9 +1,20 @@
 @import "../theme/variables";
 
-// Primary color
-.btn-primary, .bg-primary {
+// Primary and accent color
+.btn-primary,
+.bg-primary {
     background-color: $primary !important;
     border-color: $primary !important;
+    color : $accent !important;
+    font-weight: 500 !important;
+}
+
+.voyager .side-menu .navbar-header {
+    background: $accent;
+    border-color: #f0ba08;
+}
+.side-menu {
+    background: $accent !important;
 }
 
 // Profile dropdown

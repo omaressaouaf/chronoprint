@@ -159,14 +159,12 @@
    <table class="table">
       <tbody>
          <tr>
-            @if (setting('site.logo'))
-               <td class="border-0 pl-0"
-                  width="69%">
-                  <img src="storage/{{ setting('site.logo') }}"
-                     alt="logo"
-                     height="50">
-               </td>
-            @endif
+            {{-- <td class="border-0 pl-0"
+               width="69%">
+               <img src="storage/theme/logo.jpg"
+                  alt="logo"
+                  height="50">
+            </td> --}}
             <td class="border-0 pl-0">
                <p>Commande ID :
                   <strong>#{{ $order->id }}</strong>

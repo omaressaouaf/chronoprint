@@ -2,7 +2,16 @@
 // user.scss
 // Use this to write your custom SCSS
 
-h1, h2, h3, h4, h5, h6, p, span, em, u {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+em,
+u {
     font-family: $font-family-sans-serif !important;
 }
 
@@ -40,4 +49,8 @@ h1, h2, h3, h4, h5, h6, p, span, em, u {
 
 .jp-card-container {
     margin-left: 20px !important;
+}
+
+.btn-primary, .navbar-tool-label{
+    color : $accent !important;
 }

@@ -6,6 +6,28 @@
    <meta name="viewport"
       content="width=device-width, initial-scale=1">
 
+   {{-- Favicons --}}
+   <link rel="apple-touch-icon"
+      sizes="180x180"
+      href="/storage/theme/favicons/apple-touch-icon.png">
+   <link rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/storage/theme/favicons/favicon-32x32.png">
+   <link rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/storage/theme/favicons/favicon-16x16.png">
+   <link rel="manifest"
+      href="/storage/theme/favicons/site.webmanifest">
+   <link rel="mask-icon"
+      href="/storage/theme/favicons/safari-pinned-tab.svg"
+      color="#5bbad5">
+   <meta name="msapplication-TileColor"
+      content="#da532c">
+   <meta name="theme-color"
+      content="#ffffff">
+
    {{-- SEO --}}
    <title>
       {{ $constructedTitle }}
@@ -24,10 +46,8 @@
       content="{{ $constructedTitle }}" />
    <meta property="og:description"
       content="{{ $constructedDescription }}" />
-   @if (setting('site.logo'))
-      <meta property="og:image"
-         content="{{ config('app.url') }}/storage/{{ setting('site.logo') }}" />
-   @endif
+   <meta property="og:image"
+      content="{{ config('app.url') }}/storage/theme/logo.svg" />
    <meta property="og:url"
       content="{{ config('app.url') }}/{{ $canonical }}" />
    <meta name="twitter:card"
@@ -51,7 +71,7 @@
                "@type": "ImageObject",
                "@id": "{{ config('app.url') }}/#logo",
                "inLanguage": "fr-FR",
-               "url": "{{ config('app.url') }}/storage/{{ setting('site.logo') }}",
+               "url": "{{ config('app.url') }}/storage/theme/logo.svg",
                "width": 1868,
                "height": 476,
                "caption": "{{ config('app.name') }} - La meilleur imprimerie en ligne à Casablanca - Imprimerie Maroc {{ now()->year }}"
@@ -78,7 +98,7 @@
             "@type": "ImageObject",
             "@id": "{{ config('app.url') }}/#logo",
             "inLanguage": "fr-FR",
-            "url": "{{ config('app.url') }}/storage/{{ setting('site.logo') }}"
+            "url": "{{ config('app.url') }}/storage/theme/logo.svg"
          }, {
             "@type": "WebPage",
             "@id": "{{ config('app.url') }}/",
@@ -136,7 +156,7 @@
       data-scroll>
       <i class="btn-scroll-top-icon ci-arrow-up"></i>
    </a>
-   <div class="handheld-toolbar">
+   {{-- <div class="handheld-toolbar">
       <div class="d-table table-layout-fixed w-100">
          <a class="d-table-cell handheld-toolbar-item"
             href="javascript:void(0)"
@@ -156,7 +176,7 @@
             <span class="handheld-toolbar-label">{{ __('Account') }}</span>
          </a>
       </div>
-   </div>
+   </div> --}}
 
    {{-- Scripts --}}
    @livewireScripts

@@ -183,7 +183,7 @@ return [
     |
     */
 
-    'primary_color' => '#fe696a',
+    'primary_color' => '#F0BA08',
 
     'show_dev_tips' => config("app.env") === "local" ?  true : false, // Show development tip "How To Use:" in Menu and Settings
 
