@@ -5,7 +5,7 @@
          <img src="/storage/theme/logo.svg"
             width="150"
             id="logo"
-            alt="Logo de site">
+            alt="{{ config('app.name') }} Logo">
       </a>
       {{-- <a class="navbar-brand d-sm-none flex-shrink-0 me-2"
          href="{{ route('home') }}">

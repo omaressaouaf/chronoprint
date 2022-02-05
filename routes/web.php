@@ -18,6 +18,8 @@ use App\Http\Controllers\Voyager\ProductController as VoyagerProductController;
  * Admin routes
  */
 Route::prefix("admin")->group(function () {
+    Voyager::routes();
+
     Route::middleware("auth")->as("admin.")->group(function () {
         // Products
         Route::put("/products/{id}/attributes", [VoyagerProductController::class, "syncAttributes"]);
@@ -32,7 +34,6 @@ Route::prefix("admin")->group(function () {
         Route::delete('/notifications', [NotificationController::class, 'deleteNotifications']);
         Route::put('/notifications', [NotificationController::class, 'markNotifications']);
     });
-    Voyager::routes();
 });
 
 /*---------------------------------------------------------------------------------------------------------*/
