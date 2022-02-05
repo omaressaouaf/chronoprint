@@ -21,7 +21,7 @@ class CreateCategoriesTable extends Migration
             $table->string("promotion_label")->nullable();
             $table->boolean("is_graphic_service")->default(0);
             $table->text("image")->nullable();
-            $table->text("meta_title")->nullable();
+            $table->text("seo_title")->nullable();
             $table->text("meta_description")->nullable();
             $table->text("meta_keywords")->nullable();
             $table->unsignedBigInteger("group_id")->nullable();

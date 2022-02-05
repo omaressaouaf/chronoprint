@@ -1,4 +1,4 @@
-<x-app-layout :title="$product->meta_title ?? $product->title"
+<x-app-layout :title="$product->seo_title ?? $product->title"
    :description="$product->meta_description"
    :keywords="$product->meta_keywords"
    :canonical="'products/' . $product->slug">

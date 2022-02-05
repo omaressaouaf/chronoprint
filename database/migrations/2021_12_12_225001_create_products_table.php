@@ -24,7 +24,7 @@ class CreateProductsTable extends Migration
             $table->boolean("popular")->default(0);
             $table->boolean("active")->default(0);
             $table->string("promotion_label")->nullable();
-            $table->text("meta_title")->nullable();
+            $table->text("seo_title")->nullable();
             $table->text("meta_description")->nullable();
             $table->text("meta_keywords")->nullable();
             $table->foreignId("category_id")->nullable()->constrained()->onDelete("set null")->onUpdate("cascade");
