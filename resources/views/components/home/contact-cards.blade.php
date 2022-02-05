@@ -46,7 +46,7 @@
       <div class="col-md-3">
          <div class="card h-100 border-0 rounded-0 text-decoration-none py-md-4 bg-faded-accent">
             <div class="card-body text-center"><i class="ci-support fs-3 mt-2 mb-4 text-accent"></i>
-               <h3 class="h5 mb-1">{{ __('Client support') }}</h3>
+               <h3 class="h5 mb-1">{{ __('Customer support') }}</h3>
                <p class="text-muted fs-sm">{{ setting('site.phone') }}
                </p>
             </div>
