@@ -7,11 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Category extends Model
+class Post extends Model
 {
     use HasFactory, Sluggable, HasVoyagerImage;
 
     protected $guarded = [];
+
 
     /**
      * Return the sluggable configuration array for this model.
@@ -22,7 +23,7 @@ class Category extends Model
     {
         return [
             'slug' => [
-                'source' => 'name'
+                'source' => 'title'
             ]
         ];
     }
