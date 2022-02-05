@@ -10,7 +10,7 @@ class Footer extends Component
     public function render()
     {
         return view('components.layout.footer', [
-            "popularCategories" => Category::inRandomOrder()->take(12)->get()
+            "popularCategories" => Category::inRandomOrder()->take(8)->get()
         ]);
     }
 }

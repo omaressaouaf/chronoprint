@@ -13,13 +13,11 @@
          </a></div>
       <div class="col-md-3"><a
             class="card h-100 border-0 rounded-0 text-decoration-none py-md-4 bg-faded-accent"
-            href="https://www.instagram.com/fournishopmaroc/"
-            target="_blank"
-            rel="noopener">
-            <div class="card-body text-center"><i
-                  class="ci-instagram fs-3 mt-2 mb-4 text-accent"></i>
-               <h3 class="h5 mb-1">{{ __('Follow us on Instagram') }}</h3>
-               <p class="text-muted fs-sm">#fournishopmaroc</p>
+            href="{{ route('blog.index') }}">
+            <div class="card-body text-center"><i class="ci-edit fs-3 mt-2 mb-4 text-accent"></i>
+               <h3 class="h5 mb-1">{{ __('Checkout our blog') }}</h3>
+               <p class="text-muted fs-sm">
+                  {{ __('Our latest news and trends, advices..') }}</p>
             </div>
          </a></div>
       <div class="col-md-3">

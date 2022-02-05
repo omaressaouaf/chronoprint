@@ -12,6 +12,13 @@
                   @endforeach
                </ul>
             </div>
+            <div class="widget widget-links widget-light pb-2 mb-4">
+               <h3 class="widget-title text-light">{{ __('Help') }}</h3>
+               <ul class="widget-list">
+                  <li class="widget-list-item"><a class="widget-list-link"
+                        href="{{ route('contact.index') }}">{{ __('Contact us') }}</a></li>
+               </ul>
+            </div>
          </div>
          <div class="col-md-4 col-sm-6">
             <div class="widget widget-links widget-light pb-2 mb-4">
@@ -39,9 +46,9 @@
                <h3 class="widget-title text-light">{{ __('About us') }}</h3>
                <ul class="widget-list">
                   <li class="widget-list-item"><a class="widget-list-link"
-                        href="{{ route('about') }}">{{ __('About us') }}</a></li>
+                        href="{{ route('about') }}">{{ __('Who are we ?') }}</a></li>
                   <li class="widget-list-item"><a class="widget-list-link"
-                        href="{{ route('contact.index') }}">{{ __('Contact us') }}</a></li>
+                        href="{{ route('blog.index') }}">{{ __('Blog') }}</a></li>
                </ul>
             </div>
          </div>
