@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\AttributeProduct;
+use App\Traits\HasActiveField;
 use App\Traits\HasVoyagerMultiImages;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
@@ -11,7 +12,7 @@ use Illuminate\Support\Facades\Storage;
 
 class Product extends Model
 {
-    use HasFactory, HasVoyagerMultiImages, Sluggable;
+    use HasFactory, HasVoyagerMultiImages, Sluggable, HasActiveField;
 
     protected $casts = [
         'allowed_quantities' => 'array',
@@ -72,11 +73,6 @@ class Product extends Model
     {
         $attribute = $this->getAttributeByName($attributeName);
         return collect($attribute->pivot->options)->where("ref", $optionRef)->first();
-    }
-
-    public function scopeActive($query)
-    {
-        $query->where('active', true);
     }
 
     public function scopeFilterProductsForShop($query, $search, $sort)

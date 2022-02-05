@@ -14,7 +14,7 @@
                   </a>
                </li>
                {{ $slot }}
-               <li class="breadcrumb-item text-nowrap active"
+               <li class="breadcrumb-item active"
                   aria-current="page">{{ $activePage }}</li>
                </li>
             </ol>

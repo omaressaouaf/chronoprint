@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Post;
 use App\Models\Product;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
@@ -51,6 +52,10 @@ class RouteServiceProvider extends ServiceProvider
 
         Route::bind('product', function ($value) {
             return Product::active()->where('slug', $value)->firstOrFail();
+        });
+
+        Route::bind('post', function ($value) {
+            return Post::active()->where('slug', $value)->firstOrFail();
         });
     }
 

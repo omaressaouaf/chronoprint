@@ -4,6 +4,7 @@ use TCG\Voyager\Facades\Voyager;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CheckoutController;
@@ -45,15 +46,23 @@ Auth::routes();
 
 // Home & About
 Route::view('/', "home")->name("home");
-Route::view("/about" , "about")->name("about");
+Route::view("/about", "about")->name("about");
+
+// Blog
+Route::prefix("blog")->as("blog.")->group(function () {
+    Route::get("/", [BlogController::class, "index"])->name("index");
+    Route::get("/{post}", [BlogController::class, "show"])->name("show");
+});
 
 // Contact
-Route::get("/contact", [ContactController::class, "index"])->name("contact.index");
-Route::post("/contact", [ContactController::class, "store"])->name("contact.store");
+Route::prefix("contact")->as("contact.")->group(function () {
+    Route::get("/", [ContactController::class, "index"])->name("index");
+    Route::post("/", [ContactController::class, "store"])->name("store");
+});
 
 // Categories & Graphic services (shop)
 Route::get("/categories/{slug}", [CategoryController::class, "show"])->name("categories.show");
-Route::get("/graphic-services" , GraphicServiceController::class)->name("graphic-services");
+Route::get("/graphic-services", GraphicServiceController::class)->name("graphic-services");
 
 // Products
 Route::get("/products/{product:slug}", [ProductController::class, "show"])->name("products.show");

@@ -775,9 +775,15 @@
     "Your email was sent successfully": "Votre E-mail a été envoyé avec succès",
     "View all :resources": "Voir tous les :resources",
     "Any items older than one day will be deleted because of storage occupying": "Tous les éléments de plus d'un jour seront supprimés en raison de l'occupation de l'espace de stockage",
-    "Graphic services" : "Services graphiques",
-    "More details" : "Plus de détails",
-    "Developed by" : "Développé par",
-    "The Source Up Agency" : "L'agence Source Up",
-    "Main" : "Principal"
+    "Graphic services": "Services graphiques",
+    "More details": "Plus de détails",
+    "Developed by": "Développé par",
+    "The Source Up Agency": "L'agence Source Up",
+    "Main": "Principal",
+    "Read more": "Lire plus",
+    "Popular posts": "Articles populaires",
+    "Check out our products": "Découvrez nos produits",
+    "Shop now": "Achetez maintenant",
+    "Numeric and paper printing and more ..": "Impression numérique et papier et plus ..",
+    "You may also like" : "Tu pourrais aussi aimer"
 }

@@ -6683,14 +6683,14 @@ __webpack_require__.r(__webpack_exports__);
 /**
  * Lightbox component for presenting various types of media
  * @requires https://github.com/sachinchoolur/lightgallery.js
-*/
+ */
 var gallery = function () {
-  var gallery = document.querySelectorAll('.gallery');
+  var gallery = document.querySelectorAll(".gallery");
 
   if (gallery.length) {
     for (var i = 0; i < gallery.length; i++) {
       lightGallery(gallery[i], {
-        selector: '.gallery-item',
+        selector: ".gallery-item",
         download: false,
         videojs: true,
         youtubePlayerParams: {
@@ -6701,7 +6701,7 @@ var gallery = function () {
         vimeoPlayerParams: {
           byline: 0,
           portrait: 0,
-          color: 'fe696a'
+          color: "fe696a"
         }
       });
     }

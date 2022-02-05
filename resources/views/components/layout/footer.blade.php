@@ -142,7 +142,7 @@
                         src="/storage/theme/logo-light.svg"
                         width="117"
                         alt="{{ config('app.name') }} Logo"></a>
-                  <div class="btn-group dropdown disable-autohide">
+                  {{-- <div class="btn-group dropdown disable-autohide">
                      <button class="btn btn-outline-light border-light btn-sm dropdown-toggle px-2"
                         type="button"
                         data-bs-toggle="dropdown"><img class="me-2"
@@ -174,7 +174,7 @@
                                  width="20"
                                  alt="Italiano">Italiano</a></li>
                      </ul>
-                  </div>
+                  </div> --}}
                </div>
                <div class="widget widget-links widget-light">
                   <ul

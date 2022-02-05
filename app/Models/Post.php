@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\HasActiveField;
 use App\Traits\HasVoyagerImage;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
@@ -9,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Post extends Model
 {
-    use HasFactory, Sluggable, HasVoyagerImage;
+    use HasFactory, Sluggable, HasVoyagerImage, HasActiveField;
 
     protected $guarded = [];
 
