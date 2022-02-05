@@ -4,12 +4,12 @@
       <div class="side-menu-container">
          <div class="navbar-header">
             <a class="navbar-brand"
+               style="height: 100px; width : 455px"
                href="{{ route('voyager.dashboard') }}">
-               <div class="logo-icon-container">
-                  <img src="/storage/theme/icon.svg"
-                     alt="Logo Icon">
+               <div style="padding: 15px 92px 15px 3px;">
+                  <img src="/storage/theme/logo-light-admin.svg"
+                     alt="Logo">
                </div>
-               <div class="title">{{ config('app.name') }}</div>
             </a>
          </div><!-- .navbar-header -->
 

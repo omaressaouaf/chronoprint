@@ -2,13 +2,10 @@
    <div class="container">
       <a class="navbar-brand d-sm-block d-lg-flex align-items-center flex-shrink-0"
          href="{{ route('home') }}">
-         <img src="/storage/theme/icon.svg"
-            width="30"
+         <img src="/storage/theme/logo.svg"
+            width="150"
             id="logo"
             alt="Logo de site">
-         <span class="ms-2 d-none d-lg-inline">
-            {{ config('app.name') }}
-         </span>
       </a>
       {{-- <a class="navbar-brand d-sm-none flex-shrink-0 me-2"
          href="{{ route('home') }}">

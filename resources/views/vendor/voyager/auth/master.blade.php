@@ -90,7 +90,7 @@
                <div class="col-sm-12 col-md-10 col-md-offset-2">
                   <div class="logo-title-container">
                      <img class="img-responsive pull-left flip logo hidden-xs animated fadeIn"
-                        src="/storage/theme/icon-white.svg"
+                        src="/storage/theme/icon-light.svg"
                         alt="Logo Icon">
                      <div class="copy animated fadeIn">
                         <h1>{{ config('app.name') }}</h1>
