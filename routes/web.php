@@ -44,9 +44,10 @@ Route::prefix("admin")->group(function () {
  */
 Auth::routes();
 
-// Home & About
+// Static pages (Home, about ...)
 Route::view('/', "home")->name("home");
 Route::view("/about", "about")->name("about");
+Route::view("/guide", "guide")->name("guide");
 
 // Blog
 Route::prefix("blog")->as("blog.")->group(function () {
