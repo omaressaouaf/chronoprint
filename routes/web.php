@@ -48,6 +48,7 @@ Auth::routes();
 Route::view('/', "home")->name("home");
 Route::view("/about", "about")->name("about");
 Route::view("/guide", "guide")->name("guide");
+Route::view("/legal-notice", "legal-notice")->name("legalNotice");
 
 // Blog
 Route::prefix("blog")->as("blog.")->group(function () {

@@ -151,53 +151,14 @@
                         src="/storage/theme/logo-light.svg"
                         width="117"
                         alt="{{ config('app.name') }} Logo"></a>
-                  {{-- <div class="btn-group dropdown disable-autohide">
-                     <button class="btn btn-outline-light border-light btn-sm dropdown-toggle px-2"
-                        type="button"
-                        data-bs-toggle="dropdown"><img class="me-2"
-                           src="img/flags/en.png"
-                           width="20"
-                           alt="English">Eng / $</button>
-                     <ul class="dropdown-menu my-1">
-                        <li class="dropdown-item">
-                           <select class="form-select form-select-sm">
-                              <option value="usd">$ USD</option>
-                              <option value="eur">€ EUR</option>
-                              <option value="ukp">£ UKP</option>
-                              <option value="jpy">¥ JPY</option>
-                           </select>
-                        </li>
-                        <li><a class="dropdown-item pb-1"
-                              href="#"><img class="me-2"
-                                 src="img/flags/fr.png"
-                                 width="20"
-                                 alt="Français">Français</a></li>
-                        <li><a class="dropdown-item pb-1"
-                              href="#"><img class="me-2"
-                                 src="img/flags/de.png"
-                                 width="20"
-                                 alt="Deutsch">Deutsch</a></li>
-                        <li><a class="dropdown-item"
-                              href="#"><img class="me-2"
-                                 src="img/flags/it.png"
-                                 width="20"
-                                 alt="Italiano">Italiano</a></li>
-                     </ul>
-                  </div> --}}
                </div>
                <div class="widget widget-links widget-light">
                   <ul
                      class="widget-list d-flex flex-wrap justify-content-center justify-content-md-start">
                      <li class="widget-list-item me-4"><a class="widget-list-link"
-                           href="#">Outlets</a></li>
+                           href="{{ route('contact.index') }}">{{ __('Contact') }}</a></li>
                      <li class="widget-list-item me-4"><a class="widget-list-link"
-                           href="#">Affiliates</a></li>
-                     <li class="widget-list-item me-4"><a class="widget-list-link"
-                           href="#">Support</a></li>
-                     <li class="widget-list-item me-4"><a class="widget-list-link"
-                           href="#">Privacy</a></li>
-                     <li class="widget-list-item me-4"><a class="widget-list-link"
-                           href="#">Terms of use</a></li>
+                           href="{{ route('legalNotice') }}">{{ __('Legal notice') }}</a></li>
                   </ul>
                </div>
             </div>

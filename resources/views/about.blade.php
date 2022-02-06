@@ -152,7 +152,8 @@
                               La livraison se fait dans les meilleurs délais.
                               Du temps que vous pourrez consacrer à votre travail, à la création ou
                               au démarchage de nouveaux clients.
-                              Un temps gagné grâce à CHRONOPRINT.MA qui ne pourra que faire
+                              Un temps gagné grâce à {{ config('app.name') }} qui ne pourra que
+                              faire
                               augmenter votre chiffre d’affaires !
                            </p>
                         </div>
