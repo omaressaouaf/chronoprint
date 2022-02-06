@@ -151,10 +151,16 @@
    </main>
    <x-layout.footer />
 
-   <a class="btn-scroll-top"
+   {{-- <a class="btn-scroll-top"
       href="#top"
       data-scroll>
       <i class="btn-scroll-top-icon ci-arrow-up"></i>
+   </a> --}}
+
+   <a href="https://api.whatsapp.com/send?phone=+212632353434&text=Salut {{ config('app.name') }}"
+      class="btn-whatsapp text-white rounded-circle border shadow"
+      target="_blank">
+      <i class="ci-whatsapp fs-5"></i>
    </a>
    {{-- <div class="handheld-toolbar">
       <div class="d-table table-layout-fixed w-100">

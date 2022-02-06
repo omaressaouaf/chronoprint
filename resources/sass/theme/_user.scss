@@ -51,6 +51,17 @@ u {
     margin-left: 20px !important;
 }
 
-.btn-primary, .navbar-tool-label{
-    color : $accent !important;
+.btn-primary,
+.navbar-tool-label {
+    color: $accent !important;
+}
+
+.btn-whatsapp {
+    position: fixed !important;
+    right: 20px !important;
+    bottom: 20px !important;
+    z-index: 1025 !important;
+    padding : 15px 18px !important;
+    background-color: #4FCE5D !important;
+    border-color: #4FCE5D !important;
 }
