@@ -14,12 +14,12 @@ class SettingsTableSeeder extends Seeder
      */
     public function run()
     {
-        
+
 
         \DB::table('settings')->delete();
-        
+
         \DB::table('settings')->insert(array (
-            0 => 
+            0 =>
             array (
                 'id' => 4,
                 'key' => 'site.google_analytics_tracking_id',
@@ -30,7 +30,7 @@ class SettingsTableSeeder extends Seeder
                 'order' => 4,
                 'group' => 'Site',
             ),
-            1 => 
+            1 =>
             array (
                 'id' => 5,
                 'key' => 'admin.bg_image',
@@ -41,7 +41,7 @@ class SettingsTableSeeder extends Seeder
                 'order' => 31,
                 'group' => 'Admin',
             ),
-            2 => 
+            2 =>
             array (
                 'id' => 10,
                 'key' => 'admin.google_analytics_client_id',
@@ -52,7 +52,7 @@ class SettingsTableSeeder extends Seeder
                 'order' => 30,
                 'group' => 'Admin',
             ),
-            3 => 
+            3 =>
             array (
                 'id' => 12,
                 'key' => 'site.main_email',
@@ -63,7 +63,7 @@ class SettingsTableSeeder extends Seeder
                 'order' => 7,
                 'group' => 'Site',
             ),
-            4 => 
+            4 =>
             array (
                 'id' => 13,
                 'key' => 'site.contact_email',
@@ -74,18 +74,18 @@ class SettingsTableSeeder extends Seeder
                 'order' => 8,
                 'group' => 'Site',
             ),
-            5 => 
+            5 =>
             array (
                 'id' => 14,
                 'key' => 'site.phone',
                 'display_name' => 'Téléphone',
-                'value' => '+212 23 22 33',
+                'value' => '06 32 35 34 34 - 08 08 51 74 84',
                 'details' => NULL,
                 'type' => 'text',
                 'order' => 9,
                 'group' => 'Site',
             ),
-            6 => 
+            6 =>
             array (
                 'id' => 17,
                 'key' => 'cart.delivery_price',
@@ -98,7 +98,7 @@ class SettingsTableSeeder extends Seeder
                 'order' => 10,
                 'group' => 'Cart',
             ),
-            7 => 
+            7 =>
             array (
                 'id' => 18,
                 'key' => 'cart.tax',
@@ -109,19 +109,19 @@ class SettingsTableSeeder extends Seeder
                 'order' => 11,
                 'group' => 'Cart',
             ),
-            8 => 
+            8 =>
             array (
                 'id' => 21,
                 'key' => 'site.address',
                 'display_name' => 'Adresse',
-                'value' => 'Anfa',
+                'value' => '61 AV Lalla Yacout Angle Maani 1er ETG N.39 Casablanca',
                 'details' => NULL,
                 'type' => 'text',
                 'order' => 10,
                 'group' => 'Site',
             ),
         ));
-        
-        
+
+
     }
 }
