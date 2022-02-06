@@ -1,4 +1,4 @@
-<section class="tns-carousel tns-controls-lg">
+<section class="tns-carousel tns-controls-lg mb-3">
     <div class="tns-carousel-inner"
          data-carousel-options="{&quot;mode&quot;: &quot;gallery&quot;, &quot;responsive&quot;: {&quot;0&quot;:{&quot;nav&quot;:true, &quot;controls&quot;: false},&quot;992&quot;:{&quot;nav&quot;:false, &quot;controls&quot;: true}}}">
         <!-- Item-->

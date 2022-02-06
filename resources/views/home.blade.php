@@ -5,5 +5,7 @@
 
    <x-home.brands />
 
+   <x-home.testimonials />
+
    <x-home.contact-cards />
 </x-app-layout>
