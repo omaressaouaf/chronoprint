@@ -116,11 +116,7 @@
             "datePublished": "2022-01-30T14:18:23+00:00",
             "dateModified": "2022-02-07T13:17:00+00:00",
             "description": "{{ config('app.name') }} est une imprimerie en ligne à Casablanca qui facilite le processus d'impression de vos fichiers d'exigences commerciales tels que cartes de visite, flyers, catalogues, étiquettes, autocollants, emballages, boîtes, étuis, stylos, calendriers {{ now()->year }}. La livraison est disponible dans tout le Maroc",
-            "inLanguage": "fr-FR",
-            "potentialAction": [{
-               "@type": "ReadAction",
-               "target": ["{{ config('app.url') }}/"]
-            }]
+            "inLanguage": "fr-FR"
          }]
       }
    </script>
