@@ -104,8 +104,11 @@ class Product extends Model
             foreach ($product->cartItems as $cartItem) {
                 $cartItem->delete();
             }
-            foreach (json_decode($product->images) as $image) {
-                Storage::disk("public")->delete($image);
+            
+            if (is_array(json_decode($product->images))) {
+                foreach (json_decode($product->images) as $image) {
+                    Storage::disk("public")->delete($image);
+                }
             }
         });
     }
