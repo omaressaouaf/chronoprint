@@ -119,7 +119,7 @@
             "inLanguage": "fr-FR",
             "potentialAction": [{
                "@type": "ReadAction",
-               "target": [{{ config('app.url') }}/ ]
+               "target": ["{{ config('app.url') }}/"]
             }]
          }]
       }
