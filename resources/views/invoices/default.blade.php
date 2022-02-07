@@ -159,12 +159,12 @@
    <table class="table">
       <tbody>
          <tr>
-            {{-- <td class="border-0 pl-0"
+            <td class="border-0 pl-0"
                width="69%">
-               <img src="storage/theme/logo.jpg"
+               <img src="storage/theme/logo.svg"
                   alt="logo"
                   height="50">
-            </td> --}}
+            </td>
             <td class="border-0 pl-0">
                <p>Commande ID :
                   <strong>#{{ $order->id }}</strong>
