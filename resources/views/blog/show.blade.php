@@ -49,14 +49,14 @@
                data-carousel-options="{&quot;items&quot;: 2, &quot;controls&quot;: false, &quot;autoHeight&quot;: true, &quot;responsive&quot;: {&quot;0&quot;:{&quot;items&quot;:1},&quot;500&quot;:{&quot;items&quot;:2, &quot;gutter&quot;: 20},&quot;900&quot;:{&quot;items&quot;:3, &quot;gutter&quot;: 20}, &quot;1100&quot;:{&quot;items&quot;:3, &quot;gutter&quot;: 30}}}">
                @foreach ($relatedPosts as $post)
                   <article><a class="blog-entry-thumb mb-3"
-                        href="#"><img style="max-height: 230px; object-fit: cover"
+                        href="{{route("blog.show" , ["post" => $post->slug])}}"><img style="max-height: 230px; object-fit: cover"
                            src="{{ $post->public_image }}"
                            alt="{{ $post->title }}"></a>
                      <div class="d-flex align-items-center fs-sm mb-2">
                         <span class="blog-entry-meta-divider"></span><a class="blog-entry-meta-link"
                            href="#">{{ $post->created_at->translatedFormat('M d Y') }}</a>
                      </div>
-                     <h3 class="h6 blog-entry-title"><a href="#">
+                     <h3 class="h6 blog-entry-title"><a href="{{route("blog.show" , ["post" => $post->slug])}}">
                            {{ $post->title }}
                         </a></h3>
                   </article>
