@@ -151,39 +151,12 @@
    </main>
    <x-layout.footer />
 
-   {{-- <a class="btn-scroll-top"
-      href="#top"
-      data-scroll>
-      <i class="btn-scroll-top-icon ci-arrow-up"></i>
-   </a> --}}
-
-   <a href="https://api.whatsapp.com/send?phone=+212632353434&text=Salut {{ config('app.name') }}"
+   <a href="https://api.whatsapp.com/send?phone={{ \Str::start(setting('site.phone'), '+212') }}&text=Salut {{ config('app.name') }} !"
       class="btn-whatsapp text-white rounded-circle border shadow"
       target="_blank"
       rel="noopener">
       <i class="ci-whatsapp fs-5"></i>
    </a>
-   {{-- <div class="handheld-toolbar">
-      <div class="d-table table-layout-fixed w-100">
-         <a class="d-table-cell handheld-toolbar-item"
-            href="javascript:void(0)"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarCollapse"
-            onclick="window.scrollTo(0, 0)">
-            <span class="handheld-toolbar-icon">
-               <i class="ci-menu"></i>
-            </span>
-            <span class="handheld-toolbar-label">{{ __('Menu') }}</span>
-         </a>
-         <a class="d-table-cell handheld-toolbar-item"
-            href="{{ route('account.orders') }}">
-            <span class="handheld-toolbar-icon">
-               <i class="ci-user"></i>
-            </span>
-            <span class="handheld-toolbar-label">{{ __('Account') }}</span>
-         </a>
-      </div>
-   </div> --}}
 
    {{-- Scripts --}}
    @livewireScripts

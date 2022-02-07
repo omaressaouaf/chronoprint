@@ -4,7 +4,7 @@
       <div class="topbar-text text-nowrap d-inline-block"><i class="ci-support"></i><span
             class="text-muted me-1 d-none d-lg-inline">{{ __('Customer support') }}</span><a
             class="topbar-link"
-            href="tel:00331697720">{{ setting('site.phone') }}</a></div>
+            href="tel:{{ setting('site.phone') }}">{{ setting('site.phone') }}</a></div>
       <div class="tns-carousel tns-controls-static d-none d-md-block">
          <div class="tns-carousel-inner"
             data-carousel-options="{&quot;mode&quot;: &quot;gallery&quot;, &quot;nav&quot;: false}">
