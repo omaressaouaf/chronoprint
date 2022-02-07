@@ -105,7 +105,7 @@
             id="details"
             role="tabpanel">
             <div class="row">
-               <div class="col-lg-12">
+               <div class="col-lg-12 overflow-auto">
                   {!! $product->description !!}
                </div>
             </div>
