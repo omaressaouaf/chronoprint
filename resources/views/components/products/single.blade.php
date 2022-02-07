@@ -42,7 +42,7 @@
                   <div class="accordion-collapse collapse show ps-md-2"
                      id="product-details"
                      data-bs-parent="#productPanels">
-                     <div class="accordion-body">
+                     <div class="accordion-body" style="white-space: pre-line">
                         {!! $product->details !!}
                      </div>
                   </div>
