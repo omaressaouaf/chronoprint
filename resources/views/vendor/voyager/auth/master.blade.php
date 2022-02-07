@@ -12,7 +12,13 @@
       content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
    <meta name="description"
       content="admin login">
-   <title>@yield('title', 'Admin - '.config("app.name"))</title>
+   <title>
+      @hasSection('title')
+         @yield('page_title') - {{ config('app.name') }} Admin
+      @else
+         Connexion - {{ config('app.name') }} Admin
+      @endif
+   </title>
    <link rel="stylesheet"
       href="{{ voyager_asset('css/app.css') }}">
    @if (__('voyager::generic.is_rtl') == 'true')

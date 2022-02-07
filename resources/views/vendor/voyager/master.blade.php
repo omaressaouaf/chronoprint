@@ -3,7 +3,12 @@
    dir="{{ __('voyager::generic.is_rtl') == 'true' ? 'rtl' : 'ltr' }}">
 
 <head>
-   <title>@yield('page_title', config('app.name'). " - Bienvenue à l'administration")
+   <title>
+      @hasSection('page_title')
+         @yield('page_title') - {{ config('app.name') }} Admin
+      @else
+         Bienvenue à l'administration - {{ config('app.name') }} Admin
+      @endif
    </title>
    <meta name="viewport"
       content="width=device-width, initial-scale=1">
