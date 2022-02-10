@@ -64,7 +64,7 @@ class Product extends Model
         return round($sum / $count, 2);
     }
 
-    public function getAttributeByName(string $attributeName): Attribute
+    public function getAttributeByName(string $attributeName): Attribute | null
     {
         return $this->attributs->where("name", $attributeName)->first();
     }
@@ -104,7 +104,7 @@ class Product extends Model
             foreach ($product->cartItems as $cartItem) {
                 $cartItem->delete();
             }
-            
+
             if (is_array(json_decode($product->images))) {
                 foreach (json_decode($product->images) as $image) {
                     Storage::disk("public")->delete($image);
