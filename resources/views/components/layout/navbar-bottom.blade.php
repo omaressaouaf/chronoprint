@@ -81,7 +81,14 @@
                                        @foreach ($category->products as $product)
                                           <li>
                                              <a class="dropdown-item"
-                                                href="{{ route('products.show', ['product' => $product->slug]) }}">{{ $product->title }}
+                                                href="{{ route('products.show', ['product' => $product->slug]) }}">
+                                                {{ $product->title }}
+
+                                                @if ($product->promotion_label)
+                                                   <span class="badge bg-success">
+                                                      {{ $product->promotion_label }}
+                                                   </span>
+                                                @endif
                                              </a>
                                           </li>
                                        @endforeach
