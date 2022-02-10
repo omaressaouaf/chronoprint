@@ -64,7 +64,7 @@ class Product extends Model
         return round($sum / $count, 2);
     }
 
-    public function getAttributeByName(string $attributeName): Attribute | null
+    public function getAttributeByName(string $attributeName): Attribute
     {
         return $this->attributs->where("name", $attributeName)->first();
     }

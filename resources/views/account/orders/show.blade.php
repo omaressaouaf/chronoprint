@@ -36,14 +36,16 @@
                         </a>
                      </h3>
                      <div class="fs-sm">
-                        @foreach ($orderItem->selected_options as $attributeName => $optionRef)
-                           <div class="fs-sm">
-                              <span
-                                 class="text-muted me-2">{{ $orderItem->product->getAttributeByName($attributeName)?->label }}:
-                              </span>
-                              {{ $orderItem->product->getOptionByRef($attributeName, $optionRef)['name'] }}
-                           </div>
-                        @endforeach
+                        @if ($orderItem->product->id)
+                           @foreach ($orderItem->selected_options as $attributeName => $optionRef)
+                              <div class="fs-sm">
+                                 <span
+                                    class="text-muted me-2">{{ $orderItem->product->getAttributeByName($attributeName)?->label }}:
+                                 </span>
+                                 {{ $orderItem->product->getOptionByRef($attributeName, $optionRef)['name'] }}
+                              </div>
+                           @endforeach
+                        @endif
                      </div>
                   </div>
                </div>
