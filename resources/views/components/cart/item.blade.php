@@ -12,15 +12,16 @@
          <h3 class="product-title fs-base mb-2"><a
                href="{{ route('products.show', ['product' => $cartItem->product->slug]) }}">{{ $cartItem->product->title }}</a>
          </h3>
-
-         @foreach ($cartItem->selected_options as $attributeName => $optionRef)
-            <div class="fs-sm">
-               <span
-                  class="text-muted me-2">{{ $cartItem->product->getAttributeByName($attributeName)->label }}:
-               </span>
-               {{ $cartItem->product->getOptionByRef($attributeName, $optionRef)['name'] }}
-            </div>
-         @endforeach
+         @if ($orderItem->product->id)
+            @foreach ($cartItem->selected_options as $attributeName => $optionRef)
+               <div class="fs-sm">
+                  <span
+                     class="text-muted me-2">{{ $cartItem->product->getAttributeByName($attributeName)->label }}:
+                  </span>
+                  {{ $cartItem->product->getOptionByRef($attributeName, $optionRef)['name'] }}
+               </div>
+            @endforeach
+         @endif
          <div class="fs-lg text-accent pt-2">{{ format_price($cartItem->subtotal) }} <small>Dhs
                HT</small></div>
       </div>
