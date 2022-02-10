@@ -80,7 +80,7 @@
                                     <ul class="dropdown-menu">
                                        @foreach ($category->products as $product)
                                           <li>
-                                             <a class="dropdown-item"
+                                             <a class="dropdown-item d-flex align-items-start justify-content-between gap-3"
                                                 href="{{ route('products.show', ['product' => $product->slug]) }}">
                                                 {{ $product->title }}
 
