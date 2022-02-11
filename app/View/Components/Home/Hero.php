@@ -10,7 +10,10 @@ class Hero extends Component
     {
         return view('components.home.hero', [
             "sliders" => [
-                "/"
+                "1.png",
+                "2.jpg",
+                "3.jpg",
+                "4.jpg",
             ]
         ]);
     }
