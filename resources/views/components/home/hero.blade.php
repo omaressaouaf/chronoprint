@@ -9,11 +9,10 @@
                   <div class="pb-lg-5 text-center text-lg-start">
                      <h2 class="text-light fw-bold from-start delay-1 text-xl-nowrap mb-3"
                         style="font-size: 2.2rem">
-                        {{ __('Smooth printing with') }} {{ config('app.name') }}
+                        {{ $slider['title'] }}
                      </h2>
                      <p class="fs-6 text-light pb-3 from-start delay-2">
-                        {{ __('With few clicks you select your product and have the best printing service in morocco. 100% online with free delivery in casablanca. grow your brand with') }}
-                        {{ config('app.name') }}
+                        {{ $slider['paragraph'] }}
                      </p>
                      <div class="d-table scale-up delay-4 mx-auto mx-lg-0"><a class="btn btn-accent"
                            href="{{ route('categories.show', ['slug' => 'all']) }}">
@@ -24,7 +23,7 @@
                   </div>
                </div>
                <img class="d-block me-lg-n5 order-lg-1 slider-item-image"
-                  src="/storage/theme/home/hero-slider/{{ $slider }}"
+                  src="/storage/theme/home/hero-slider/{{ $slider["image"] }}"
                   alt="Slider">
             </div>
          </div>
