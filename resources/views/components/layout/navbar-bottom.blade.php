@@ -15,7 +15,11 @@
                      class="ci-menu me-2"></i>{{ __('All categories') }}
                </a>
                <div class="dropdown-menu px-2 pb-4"
-                  style="min-width:65vw">
+                  style="min-width:65vw;
+                  overflow-y: overlay;
+                  overflow-x: hidden !important;
+                  max-height: 70vh;
+              ">
                   <a href="{{ route('categories.show', ['slug' => 'all']) }}">
                      <h6 class="fs-base ps-lg-2 mt-2">
                         {{ __('All products') }}
