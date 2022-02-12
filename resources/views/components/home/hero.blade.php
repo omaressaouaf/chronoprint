@@ -6,8 +6,8 @@
             <div class="d-lg-flex justify-content-between align-items-center">
                <div class="position-relative mx-auto py-5 mb-lg-5 order-lg-2"
                   style="z-index: 10;">
-                  <div class="pb-lg-5 mb-lg-5 text-center text-lg-start">
-                     <h2 class="text-light fw-bold from-start delay-1 text-xl-nowrap"
+                  <div class="pb-lg-5 text-center text-lg-start">
+                     <h2 class="text-light fw-bold from-start delay-1 text-xl-nowrap mb-3"
                         style="font-size: 2.2rem">
                         {{ __('Smooth printing with') }} {{ config('app.name') }}
                      </h2>
