@@ -14,7 +14,7 @@
                   data-bs-toggle="dropdown"><i
                      class="ci-menu me-2"></i>{{ __('All categories') }}
                </a>
-               <div class="dropdown-menu px-2 pb-4"
+               <div class="dropdown-menu has-cool-scrollbar px-2 pb-4"
                   style="min-width:65vw;
                   overflow-y: overlay;
                   overflow-x: hidden !important;
