@@ -12,7 +12,7 @@
          <h3 class="product-title fs-base mb-2"><a
                href="{{ route('products.show', ['product' => $cartItem->product->slug]) }}">{{ $cartItem->product->title }}</a>
          </h3>
-         @if ($orderItem->product->id)
+         @if ($cartItem->product->id)
             @foreach ($cartItem->selected_options as $attributeName => $optionRef)
                <div class="fs-sm">
                   <span

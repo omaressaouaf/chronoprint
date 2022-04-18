@@ -1,11 +1,12 @@
 @import "../theme/variables";
+@import "../theme/user-variables";
 
 // Primary and accent color
 .btn-primary,
 .bg-primary {
     background-color: $primary !important;
     border-color: $primary !important;
-    color: $accent !important;
+    // color: $accent !important;
     font-weight: 500 !important;
 }
 
@@ -16,6 +17,18 @@
 }
 .side-menu {
     background: $accent !important;
+
+    a {
+        color: rgba(255, 255, 255, 0.87) !important;
+    }
+
+    a:hover {
+        background-color: $accent-light !important;
+    }
+
+    li.active:not(.dropdown) {
+        background-color: $accent-light !important;
+    }
 }
 
 // Profile dropdown
