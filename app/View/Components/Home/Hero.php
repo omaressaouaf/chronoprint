@@ -11,7 +11,7 @@ class Hero extends Component
         return view('components.home.hero', [
             "sliders" => [
                 [
-                    "image" => "1.jpg",
+                    "image" => "1.png",
                     "title" => __('Smooth printing with') . ' ' . config('app.name'),
                     "paragraph" => __('With few clicks you select your product and have the best printing service in morocco. 100% online with free delivery in casablanca. grow your brand with') . ' ' . config('app.name')
                 ],

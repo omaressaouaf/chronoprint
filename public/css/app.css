@@ -19670,10 +19670,6 @@ u {
   border-color: #4fce5d !important;
 }
 
-.slider-item {
-  background-color: #f8c50a;
-}
-
 .slider-item-image {
   width: 100%;
   height: auto;
@@ -19681,12 +19677,15 @@ u {
 
 @media (min-width: 1000px) {
   .slider-item {
-    background-image: url("/storage/theme/home/hero-slider/bg.jpg");
-    background-size: contain;
-    background-position: center;
+    height: 80vh;
+    background-size: cover !important;
+    background-position: bottom !important;
+    background-repeat: no-repeat !important;
   }
-
-  .slider-item-image {
+  .slider-item .slider-item-content {
+    max-width: 50% !important;
+  }
+  .slider-item .slider-item-image {
     width: 57%;
     height: auto;
   }

@@ -2,15 +2,15 @@
    <div class="tns-carousel-inner"
       data-carousel-options="{&quot;mode&quot;: &quot;gallery&quot;, &quot;responsive&quot;: {&quot;0&quot;:{&quot;nav&quot;:true, &quot;controls&quot;: false},&quot;992&quot;:{&quot;nav&quot;:false, &quot;controls&quot;: true}}}">
       @foreach ($sliders as $slider)
-         <div class="pe-lg-5 slider-item">
-            <div class="d-lg-flex justify-content-between align-items-center">
-               <div class="position-relative mx-auto py-5 mb-lg-5 order-lg-2"
+         <div class="pe-lg-5 slider-item" style="background: url('/storage/theme/home/hero-slider/1.png')">
+            <div class="d-lg-flex justify-content-between align-items-center h-100">
+               <div class="slider-item-content position-relative px-5 mb-lg-5"
                   style="z-index: 10;">
                   <div class="pb-lg-5 text-center text-lg-start">
-                     <h2 class="text-light fw-bold from-start delay-1 text-xl-nowrap mb-3"
+                     <h1 class="fw-bold text-light from-start delay-1 text-xl-nowrap fs-2 mb-3"
                         style="font-size: 2.2rem">
                         {{ $slider['title'] }}
-                     </h2>
+                     </h1>
                      <p class="fs-6 text-light pb-3 from-start delay-2">
                         {{ $slider['paragraph'] }}
                      </p>
@@ -22,9 +22,9 @@
                      </div>
                   </div>
                </div>
-               <img class="d-block me-lg-n5 order-lg-1 slider-item-image"
-                  src="/storage/theme/home/hero-slider/{{ $slider["image"] }}"
-                  alt="Slider">
+               {{-- <img class="d-block me-lg-n5 slider-item-image"
+                  src="/storage/theme/home/hero-slider/{{ $slider['image'] }}"
+                  alt="Slider"> --}}
             </div>
          </div>
       @endforeach

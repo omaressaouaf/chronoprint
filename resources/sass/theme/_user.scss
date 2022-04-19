@@ -66,9 +66,9 @@ u {
     border-color: #4fce5d !important;
 }
 
-.slider-item {
-    background-color: #f8c50a;
-}
+// .slider-item {
+//     background-color: #f8c50a;
+// }
 
 .slider-item-image {
     width: 100%;
@@ -77,13 +77,19 @@ u {
 
 @media (min-width: 1000px) {
     .slider-item {
-        background-image: url("/storage/theme/home/hero-slider/bg.jpg");
-        background-size: contain;
-        background-position: center;
-    }
+        // background-image: url("/storage/theme/home/hero-slider/bg.png");
+        height: 80vh;
+        background-size: cover !important;
+        background-position: bottom !important;
+        background-repeat: no-repeat !important;
 
-    .slider-item-image {
-        width: 57%;
-        height: auto;
+        .slider-item-content {
+            max-width: 50% !important;
+        }
+
+        .slider-item-image {
+            width: 57%;
+            height: auto;
+        }
     }
 }
