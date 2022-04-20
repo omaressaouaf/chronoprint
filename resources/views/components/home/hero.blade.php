@@ -1,6 +1,6 @@
 <section class="tns-carousel tns-controls-lg mb-3">
    <div class="tns-carousel-inner"
-      data-carousel-options="{&quot;mode&quot;: &quot;gallery&quot;,&quot;autoplay&quot;: &quot;true&quot;,&quot;autoplayTimeout&quot;: &quot;7200&quot;, &quot;responsive&quot;: {&quot;0&quot;:{&quot;nav&quot;:true, &quot;controls&quot;: false},&quot;992&quot;:{&quot;nav&quot;:true, &quot;controls&quot;: true}}}">
+      data-carousel-options='{"mode": "gallery","autoplay": "true","autoplayTimeout": "7400", "responsive": {"0":{"nav":true, "controls": false},"992":{"nav":true, "controls": true}}}'>
       @foreach ($sliders as $slider)
          <div class="pe-lg-5 slider-item"
             style="background-image:linear-gradient(to right, #ccb5037a,#dac1011f, transparent), url('/storage/theme/home/hero-slider/{{ $loop->index + 1 }}.png');">
