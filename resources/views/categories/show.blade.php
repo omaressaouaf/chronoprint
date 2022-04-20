@@ -1,4 +1,4 @@
-<x-app-layout :title="$category->slug === 'all' ? '' : $category->seo_title ?? $category->name"
+<x-app-layout :title="$category->slug === 'all' ? 'Toutes les produits' : $category->seo_title ?? $category->name"
    :description="$category->slug === 'all' ? '' : $category->meta_description"
    :keywords="$category->slug === 'all' ? '' : $category->meta_keywords"
    :canonical="'categories/' . $category->slug">
