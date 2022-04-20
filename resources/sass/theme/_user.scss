@@ -40,6 +40,7 @@ u {
     width: 18px !important;
     height: 14px !important;
 }
+
 .has-cool-scrollbar::-webkit-scrollbar-thumb {
     background-color: $gray-500;
     border: 4px solid transparent;
@@ -51,11 +52,6 @@ u {
     margin-left: 20px !important;
 }
 
-// .btn-primary,
-// .navbar-tool-label {
-//     color: $accent !important;
-// }
-
 .btn-whatsapp {
     position: fixed !important;
     right: 20px !important;
@@ -66,10 +62,6 @@ u {
     border-color: #4fce5d !important;
 }
 
-// .slider-item {
-//     background-color: #f8c50a;
-// }
-
 .slider-item-image {
     width: 100%;
     height: auto;
@@ -77,7 +69,6 @@ u {
 
 @media (min-width: 1000px) {
     .slider-item {
-        // background-image: url("/storage/theme/home/hero-slider/bg.png");
         height: 80vh;
         background-size: cover !important;
         background-position: bottom !important;
