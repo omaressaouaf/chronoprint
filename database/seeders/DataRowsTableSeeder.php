@@ -736,7 +736,7 @@ class DataRowsTableSeeder extends Seeder
                 'edit' => 1,
                 'add' => 1,
                 'delete' => 1,
-                'details' => '{"on":"oui","off":"non"}',
+                'details' => '{"on":"oui","off":"non","checked":true}',
                 'order' => 11,
             ),
             45 => 
@@ -1858,6 +1858,22 @@ class DataRowsTableSeeder extends Seeder
                 'delete' => 0,
                 'details' => '{}',
                 'order' => 13,
+            ),
+            115 => 
+            array (
+                'id' => 127,
+                'data_type_id' => 4,
+                'field' => 'popular',
+                'type' => 'checkbox',
+                'display_name' => 'Populaire',
+                'required' => 1,
+                'browse' => 1,
+                'read' => 1,
+                'edit' => 1,
+                'add' => 1,
+                'delete' => 1,
+                'details' => '{"on":"oui","off":"non"}',
+                'order' => 7,
             ),
         ));
         

@@ -20,6 +20,7 @@ class CreateCategoriesTable extends Migration
             $table->string("slug")->nullable()->unique();
             $table->string("promotion_label")->nullable();
             $table->boolean("is_graphic_service")->default(0);
+            $table->boolean("popular")->default(0);
             $table->text("image")->nullable();
             $table->text("seo_title")->nullable();
             $table->text("meta_description")->nullable();

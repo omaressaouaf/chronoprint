@@ -1,6 +1,6 @@
 @props(['product'])
 
-<div class="col-lg-3 col-md-4 col-sm-6 col-12 px-2 mb-4">
+<div {{ $attributes->merge(['class' => 'col-lg-3 col-md-4 col-sm-6 col-12 px-2 mb-4']) }}>
    <div class="card product-card">
       @if ($product->promotion_label)
          <span class="badge bg-success">{{ $product->promotion_label }}</span>
@@ -22,7 +22,8 @@
          <div class="d-flex justify-content-between">
             <div class="star-rating">
                @foreach (range(1, 5) as $rating)
-                  <i class="star-rating-icon ci-star-filled @if ($product->average_rating >= $rating) active @endif">
+                  <i
+                     class="star-rating-icon ci-star-filled @if ($product->average_rating >= $rating) active @endif">
                   </i>
                @endforeach
             </div>

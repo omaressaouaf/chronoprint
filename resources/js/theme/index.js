@@ -28,5 +28,6 @@ import labelUpdate from "./components/label-update";
 import radioTab from "./components/radio-tab";
 // import creditCard from "./components/credit-card";
 import masterCheckbox from "./components/master-checkbox";
+import isotope from "./components/isotope";
 
 

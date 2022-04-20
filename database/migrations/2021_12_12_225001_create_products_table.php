@@ -22,7 +22,7 @@ class CreateProductsTable extends Migration
             $table->float("design_price")->nullable();
             $table->json("allowed_quantities");
             $table->boolean("popular")->default(0);
-            $table->boolean("active")->default(0);
+            $table->boolean("active")->default(1);
             $table->string("promotion_label")->nullable();
             $table->text("seo_title")->nullable();
             $table->text("meta_description")->nullable();

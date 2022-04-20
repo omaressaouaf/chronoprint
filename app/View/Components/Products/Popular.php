@@ -2,7 +2,7 @@
 
 namespace App\View\Components\Products;
 
-use App\Models\Product;
+use App\Models\Category;
 use Illuminate\View\Component;
 
 class Popular extends Component
@@ -10,7 +10,7 @@ class Popular extends Component
     public function render()
     {
         return view('components.products.popular', [
-            "products" => Product::active()->wherePopular(1)->get()
+            "categories" => Category::wherePopular(1)->whereRelation("products", "active", true)->whereRelation("products", "popular", true)->with("products")->get()
         ]);
     }
 }
