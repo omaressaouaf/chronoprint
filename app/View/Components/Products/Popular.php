@@ -10,7 +10,9 @@ class Popular extends Component
     public function render()
     {
         return view('components.products.popular', [
-            "categories" => Category::wherePopular(1)->whereRelation("products", "active", true)->whereRelation("products", "popular", true)->with("products")->get()
+            "categories" => Category::wherePopular(1)
+                ->with(["products" => fn ($query) => $query->active()->wherePopular(1)])
+                ->get()
         ]);
     }
 }
