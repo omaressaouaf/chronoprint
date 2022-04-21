@@ -7,5 +7,7 @@
 
    <x-home.testimonials />
 
+   <x-home.subscription-banner />
+
    <x-home.contact-cards />
 </x-app-layout>

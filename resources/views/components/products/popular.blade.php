@@ -1,4 +1,4 @@
-<section class="container pt-md-3 pb-5 mb-md-3 popular-products">
+<section class="container pt-md-3 pb-5 mb-md-3 popular-products mt-4">
    <h2 class="h3 text-center mb-4">{{ __('Popular products') }}</h2>
    <div class="row">
       <div class="col-lg-12 d-flex justify-content-center">

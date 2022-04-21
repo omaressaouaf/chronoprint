@@ -1,4 +1,4 @@
-<section class="tns-carousel tns-controls-lg mb-3">
+<section class="tns-carousel tns-controls-lg tns-nav-inside mb-3">
    <div class="tns-carousel-inner"
       data-carousel-options='{"mode": "gallery","autoplay": "true","autoplayTimeout": "7400", "responsive": {"0":{"nav":true, "controls": false},"992":{"nav":true, "controls": true}}}'>
       @foreach ($sliders as $slider)
