@@ -1,9 +1,8 @@
 <div class="navbar navbar-expand-lg navbar-light">
    <div class="container">
-      <a class="navbar-brand d-sm-block d-lg-flex align-items-center flex-shrink-0"
+      <a class="navbar-brand d-sm-block d-lg-flex align-items-center flex-shrink-0 py-3 mx-auto mx-md-0 me-md-3"
          href="{{ route('home') }}">
-         <img src="/storage/theme/logo.svg"
-            width="150"
+         <img src="/storage/theme/logo.png"
             id="logo"
             alt="{{ config('app.name') }} Logo">
       </a>
@@ -16,7 +15,7 @@
       <div class="d-none d-lg-block flex-grow-1">
          <x-products.search />
       </div>
-      <div class="navbar-toolbar d-flex flex-shrink-0 align-items-center ms-md-5">
+      <div class="navbar-toolbar d-flex flex-shrink-0 align-items-center ms-auto ms-md-5">
          <button class="navbar-toggler"
             type="button"
             data-bs-toggle="collapse"
@@ -42,7 +41,9 @@
                         {{ __('Hello, There') }}
                      @endauth
                   </small>
-                  @auth {{ __('Account') }} @else {{ __('Login') }} @endauth
+                  @auth {{ __('Account') }}
+                  @else
+                  {{ __('Login') }} @endauth
 
                </div>
             </a>

@@ -19623,6 +19623,15 @@ u {
   font-family: "Rubik", sans-serif !important;
 }
 
+#logo {
+  width: 250px;
+}
+
+@media only screen and (max-width: 600px) {
+  #logo {
+    width: 170px;
+  }
+}
 .image-zoom {
   height: 100% !important;
 }

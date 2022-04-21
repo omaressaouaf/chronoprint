@@ -148,11 +148,11 @@
             <div class="col-md-6 text-center text-md-start mb-4">
                <div class="text-nowrap mb-4"><a class="d-inline-block align-middle mt-n1 me-3"
                      href="#"><img class="d-block"
-                        src="/storage/theme/logo-light.svg"
-                        width="117"
+                        src="/storage/theme/logo-light.png"
+                        width="275"
                         alt="{{ config('app.name') }} Logo"></a>
                </div>
-               <div class="widget widget-links widget-light">
+               <div class="widget widget-links widget-light ps-4">
                   <ul
                      class="widget-list d-flex flex-wrap justify-content-center justify-content-md-start">
                      <li class="widget-list-item me-4"><a class="widget-list-link"
