@@ -1,5 +1,5 @@
 <section class="container py-lg-4 mb-4">
-    <h2 class="h3 text-center pb-4">{{ __('Satisfied brands') }}</h2>
+    <h2 class="h3 text-center pb-4">{{ __('Our references') }}</h2>
     <div class="row">
         @foreach (range(1,6) as $item)
             <div class="col-md-4 col-sm-4 col-6">
