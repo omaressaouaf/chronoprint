@@ -6,7 +6,7 @@
                 <a class="d-block bg-white shadow-sm rounded-3 py-3 py-sm-4 mb-grid-gutter"
                    href="#">
                     <img class="d-block mx-auto"
-                         src="/storage/theme/brands/{{$item}}.png"
+                         src="/theme-images/brands/{{$item}}.png"
                          style="width: 150px;"
                          alt="{{__("Brand")}}">
                 </a>

@@ -161,7 +161,7 @@
          <tr>
             <td class="border-0 pl-0"
                width="69%">
-               <img src="storage/theme/logo.svg"
+               <img src="storage/theme-images/logo.svg"
                   alt="logo"
                   height="50">
             </td>

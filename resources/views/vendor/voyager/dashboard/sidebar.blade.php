@@ -6,8 +6,8 @@
             <a class="navbar-brand"
                style="height: 100px; width : 455px"
                href="{{ route('voyager.dashboard') }}">
-               <div style="padding: 15px 92px 15px 3px;">
-                  <img src="/storage/theme/logo-light.png"
+               <div style="padding: 15px 92px 15px 20px;">
+                  <img src="/theme-images/logo-light.png"
                      alt="{{ config('app.name') }} Logo">
                </div>
             </a>

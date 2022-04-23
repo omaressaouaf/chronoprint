@@ -6,14 +6,14 @@
             <div class="col-md-6">
                <a href="{{ route('categories.show', ['slug' => 'all']) }}">
                   <img class="rounded-3 w-100"
-                     src="/storage/theme/banners/promo.png"
+                     src="/theme-images/banners/promo.png"
                      alt="{{ __('Coupon code') }}">
                </a>
             </div>
             <div class="col-md-6">
                <a href="{{ route('contact.store') }}">
                   <img class="rounded-3 w-100"
-                     src="/storage/theme/banners/revendeur.png"
+                     src="/theme-images/banners/revendeur.png"
                      alt="{{ __('Coupon code') }}">
                </a>
             </div>

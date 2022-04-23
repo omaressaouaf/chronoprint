@@ -23,20 +23,20 @@
 
    <!-- Favicon -->
    <link rel="apple-touch-icon"
-      sizes="180x180"
-      href="/storage/theme/favicons/apple-touch-icon.png">
+      sizes="152x152"
+      href="/theme-images/favicons/apple-touch-icon.png">
    <link rel="icon"
       type="image/png"
       sizes="32x32"
-      href="/storage/theme/favicons/favicon-32x32.png">
+      href="/theme-images/favicons/favicon-32x32.png">
    <link rel="icon"
       type="image/png"
       sizes="16x16"
-      href="/storage/theme/favicons/favicon-16x16.png">
+      href="/theme-images/favicons/favicon-16x16.png">
    <link rel="manifest"
-      href="/storage/theme/favicons/site.webmanifest">
+      href="/theme-images/favicons/site.webmanifest">
    <link rel="mask-icon"
-      href="/storage/theme/favicons/safari-pinned-tab.svg"
+      href="/theme-images/favicons/safari-pinned-tab.svg"
       color="#5bbad5">
    <meta name="msapplication-TileColor"
       content="#da532c">
@@ -84,13 +84,17 @@
 
    @if (!empty(config('voyager.additional_css')))
       <!-- Additional CSS -->
-      @foreach (config('voyager.additional_css') as $css)<link rel="stylesheet" type="text/css" href="{{ asset($css) }}">@endforeach
+      @foreach (config('voyager.additional_css') as $css)
+         <link rel="stylesheet"
+            type="text/css"
+            href="{{ asset($css) }}">
+      @endforeach
    @endif
 
    @yield('head')
 </head>
 
-<body class="voyager @if (isset($dataType) && isset($dataType->slug)){{ $dataType->slug }}@endif">
+<body class="voyager @if (isset($dataType) && isset($dataType->slug)) {{ $dataType->slug }} @endif">
 
    <?php
    if (\Illuminate\Support\Str::startsWith(Auth::user()->avatar, 'http://') || \Illuminate\Support\Str::startsWith(Auth::user()->avatar, 'https://')) {
@@ -180,7 +184,10 @@
    @stack('javascript')
    @if (!empty(config('voyager.additional_js')))
       <!-- Additional Javascript -->
-      @foreach (config('voyager.additional_js') as $js)<script type="text/javascript" src="{{ asset($js) }}"></script>@endforeach
+      @foreach (config('voyager.additional_js') as $js)
+         <script type="text/javascript"
+                  src="{{ asset($js) }}"></script>
+      @endforeach
    @endif
 
 </body>

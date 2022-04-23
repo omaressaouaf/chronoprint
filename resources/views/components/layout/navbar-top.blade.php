@@ -2,7 +2,7 @@
    <div class="container">
       <a class="navbar-brand d-sm-block d-lg-flex align-items-center flex-shrink-0 py-3 mx-auto mx-md-0 me-md-3"
          href="{{ route('home') }}">
-         <img src="/storage/theme/logo.png"
+         <img src="/theme-images/logo.png"
             id="logo"
             alt="{{ config('app.name') }} Logo">
       </a>

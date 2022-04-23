@@ -66,20 +66,20 @@
 
    <!-- Favicon -->
    <link rel="apple-touch-icon"
-      sizes="180x180"
-      href="/storage/theme/favicons/apple-touch-icon.png">
+      sizes="152x152"
+      href="/theme-images/favicons/apple-touch-icon.png">
    <link rel="icon"
       type="image/png"
       sizes="32x32"
-      href="/storage/theme/favicons/favicon-32x32.png">
+      href="/theme-images/favicons/favicon-32x32.png">
    <link rel="icon"
       type="image/png"
       sizes="16x16"
-      href="/storage/theme/favicons/favicon-16x16.png">
+      href="/theme-images/favicons/favicon-16x16.png">
    <link rel="manifest"
-      href="/storage/theme/favicons/site.webmanifest">
+      href="/theme-images/favicons/site.webmanifest">
    <link rel="mask-icon"
-      href="/storage/theme/favicons/safari-pinned-tab.svg"
+      href="/theme-images/favicons/safari-pinned-tab.svg"
       color="#5bbad5">
    <meta name="msapplication-TileColor"
       content="#da532c">
@@ -96,7 +96,7 @@
                <div class="col-sm-12 col-md-10 col-md-offset-2">
                   <div class="logo-title-container">
                      <img class="img-responsive pull-left flip logo hidden-xs animated fadeIn"
-                        src="/storage/theme/icon-light.png"
+                        src="/theme-images/icon-light.png"
                         alt="Logo Icon">
                      <div class="copy animated fadeIn">
                         <h1>{{ config('app.name') }}</h1>

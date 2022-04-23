@@ -8,7 +8,7 @@
       <section class="container">
          <div class="row">
             <div class="col-md-6 bg-position-center bg-size-cover bg-secondary rounded shadow-lg"
-               style="min-height: 15rem; max-height: 40rem; background-image: url(/storage/theme/about/01.jpg);">
+               style="min-height: 15rem; max-height: 40rem; background-image: url(/theme-images/about/01.jpg);">
             </div>
             <div class="col-md-6 px-3 px-md-5 py-5">
                <div class="mx-auto py-lg-5">
@@ -144,7 +144,7 @@
          <div class="row">
             <div
                class="col-md-6 order-1 order-lg-2 bg-position-center bg-size-cover bg-secondary rounded shadow-lg"
-               style="min-height: 15rem; max-height: 40rem; background-image: url(/storage/theme/about/02.jpg);">
+               style="min-height: 15rem; max-height: 40rem; background-image: url(/theme-images/about/02.jpg);">
             </div>
             <div class="col-md-6 order-2 order-lg-1 px-3 px-md-5 mt-5 mt-lg-0">
                <div class="mx-auto">

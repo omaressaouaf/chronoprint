@@ -39,7 +39,7 @@
                      <div class="d-flex align-items-center fs-sm pb-2 mb-1"><a
                            class="blog-entry-meta-link"
                            href="#">
-                           <div class="blog-entry-author-ava"><img src="/storage/theme/icon.svg"
+                           <div class="blog-entry-author-ava"><img src="/theme-images/icon.png"
                                  alt="{{ config('app.name') }}"></div>{{ config('app.name') }}
                         </a>
                         <span class="blog-entry-meta-divider"></span>
@@ -121,7 +121,7 @@
                                  <!-- Promo banner-->
                                  <div
                                     class="bg-size-cover bg-position-center rounded-3 py-5 mx-lg-2"
-                                    style="background-image: url(/storage/theme/banners/bg.jpg);">
+                                    style="background-image: url(/theme-images/banners/bg.jpg);">
                                     <div class="py-5 px-4 text-center">
                                        <h5 class="mb-2">
                                           {{ __('Check out our products') }}</h5>

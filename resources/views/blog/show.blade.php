@@ -18,7 +18,7 @@
                <div class="d-flex align-items-center fs-sm mb-2"><a class="blog-entry-meta-link"
                      href="#">
                      <div class="blog-entry-author-ava">
-                        <img src="/storage/theme/icon.svg"
+                        <img src="/theme-images/icon.png"
                            alt="{{ config('app.name') }}">
                      </div>
                      {{ config('app.name') }}

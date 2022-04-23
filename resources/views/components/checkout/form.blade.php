@@ -118,11 +118,11 @@
                      <div class="accordion-body">
                         <p class="fs-sm">{{ __('Secure online payment with CMI') }} :
                            <img class="d-inline-block align-middle ms-2"
-                              src="/storage/theme/cards.png"
+                              src="/theme-images/cards.png"
                               width="187"
                               alt="Cerdit Cards">
                         </p>
-                        <img src="/storage/theme/credit_card.svg"
+                        <img src="/theme-images/credit_card.svg"
                            width="300"
                            height="300"
                            class="mb-3"

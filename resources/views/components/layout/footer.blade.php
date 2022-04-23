@@ -87,7 +87,7 @@
                   <div class="subscription-status"></div>
                </form>
                <img class="d-inline-block mt-5"
-                  src="/storage/theme/cards-alt.png"
+                  src="/theme-images/cards-alt.png"
                   width="387"
                   alt="Payment methods">
             </div>
@@ -148,7 +148,7 @@
             <div class="col-md-6 text-center text-md-start mb-4">
                <div class="text-nowrap mb-4"><a class="d-inline-block align-middle mt-n1 me-3"
                      href="#"><img class="d-block"
-                        src="/storage/theme/logo-light.png"
+                        src="/theme-images/logo-light.png"
                         width="275"
                         alt="{{ config('app.name') }} Logo"></a>
                </div>
