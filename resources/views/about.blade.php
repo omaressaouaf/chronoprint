@@ -13,27 +13,35 @@
             <div class="col-md-6 px-3 px-md-5 py-5">
                <div class="mx-auto py-lg-5">
                   <h3 class="mb-4">
-                     {{ config('app.name') }} est une imprimerie <span class="text-primary">100%
-                        digitale</span>
+                     {{ config('app.name') }} est une imprimerie <span
+                        class="text-primary">digitale</span>
                   </h3>
                   <div class="mt-4">
-                     <h6 class="mb-3">{{ config('app.name') }} est une marque déposée par
-                        la
-                        société <a href="http://fournishop.ma/"
+                     <h6 class="mb-3">{{ config('app.name') }} est une marque détenue par
+                        <a href="http://fournishop.ma/"
                            rel="noopener"
-                           target="_blank">FOURNISHOP</a></h6>
+                           target="_blank"> FOURNISHOP</a>
+                     </h6>
                      <p>
-                        Fruit de l’expérience et de la modernité,
-                        {{ config('app.name') }} a réuni le meilleur de l’impression et du web.
-                        Nous bénéficions d’un savoir-faire unique de professionnels
-                        de la digitalisation, mais aussi de la chaîne graphique et de l’impression
-                        offset et numérique.
-                        Chez {{ config('app.name') }} tout a été repensé pour en faire une
-                        imprimerie
-                        comme vous n’en n’avez jamais vu ! Nous sommes en effet équipés des
-                        dernières
-                        technologies en matière d’impression et d’automatisation de la production.
+                        qui est aussi une famille construite par les personnes les plus
+                        expérimentées dans le domaine de l'impression et du design avec un seul
+                        objectif : répondre aux besoins de nos clients partout au Maroc.
+                        Bienvenue chez <a href="{{ route('home') }}"
+                           class="text-info">{{ config('app.name') }}</a>
                      </p>
+                     <p>
+                        Nous fournissons à votre entreprise la meilleure qualité d'impression et des
+                        délais d'exécution ultra rapides afin de répondre à tous vos besoins
+                        d'impression. Bien entendu, nous servons chaque client en tenant compte de
+                        son budget ; nous nous spécialisons dans la réduction de vos coûts
+                        d'impression.
+                     </p>
+                     <p>
+                        Nous faisons bien plus pour votre entreprise que de simplement fournir des
+                        impressions. Des services de conception au publipostage, notre objectif est
+                        de vous faciliter la vie. Pour voir plus de nos excellents services.
+                     </p>
+
                   </div>
                </div>
             </div>
@@ -46,13 +54,11 @@
                <div class="card border-0 shadow">
                   <div class="card-body text-center">
                      <i class="ci-check-circle fs-3 mt-2 mb-4 text-success"></i>
-                     <h6>Service de qualité</h6>
+                     <h6>Qualité de produits et service</h6>
                      <p class="fs-sm text-muted pb-2">
-                        Notre équipe se tient à votre disposition pour répondre de manière
-                        compétente
-                        et rapide à vos questions et vous proposer des solutions personnalisées afin
-                        de
-                        satisfaire vos exigences.
+                        {{ config('app.name') }} dispose d'une équipe dont le seul rôle est de
+                        valider la qualité de nos produits et services, afin de répondre aux
+                        exigences de nos clients
                      </p>
                   </div>
                </div>
@@ -63,10 +69,11 @@
                      <i class="ci-check-circle fs-3 mt-2 mb-4 text-success"></i>
                      <h6>Qualité d'impression</h6>
                      <p class="fs-sm text-muted pb-2">
-                        Quels que soient nos outils (offset, jet d'encre, laser), nous vous offrons
-                        une
-                        qualité d'impression sur une grande variété de supports (papiers, cartons,
-                        adhésif...).
+                        {{ config('app.name') }} s'engage toujours à donner la meilleure version
+                        de
+                        qualité d'impression quels que soient les outils que nous utilisons (offset,
+                        jet d'encre, laser) valable sur tous types de supports (papier, carton,
+                        adhésif, etc...)
                      </p>
                   </div>
                </div>
@@ -77,10 +84,9 @@
                      <i class="ci-check-circle fs-3 mt-2 mb-4 text-success"></i>
                      <h6>Pas de frais cachés</h6>
                      <p class="fs-sm text-muted pb-2">
-                        Vous avez un accès clair à l'ensemble des prix dans notre boutique en ligne.
-                        Les frais de livraison sont toujours détaillés au moment de la confirmation
-                        de
-                        commande.
+                        {{ config('app.name') }} pratique une politique de transparence avec ses
+                        clients, c'est pourquoi nous avons mis en place un système qui donne tous
+                        les prix de nos produits et services disponibles sur la plateforme
                      </p>
                   </div>
                </div>
@@ -91,9 +97,12 @@
                      <i class="ci-check-circle fs-3 mt-2 mb-4 text-success"></i>
                      <h6>Livraison Express</h6>
                      <p class="fs-sm text-muted pb-2">
-                        En 24h pour les plus grandes villes (Agadir, Casablanca, Fès, Marrakech,
-                        Rabat
-                        et Tanger) et entre 48 à 72h pour le reste du Royaume.
+                        {{ config('app.name') }} est la seule plateforme qui dispose d'un système
+                        de
+                        livraison express au Maroc afin de répondre au plus vite aux besoins de nos
+                        clients, entre 12 à 24 heures pour les plus grandes villes (Agadir,
+                        Casablanca, Fès, Marrakech, Rabat et Tanger) et entre 24 à 48 heures pour le
+                        reste du Royaume
                      </p>
                   </div>
                </div>
@@ -104,10 +113,12 @@
                      <i class="ci-check-circle fs-3 mt-2 mb-4 text-success"></i>
                      <h6>Service client incroyable</h6>
                      <p class="fs-sm text-muted pb-2">
-                        Faites confiance à notre
-                        Service Client pour vous guider.
-                        Ils seront à vos petits soins pour répondre à toutes vos questions et feront
-                        tout pour vous accompagner.
+                        Ce n'est pas parce que nous sommes en ligne que nous sommes inaccessibles.
+                        Chaque fois que vous souhaitez obtenir de l'aide pour une commande ou avez
+                        des questions, n'hésitez pas à contacter nos sympathiques représentants de
+                        compte. Nos représentants sont tous des spécialistes dans le domaine et
+                        dédiés à répondre à tous les besoins d'impression de votre entreprise de
+                        manière rapide
                      </p>
                   </div>
                </div>
@@ -118,10 +129,11 @@
                      <i class="ci-check-circle fs-3 mt-2 mb-4 text-success"></i>
                      <h6>Des papiers choisis pour vous</h6>
                      <p class="fs-sm text-muted pb-2">
-                        Nous vous proposons les formats et papiers les plus utilisés par l’ensemble
-                        des
-                        clients, particuliers ou professionnels. Vos créations trouveront le modèle
-                        qu’il leur faut pour un rendu parfait.
+                        {{ config('app.name') }} un des rares centres d'impression qui propose
+                        tous
+                        les formats et papiers les plus utilisés par l'ensemble du milieu
+                        professionnel marocain, tout cela pour vous donner la meilleure version
+                        possible de vos besoins
                      </p>
                   </div>
                </div>
@@ -145,16 +157,10 @@
                            <i class="ci-time text-white fs-base fw-bold"></i>
                         </div>
                         <div>
-                           <h5>Economisez du temps et de l’argent</h5>
-                           <p>Grâce à la digitalisation, tout va plus vite. La commande est passée
-                              rapidement.
-                              Le temps de production est optimisé.
-                              La livraison se fait dans les meilleurs délais.
-                              Du temps que vous pourrez consacrer à votre travail, à la création ou
-                              au démarchage de nouveaux clients.
-                              Un temps gagné grâce à {{ config('app.name') }} qui ne pourra que
-                              faire
-                              augmenter votre chiffre d’affaires !
+                           <h5>Réactivité</h5>
+                           <p>
+                              Notre équipe vous conseille, vous propose un devis adapté et imprime
+                              tous vos supports de communication en un temps record, Testez notre réactivité hors norme, vous ne serez pas déçu.
                            </p>
                         </div>
                      </div>
@@ -163,14 +169,9 @@
                            <i class="ci-smile text-white fs-base fw-bold"></i>
                         </div>
                         <div>
-                           <h5>Satisfait ou Réimprimé !</h5>
+                           <h5>Suivi personnalisé</h5>
                            <p>
-                              Votre satisfaction est notre priorité. A la livraison de votre
-                              commande, si vous n’êtes pas 100% satisfait, notre Service Client se
-                              chargera de vous assister très rapidement dans l’identification du
-                              défaut. Une fois le défaut détecté, s’il est de notre responsabilité,
-                              nous nous engageons à récupérer la commande défectueuse et à vous la
-                              réimprimer.
+                              Nous mettons nos clients au cœur de nos process de fabrication. Nous proposons un service personnalisé de la prise de brief à la livraison. Cela signifie que vous n’avez qu’un seul et même interlocuteur pour le suivi de votre dossier d’impression. Nous mettons également à votre disposition notre service de livraison interne avec nos propres chauffeurs. Les coordonnées de la personne en charge de la livraison de vos supports de communication vous sont données dès la commande. Vous pouvez ainsi contacter votre livreur à tout moment et suivre l’acheminement de vos travaux en temps réel. C’est un service entièrement gratuit. Profitez-en !
                            </p>
                         </div>
                      </div>
@@ -179,13 +180,9 @@
                            <i class="ci-discount text-white fs-5"></i>
                         </div>
                         <div>
-                           <h5>Des prix avantageux sans rogner sur la qualité</h5>
+                           <h5>Qualité</h5>
                            <p>
-                              La qualité est notre première préoccupation. C’est à travers une
-                              organisation minutieuse et la digitalisation de nos procédés que nous
-                              pouvons vous permettre un rapport qualité/prix imbattable. Et ce, tout
-                              en vous garantissant une maîtrise et une régularité de la colorimétrie
-                              de vos imprimés.
+                              La qualité d’exécution et d’impression de vos documents est notre priorité. Notre matériel offset et numérique, petit, moyen ou encore grand format est de dernière génération. Que ce soit pour imprimer en ligne vos prospectus, vos dossiers de presse, vos affiches ou encore vos cartes de visite sur Casablanca ou partout au maroc, nos machines haute performance répondront à vos besoins et à vos exigences.
                            </p>
                         </div>
                      </div>
