@@ -121,7 +121,7 @@
                                  <!-- Promo banner-->
                                  <div
                                     class="bg-size-cover bg-position-center rounded-3 py-5 mx-lg-2"
-                                    style="background-image: url(/storage/theme/banners/banner-bg.jpg);">
+                                    style="background-image: url(/storage/theme/banners/bg.jpg);">
                                     <div class="py-5 px-4 text-center">
                                        <h5 class="mb-2">
                                           {{ __('Check out our products') }}</h5>

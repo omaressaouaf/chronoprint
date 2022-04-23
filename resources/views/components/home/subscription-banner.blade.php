@@ -5,7 +5,7 @@
          <p class="text-muted text-center mb-5">{{ __('Contact us to get your card now') }}</p>
          <a href="{{ route('contact.index') }}">
             <img class="rounded-3"
-               src="/storage/theme/banners/subscription.png"
+               src="/storage/theme/banners/abonnement.png"
                alt="{{ __('Subscription card') }}">
          </a>
       </div>

@@ -3,6 +3,8 @@
 
    <x-products.popular />
 
+   <x-home.promo-dealer-banners />
+
    <x-home.brands />
 
    <x-home.testimonials />

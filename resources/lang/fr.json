@@ -685,6 +685,8 @@
     "Delivery price": "Prix de livraison",
     "Apply coupon code": "Appliquer un code promo",
     "Coupon code": "Code promo",
+    "Brand": "Marque",
+    "Dealer": "Revendeur",
     "Apply": "Appliquer",
     "Free in casablanca": "Gratuit à casablanca",
     "Are you sure ?": "Etes-vous sûr(e) ?",
@@ -801,10 +803,10 @@
     "Enjoy our high quality business cards with plenty of variations available :": "Profitez de nos cartes de visite de haute qualité avec de nombreuses variantes disponibles :",
     ":appName Flyers Brouchures": "Flyers Brouchures de :appName",
     "And don't forget our special flyers. suitable for all kind of brands :": "Et n'oubliez pas nos flyers spéciaux. convient à tous types de marques :",
-    ":appName Rollups and Stands" : "Rollups et Stands de :appName",
-    "Market your business with our Rollups and Stands suitable for the office and outside :" : "Commercialisez votre entreprise avec nos Rollups et Stands adaptés au bureau et à l'extérieur :",
-    ":appName Packaging" : "Packaging de :appName",
-    "Brand your packaging and leaves your impression on your customers with our :" : "Marquez votre emballage et laissez votre impression sur vos clients avec nos :",
-    "Subscription card" : "Carte d'abonnement",
-    "Contact us to get your card now" : "Contactez-nous pour obtenir votre carte maintenant"
+    ":appName Rollups and Stands": "Rollups et Stands de :appName",
+    "Market your business with our Rollups and Stands suitable for the office and outside :": "Commercialisez votre entreprise avec nos Rollups et Stands adaptés au bureau et à l'extérieur :",
+    ":appName Packaging": "Packaging de :appName",
+    "Brand your packaging and leaves your impression on your customers with our :": "Marquez votre emballage et laissez votre impression sur vos clients avec nos :",
+    "Subscription card": "Carte d'abonnement",
+    "Contact us to get your card now": "Contactez-nous pour obtenir votre carte maintenant"
 }

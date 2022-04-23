@@ -32,7 +32,7 @@
       @else
          <div class="row justify-content-center pt-lg-4 mt-md-n5 text-center">
             <div class="col-lg-7 col-md-7 col-12 pe-0"><img class="d-block mx-auto mb-5"
-                  src="/storage/theme/shop/cart.svg"
+                  src="/storage/theme/cart.svg"
                   width="340"
                   alt="{{ __('Your cart is empty') }}">
                <h3>{{ __('Your cart is empty') }}</h3>
