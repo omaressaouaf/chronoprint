@@ -186,7 +186,7 @@
             </div>
          </div>
          <hr class="hr-light mb-5">
-         <div class="pb-4 fs-xs text-light opacity-50 text-center text-md-start">Ⓒ
+         <div class="pb-4 fs-xs text-light text-center text-md-start">Ⓒ
             {{ config('app.name') }}.
             {{ __('All rights reserved') }}.
             {{ __('Developed by') }} <a href="https://www.sourceup.ma/"

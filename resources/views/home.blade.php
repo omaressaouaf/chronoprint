@@ -7,6 +7,8 @@
 
    <x-home.brands />
 
+   <x-products.latest />
+
    <x-home.testimonials />
 
    <x-home.subscription-banner />
