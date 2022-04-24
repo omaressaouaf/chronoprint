@@ -161,8 +161,8 @@
          <tr>
             <td class="border-0 pl-0"
                width="69%">
-               <img src="storage/theme-images/logo.svg"
-                  alt="logo"
+               <img src="{{asset("/theme-images/logo.png")}}"
+                  alt="{{ config('app.name') }} Logo"
                   height="50">
             </td>
             <td class="border-0 pl-0">
