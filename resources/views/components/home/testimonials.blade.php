@@ -1,5 +1,5 @@
 <section class="bg-secondary py-5">
-   <div class="container py-md-4 pt-3 pb-0 py-sm-3">
+   <div class="container-fluid px-xxl-10 py-md-4 pt-3 pb-0 py-sm-3">
       <h2 class="text-center mb-4 mb-md-5">{{ __('Satisfied clients') }}</h2>
       <div class="tns-carousel mb-3">
          <div class="tns-carousel-inner"
@@ -10,20 +10,26 @@
                      <div class="mb-2">
                         <div class="star-rating">
                            @foreach (range(1, 5) as $rating)
-                              <i class="star-rating-icon ci-star-filled @if ($testimonial['rating'] >= $rating) active @endif">
+                              <i
+                                 class="star-rating-icon ci-star-filled @if ($testimonial['rating'] >= $rating) active @endif">
                               </i>
                            @endforeach
                         </div>
                      </div>
                      <div>
                         <h6 class="mt-2">{{ $testimonial['title'] }}</h6>
-                        {{ $testimonial['body'] }}
+                        <span
+                           class="fs-ms text-muted opacity-75">{{ $testimonial['date'] }}</span>
                      </div>
                   </div>
-                  <footer class="d-flex justify-content-center align-items-center pt-4">
+                  <footer class="d-flex justify-content-start align-items-center pt-4"><img
+                        class="rounded"
+                        src="/theme-images/testimonials/{{ $loop->index + 1 }}.jpeg"
+                        width="50"
+                        alt="{{ $testimonial['author']['name'] }}">
                      <div class="ps-3">
-                        <h6 class="fs-sm mb-n1">{{ $testimonial['author'] }}</h6><span
-                           class="fs-ms text-muted opacity-75">{{ $testimonial['date'] }}</span>
+                        <h6 class="fs-sm mb-n1">{{ $testimonial['author']['name'] }}</h6><span
+                           class="fs-ms text-muted">{{ $testimonial['author']['job'] }}</span>
                      </div>
                   </footer>
                </blockquote>
