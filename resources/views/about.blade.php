@@ -1,7 +1,7 @@
 <x-app-layout title="À propos de nous"
    description="{{ config('app.name') }} est une société d'impression en ligne à Casablanca qui facilite le processus d'impression de vos fichiers d'exigences commerciales tels que cartes de visite, dépliants, catalogues, étiquettes, autocollants, emballages, emballages, boîtes, étuis, stylos, calendriers 2022,
    La livraison est disponible dans tout le Maroc"
-   canonical="about">
+   canonical="a-propos-de-nous">
    <x-layout.breadcrumb :dark="false"
       :active-page="__('About us')" />
    <main class="px-0 my-5">

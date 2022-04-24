@@ -28,20 +28,12 @@
       <div class="form-group mb-3">
          <div class="input-group mb-3"><i
                class="ci-locked position-absolute top-50 translate-middle-y text-muted fs-base ms-3"></i>
-            <div class="password-toggle w-100">
-               <input type="password"
-                  placeholder="Password"
-                  class="form-control @error('password') is-invalid @enderror"
-                  name="password"
-                  required
-                  autocomplete="current-password">
-               <label class="password-toggle-btn"
-                  aria-label="Show/hide password">
-                  <input class="password-toggle-check"
-                     type="checkbox">
-                  <div class="password-toggle-indicator"></div>
-               </label>
-            </div>
+            <input type="password"
+               placeholder="{{ __('Password') }}"
+               class="form-control @error('password') is-invalid @enderror"
+               name="password"
+               required
+               autocomplete="current-password">
          </div>
          @error('password')
             <span class="invalid-feedback text-sm"

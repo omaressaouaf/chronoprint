@@ -46,9 +46,10 @@ Auth::routes();
 
 // Static pages (Home, about ...)
 Route::view('/', "home")->name("home");
-Route::view("/about", "about")->name("about");
-Route::view("/guide", "guide")->name("guide");
-Route::view("/legal-notice", "legal-notice")->name("legalNotice");
+Route::view("/a-propos-de-nous", "about")->name("about");
+Route::view("/guide-impression", "guide")->name("guide");
+Route::view("/mention-legale", "legal-notice")->name("legal-notice");
+Route::view("/politique-de-confidentialite", "privacy-policy")->name("privacy-policy");
 
 // Blog
 Route::prefix("blog")->as("blog.")->group(function () {
@@ -64,7 +65,7 @@ Route::prefix("contact")->as("contact.")->group(function () {
 
 // Categories & Graphic services (shop)
 Route::get("/categories/{slug}", [CategoryController::class, "show"])->name("categories.show");
-Route::get("/graphic-services", GraphicServiceController::class)->name("graphic-services");
+Route::get("/services-graphiques", GraphicServiceController::class)->name("graphic-services");
 
 // Products
 Route::get("/products/{product:slug}", [ProductController::class, "show"])->name("products.show");

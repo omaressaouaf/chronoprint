@@ -170,6 +170,11 @@
                <i class="ci-announcement me-2 text-info fw-bold"></i>
                {{ __('I understand that my files will be printed exactly as it appears here. I cannot make any changes once my order has been placed and I take full responsibility for any of my design errors') }}
             </p>
+            <p class="fs-sm mt-4">
+               <i class="ci-announcement me-2 text-info fw-bold"></i>
+               {{ __('Your personal data will be used to process your order, support your experience on this website and for other purposes described in our') }}
+               <a href="{{ route('privacy-policy') }}">{{ __('Privacy policy') }}</a>
+            </p>
          </div>
       </div>
       <button type="submit"

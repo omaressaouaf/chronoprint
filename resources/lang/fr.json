@@ -403,7 +403,7 @@
     "Press / to search": "Presser / pour faire une recherche",
     "Preview": "Aperçu",
     "Previous": "Précédent",
-    "Privacy Policy": "Politique de confidentialité",
+    "Privacy policy": "Politique de confidentialité",
     "Profile": "Profil",
     "Profile Information": "Information du profil",
     "Puerto Rico": "Porto Rico",
@@ -742,6 +742,7 @@
     "Current password": "Mot de passe actuel",
     "New password": "Nouveau mot de passe",
     "New password confirmation": "Confirmation du nouveau mot de passe",
+    "Password confirmation": "Confirmation du mot de passe",
     "Update your password": "Mettez à jour votre mot de passe",
     "City": "Ville",
     "ZIP code": "Code postal",
@@ -810,5 +811,6 @@
     "Brand your packaging and leaves your impression on your customers with our :": "Marquez votre emballage et laissez votre impression sur vos clients avec nos :",
     "Subscription card": "Carte d'abonnement",
     "Contact us to get your card now": "Contactez-nous pour obtenir votre carte maintenant",
-    "Latest products" : "Derniers produits"
+    "Latest products": "Derniers produits",
+    "Your personal data will be used to process your order, support your experience on this website and for other purposes described in our": "Vos données personnelles seront utilisées pour traiter votre commande, soutenir votre expérience sur ce site Web et à d'autres fins décrites dans notre"
 }

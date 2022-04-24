@@ -6,108 +6,125 @@
    <form method="POST"
       action="{{ route('register') }}">
       @csrf
-
-      <div class="row mb-3">
-         <label for="register_name"
-            class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
-
-         <div class="col-md-6">
+      <div class="form-group mb-3 mt-4">
+         <div class="input-group">
+            <i
+               class="ci-user position-absolute top-50 translate-middle-y text-muted fs-base ms-3"></i>
             <input id="register_name"
-               type="text"
-               class="form-control @error('register_name') is-invalid @enderror"
+               placeholder="{{ __('Full name') }}"
+               class="form-control rounded-start @error('register_name') is-invalid @enderror"
                name="register_name"
                value="{{ old('register_name') }}"
                required
                autocomplete="register_name"
                autofocus>
 
-            @error('register_name')
-               <span class="invalid-feedback"
-                  role="alert">
-                  <strong>{{ $message }}</strong>
-               </span>
-            @enderror
          </div>
+         @error('register_name')
+            <span class="text-danger fs-xs"
+               role="alert">
+               <strong>{{ $message }}</strong>
+            </span>
+         @enderror
       </div>
-
-      <div class="row mb-3">
-         <label for="register_email"
-            class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
-         <div class="col-md-6">
-            <input id="register_email"
-               type="email"
-               class="form-control @error('register_email') is-invalid @enderror"
+      <div class="form-group mb-3">
+         <div class="input-group">
+            <i
+               class="ci-mail position-absolute top-50 translate-middle-y text-muted fs-base ms-3"></i>
+            <input type="email"
+               placeholder="Email"
+               class="form-control rounded-start @error('register_email') is-invalid @enderror"
                name="register_email"
                value="{{ old('register_email') }}"
                required
-               autocomplete="register_email">
+               autocomplete="register_email"
+               autofocus>
 
-            @error('register_email')
-               <span class="invalid-feedback"
-                  role="alert">
-                  <strong>{{ $message }}</strong>
-               </span>
-            @enderror
          </div>
+         @error('register_email')
+            <span class="text-danger fs-xs"
+               role="alert">
+               <strong>{{ $message }}</strong>
+            </span>
+         @enderror
       </div>
-      <div class="row mb-3">
-         <label for="register_phone"
-            class="col-md-4 col-form-label text-md-right">{{ __('Phone') }}</label>
-
-         <div class="col-md-6">
+      <div class="form-group mb-3">
+         <div class="input-group">
+            <i
+               class="ci-phone position-absolute top-50 translate-middle-y text-muted fs-base ms-3"></i>
             <input id="register_phone"
-               class="form-control @error('register_phone') is-invalid @enderror"
+               placeholder="{{ __('Phone') }}"
+               class="form-control rounded-start @error('register_phone') is-invalid @enderror"
                name="register_phone"
                value="{{ old('register_phone') }}"
                required
-               autocomplete="register_phone">
+               autocomplete="register_phone"
+               autofocus>
 
-            @error('register_phone')
-               <span class="invalid-feedback"
-                  role="alert">
-                  <strong>{{ $message }}</strong>
-               </span>
-            @enderror
          </div>
+         @error('register_phone')
+            <span class="text-danger fs-xs"
+               role="alert">
+               <strong>{{ $message }}</strong>
+            </span>
+         @enderror
       </div>
-
-      <div class="row mb-3">
-         <label for="register_password"
-            class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-         <div class="col-md-6">
-            <input id="register_password"
-               type="password"
-               class="form-control @error('register_password') is-invalid @enderror"
-               name="register_password"
-               required
-               autocomplete="new-password">
-
-            @error('register_password')
-               <span class="invalid-feedback"
-                  role="alert">
-                  <strong>{{ $message }}</strong>
-               </span>
-            @enderror
+      <div class="form-group mb-3">
+         <div class="input-group mb-3"><i
+               class="ci-locked position-absolute top-50 translate-middle-y text-muted fs-base ms-3"></i>
+            <div class="password-toggle w-100">
+               <input type="password"
+                  placeholder="{{ __('Password') }}"
+                  class="form-control @error('register_password') is-invalid @enderror"
+                  name="register_password"
+                  required
+                  autocomplete="new-password">
+               <label class="password-toggle-btn"
+                  aria-label="Show/hide password">
+                  <input class="password-toggle-check"
+                     type="checkbox">
+                  <div class="password-toggle-indicator"></div>
+               </label>
+            </div>
          </div>
+         @error('register_password')
+            <span class="text-danger fs-xs"
+               role="alert">
+               <strong>{{ $message }}</strong>
+            </span>
+         @enderror
       </div>
-
-      <div class="row mb-3">
-         <label for="register_password-confirm"
-            class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
-
-         <div class="col-md-6">
-            <input id="register_password-confirm"
-               type="password"
-               class="form-control"
-               name="register_password_confirmation"
-               required
-               autocomplete="new-password">
+      <div class="form-group mb-3">
+         <div class="input-group mb-3"><i
+               class="ci-locked position-absolute top-50 translate-middle-y text-muted fs-base ms-3"></i>
+            <div class="password-toggle w-100">
+               <input type="password"
+                  placeholder="{{ __('Password confirmation') }}"
+                  class="form-control @error('register_password_confirmation') is-invalid @enderror"
+                  name="register_password_confirmation"
+                  required
+                  autocomplete="new-password">
+               <label class="password-toggle-btn"
+                  aria-label="Show/hide password">
+                  <input class="password-toggle-check"
+                     type="checkbox">
+                  <div class="password-toggle-indicator"></div>
+               </label>
+            </div>
          </div>
+         @error('register_password_confirmation')
+            <span class="text-danger fs-xs"
+               role="alert">
+               <strong>{{ $message }}</strong>
+            </span>
+         @enderror
       </div>
-
-      <div class="text-end pt-4">
+      <hr class="mt-4">
+      <p class="fs-sm mt-4">
+         {{ __('Your personal data will be used to process your order, support your experience on this website and for other purposes described in our') }}
+         <a href="{{ route('privacy-policy') }}">{{ __('Privacy policy') }}</a>
+      </p>
+      <div class="text-end pt-2">
          <button class="btn btn-primary"
             type="submit"><i class="ci-user me-2 ms-n1"></i>{{ __('Register') }}</button>
       </div>

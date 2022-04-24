@@ -152,13 +152,15 @@
                         width="275"
                         alt="{{ config('app.name') }} Logo"></a>
                </div>
-               <div class="widget widget-links widget-light ps-4">
+               <div class="widget widget-links widget-light ps-1">
                   <ul
                      class="widget-list d-flex flex-wrap justify-content-center justify-content-md-start">
                      <li class="widget-list-item me-4"><a class="widget-list-link"
-                           href="{{ route('contact.index') }}">{{ __('Contact') }}</a></li>
+                           href="{{ route('privacy-policy') }}">{{ __('Privacy policy') }}</a>
+                     </li>
                      <li class="widget-list-item me-4"><a class="widget-list-link"
-                           href="{{ route('legalNotice') }}">{{ __('Legal notice') }}</a></li>
+                           href="{{ route('legal-notice') }}">{{ __('Legal notice') }}</a>
+                     </li>
                   </ul>
                </div>
             </div>

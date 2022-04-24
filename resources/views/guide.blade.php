@@ -1,5 +1,5 @@
 <x-app-layout title="Guide d'impression"
-   canonical="guide">
+   canonical="guide-impression">
    <x-layout.breadcrumb :dark="false"
       :active-page="__('Printing guide')" />
 

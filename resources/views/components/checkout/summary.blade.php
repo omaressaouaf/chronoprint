@@ -79,6 +79,10 @@
          </ul>
          {{-- <h3 class="fw-normal text-center my-4">{{ $cart->getTotal() }}<small> Dhs TTC</small>
          </h3> --}}
+         <p class="fs-sm mt-4">
+            {{ __('Your personal data will be used to process your order, support your experience on this website and for other purposes described in our') }}
+            <a href="{{ route('privacy-policy') }}">{{ __('Privacy policy') }}</a>
+         </p>
       </div>
    </div>
    <div class="px-3">

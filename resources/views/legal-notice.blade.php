@@ -1,5 +1,5 @@
 <x-app-layout title="Mentions légales"
-   canonical="legal-notice">
+   canonical="mention-legale">
    <x-layout.breadcrumb :dark="false"
       :active-page="__('Legal notice')" />
 
