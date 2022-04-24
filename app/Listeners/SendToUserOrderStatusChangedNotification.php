@@ -15,12 +15,7 @@ class SendToUserOrderStatusChangedNotification
      */
     public function handle(OrderStatusChanged $event)
     {
-        /**
-         * @var App\Models\User
-         */
-        $authUser = auth()->user();
-
-        $authUser->notify(
+        $event->order->user->notify(
             new OrderNotification(
                 $event->order->status === 'shipped'
                     ? "Votre commande #{$event->order->id} a été expédié à
