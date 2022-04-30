@@ -40,11 +40,13 @@ class AccountController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users,email,' . auth()->id(),
             'phone' => 'required',
+            "ice" => "nullable",
+            "rc_number" => "nullable"
         ]);
 
         /** @var \App\Models\User */
         $authUser =  auth()->user();
-        $authUser->update(request()->only(['name', 'email', 'phone']));
+        $authUser->update(request()->only(['name', 'email', 'phone', "ice", "rc_number"]));
 
         return back()->with('success_message', __('Updated successfully'));
     }

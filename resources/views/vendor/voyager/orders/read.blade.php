@@ -70,13 +70,11 @@
                      <h4>
                         <span
                            class="label float-right
-                          @if (in_array($order->status, ['pending', 'failed']))
-                            label-danger
+                          @if (in_array($order->status, ['pending', 'failed'])) label-danger
                           @elseif(in_array($order->status, ['shipped', 'delivered']))
                             label-success
                           @else
-                            label-primary
-                          @endif
+                            label-primary @endif
                        ">
                            {{ __($order->status) }}
                         </span>
@@ -198,16 +196,23 @@
                            <span class="font-weight-bold">Total HT</span>
                            <span class="float-right">{{ $order->subtotal }} Dhs</span>
                         </p>
+                        @if ($order->discount_price)
+                           <p class="text-success">
+                              <span class="font-weight-bold">Remise</span>
+                              <span class="float-right">- {{ $order->discount_price }} Dhs</span>
+                           </p>
+                        @endif
+                        @if ($order->dealer_discount_price)
+                           <p class="text-success">
+                              <span class="font-weight-bold">Remise de revendeurs</span>
+                              <span class="float-right">- {{ $order->dealer_discount_price }}
+                                 Dhs</span>
+                           </p>
+                        @endif
                         <p>
                            <span class="font-weight-bold">Livraison</span>
                            <span class="float-right">{{ $order->delivery_price }} Dhs</span>
                         </p>
-                        @if ($order->discount_price)
-                           <p class="text-success">
-                              <span class="font-weight-bold">Remise</span>
-                              <span class="float-right">{{ $order->discount_price }} Dhs</span>
-                           </p>
-                        @endif
                         <p class="text-danger">
                            <span class="font-weight-bold">TVA</span>
                            <span class="float-right">{{ $order->tax_price }} Dhs</span>
@@ -237,11 +242,16 @@
                            alt="Client"
                            class="img-circle mr-3">
                         <div class="mt-3">
-                           <u class="text-dark">
-                              <a href="/admin/users/{{ $order->user_id }}">
+                           <a href="/admin/users/{{ $order->user_id }}">
+                              <u class="text-dark">
                                  {{ $order->user->name }}
-                              </a>
-                           </u>
+                              </u>
+                              @if ($order->user->role?->name === 'dealer')
+                                 <span class="ml-2 label label-success">
+                                    Revendeur
+                                 </span>
+                              @endif
+                           </a>
                            @if ($order->user->email)
                               <p class="mt-2 text-muted">
                                  {{ $order->user->email }}

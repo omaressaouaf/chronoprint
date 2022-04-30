@@ -23,6 +23,7 @@ class CreateOrdersTable extends Migration
             $table->string("address_line");
             $table->float("subtotal");
             $table->float("discount_price")->default(0.00);
+            $table->float("dealer_discount_price")->default(0.00);
             $table->string("coupon_code")->nullable();
             $table->float("delivery_price");
             $table->float("tax_price");

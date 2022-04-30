@@ -21,6 +21,8 @@ class User extends \TCG\Voyager\Models\User
         'email',
         'phone',
         'password',
+        "ice",
+        "rc_number"
     ];
 
     /**
@@ -60,5 +62,16 @@ class User extends \TCG\Voyager\Models\User
     public function role()
     {
         return $this->belongsTo(Role::class);
+    }
+
+    public function hasFreeDeliveryAddress()
+    {
+        foreach ($this->addresses as $address) {
+            if ($address->city === 'casablanca') {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

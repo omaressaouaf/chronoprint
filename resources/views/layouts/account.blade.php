@@ -17,8 +17,11 @@
                            alt="Susan Gardner">
                      </div>
                      <div class="ps-md-3">
-                        <h3 class="fs-base mb-0">{{ auth()->user()->name }}</h3><span
-                           class="text-accent fs-sm">{{ auth()->user()->email }}</span>
+                        <h3 class="fs-base mb-0">{{ auth()->user()->name }}
+                           @if (auth()->user()->role?->name === 'dealer')
+                              <span class="badge bg-success ms-2">{{ __('Dealer') }}</span>
+                           @endif
+                        </h3><span class="text-accent fs-sm">{{ auth()->user()->email }}</span>
                      </div>
                   </div><a class="btn btn-primary d-lg-none mb-2 mt-3 mt-md-0"
                      href="#account-menu"

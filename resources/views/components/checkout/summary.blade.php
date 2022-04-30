@@ -22,10 +22,12 @@
                         </a>
                      </h6>
                      <div class="widget-product-meta">
-                        <span class="text-accent me-2">{{ $cartItem->subtotal }}<small>
+                        <span
+                           class="text-accent me-2">{{ format_price($cartItem->subtotal) }}<small>
                               Dhs</small>
                         </span>
-                        <span class="text-muted">{{ $cartItem->quantity }}</span>
+                        <span
+                           class="text-muted">{{ format_price($cartItem->quantity) }}</span>
                      </div>
                   </div>
                </div>
@@ -35,21 +37,34 @@
             <li class="d-flex justify-content-between align-items-center">
                <span class="me-2">{{ __('Subtotal') }}:
                </span>
-               <span class="text-end">{{ $cart->subtotal }}<small> Dhs</small></span>
-            </li>
-            <li class="d-flex justify-content-between align-items-center">
-               <span class="me-2 text-success">{{ __('Discount') }}:
-               </span>
-               <span class="text-end text-success">{{ $cart->discount_price }}<small>
+               <span class="text-end">{{ format_price($cart->subtotal) }}<small>
                      Dhs</small></span>
             </li>
+            @if ($cart->discount_price)
+               <li class="d-flex justify-content-between align-items-center">
+                  <span class="me-2 text-success">{{ __('Discount') }}:
+                  </span>
+                  <span class="text-end text-success">-
+                     {{ format_price($cart->discount_price) }}<small>
+                        Dhs</small></span>
+               </li>
+            @endif
+            @if (auth()->user()->role?->name === 'dealer')
+               <li class="d-flex justify-content-between align-items-center">
+                  <span class="me-2 text-success">{{ __('Dealer discount') }}:
+                  </span>
+                  <span class="text-end text-success">-
+                     {{ format_price($cart->getDealerDiscountPrice()) }}<small>
+                        Dhs</small></span>
+               </li>
+            @endif
             <li x-bind:class="selectedAddress.city == 'casablanca' && 'text-success'"
                class="d-flex justify-content-between align-items-center">
                <span class="me-2">{{ __('Delivery price') }}:
                </span>
                <span class="text-end">
                   <span
-                     x-text="selectedAddress.city =='casablanca' ? 0 : {{ (float) setting('cart.delivery_price') }}">
+                     x-text="selectedAddress.city =='casablanca' ? 0 : '+ {{ format_price((float) setting('cart.delivery_price')) }}'">
                   </span>
                   <small>Dhs</small>
                </span>
@@ -59,8 +74,8 @@
                </span>
                <span class="text-end">
                   <span x-text="selectedAddress.city =='casablanca'
-                      ? {{ $cart->getTaxPrice() }}
-                      : {{ $cart->getTaxPrice(setting('cart.delivery_price')) }}">
+                      ? {{ format_price($cart->getTaxPrice()) }}
+                      : {{ format_price($cart->getTaxPrice(setting('cart.delivery_price'))) }}">
                   </span>
                   <small> Dhs</small>
                </span>
@@ -70,8 +85,8 @@
                </span>
                <span class="text-end h6">
                   <span x-text="selectedAddress.city =='casablanca'
-                  ? {{ $cart->getTotal() }}
-                  : {{ $cart->getTotal(setting('cart.delivery_price')) }}">
+                  ? {{ format_price($cart->getTotal()) }}
+                  : {{ format_price($cart->getTotal(setting('cart.delivery_price'))) }}">
                   </span>
                   <small> Dhs</small>
                </span>

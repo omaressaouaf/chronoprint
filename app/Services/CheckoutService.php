@@ -42,6 +42,7 @@ class CheckoutService
                 "address_line" => $authUserAddress->line,
                 "subtotal" => $cart->subtotal,
                 "discount_price" => $cart->discount_price,
+                "dealer_discount_price" => $cart->getDealerDiscountPrice(),
                 "coupon_code" => $cart->coupon_code,
                 "delivery_price" => $deliveryPrice,
                 "tax_price" => $cart->getTaxPrice($deliveryPrice),

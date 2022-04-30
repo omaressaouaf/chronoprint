@@ -14,14 +14,42 @@
             </h6>
          </div>
       @endif
+      @if (auth()->user()->role?->name === 'dealer')
+         <div class="d-flex justify-content-between mb-2 pb-1 border-bottom">
+            <h6 class="mb-3 pb-1">{{ __('Dealer discount') }}</h6>
+            <h6 class="fw-normal text-success">-
+               {{ format_price($cart->getDealerDiscountPrice()) }}
+               <small>Dhs</small>
+            </h6>
+         </div>
+      @endif
+      <div class="d-flex justify-content-between mb-2 pb-1 border-bottom">
+         <h6 class="mb-3 pb-1">{{ __('Delivery price') }}</h6>
+         @if ($cart->user->hasFreeDeliveryAddress())
+            <h6 class="fw-normal text-success">
+               0
+               <small>Dhs</small>
+            </h6>
+         @else
+            <h6 class="fw-normal">
+               {{ format_price((float) setting('cart.delivery_price')) }}
+               <small>Dhs</small>
+            </h6>
+         @endif
+      </div>
       <div class="d-flex justify-content-between mb-2 pb-1 border-bottom">
          <h6 class="mb-3 pb-1">{{ __('TVA') }}</h6>
-         <h6 class="fw-normal">+ {{ format_price($cart->getTaxPrice()) }} <small>Dhs</small>
+         <h6 class="fw-normal">+
+            {{ format_price($cart->getTaxPrice($cart->user->hasFreeDeliveryAddress() ? 0 : setting('cart.delivery_price'))) }}
+            <small>Dhs</small>
          </h6>
       </div>
       <div class="d-flex justify-content-between mb-4 pb-1 border-bottom">
          <h6 class="mb-3 pb-1">{{ __('Total') }}</h6>
-         <h5 class="fw-normal">{{ format_price($cart->getTotal()) }} <small>Dhs</small></h5>
+         <h5 class="fw-normal">
+            {{ format_price($cart->getTotal($cart->user->hasFreeDeliveryAddress() ? 0 : setting('cart.delivery_price'))) }}
+            <small>Dhs</small>
+         </h5>
       </div>
       <x-base.alerts />
       <div class="accordion"

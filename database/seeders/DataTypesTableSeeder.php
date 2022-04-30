@@ -32,10 +32,10 @@ class DataTypesTableSeeder extends Seeder
                 'controller' => 'TCG\\Voyager\\Http\\Controllers\\VoyagerUserController',
                 'description' => NULL,
                 'generate_permissions' => 1,
-                'server_side' => 0,
+                'server_side' => 1,
                 'details' => '{"order_column":null,"order_display_column":null,"order_direction":"desc","default_search_key":null,"scope":null}',
                 'created_at' => '2021-12-15 20:47:30',
-                'updated_at' => '2022-04-30 14:40:40',
+                'updated_at' => '2022-04-30 16:21:39',
             ),
             1 => 
             array (
@@ -194,10 +194,10 @@ class DataTypesTableSeeder extends Seeder
                 'controller' => 'App\\Http\\Controllers\\Voyager\\OrderController',
                 'description' => NULL,
                 'generate_permissions' => 1,
-                'server_side' => 0,
+                'server_side' => 1,
                 'details' => '{"order_column":null,"order_display_column":null,"order_direction":"asc","default_search_key":null,"scope":null}',
                 'created_at' => '2022-01-14 14:32:36',
-                'updated_at' => '2022-01-18 21:48:22',
+                'updated_at' => '2022-04-30 16:21:58',
             ),
             10 => 
             array (
