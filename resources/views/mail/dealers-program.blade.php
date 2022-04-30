@@ -1,9 +1,11 @@
 @component('mail::message')
-# Message du formulaire de contact
+# Demande revendeur
 
 
-@if ($mailData["name"])
 Nom : {{$mailData["name"]}}
+<br>
+@if ($mailData["company"])
+Entreprise : {{$mailData["company"]}}
 <br>
 @endif
 @if ($mailData["phone"])

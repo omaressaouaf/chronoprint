@@ -9,6 +9,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\DealersProgramController;
 use App\Http\Controllers\GraphicServiceController;
 use App\Http\Controllers\Voyager\MediaController;
 use App\Http\Controllers\Voyager\InvoiceController;
@@ -48,8 +49,8 @@ Auth::routes();
 Route::view('/', "home")->name("home");
 Route::view("/a-propos-de-nous", "about")->name("about");
 Route::view("/guide-impression", "guide")->name("guide");
-Route::view("/mention-legale", "legal-notice")->name("legal-notice");
 Route::view("/politique-de-confidentialite", "privacy-policy")->name("privacy-policy");
+Route::view("/mention-legale", "legal-notice")->name("legal-notice");
 
 // Blog
 Route::prefix("blog")->as("blog.")->group(function () {
@@ -61,6 +62,12 @@ Route::prefix("blog")->as("blog.")->group(function () {
 Route::prefix("contact")->as("contact.")->group(function () {
     Route::get("/", [ContactController::class, "index"])->name("index");
     Route::post("/", [ContactController::class, "store"])->name("store");
+});
+
+// Dealers program
+Route::prefix("programme-revendeurs")->as("dealers-program.")->group(function () {
+    Route::get("/", [DealersProgramController::class, "index"])->name("index");
+    Route::post("/", [DealersProgramController::class, "store"])->name("store");
 });
 
 // Categories & Graphic services (shop)

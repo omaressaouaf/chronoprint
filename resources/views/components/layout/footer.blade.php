@@ -18,6 +18,8 @@
                   <li class="widget-list-item"><a class="widget-list-link"
                         href="{{ route('contact.index') }}">{{ __('Contact us') }}</a></li>
                   <li class="widget-list-item"><a class="widget-list-link"
+                        href="{{ route('dealers-program.index') }}">{{ __('Become a dealer') }}</a></li>
+                  <li class="widget-list-item"><a class="widget-list-link"
                         href="{{ route('guide') }}">{{ __('Printing guide') }}</a></li>
                </ul>
             </div>

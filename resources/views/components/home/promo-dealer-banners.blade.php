@@ -11,10 +11,10 @@
                </a>
             </div>
             <div class="col-md-6">
-               <a href="{{ route('contact.store') }}">
+               <a href="{{ route('dealers-program.index') }}">
                   <img class="rounded-3 w-100"
                      src="/theme-images/banners/revendeur.png"
-                     alt="{{ __('Coupon code') }}">
+                     alt="{{ __('Dealers program') }}">
                </a>
             </div>
          </div>
