@@ -113,7 +113,7 @@ class DataRowsTableSeeder extends Seeder
                 'add' => 0,
                 'delete' => 0,
                 'details' => '{}',
-                'order' => 7,
+                'order' => 8,
             ),
             6 => 
             array (
@@ -129,7 +129,7 @@ class DataRowsTableSeeder extends Seeder
                 'add' => 0,
                 'delete' => 0,
                 'details' => '{}',
-                'order' => 9,
+                'order' => 12,
             ),
             7 => 
             array (
@@ -145,7 +145,7 @@ class DataRowsTableSeeder extends Seeder
                 'add' => 1,
                 'delete' => 1,
                 'details' => '{}',
-                'order' => 6,
+                'order' => 7,
             ),
             8 => 
             array (
@@ -161,7 +161,7 @@ class DataRowsTableSeeder extends Seeder
                 'add' => 1,
                 'delete' => 0,
                 'details' => '{"model":"TCG\\\\Voyager\\\\Models\\\\Role","table":"roles","type":"belongsTo","column":"role_id","key":"id","label":"display_name","pivot_table":"roles","pivot":"0","taggable":"0"}',
-                'order' => 11,
+                'order' => 14,
             ),
             9 => 
             array (
@@ -177,7 +177,7 @@ class DataRowsTableSeeder extends Seeder
                 'add' => 1,
                 'delete' => 0,
                 'details' => '{"model":"TCG\\\\Voyager\\\\Models\\\\Role","table":"roles","type":"belongsToMany","column":"id","key":"id","label":"display_name","pivot_table":"user_roles","pivot":"1","taggable":"0"}',
-                'order' => 12,
+                'order' => 15,
             ),
             10 => 
             array (
@@ -193,7 +193,7 @@ class DataRowsTableSeeder extends Seeder
                 'add' => 0,
                 'delete' => 0,
                 'details' => '{}',
-                'order' => 13,
+                'order' => 16,
             ),
             11 => 
             array (
@@ -285,8 +285,8 @@ class DataRowsTableSeeder extends Seeder
                 'required' => 1,
                 'browse' => 1,
                 'read' => 1,
-                'edit' => 1,
-                'add' => 1,
+                'edit' => 0,
+                'add' => 0,
                 'delete' => 1,
                 'details' => '{}',
                 'order' => 2,
@@ -353,7 +353,7 @@ class DataRowsTableSeeder extends Seeder
                 'add' => 1,
                 'delete' => 1,
                 'details' => '{}',
-                'order' => 10,
+                'order' => 13,
             ),
             21 => 
             array (
@@ -993,7 +993,7 @@ class DataRowsTableSeeder extends Seeder
                 'add' => 0,
                 'delete' => 0,
                 'details' => '{}',
-                'order' => 8,
+                'order' => 11,
             ),
             61 => 
             array (
@@ -1617,7 +1617,7 @@ class DataRowsTableSeeder extends Seeder
                 'add' => 1,
                 'delete' => 1,
                 'details' => '{"validation":{"rule":"unique:users"}}',
-                'order' => 5,
+                'order' => 6,
             ),
             100 => 
             array (
@@ -1874,6 +1874,38 @@ class DataRowsTableSeeder extends Seeder
                 'delete' => 1,
                 'details' => '{"on":"oui","off":"non"}',
                 'order' => 7,
+            ),
+            116 => 
+            array (
+                'id' => 128,
+                'data_type_id' => 1,
+                'field' => 'ice',
+                'type' => 'text',
+                'display_name' => 'ICE',
+                'required' => 0,
+                'browse' => 0,
+                'read' => 1,
+                'edit' => 1,
+                'add' => 1,
+                'delete' => 1,
+                'details' => '{}',
+                'order' => 9,
+            ),
+            117 => 
+            array (
+                'id' => 129,
+                'data_type_id' => 1,
+                'field' => 'rc_number',
+                'type' => 'text',
+                'display_name' => 'N° RC',
+                'required' => 0,
+                'browse' => 0,
+                'read' => 1,
+                'edit' => 1,
+                'add' => 1,
+                'delete' => 1,
+                'details' => '{}',
+                'order' => 10,
             ),
         ));
         

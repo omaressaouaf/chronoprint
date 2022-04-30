@@ -55,6 +55,16 @@
                                 <input  class="form-control" id="phone" name="phone" placeholder="Téléphone"
                                        value="{{ old('phone', $dataTypeContent->phone ?? '') }}">
                             </div>
+                            <div class="form-group">
+                                <label for="ice">ICE</label>
+                                <input  class="form-control" id="ice" name="ice" placeholder="ICE"
+                                       value="{{ old('ice', $dataTypeContent->ice ?? '') }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="rc_number">N° RC</label>
+                                <input  class="form-control" id="rc_number" name="rc_number" placeholder="N° RC"
+                                       value="{{ old('rc_number', $dataTypeContent->rc_number ?? '') }}">
+                            </div>
 
                             <div class="form-group">
                                 <label for="password">{{ __('voyager::generic.password') }}</label>

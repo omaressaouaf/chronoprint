@@ -14,12 +14,12 @@ class SettingsTableSeeder extends Seeder
      */
     public function run()
     {
-
+        
 
         \DB::table('settings')->delete();
-
+        
         \DB::table('settings')->insert(array (
-            0 =>
+            0 => 
             array (
                 'id' => 4,
                 'key' => 'site.google_analytics_tracking_id',
@@ -30,7 +30,7 @@ class SettingsTableSeeder extends Seeder
                 'order' => 4,
                 'group' => 'Site',
             ),
-            1 =>
+            1 => 
             array (
                 'id' => 5,
                 'key' => 'admin.bg_image',
@@ -41,18 +41,18 @@ class SettingsTableSeeder extends Seeder
                 'order' => 31,
                 'group' => 'Admin',
             ),
-            2 =>
+            2 => 
             array (
                 'id' => 10,
                 'key' => 'admin.google_analytics_client_id',
             'display_name' => 'Google Analytics Client ID (utilisé pour les statistiques et les analyses)',
-                'value' => "727102039797-rnt9800upb4bbk63n1t06u6js0ll16v2.apps.googleusercontent.com",
+                'value' => '727102039797-rnt9800upb4bbk63n1t06u6js0ll16v2.apps.googleusercontent.com',
                 'details' => '',
                 'type' => 'text',
                 'order' => 30,
                 'group' => 'Admin',
             ),
-            3 =>
+            3 => 
             array (
                 'id' => 12,
                 'key' => 'site.main_email',
@@ -63,7 +63,7 @@ class SettingsTableSeeder extends Seeder
                 'order' => 7,
                 'group' => 'Site',
             ),
-            4 =>
+            4 => 
             array (
                 'id' => 13,
                 'key' => 'site.contact_email',
@@ -74,7 +74,7 @@ class SettingsTableSeeder extends Seeder
                 'order' => 8,
                 'group' => 'Site',
             ),
-            5 =>
+            5 => 
             array (
                 'id' => 14,
                 'key' => 'site.phone',
@@ -85,7 +85,7 @@ class SettingsTableSeeder extends Seeder
                 'order' => 9,
                 'group' => 'Site',
             ),
-            6 =>
+            6 => 
             array (
                 'id' => 17,
                 'key' => 'cart.delivery_price',
@@ -98,7 +98,7 @@ class SettingsTableSeeder extends Seeder
                 'order' => 10,
                 'group' => 'Cart',
             ),
-            7 =>
+            7 => 
             array (
                 'id' => 18,
                 'key' => 'cart.tax',
@@ -109,7 +109,7 @@ class SettingsTableSeeder extends Seeder
                 'order' => 11,
                 'group' => 'Cart',
             ),
-            8 =>
+            8 => 
             array (
                 'id' => 21,
                 'key' => 'site.address',
@@ -120,7 +120,7 @@ class SettingsTableSeeder extends Seeder
                 'order' => 10,
                 'group' => 'Site',
             ),
-            9 =>
+            9 => 
             array (
                 'id' => 22,
                 'key' => 'site.facebook',
@@ -131,7 +131,7 @@ class SettingsTableSeeder extends Seeder
                 'order' => 32,
                 'group' => 'Site',
             ),
-            10 =>
+            10 => 
             array (
                 'id' => 23,
                 'key' => 'site.instagram',
@@ -142,8 +142,19 @@ class SettingsTableSeeder extends Seeder
                 'order' => 33,
                 'group' => 'Site',
             ),
+            11 => 
+            array (
+                'id' => 25,
+                'key' => 'cart.dealer_discount',
+            'display_name' => 'Remise de revendeurs (%)',
+                'value' => '20',
+                'details' => NULL,
+                'type' => 'text',
+                'order' => 34,
+                'group' => 'Cart',
+            ),
         ));
-
-
+        
+        
     }
 }
