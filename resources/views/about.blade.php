@@ -2,6 +2,15 @@
    description="{{ config('app.name') }} est une société d'impression en ligne à Casablanca qui facilite le processus d'impression de vos fichiers d'exigences commerciales tels que cartes de visite, dépliants, catalogues, étiquettes, autocollants, emballages, emballages, boîtes, étuis, stylos, calendriers 2022,
    La livraison est disponible dans tout le Maroc"
    canonical="a-propos-de-nous">
+   <x-slot name="schemaBreadcrumbItems">
+      {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "À propos de nous",
+      "item": "{{ config('app.url') }}a-propos-de-nous"
+      }
+   </x-slot>
+
    <x-layout.breadcrumb :dark="false"
       :active-page="__('About us')" />
    <main class="px-0 my-5">
@@ -160,7 +169,8 @@
                            <h5>Réactivité</h5>
                            <p>
                               Notre équipe vous conseille, vous propose un devis adapté et imprime
-                              tous vos supports de communication en un temps record, Testez notre réactivité hors norme, vous ne serez pas déçu.
+                              tous vos supports de communication en un temps record, Testez notre
+                              réactivité hors norme, vous ne serez pas déçu.
                            </p>
                         </div>
                      </div>
@@ -171,7 +181,16 @@
                         <div>
                            <h5>Suivi personnalisé</h5>
                            <p>
-                              Nous mettons nos clients au cœur de nos process de fabrication. Nous proposons un service personnalisé de la prise de brief à la livraison. Cela signifie que vous n’avez qu’un seul et même interlocuteur pour le suivi de votre dossier d’impression. Nous mettons également à votre disposition notre service de livraison interne avec nos propres chauffeurs. Les coordonnées de la personne en charge de la livraison de vos supports de communication vous sont données dès la commande. Vous pouvez ainsi contacter votre livreur à tout moment et suivre l’acheminement de vos travaux en temps réel. C’est un service entièrement gratuit. Profitez-en !
+                              Nous mettons nos clients au cœur de nos process de fabrication. Nous
+                              proposons un service personnalisé de la prise de brief à la livraison.
+                              Cela signifie que vous n’avez qu’un seul et même interlocuteur pour le
+                              suivi de votre dossier d’impression. Nous mettons également à votre
+                              disposition notre service de livraison interne avec nos propres
+                              chauffeurs. Les coordonnées de la personne en charge de la livraison
+                              de vos supports de communication vous sont données dès la commande.
+                              Vous pouvez ainsi contacter votre livreur à tout moment et suivre
+                              l’acheminement de vos travaux en temps réel. C’est un service
+                              entièrement gratuit. Profitez-en !
                            </p>
                         </div>
                      </div>
@@ -182,7 +201,12 @@
                         <div>
                            <h5>Qualité</h5>
                            <p>
-                              La qualité d’exécution et d’impression de vos documents est notre priorité. Notre matériel offset et numérique, petit, moyen ou encore grand format est de dernière génération. Que ce soit pour imprimer en ligne vos prospectus, vos dossiers de presse, vos affiches ou encore vos cartes de visite sur Casablanca ou partout au maroc, nos machines haute performance répondront à vos besoins et à vos exigences.
+                              La qualité d’exécution et d’impression de vos documents est notre
+                              priorité. Notre matériel offset et numérique, petit, moyen ou encore
+                              grand format est de dernière génération. Que ce soit pour imprimer en
+                              ligne vos prospectus, vos dossiers de presse, vos affiches ou encore
+                              vos cartes de visite sur Casablanca ou partout au maroc, nos machines
+                              haute performance répondront à vos besoins et à vos exigences.
                            </p>
                         </div>
                      </div>

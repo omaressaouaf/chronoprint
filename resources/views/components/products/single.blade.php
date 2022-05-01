@@ -8,9 +8,11 @@
             <div class="product-gallery">
                <div class="product-gallery-preview order-sm-2">
                   @foreach ($product->all_images as $image)
-                     <div class="product-gallery-preview-item @if ($loop->first) active @endif"
+                     <div
+                        class="product-gallery-preview-item @if ($loop->first) active @endif"
                         id="image-{{ $loop->index }}">
                         <img class="image-zoom rounded-3"
+                           id="primary-image-{{ $loop->index + 1 }}"
                            src="{{ $image }}"
                            data-zoom="{{ $image }}"
                            alt="{{ $product->title }}">
@@ -42,7 +44,8 @@
                   <div class="accordion-collapse collapse show ps-md-2"
                      id="product-details"
                      data-bs-parent="#productPanels">
-                     <div class="accordion-body" style="white-space: pre-line">
+                     <div class="accordion-body"
+                        style="white-space: pre-line">
                         {!! $product->details !!}
                      </div>
                   </div>
@@ -58,7 +61,8 @@
                      data-scroll>
                      <div class="star-rating">
                         @foreach (range(1, 5) as $rating)
-                           <i class="star-rating-icon ci-star-filled @if ($product->average_rating >= $rating) active @endif">
+                           <i
+                              class="star-rating-icon ci-star-filled @if ($product->average_rating >= $rating) active @endif">
                            </i>
                         @endforeach
                      </div>
@@ -94,7 +98,8 @@
                data-bs-toggle="tab"
                role="tab">{{ __('Product description') }}</a></li>
       @endif
-      <li class="nav-item"><a class="nav-link p-4 @if (!$product->description) active @endif"
+      <li class="nav-item"><a
+            class="nav-link p-4 @if (!$product->description) active @endif"
             href="#reviews"
             data-bs-toggle="tab"
             role="tab">{{ __('Product reviews') }}</a></li>

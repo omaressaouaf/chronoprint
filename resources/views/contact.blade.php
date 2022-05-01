@@ -1,9 +1,17 @@
 <x-app-layout title="Contact"
    description="Contactez-nous à tout moment pour l'impression de vos cartes de visite, Flyers, Catalogues.."
    canonical="contact">
+   <x-slot name="schemaBreadcrumbItems">
+      {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Contact",
+      "item": "{{ config('app.url') }}contact"
+      }
+   </x-slot>
+   
    <x-layout.breadcrumb :dark="false"
       :active-page="__('Contact us')" />
-
    {{-- Contact cards --}}
    <section class="container-fluid pt-grid-gutter">
       <div class="row">

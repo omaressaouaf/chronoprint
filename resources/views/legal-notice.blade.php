@@ -1,8 +1,16 @@
 <x-app-layout title="Mentions légales"
    canonical="mention-legale">
+   <x-slot name="schemaBreadcrumbItems">
+      {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Mentions légales",
+      "item": "{{ config('app.url') }}mention-legale"
+      }
+   </x-slot>
+
    <x-layout.breadcrumb :dark="false"
       :active-page="__('Legal notice')" />
-
    <div class="container py-5 mt-md-2 mb-2">
       <div class="row">
          <div class="col-lg-12">

@@ -1,8 +1,16 @@
 <x-app-layout title="Politique de confidentialité"
    canonical="politique-de-confidentialite">
+   <x-slot name="schemaBreadcrumbItems">
+      {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Politique de confidentialité",
+      "item": "{{ config('app.url') }}politique-de-confidentialite"
+      }
+   </x-slot>
+
    <x-layout.breadcrumb :dark="false"
       :active-page="__('Privacy policy')" />
-
    <div class="container py-5 mt-md-2 mb-2">
       <div class="row">
          <div class="col-lg-12">

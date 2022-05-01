@@ -1,8 +1,16 @@
 <x-app-layout title="Guide d'impression"
    canonical="guide-impression">
+   <x-slot name="schemaBreadcrumbItems">
+      {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Guide d'impression",
+      "item": "{{ config('app.url') }}guide-impression"
+      }
+   </x-slot>
+
    <x-layout.breadcrumb :dark="false"
       :active-page="__('Printing guide')" />
-
    <div class="container py-5 mt-md-2 mb-2">
       <div class="row">
          <div class="col-lg-12">

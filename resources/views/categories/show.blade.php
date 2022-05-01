@@ -1,7 +1,20 @@
-<x-app-layout :title="$category->slug === 'all' ? 'Toutes les produits' : $category->seo_title ?? $category->name"
+@php
+$categoryTitle = $category->slug === 'all' ? 'Toutes les produits' : $category->seo_title ?? $category->name;
+@endphp
+
+<x-app-layout :title="$categoryTitle"
    :description="$category->slug === 'all' ? '' : $category->meta_description"
    :keywords="$category->slug === 'all' ? '' : $category->meta_keywords"
    :canonical="'categories/' . $category->slug">
+   <x-slot name="schemaBreadcrumbItems">
+      {
+      "@type": "ListItem",
+      "position": 2,
+      "name":"{{ $categoryTitle }}",
+      "item": "{{ config('app.url') }}categories/{{ $category->slug }}"
+      }
+   </x-slot>
+
    <x-layout.breadcrumb :active-page="$category->name" />
    <div class="container pb-5 mb-2 mb-md-4">
       <x-products.filters :products="$products" />
@@ -15,7 +28,6 @@
                     "></i>
             </a>
          </h5>
-
       @endif
       <div class="row pt-3 mx-n2">
          @foreach ($products as $product)

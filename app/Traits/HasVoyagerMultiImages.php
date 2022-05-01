@@ -2,6 +2,8 @@
 
 namespace App\Traits;
 
+use Illuminate\Support\Str;
+
 trait HasVoyagerMultiImages
 {
     /**
@@ -11,7 +13,9 @@ trait HasVoyagerMultiImages
      */
     public function getFirstImageAttribute(): string
     {
-        return $this->images  ? "\\storage\\" . json_decode($this->images)[0] : "/storage/products/default.jpg";
+        return $this->images
+            ? "/storage/" . Str::replace('\\', '/', json_decode($this->images)[0])
+            : "/storage/products/default.jpg";
     }
 
     /**
@@ -26,7 +30,7 @@ trait HasVoyagerMultiImages
         $images = [];
 
         foreach (json_decode($this->images) as $image) {
-            $images[] = "\\storage\\" . $image;
+            $images[] = "/storage/" . Str::replace('\\', '/', $image);
         }
 
         return $images;

@@ -2,6 +2,8 @@
 
 namespace App\Traits;
 
+use Illuminate\Support\Str;
+
 trait HasVoyagerImage
 {
     /**
@@ -9,8 +11,8 @@ trait HasVoyagerImage
      *
      * @return string
      */
-    public function getPublicImageAttribute() : string
+    public function getPublicImageAttribute(): string
     {
-        return $this->image ? "/storage/{$this->image}" : "/storage/products/default.jpg";
+        return $this->image ? "/storage/" . Str::replace('\\', '/', $this->image) : "/storage/products/default.jpg";
     }
 }

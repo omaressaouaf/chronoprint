@@ -3,7 +3,7 @@
 <div class="@if (!$dark) bg-secondary py-4 @else page-title-overlap bg-accent pt-4 @endif">
    <div class="container d-lg-flex justify-content-between py-2 py-lg-3">
       <div class="order-lg-2 mb-3 mb-lg-0 pt-lg-2">
-         <nav aria-label="breadcrumb">
+         <nav aria-label="breadcrumb" id="breadcrumb">
             <ol
                class="breadcrumb flex-lg-nowrap justify-content-center justify-content-lg-start
                @if ($dark) breadcrumb-light @endif">

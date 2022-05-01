@@ -1,9 +1,17 @@
-<x-app-layout title="Notre blog"
-   description="Découvrez des sujets intéressants concernant l'industrie de l'imprimerie. et nos conseils en matière d'impression de produits tels que des cartes de visite et des flyers, etc."
+<x-app-layout title="Blog"
+   description="Découvrez des sujets intéressants concernant l'industrie de l'imprimerie. et nos conseils en matière d'impression de produits tels que des cartes de visite et des flyers, etc.."
    canonical="blog">
+   <x-slot name="schemaBreadcrumbItems">
+      {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Blog",
+      "item": "{{ config('app.url') }}blog"
+      }
+   </x-slot>
+
    <x-layout.breadcrumb :dark="false"
       :active-page="__('Blog')" />
-
    <div class="container pb-5 mb-2 mb-md-4">
       <!-- Popular posts carousel-->
       <div class="featured-posts-carousel tns-carousel pt-5">

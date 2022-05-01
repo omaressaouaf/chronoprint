@@ -1,9 +1,17 @@
 <x-app-layout title="Services graphiques - Conception Logo - Création de Visuels"
    description="Nous offrons d'excellents services graphiques tels que la conception de logo senior et junior. et création et modification de vidéos visuelles et de produits numériques"
    canonical="services-graphiques">
+   <x-slot name="schemaBreadcrumbItems">
+      {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Services graphiques - Conception Logo - Création de Visuels",
+      "item": "{{ config('app.url') }}services-graphiques"
+      }
+   </x-slot>
+
    <x-layout.breadcrumb :dark="false"
       :active-page="__('Graphic services')" />
-
    <div class="container pb-4 pb-sm-5">
       <div class="row pt-5">
          @foreach ($categories as $category)

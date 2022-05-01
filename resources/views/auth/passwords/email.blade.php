@@ -1,4 +1,7 @@
 <x-app-layout>
+   <x-layout.breadcrumb :dark="false"
+   :active-page="__('Reset Password')" />
+   
    <div class="container my-5">
       <div class="row justify-content-center">
          <div class="col-md-8">

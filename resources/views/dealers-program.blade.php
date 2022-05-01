@@ -1,8 +1,16 @@
 <x-app-layout title="Programme revendeurs"
    canonical="dealers-program">
+   <x-slot name="schemaBreadcrumbItems">
+      {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Programme revendeurs",
+      "item": "{{ config('app.url') }}dealers-program"
+      }
+   </x-slot>
+
    <x-layout.breadcrumb :dark="false"
       :active-page="__('Dealers program')" />
-
    <div class="container py-5 mt-md-2 mb-2">
       <div class="row">
          <div class="col-lg-12">
