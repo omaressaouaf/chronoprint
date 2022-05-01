@@ -29,7 +29,7 @@
                         <i class="ci-add-user"></i>
                         {{ __('Create your account') }}
                      </div>
-                     <div class="media-tab-subtitle text-muted fs-sm mt-2 px-5">
+                     <div class="media-tab-subtitle text-muted fs-sm mt-2 px-md-5">
                         {{ __('Create your account first . then we can upgrade it to a dealer account') }}
                      </div>
                   </a>
@@ -42,7 +42,7 @@
                         <i class="ci-mail"></i>
                         {{ __('Send us a request') }}
                      </div>
-                     <div class="media-tab-subtitle text-muted fs-sm mt-2 px-5">
+                     <div class="media-tab-subtitle text-muted fs-sm mt-2 px-md-5">
                         {{ __('Fill this form and send us a copy of your trade register in this email') }}
                         :
                         {{ setting('site.contact_email') ?? setting('site.main_email') }}
