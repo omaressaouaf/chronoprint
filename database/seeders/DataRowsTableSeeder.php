@@ -1776,7 +1776,7 @@ class DataRowsTableSeeder extends Seeder
                 'edit' => 1,
                 'add' => 1,
                 'delete' => 1,
-                'details' => '{"on":"oui","off":"non"}',
+                'details' => '{"on":"oui","off":"non","checked":true}',
                 'order' => 8,
             ),
             110 => 
