@@ -111,6 +111,18 @@
                   {{ __('Graphic services') }}
                </a>
             </li>
+            <li class="nav-item d-lg-none">
+               <a href="{{ route('dealers-program.store') }}"
+                  class="btn btn-link nav-link d-flex align-items-start justify-content-between gap-3">
+                  {{ __('Become a dealer') }}
+               </a>
+            </li>
+            <li class="nav-item d-lg-none">
+               <a href="{{ route('contact.store') }}"
+                  class="btn btn-link nav-link d-flex align-items-start justify-content-between gap-3">
+                  {{ __('Contact us') }}
+               </a>
+            </li>
             @auth
                <li class="nav-item d-lg-none">
                   <form action="{{ route('logout') }}"
