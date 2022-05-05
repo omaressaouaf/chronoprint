@@ -16,10 +16,10 @@
                class="d-none d-lg-inline">
                {{ __('Graphic services') }} </span></a>
          <a class="topbar-link me-4"
-            href="{{ route('contact.index') }}"
+            href="{{ route('dealers-program.index') }}"
             data-bs-toggle="tooltip"
             data-bs-placement="bottom"
-            title="{{ __('Contact us') }}"><i class="ci-percent"></i> <span
+            title="{{ __('Become a dealer') }}"><i class="ci-percent"></i> <span
                class="d-none d-lg-inline">
                {{ __('Become a dealer') }} </span></a>
          <a class="topbar-link me-4"
