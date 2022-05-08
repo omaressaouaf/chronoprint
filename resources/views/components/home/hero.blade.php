@@ -3,7 +3,7 @@
       data-carousel-options='{"mode": "gallery","autoplay": "true","autoplayTimeout": "7400", "responsive": {"0":{"nav":true, "controls": false},"992":{"nav":true, "controls": true}}}'>
       @foreach ($sliders as $slider)
          <div class="pe-lg-5 slider-item"
-            style="background-image:linear-gradient(to right, #ccb5037a,#dac1011f, transparent), url('/theme-images/hero-sliders/{{ $loop->index + 1 }}.png');">
+            style="background-image:linear-gradient(to right, #eed2009d,#dac1011f, transparent), url('/theme-images/hero-sliders/{{ $loop->index + 1 }}.png');">
             <div class="d-lg-flex justify-content-between align-items-center h-100">
                <div class="slider-item-content position-relative px-5 mb-lg-5 py-5 py-lg-0"
                   style="z-index: 10;">

@@ -58,7 +58,6 @@
       content="{{ config('app.name') }} Logo" />
    <meta name="keywords"
       content="chronoprint, chrono print, ChronoPrint, Chrono Print, chronoprint imprimerie, chronoprint siteweb, chronoprint en ligne, ChronoPrint imprimerie, ChronoPrint siteweb, imprimerie en ligne, imprimerie en ligne maroc, imprimerie en ligne casablanca, imprimerie en ligne pas cher, impression au maroc, impression à casablanca, impression numérique, impression offset{{ $keywords ? ', ' . $keywords : '' }}" />
-   <!-- / Yoast SEO plugin. -->
    <script type="application/ld+json">
       {
          "@context": "https://schema.org",
@@ -168,7 +167,8 @@
    <a href="https://api.whatsapp.com/send?phone={{ \Str::start(setting('site.phone'), '+212') }}&text=Salut {{ config('app.name') }} !"
       class="btn-whatsapp text-white rounded-circle border shadow"
       target="_blank"
-      rel="noopener">
+      rel="noopener"
+      aria-label="whatsapp">
       <i class="ci-whatsapp fs-5"></i>
    </a>
 

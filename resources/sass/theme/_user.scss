@@ -128,3 +128,10 @@ u {
 .popular-products #product-categories li:last-child {
     margin-right: 0;
 }
+
+@media only screen and (max-width: 600px) {
+    .slider-item {
+        background-color: $primary !important;
+        background-image: none !important;
+    }
+}
