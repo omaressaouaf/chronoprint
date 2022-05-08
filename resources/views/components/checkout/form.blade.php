@@ -122,7 +122,7 @@
                               width="187"
                               alt="Cerdit Cards">
                         </p>
-                        <img src="/theme-images/credit_card.svg"
+                        <img src="/theme-images/credit-card.svg"
                            width="300"
                            height="300"
                            class="mb-3"
