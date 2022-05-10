@@ -152,7 +152,12 @@ class PriceCalculator extends Component
                 return;
             }
 
-            return $carry + $option["price"];
+            $optionPriceBasedOnQuantity = 0;
+            if (is_array($option["prices"]) && $option["prices"][$this->selectedQuantityValue] && is_numeric($option["prices"][$this->selectedQuantityValue])) {
+                $optionPriceBasedOnQuantity = $option["prices"][$this->selectedQuantityValue];
+            }
+
+            return $carry + $optionPriceBasedOnQuantity;
         }, 0);
 
         $quantity = collect($this->product->allowed_quantities)->where("value", $this->selectedQuantityValue)->first();
@@ -163,7 +168,7 @@ class PriceCalculator extends Component
             return;
         }
 
-        $this->totalPrice = $quantity["price"] + ($selectedOptionsTotalPrice * $quantity["value"]);
+        $this->totalPrice = $quantity["price"] + $selectedOptionsTotalPrice;
 
         if ($this->designByCompany) {
             $this->totalPrice += $this->product->design_price;

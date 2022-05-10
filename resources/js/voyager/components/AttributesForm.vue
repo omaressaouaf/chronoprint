@@ -36,6 +36,9 @@
                         <options-form
                             :form-title="`Les options de l'attribut : ${selectedAttribute.name}`"
                             :attribute-options="selectedAttribute.pivot.options"
+                            :product-allowed-quantities="
+                                product.allowed_quantities
+                            "
                             emit-options
                             @options-changed="
                                 setAttributeOptions($event, index)

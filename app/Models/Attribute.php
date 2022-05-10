@@ -11,12 +11,11 @@ class Attribute extends Model
     use HasFactory;
 
     protected $casts = [
-        'options' => 'array',
+        'options' => "array",
     ];
 
     public function products()
     {
         return $this->belongsToMany(Product::class)->withPivot(['options'])->using(AttributeProduct::class);
     }
-
 }

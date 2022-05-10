@@ -16,7 +16,7 @@
                 />
             </div>
             <div class="form-group col-md-3">
-                <label class="control-label">Son prix</label>
+                <label class="control-label">Son prix de base</label>
                 <input
                     v-model="form.price"
                     type="number"

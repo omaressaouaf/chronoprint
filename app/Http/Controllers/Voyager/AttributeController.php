@@ -395,7 +395,8 @@ class AttributeController extends \TCG\Voyager\Http\Controllers\VoyagerBaseContr
         $request->validate([
             "options" => "nullable|array",
             "options.*.name" => "required|string",
-            "options.*.price" => "required|numeric",
+            "options.*.requiredFilesProperties" => "nullable|array",
+            "options.*.requiredFilesProperties.*.name" => "required|string",
         ]);
     }
 }
