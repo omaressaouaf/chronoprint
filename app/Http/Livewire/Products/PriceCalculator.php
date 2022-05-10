@@ -152,9 +152,11 @@ class PriceCalculator extends Component
                 return;
             }
 
+            $optionPrices =  (array)$option["prices"];
             $optionPriceBasedOnQuantity = 0;
-            if (is_array($option["prices"]) && $option["prices"][$this->selectedQuantityValue] && is_numeric($option["prices"][$this->selectedQuantityValue])) {
-                $optionPriceBasedOnQuantity = $option["prices"][$this->selectedQuantityValue];
+
+            if (is_array($optionPrices) && isset($optionPrices[$this->selectedQuantityValue]) && is_numeric($optionPrices[$this->selectedQuantityValue])) {
+                $optionPriceBasedOnQuantity = $optionPrices[$this->selectedQuantityValue];
             }
 
             return $carry + $optionPriceBasedOnQuantity;
