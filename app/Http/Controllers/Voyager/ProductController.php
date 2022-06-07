@@ -245,7 +245,7 @@ class ProductController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControl
 
             $product->attributs()->attach($attribute['id'], ["options" => $attribute["pivot"]["options"]]);
         }
-
+        
         return response()->json(["selectedAttributes" => $product->attributs], 201);
     }
 

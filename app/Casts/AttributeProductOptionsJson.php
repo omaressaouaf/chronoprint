@@ -39,6 +39,12 @@ class AttributeProductOptionsJson implements CastsAttributes
      */
     public function set($model, $key, $value, $attributes)
     {
-        return json_encode($value, JSON_FORCE_OBJECT);
+        if (is_array($value)) {
+            foreach ($value as $key => $item) {
+                $value[$key]["prices"] = (object)$item["prices"];
+            }
+        }
+
+        return json_encode($value);
     }
 }
