@@ -262,9 +262,9 @@ class ProductController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControl
         $request->validate([
             "allowed_quantities_type" => "required|in:fixed,interval",
             "allowed_quantities" => "required|array",
-            "allowed_quantities.*.value" => "required_if:allowed_quantities_type,fixed|prohibited_if:allowed_quantities_type,interval|numeric|min:1",
-            "allowed_quantities.*.minValue" => "required_if:allowed_quantities_type,interval|prohibited_if:allowed_quantities_type,fixed|numeric|min:1",
-            "allowed_quantities.*.maxValue" => "required_if:allowed_quantities_type,interval|prohibited_if:allowed_quantities_type,fixed|numeric|min:0|gte:allowed_quantities.*.minValue",
+            "allowed_quantities.*.value" => "required_if:allowed_quantities_type,fixed|numeric|min:1",
+            "allowed_quantities.*.minValue" => "required_if:allowed_quantities_type,interval|numeric|min:1",
+            "allowed_quantities.*.maxValue" => "required_if:allowed_quantities_type,interval|numeric|min:0|gte:allowed_quantities.*.minValue",
             "allowed_quantities.*.price" => "required|numeric|min:1"
         ]);
     }

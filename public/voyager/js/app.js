@@ -19721,13 +19721,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         this.resetForm();
         this.quantitiesList.forEach(function (quantity, index) {
-          _this.quantitiesList[index] = {
-            price: quantity.price
-          };
-
-          if (quantity.ref) {
-            _this.quantitiesList[index].ref = quantity.ref;
-          }
+          _this.quantitiesList[index] = _objectSpread({}, quantity);
 
           if (_this.allowedQuantitiesType === "fixed") {
             _this.quantitiesList[index].value = quantity.value || quantity.maxValue;

@@ -161,11 +161,9 @@ export default {
                 this.resetForm();
 
                 this.quantitiesList.forEach((quantity, index) => {
-                    this.quantitiesList[index] = { price: quantity.price };
-
-                    if (quantity.ref) {
-                        this.quantitiesList[index].ref = quantity.ref;
-                    }
+                    this.quantitiesList[index] = {
+                        ...quantity,
+                    };
 
                     if (this.allowedQuantitiesType === "fixed") {
                         this.quantitiesList[index].value =
