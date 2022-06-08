@@ -39,15 +39,21 @@
                     class="form-group pl-4"
                 >
                     <label class="control-label"
-                        >Tarifs additionnel pour qté ({{
+                        >Tarifs additionnel pour qté (
+                        <span v-if="productAllowedQuantitiesType === 'fixed'">{{
                             quantity.value
-                        }})</label
+                        }}</span>
+                        <span v-else>
+                            {{ quantity.minValue }}
+                            <i class="voyager-dot-2"></i>
+                            {{ quantity.maxValue }} </span
+                        >)</label
                     >
                     <input
-                        v-model="form.prices[quantity.value]"
+                        v-model="form.prices[quantity.ref]"
                         type="number"
                         class="form-control"
-                        :placeholder="`Tarifs additionnel pour qté (${quantity.value})`"
+                        placeholder="`Tarifs additionnels"
                     />
                 </div>
             </div>
@@ -206,8 +212,20 @@
                                     ) in productAllowedQuantities"
                                     :key="index"
                                 >
-                                    {{ quantity.value }} Qté :
-                                    {{ option.prices[quantity.value] || 0 }} Dhs
+                                    <span
+                                        v-if="
+                                            productAllowedQuantitiesType ===
+                                            'fixed'
+                                        "
+                                        >{{ quantity.value }}</span
+                                    >
+                                    <span v-else>
+                                        {{ quantity.minValue }}
+                                        <i class="voyager-dot-2"></i>
+                                        {{ quantity.maxValue }}
+                                    </span>
+                                    Qté :
+                                    {{ option.prices[quantity.ref] || 0 }} Dhs
                                 </h6>
                             </div>
                         </div>
@@ -272,6 +290,9 @@ export default {
         },
         productAllowedQuantities: {
             type: Array,
+        },
+        productAllowedQuantitiesType: {
+            type: String,
         },
         formTitle: {
             type: String,

@@ -22,7 +22,7 @@
                         <div class="d-flex justify-content-between align-items-center pb-1">
                            <label class="form-label">{{ __('Quantity') }}</label>
                         </div>
-                        @if ($product->allowed_quantities)
+                        @if ($product->allowed_quantities_type === 'fixed')
                            <select wire:model="selectedQuantityValue"
                               class="form-select"
                               required>
@@ -31,6 +31,11 @@
                                     {{ $quantity['value'] }}</option>
                               @endforeach
                            </select>
+                        @else
+                           <input wire:model.lazy="selectedQuantityValue"
+                              type="number"
+                              class="form-control"
+                              placeholder="{{ __('Quantity') }}">
                         @endif
                      </div>
                      @foreach ($product->attributs as $attribute)
@@ -85,8 +90,8 @@
          </div>
       </div>
       <div>
+         <x-base.alerts />
          @if ($editMode)
-            <x-base.alerts />
             <button wire:click="handleSubmit"
                wire:target="handleSubmit"
                wire:loading.attr="disabled"
@@ -104,7 +109,9 @@
          @endif
          @if ($designByCompany)
             <button data-bs-toggle="modal"
-               data-bs-target="@auth #price-calculator-files-upload-modal @else #auth-modal @endauth"
+               data-bs-target="@auth #price-calculator-files-upload-modal
+@else
+#auth-modal @endauth"
                class="btn btn-accent w-100"
                type="submit">
                <i class="ci-edit fs-lg me-2"></i>
@@ -112,7 +119,9 @@
             </button>
          @else
             <button data-bs-toggle="modal"
-               data-bs-target="@auth #price-calculator-files-upload-modal @else #auth-modal @endauth"
+               data-bs-target="@auth #price-calculator-files-upload-modal
+@else
+#auth-modal @endauth"
                class="btn btn-primary w-100"
                type="submit">
                <i class="ci-upload fs-lg me-2"></i>
@@ -141,7 +150,7 @@
                   data-bs-dismiss="modal"
                   aria-label="Close"></button>
             </div>
-            <div x-data="{ isUploading: false, progress: 0 , }"
+            <div x-data="{ isUploading: false, progress: 0, }"
                x-on:livewire-upload-start="isUploading = true"
                x-on:livewire-upload-finish="isUploading = false ; progress = 0"
                x-on:livewire-upload-error="isUploading = false ; progress = 0"
@@ -199,7 +208,9 @@
                               </a>
                            </p>
                         </div>
-                        @if (!$loop->last) <hr class="my-3"> @endif
+                        @if (!$loop->last)
+                           <hr class="my-3">
+                        @endif
                      @endforeach
                   </div>
                   <h5 class="mb-4 mt-4 px-1">{{ __('New files') }}</h5>

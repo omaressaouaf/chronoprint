@@ -62,7 +62,8 @@ $add = is_null($dataTypeContent->getKey());
                      @endphp
                      <div id="product-allowed-quantities">
                         <quantities-form
-                           :product-allowed-quantities="{{ json_encode($productAllowedQuantities) }}">
+                           :product-allowed-quantities="{{ json_encode($productAllowedQuantities) }}"
+                           :product-allowed-quantities-type="'{{ $productAllowedQuantitiesType }}'">
                         </quantities-form>
                      </div>
                      @foreach ($dataTypeRows as $row)
@@ -81,22 +82,27 @@ $add = is_null($dataTypeContent->getKey());
 
                         <div
                            class="form-group @if ($row->type == 'hidden') hidden @endif col-md-{{ $display_options->width ?? 12 }} {{ $errors->has($row->field) ? 'has-error' : '' }}"
-                           @if (isset($display_options->id)){{ "id=$display_options->id" }}@endif>
+                           @if (isset($display_options->id)) {{ "id=$display_options->id" }} @endif>
                            {{ $row->slugify }}
                            <label class="control-label"
                               for="name">{{ $row->getTranslatedAttribute('display_name') }}</label>
-                           @include('voyager::multilingual.input-hidden-bread-edit-add')
+                           @include(
+                               'voyager::multilingual.input-hidden-bread-edit-add'
+                           )
                            @if (isset($row->details->view))
-                              @include($row->details->view, ['row' => $row, 'dataType' => $dataType,
-                              'dataTypeContent' =>
-                              $dataTypeContent, 'content' => $dataTypeContent->{$row->field}, 'action'
-                              => ($edit ?
-                              'edit'
-                              : 'add'), 'view' => ($edit ? 'edit' : 'add'), 'options' =>
-                              $row->details])
+                              @include($row->details->view, [
+                                  'row' => $row,
+                                  'dataType' => $dataType,
+                                  'dataTypeContent' => $dataTypeContent,
+                                  'content' => $dataTypeContent->{$row->field},
+                                  'action' => $edit ? 'edit' : 'add',
+                                  'view' => $edit ? 'edit' : 'add',
+                                  'options' => $row->details,
+                              ])
                            @elseif ($row->type == 'relationship')
-                              @include('voyager::formfields.relationship', ['options' =>
-                              $row->details])
+                              @include('voyager::formfields.relationship', [
+                                  'options' => $row->details,
+                              ])
                            @else
                               {!! app('voyager')->formField($row, $dataType, $dataTypeContent) !!}
                            @endif
@@ -224,7 +230,9 @@ $add = is_null($dataTypeContent->getKey());
       });
 
       @if ($isModelTranslatable)
-         $('.side-body').multilingual({"editing": true});
+         $('.side-body').multilingual({
+            "editing": true
+         });
       @endif
 
       $('.side-body input[data-slug-origin]').each(function(i, el) {

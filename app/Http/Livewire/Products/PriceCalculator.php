@@ -39,6 +39,8 @@ class PriceCalculator extends Component
 
     public int|string $selectedQuantityValue;
 
+    public array|null $quantity;
+
     public bool $designByCompany = false;
 
     public string $designInformation = "";
@@ -67,7 +69,7 @@ class PriceCalculator extends Component
 
         return [
             'selectedOptions' => 'nullable',
-            "selectedQuantityValue" => "required|numeric",
+            "quantity" => "required|array",
             'designByCompany' => "required|boolean",
             "totalPrice" => "required|numeric|min:1",
             "requiredFiles.*" => ["nullable", $fileRules],
@@ -99,7 +101,7 @@ class PriceCalculator extends Component
             $this->product->attributs->each(function ($attribute) {
                 $this->selectedOptions->put($attribute->name, $attribute->pivot->options[0]["ref"]);
             });
-            $this->selectedQuantityValue = $this->product->allowed_quantities[0]["value"];
+            $this->resetSelectedQuantityValue();
             $this->designByCompany = $this->product->category?->is_graphic_service ?? false;
         }
 
@@ -137,12 +139,54 @@ class PriceCalculator extends Component
     }
 
     /**
+     * Reset selected quantity value accordingly
+     *
+     * @return void
+     */
+    private function resetSelectedQuantityValue(): void
+    {
+        $this->selectedQuantityValue = $this->product->allowed_quantities[0][$this->product->allowed_quantities_type === 'fixed'
+            ? 'value'
+            : 'minValue'];
+    }
+
+    /**
+     * Get quantity by selected value
+     *
+     *@return array
+     */
+    private function getQuantityBySelectedQuantityValue(): array|null
+    {
+        return collect($this->product->allowed_quantities)
+            ->when($this->product->allowed_quantities_type === 'fixed', function ($collection) {
+                return $collection->where("value", $this->selectedQuantityValue);
+            }, function ($collection) {
+                return $collection->where("minValue", "<=", $this->selectedQuantityValue)->where("maxValue", ">=", $this->selectedQuantityValue);
+            })->first();
+    }
+
+    /**
      * Calculates the total and unit price
      *
      * @return void
      */
     private function calculatePrices(): void
     {
+        $this->quantity = $this->getQuantityBySelectedQuantityValue();
+        
+        /** in case the entered quantity is not allowed */
+        if (!$this->quantity) {
+            $this->resetSelectedQuantityValue();
+            $this->calculatePrices();
+            $this->addError(
+                'quantity',
+                __("Quantity is not allowed. call customer service :number", ["number" => setting("site.phone")])
+            );
+            return;
+        }
+
+        $this->resetValidation('quantity');
+
         $selectedOptionsTotalPrice = $this->selectedOptions->reduce(function ($carry, $optionRef, $attributeName) {
             $option = $this->product->getOptionByRef($attributeName, $optionRef);
 
@@ -155,28 +199,20 @@ class PriceCalculator extends Component
             $optionPrices =  (array)$option["prices"];
             $optionPriceBasedOnQuantity = 0;
 
-            if (is_array($optionPrices) && isset($optionPrices[$this->selectedQuantityValue]) && is_numeric($optionPrices[$this->selectedQuantityValue])) {
-                $optionPriceBasedOnQuantity = $optionPrices[$this->selectedQuantityValue];
+            if (is_array($optionPrices) && isset($optionPrices[$this->quantity['ref']]) && is_numeric($optionPrices[$this->quantity['ref']])) {
+                $optionPriceBasedOnQuantity = $optionPrices[$this->quantity['ref']];
             }
 
             return $carry + $optionPriceBasedOnQuantity;
         }, 0);
 
-        $quantity = collect($this->product->allowed_quantities)->where("value", $this->selectedQuantityValue)->first();
-
-        /** in case a millisious user tries to tamper with the quantity */
-        if (!$quantity) {
-            $this->mount();
-            return;
-        }
-
-        $this->totalPrice = $quantity["price"] + $selectedOptionsTotalPrice;
+        $this->totalPrice = $this->quantity["price"] + $selectedOptionsTotalPrice;
 
         if ($this->designByCompany) {
             $this->totalPrice += $this->product->design_price;
         }
 
-        $this->unitPrice = $this->totalPrice / $quantity["value"];
+        $this->unitPrice = $this->totalPrice / $this->selectedQuantityValue;
     }
 
     /**

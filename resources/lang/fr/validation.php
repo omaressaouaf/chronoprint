@@ -194,6 +194,7 @@ return [
         "selectedOptionsRequiredFiles" => "fichiers requis",
         "designFiles" => "fichiers",
         "address_id" => "adresse",
-        "subject" => "sujet"
+        "subject" => "sujet",
+        "quantity" => "quantité"
     ],
 ];

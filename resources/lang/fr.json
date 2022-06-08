@@ -827,5 +827,6 @@
     "Preferably your account's email": "De préférence l'email de votre compte",
     "Company": "Entreprise",
     "Send the request": "Envoyez la demande",
-    "Your request was sent successfully" : "Votre demande a été envoyée avec succès"
+    "Your request was sent successfully": "Votre demande a été envoyée avec succès",
+    "Quantity is not allowed. call customer service :number": "La quantité n'est pas autorisée. appeler le service client :number"
 }

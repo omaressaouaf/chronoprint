@@ -46,9 +46,10 @@ class ProductController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControl
 
         /**My code begins */
         $productAllowedQuantities = [];
+        $productAllowedQuantitiesType = "fixed";
         /**My code ends */
 
-        return Voyager::view($view, compact('dataType', 'dataTypeContent', 'isModelTranslatable', 'productAllowedQuantities'));
+        return Voyager::view($view, compact('dataType', 'dataTypeContent', 'isModelTranslatable', 'productAllowedQuantities', "productAllowedQuantitiesType"));
     }
 
     public function store(Request $request)
@@ -70,7 +71,8 @@ class ProductController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControl
         /**My code begins */
         $model = new $dataType->model_name();
 
-        $model->allowed_quantities = $request->allowed_quantities;
+        $model->allowed_quantities_type = $request->allowed_quantities_type;
+        $model->allowed_quantities = $this->addRefToAllowedQuantities($request->allowed_quantities);
         /**My code ends */
 
         $data = $this->insertUpdateData($request, $slug, $dataType->addRows, $model);
@@ -141,10 +143,11 @@ class ProductController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControl
         }
 
         /**My code begins */
-        $productAllowedQuantities = Product::findOrFail($id)->allowed_quantities;
+        $productAllowedQuantitiesType = $dataTypeContent->allowed_quantities_type;
+        $productAllowedQuantities = $dataTypeContent->allowed_quantities;
         /**My code ends */
 
-        return Voyager::view($view, compact('dataType', 'dataTypeContent', 'isModelTranslatable', 'productAllowedQuantities'));
+        return Voyager::view($view, compact('dataType', 'dataTypeContent', 'isModelTranslatable', 'productAllowedQuantities', 'productAllowedQuantitiesType'));
     }
 
     public function update(Request $request, $id)
@@ -172,7 +175,8 @@ class ProductController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControl
         $data = $query->findOrFail($id);
 
         /**My code begins */
-        $data->allowed_quantities = $request->allowed_quantities;
+        $data->allowed_quantities_type = $request->allowed_quantities_type;
+        $data->allowed_quantities = $this->addRefToAllowedQuantities($request->allowed_quantities);
         /**My code ends */
 
         // Check permission
@@ -245,20 +249,39 @@ class ProductController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControl
 
             $product->attributs()->attach($attribute['id'], ["options" => $attribute["pivot"]["options"]]);
         }
-        
+
         return response()->json(["selectedAttributes" => $product->attributs], 201);
     }
 
-    private  function convertAndValidateRequest($request)
+    private function convertAndValidateRequest($request)
     {
         $request->merge([
             "allowed_quantities" => json_decode($request->allowed_quantities, true)
         ]);
 
         $request->validate([
+            "allowed_quantities_type" => "required|in:fixed,interval",
             "allowed_quantities" => "required|array",
-            "allowed_quantities.*.value" => "required|numeric",
-            "allowed_quantities.*.price" => "required|numeric"
+            "allowed_quantities.*.value" => "required_if:allowed_quantities_type,fixed|prohibited_if:allowed_quantities_type,interval|numeric|min:1",
+            "allowed_quantities.*.minValue" => "required_if:allowed_quantities_type,interval|prohibited_if:allowed_quantities_type,fixed|numeric|min:1",
+            "allowed_quantities.*.maxValue" => "required_if:allowed_quantities_type,interval|prohibited_if:allowed_quantities_type,fixed|numeric|min:0|gte:allowed_quantities.*.minValue",
+            "allowed_quantities.*.price" => "required|numeric|min:1"
         ]);
+    }
+
+    private function addRefToAllowedQuantities(array $allowedQuantities): array
+    {
+        $allowedQuantitiesWithRef = [];
+
+        foreach ($allowedQuantities as $quantity) {
+            $allowedQuantitiesWithRef[] =  array_merge(
+                $quantity,
+                isset($quantity["ref"])
+                    ? []
+                    : ['ref' => Str::uuid() . Str::random(10)]
+            );
+        }
+
+        return $allowedQuantitiesWithRef;
     }
 }

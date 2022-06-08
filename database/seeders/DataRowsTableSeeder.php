@@ -1923,6 +1923,22 @@ class DataRowsTableSeeder extends Seeder
                 'details' => '{}',
                 'order' => 11,
             ),
+            119 => 
+            array (
+                'id' => 131,
+                'data_type_id' => 7,
+                'field' => 'allowed_quantities_type',
+                'type' => 'text',
+                'display_name' => 'Type de quantités autorisées',
+                'required' => 1,
+                'browse' => 0,
+                'read' => 0,
+                'edit' => 0,
+                'add' => 0,
+                'delete' => 0,
+                'details' => '{}',
+                'order' => 8,
+            ),
         ));
         
         

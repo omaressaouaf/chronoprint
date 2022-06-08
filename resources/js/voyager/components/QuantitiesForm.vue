@@ -1,19 +1,60 @@
 <template>
     <input type="hidden" name="allowed_quantities" :value="allowedQuantities" />
+    <input
+        type="hidden"
+        name="allowed_quantities_type"
+        :value="allowedQuantitiesType"
+    />
     <div class="panel-body">
         <div class="row">
             <div v-if="error" class="alert alert-danger">{{ error }}</div>
             <div class="form-title" style="margin-bottom: 50px">
                 <h5 class="col-md-12">Quantités autorisées</h5>
             </div>
-            <div class="form-group col-md-3">
+            <div class="checkbox mb-4">
+                <label> Type </label>
+                <label>
+                    <input
+                        v-model="allowedQuantitiesType"
+                        type="radio"
+                        value="fixed"
+                        id="fixed"
+                    />
+                    Fixé
+                </label>
+                <label>
+                    <input
+                        v-model="allowedQuantitiesType"
+                        type="radio"
+                        value="interval"
+                        id="interval"
+                    />
+                    Intervalle
+                </label>
+            </div>
+            <div class="form-group col-md-4 ml-2">
                 <label class="control-label">La quantité</label>
                 <input
+                    v-if="allowedQuantitiesType === 'fixed'"
                     v-model="form.value"
                     type="number"
                     class="form-control"
                     placeholder="La quantité"
                 />
+                <div v-else class="d-flex">
+                    <input
+                        v-model="form.minValue"
+                        type="number"
+                        class="form-control mr-1"
+                        placeholder="Le min"
+                    />
+                    <input
+                        v-model="form.maxValue"
+                        type="number"
+                        class="form-control"
+                        placeholder="Le max"
+                    />
+                </div>
             </div>
             <div class="form-group col-md-3">
                 <label class="control-label">Son prix de base</label>
@@ -21,7 +62,7 @@
                     v-model="form.price"
                     type="number"
                     class="form-control"
-                    placeholder="Son prix"
+                    placeholder="Son prix de base"
                 />
             </div>
             <div class="form-group col-md-3 form-actions">
@@ -59,7 +100,15 @@
                     :key="index"
                 >
                     <h5 class="text-capitalize font-weight-bold">
-                        {{ quantity.value }} unité =
+                        <span v-if="allowedQuantitiesType === 'fixed'">{{
+                            quantity.value
+                        }}</span>
+                        <span v-else>
+                            {{ quantity.minValue }}
+                            <i class="voyager-dot-2"></i>
+                            {{ quantity.maxValue }}
+                        </span>
+                        unité =
                         <span class="font-weight-light ml-5"
                             >{{ quantity.price }} Dhs</span
                         >
@@ -84,15 +133,19 @@ export default {
         productAllowedQuantities: {
             type: Array,
         },
+        productAllowedQuantitiesType: {
+            type: String,
+        },
     },
     data() {
         return {
             form: {
-                value: 100,
-                price: 100,
+                value: "",
+                price: "",
             },
             error: null,
             quantitiesList: this.productAllowedQuantities || [],
+            allowedQuantitiesType: this.productAllowedQuantitiesType || "fixed",
             editMode: false,
             currentIndex: null,
         };
@@ -102,18 +155,87 @@ export default {
             return JSON.stringify(this.quantitiesList);
         },
     },
+    watch: {
+        allowedQuantitiesType: {
+            handler() {
+                this.resetForm();
+
+                this.quantitiesList.forEach((quantity, index) => {
+                    this.quantitiesList[index] = { price: quantity.price };
+
+                    if (quantity.ref) {
+                        this.quantitiesList[index].ref = quantity.ref;
+                    }
+
+                    if (this.allowedQuantitiesType === "fixed") {
+                        this.quantitiesList[index].value =
+                            quantity.value || quantity.maxValue;
+                    } else {
+                        this.quantitiesList[index].minValue =
+                            quantity.minValue || 1;
+                        this.quantitiesList[index].maxValue =
+                            quantity.maxValue || quantity.value;
+                    }
+                });
+            },
+            immediate: true,
+        },
+    },
     methods: {
+        resetForm() {
+            this.form =
+                this.allowedQuantitiesType === "fixed"
+                    ? {
+                          value: "",
+                          price: "",
+                      }
+                    : {
+                          minValue: "",
+                          maxValue: "",
+                          price: "",
+                      };
+        },
         validateForm() {
             this.error = null;
 
             if (
-                typeof this.form.quantity === "string" &&
-                this.form.quantity.trim() === "" &&
-                typeof this.form.price === "string" &&
-                this.form.price.trim() === ""
+                (this.allowedQuantitiesType === "fixed" &&
+                    typeof this.form.value === "string" &&
+                    this.form.value.trim() === "") ||
+                (this.allowedQuantitiesType === "interval" &&
+                    typeof this.form.minValue === "string" &&
+                    this.form.minValue.trim() === "" &&
+                    typeof this.form.maxValue === "string" &&
+                    this.form.maxValue.trim() === "") ||
+                (typeof this.form.price === "string" &&
+                    this.form.price.trim() === "")
             ) {
                 this.error = "La quantité et son prix est requise";
+                return false;
+            }
 
+            if (
+                (this.allowedQuantitiesType === "fixed" &&
+                    (typeof this.form.value === "string" ||
+                        this.form.value < 1)) ||
+                (this.allowedQuantitiesType === "interval" &&
+                    (typeof this.form.minValue === "string" ||
+                        this.form.minValue < 1 ||
+                        typeof this.form.maxValue === "string" ||
+                        this.form.maxValue < 1)) ||
+                typeof this.form.price === "string" ||
+                this.form.price < 1
+            ) {
+                this.error =
+                    "La quantité et le prix doivent être supérieurs à 0";
+                return false;
+            }
+
+            if (
+                this.allowedQuantitiesType === "interval" &&
+                this.form.minValue > this.form.maxValue
+            ) {
+                this.error = "Le max doit être supérieure ou égale à le max";
                 return false;
             }
 
@@ -123,7 +245,10 @@ export default {
             if (!this.validateForm()) {
                 return;
             }
+
             this.quantitiesList.push({ ...this.form });
+
+            this.resetForm();
         },
         deleteQuantity(index) {
             this.quantitiesList.splice(index, 1);
@@ -147,6 +272,7 @@ export default {
 
             this.quantitiesList[this.currentIndex] = { ...this.form };
 
+            this.resetForm();
             this.editMode = false;
         },
     },

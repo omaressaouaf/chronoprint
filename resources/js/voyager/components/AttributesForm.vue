@@ -39,6 +39,9 @@
                             :product-allowed-quantities="
                                 product.allowed_quantities
                             "
+                            :product-allowed-quantities-type="
+                                product.allowed_quantities_type
+                            "
                             emit-options
                             @options-changed="
                                 setAttributeOptions($event, index)
