@@ -238,10 +238,10 @@ class ProductController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControl
 
             foreach ($attribute["pivot"]["options"] as $option) {
                 $optionsWithRef[] =  array_merge(
-                    $option,
                     isset($option["ref"])
                         ? []
-                        : ['ref' => Str::uuid() . Str::random(10)]
+                        : ['ref' => Str::uuid() . Str::random(10)],
+                    $option,
                 );
             }
 
@@ -275,10 +275,10 @@ class ProductController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControl
 
         foreach ($allowedQuantities as $quantity) {
             $allowedQuantitiesWithRef[] =  array_merge(
-                $quantity,
                 isset($quantity["ref"])
                     ? []
-                    : ['ref' => Str::uuid() . Str::random(10)]
+                    : ['ref' => Str::uuid() . Str::random(10)],
+                $quantity,
             );
         }
 
