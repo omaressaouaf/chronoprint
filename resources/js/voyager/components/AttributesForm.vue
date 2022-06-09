@@ -36,6 +36,10 @@
                         <options-form
                             :form-title="`Les options de l'attribut : ${selectedAttribute.name}`"
                             :attribute-options="selectedAttribute.pivot.options"
+                            :attribute-options-type="
+                                selectedAttribute.options_type
+                            "
+                            :attribute-groups="selectedAttribute.groups"
                             :product-allowed-quantities="
                                 product.allowed_quantities
                             "

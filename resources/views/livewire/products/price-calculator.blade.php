@@ -39,19 +39,59 @@
                         @endif
                      </div>
                      @foreach ($product->attributs as $attribute)
-                        <div class="col-md-6 mb-4">
-                           <div class="d-flex justify-content-between align-items-center pb-1">
-                              <label class="form-label">{{ $attribute->label }}:</label>
+                        @if ($attribute->options_type === 'fixed')
+                           <div class="col-md-6 mb-4">
+                              <div class="d-flex justify-content-between align-items-center pb-1">
+                                 <label
+                                    class="form-label">{{ $attribute->label }}:</label>
+                              </div>
+                              <select wire:model="selectedOptions.{{ $attribute->name }}"
+                                 class="form-select"
+                                 required>
+                                 @foreach ($attribute->pivot->options as $option)
+                                    <option value="{{ $option['ref'] }}">
+                                       {{ $option['name'] }}
+                                    </option>
+                                 @endforeach
+                              </select>
                            </div>
-                           <select wire:model="selectedOptions.{{ $attribute->name }}"
-                              class="form-select"
-                              required>
-                              @foreach ($attribute->pivot->options as $option)
-                                 <option value="{{ $option['ref'] }}">{{ $option['name'] }}
-                                 </option>
-                              @endforeach
-                           </select>
-                        </div>
+                        @else
+                           <div class="row col-md-12 mb-4 pe-0">
+                              <div
+                                 class="col-md-12 d-flex justify-content-between align-items-center pb-1 mb-2">
+                                 <label
+                                    class="form-label">{{ $attribute->label }}:</label>
+                              </div>
+                              @if (is_array($attribute->groups) && count($attribute->groups))
+                                 @foreach ($attribute->groups as $group)
+                                    <div @class(['col-md-5', 'pe-0', 'ps-0' => !$loop->first])>
+                                       <div
+                                          class="d-flex justify-content-between align-items-center pb-1">
+                                          <label
+                                             class="form-label text-capitalize fs-sm">{{ $group['name'] }}:</label>
+                                       </div>
+                                       <input
+                                          wire:model.lazy="selectedOptions.{{ $attribute->name }}"
+                                          type="number"
+                                          class="form-control text-capitalize"
+                                          placeholder="{{ $group['name'] }}">
+                                    </div>
+                                    @if (!$loop->last)
+                                       <i
+                                          class="ci-close col-md-2 mt-5 px-0 fs-xs fw-bold text-center"></i>
+                                    @endif
+                                 @endforeach
+                              @else
+                                 <div class="col-md-12 pe-0">
+                                    <input
+                                       wire:model.lazy="selectedOptions.{{ $attribute->name }}"
+                                       type="number"
+                                       class="form-control text-capitalize"
+                                       placeholder="{{ $attribute->label }}">
+                                 </div>
+                              @endif
+                           </div>
+                        @endif
                      @endforeach
                      @if (!$editMode && !$product->category?->is_graphic_service)
                         <div class="col-md-12">

@@ -13,6 +13,7 @@ class Attribute extends Model
 
     protected $casts = [
         "options" => AttributeProductOptionsJson::class,
+        "groups" => "array",
     ];
 
     public function products()

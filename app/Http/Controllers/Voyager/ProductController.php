@@ -72,7 +72,7 @@ class ProductController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControl
         $model = new $dataType->model_name();
 
         $model->allowed_quantities_type = $request->allowed_quantities_type;
-        $model->allowed_quantities = $this->addRefToAllowedQuantities($request->allowed_quantities);
+        $model->allowed_quantities = $this->allowedQuantitiesWithRef($request->allowed_quantities);
         /**My code ends */
 
         $data = $this->insertUpdateData($request, $slug, $dataType->addRows, $model);
@@ -176,7 +176,7 @@ class ProductController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControl
 
         /**My code begins */
         $data->allowed_quantities_type = $request->allowed_quantities_type;
-        $data->allowed_quantities = $this->addRefToAllowedQuantities($request->allowed_quantities);
+        $data->allowed_quantities = $this->allowedQuantitiesWithRef($request->allowed_quantities);
         /**My code ends */
 
         // Check permission
@@ -224,7 +224,9 @@ class ProductController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControl
             "selectedAttributes" => "nullable|array",
             "selectedAttributes.*.id" => "required",
             "selectedAttributes.*.pivot.options" => "required|array",
-            "selectedAttributes.*.pivot.options.*.name" => "required|string",
+            "selectedAttributes.*.pivot.options.*.name" => "exclude_unless:selectedAttributes.*.options_type,fixed|required|string",
+            "selectedAttributes.*.pivot.options.*.minValue" => "exclude_unless:selectedAttributes.*.options_type,interval|required|numeric|min:1",
+            "selectedAttributes.*.pivot.options.*.maxValue" => "exclude_unless:selectedAttributes.*.options_type,interval|required|numeric|min:1|gte:selectedAttributes.*.pivot.options.*.minValue",
             "selectedAttributes.*.pivot.options.*.prices" => "nullable",
             "selectedAttributes.*.pivot.options.*.prices.*" => "required|numeric|min:0",
             "selectedAttributes.*.pivot.options.*.requiredFilesProperties" => "nullable|array",
@@ -240,7 +242,7 @@ class ProductController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControl
                 $optionsWithRef[] =  array_merge(
                     isset($option["ref"])
                         ? []
-                        : ['ref' => Str::uuid() . Str::random(10)],
+                        : ['ref' => generate_ref()],
                     $option,
                 );
             }
@@ -262,14 +264,14 @@ class ProductController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControl
         $request->validate([
             "allowed_quantities_type" => "required|in:fixed,interval",
             "allowed_quantities" => "required|array",
-            "allowed_quantities.*.value" => "required_if:allowed_quantities_type,fixed|numeric|min:1",
-            "allowed_quantities.*.minValue" => "required_if:allowed_quantities_type,interval|numeric|min:1",
-            "allowed_quantities.*.maxValue" => "required_if:allowed_quantities_type,interval|numeric|min:0|gte:allowed_quantities.*.minValue",
-            "allowed_quantities.*.price" => "required|numeric|min:1"
+            "allowed_quantities.*.value" => "exclude_unless:allowed_quantities_type,fixed|required|numeric|min:1",
+            "allowed_quantities.*.minValue" => "exclude_unless:allowed_quantities_type,interval|required|numeric|min:1",
+            "allowed_quantities.*.maxValue" => "exclude_unless:allowed_quantities_type,interval|required|numeric|min:1|gte:allowed_quantities.*.minValue",
+            "allowed_quantities.*.price" => "required|numeric|min:0"
         ]);
     }
 
-    private function addRefToAllowedQuantities(array $allowedQuantities): array
+    private function allowedQuantitiesWithRef(array $allowedQuantities): array
     {
         $allowedQuantitiesWithRef = [];
 
@@ -277,7 +279,7 @@ class ProductController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControl
             $allowedQuantitiesWithRef[] =  array_merge(
                 isset($quantity["ref"])
                     ? []
-                    : ['ref' => Str::uuid() . Str::random(10)],
+                    : ['ref' => generate_ref()],
                 $quantity,
             );
         }

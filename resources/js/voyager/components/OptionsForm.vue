@@ -1,23 +1,88 @@
 <template>
     <input v-if="!emitOptions" type="hidden" name="options" :value="options" />
+    <input
+        v-if="!emitOptions"
+        type="hidden"
+        name="options_type"
+        :value="optionsType"
+    />
     <div class="panel-body">
         <div class="form-title row col-md-12">
             <h4 class="col-md-12">
                 {{ formTitle }}
             </h4>
         </div>
+        <div v-if="!emitOptions" class="checkbox mb-4">
+            <label>Type</label>
+            <label>
+                <input
+                    v-model="optionsType"
+                    type="radio"
+                    value="fixed"
+                    id="fixed"
+                />
+                Fixé
+            </label>
+            <label>
+                <input
+                    v-model="optionsType"
+                    type="radio"
+                    value="interval"
+                    id="interval"
+                />
+                Intervalle
+            </label>
+        </div>
+
         <div class="form-inputs row col-md-12">
             <div v-if="formError" class="alert alert-danger">
                 {{ formError }}
             </div>
             <div class="form-group col-md-12">
-                <label class="control-label">Nom</label>
-                <input
-                    v-model="form.name"
-                    type="text"
-                    class="form-control"
-                    placeholder="Nom d'option"
-                />
+                <div v-if="optionsType === 'fixed'">
+                    <label class="control-label">Nom d'option</label>
+                    <input
+                        v-model="form.name"
+                        type="text"
+                        class="form-control"
+                        placeholder="Nom d'option"
+                    />
+                </div>
+                <div v-else>
+                    <label class="control-label">
+                        Intervalle d'option
+                        <span v-if="attributeGroups?.length">
+                            (
+                            <template
+                                v-for="(group, index) in attributeGroups"
+                                :key="index"
+                            >
+                                {{ group.name }}
+                                <span
+                                    class="font-weight-bold mr-1"
+                                    v-if="index < attributeGroups.length - 1"
+                                >
+                                    <i class="voyager-x"></i>
+                                </span>
+                            </template>
+                            )
+                        </span>
+                    </label>
+                    <div class="d-flex">
+                        <input
+                            v-model="form.minValue"
+                            type="number"
+                            class="form-control mr-1"
+                            placeholder="Le min"
+                        />
+                        <input
+                            v-model="form.maxValue"
+                            type="number"
+                            class="form-control"
+                            placeholder="Le max"
+                        />
+                    </div>
+                </div>
             </div>
         </div>
         <div
@@ -135,7 +200,7 @@
                 </div>
             </div>
         </div>
-        <div class="row col-md-12 mt-3">
+        <div class="row col-md-12">
             <div class="form-group col-md-3">
                 <div class="actions" v-if="editMode">
                     <button
@@ -172,7 +237,14 @@
                 >
                     <div>
                         <h5 class="text-capitalize font-weight-bold mb-3">
-                            {{ option.name }}
+                            <span v-if="optionsType === 'fixed'">
+                                {{ option.name }}
+                            </span>
+                            <span v-else>
+                                {{ option.minValue }}
+                                <i class="voyager-dot-2"></i>
+                                {{ option.maxValue }}
+                            </span>
                         </h5>
                         <div
                             v-if="
@@ -277,16 +349,28 @@
                 </li>
             </ul>
         </div>
+        <groups-form
+            v-if="!emitOptions && optionsType === 'interval'"
+            :attribute-groups="attributeGroups"
+        />
     </div>
 </template>
 
 <script>
 import { uniqueId, cloneDeep } from "lodash";
+import GroupsForm from "./GroupsForm.vue";
 
 export default {
+    components: { GroupsForm },
     props: {
         attributeOptions: {
             type: Array,
+        },
+        attributeGroups: {
+            type: Array,
+        },
+        attributeOptionsType: {
+            type: String,
         },
         productAllowedQuantities: {
             type: Array,
@@ -316,6 +400,7 @@ export default {
             editMode: false,
             currentIndex: null,
             optionsList: [],
+            optionsType: this.attributeOptionsType || "fixed",
         };
     },
     computed: {
@@ -340,22 +425,57 @@ export default {
             deep: true,
             immediate: true,
         },
+        optionsType: {
+            handler() {
+                this.resetForm();
+
+                this.optionsList.forEach((option, index) => {
+                    this.optionsList[index] = {
+                        ...option,
+                    };
+
+                    if (this.optionsType === "fixed") {
+                        this.optionsList[index].name = option.name || "Nom";
+                    } else {
+                        this.optionsList[index].minValue = option.minValue || 1;
+                        this.optionsList[index].maxValue =
+                            option.maxValue || 10;
+                    }
+                });
+            },
+            immediate: true,
+        },
     },
     methods: {
         validateForm() {
             this.formError = null;
 
-            if (this.form.name.trim() === "") {
+            if (this.optionsType === "fixed" && this.form.name.trim() === "") {
                 this.formError = "Le nom est requis";
                 return false;
             }
-            for (const [quantity, price] of Object.entries(this.form.prices)) {
+
+            if (
+                this.optionsType === "interval" &&
+                (typeof this.form.minValue === "string" ||
+                    this.form.minValue < 1 ||
+                    typeof this.form.maxValue === "string" ||
+                    this.form.maxValue < 1)
+            ) {
+                this.formError =
+                    "Le min et le max sont requis et doivent être supérieurs à 0";
+                return false;
+            }
+
+            for (const [quantityRef, price] of Object.entries(
+                this.form.prices
+            )) {
                 if (price.toString().trim() === "") {
-                    delete this.form.prices[quantity];
+                    delete this.form.prices[quantityRef];
                 }
 
                 if (isNaN(price) || price < 0) {
-                    this.formError = "Le prix être supérieur à 0";
+                    this.formError = "Le prix être supérieur ou égal à 0";
                     return false;
                 }
             }
@@ -412,8 +532,18 @@ export default {
             this.resetForm();
         },
         resetForm() {
+            this.form =
+                this.optionsList === "fixed"
+                    ? {
+                          name: "",
+                      }
+                    : {
+                          minValue: "",
+                          maxValue: "",
+                      };
+
             this.form = {
-                name: "",
+                ...this.form,
                 prices: {},
                 requiredFilesProperties: [],
             };

@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Str;
 use Illuminate\Http\UploadedFile;
 
 /**
@@ -25,5 +26,15 @@ function file_is_image(UploadedFile|string $file): bool
  */
 function format_price($price): float
 {
-    return number_format((float)$price, 2 , "." , "");
+    return number_format((float)$price, 2, ".", "");
+}
+
+/**
+ * Generates a long unique string ref
+ *
+ * @return string
+ */
+function generate_ref(): string
+{
+    return Str::uuid() . Str::random();
 }

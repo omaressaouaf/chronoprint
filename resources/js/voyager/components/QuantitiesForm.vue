@@ -141,6 +141,8 @@ export default {
         return {
             form: {
                 value: "",
+                minValue: "",
+                maxValue: "",
                 price: "",
             },
             error: null,
@@ -198,22 +200,6 @@ export default {
 
             if (
                 (this.allowedQuantitiesType === "fixed" &&
-                    typeof this.form.value === "string" &&
-                    this.form.value.trim() === "") ||
-                (this.allowedQuantitiesType === "interval" &&
-                    typeof this.form.minValue === "string" &&
-                    this.form.minValue.trim() === "" &&
-                    typeof this.form.maxValue === "string" &&
-                    this.form.maxValue.trim() === "") ||
-                (typeof this.form.price === "string" &&
-                    this.form.price.trim() === "")
-            ) {
-                this.error = "La quantité et son prix est requise";
-                return false;
-            }
-
-            if (
-                (this.allowedQuantitiesType === "fixed" &&
                     (typeof this.form.value === "string" ||
                         this.form.value < 1)) ||
                 (this.allowedQuantitiesType === "interval" &&
@@ -222,10 +208,10 @@ export default {
                         typeof this.form.maxValue === "string" ||
                         this.form.maxValue < 1)) ||
                 typeof this.form.price === "string" ||
-                this.form.price < 1
+                this.form.price < 0
             ) {
                 this.error =
-                    "La quantité et le prix doivent être supérieurs à 0";
+                    "La quantité doit être supérieure à 0. et le prix supérieur ou égal à 0";
                 return false;
             }
 
@@ -290,7 +276,7 @@ ul {
     border: 1px solid #22a8f08a;
     padding: 7px 15px !important;
     border-radius: 20px;
-    box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px !important;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px !important;
     color: #229ef0;
 }
 .quantities-row:hover {

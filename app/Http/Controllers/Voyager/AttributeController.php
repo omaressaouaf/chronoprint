@@ -208,6 +208,8 @@ class AttributeController extends \TCG\Voyager\Http\Controllers\VoyagerBaseContr
         $model = new $dataType->model_name();
 
         $model->options = count($request->options)  ? $request->options : NULL;
+        $model->options_type = $request->options_type;
+        $model->groups = $this->groupsWithRef($request->groups);
         /**My code ends */
 
         $data = $this->insertUpdateData($request, $slug, $dataType->addRows, $model);
@@ -278,11 +280,7 @@ class AttributeController extends \TCG\Voyager\Http\Controllers\VoyagerBaseContr
             $view = "voyager::$slug.edit-add";
         }
 
-        /**My code begins */
-        $attributeOptions = Attribute::findOrFail($id)->options;
-        /**My code ends */
-
-        return Voyager::view($view, compact('dataType', 'dataTypeContent', 'isModelTranslatable', "attributeOptions"));
+        return Voyager::view($view, compact('dataType', 'dataTypeContent', 'isModelTranslatable'));
     }
 
     public function create(Request $request)
@@ -317,11 +315,7 @@ class AttributeController extends \TCG\Voyager\Http\Controllers\VoyagerBaseContr
             $view = "voyager::$slug.edit-add";
         }
 
-        /**My code begins */
-        $attributeOptions = [];
-        /**My code ends */
-
-        return Voyager::view($view, compact('dataType', 'dataTypeContent', 'isModelTranslatable', "attributeOptions"));
+        return Voyager::view($view, compact('dataType', 'dataTypeContent', 'isModelTranslatable'));
     }
 
     public function update(Request $request, $id)
@@ -350,6 +344,8 @@ class AttributeController extends \TCG\Voyager\Http\Controllers\VoyagerBaseContr
 
         /**My code begins */
         $data->options = count($request->options)  ? $request->options : NULL;
+        $data->options_type = $request->options_type;
+        $data->groups = $this->groupsWithRef($request->groups);
         /**My code ends */
 
         // Check permission
@@ -389,14 +385,40 @@ class AttributeController extends \TCG\Voyager\Http\Controllers\VoyagerBaseContr
     private  function convertAndValidateRequest($request)
     {
         $request->merge([
-            "options" => json_decode($request->options, true)
+            "options" => json_decode($request->options, true),
+            "groups" => json_decode($request->groups, true)
         ]);
 
         $request->validate([
+            "options_type" => "required|in:fixed,interval",
             "options" => "nullable|array",
-            "options.*.name" => "required|string",
+            "options.*.name" => "exclude_unless:options_type,fixed|required|string",
+            "options.*.minValue" => "exclude_unless:options_type,interval|required|numeric|min:1",
+            "options.*.maxValue" => "exclude_unless:options_type,interval|required|numeric|min:1|gte:options.*.minValue",
             "options.*.requiredFilesProperties" => "nullable|array",
             "options.*.requiredFilesProperties.*.name" => "required|string",
+            "groups" => "nullable|array",
+            "groups.*.name" => "required",
+            "groups.*.minLimit" => "nullable|numeric|min:0",
+            "groups.*.maxLimit" => "nullable|numeric|min:0|gte:groups.*.minLimit",
         ]);
+    }
+
+    private function groupsWithRef(array|null $groups): array
+    {
+        $groupsWithRef = [];
+
+        if (is_array($groups)) {
+            foreach ($groups as $group) {
+                $groupsWithRef[] =  array_merge(
+                    isset($group["ref"])
+                        ? []
+                        : ['ref' => generate_ref()],
+                    $group,
+                );
+            }
+        }
+
+        return $groupsWithRef;
     }
 }

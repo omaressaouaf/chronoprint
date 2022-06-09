@@ -961,7 +961,7 @@ class DataRowsTableSeeder extends Seeder
                 'add' => 0,
                 'delete' => 0,
                 'details' => '{}',
-                'order' => 5,
+                'order' => 7,
             ),
             59 => 
             array (
@@ -977,7 +977,7 @@ class DataRowsTableSeeder extends Seeder
                 'add' => 0,
                 'delete' => 0,
                 'details' => '{}',
-                'order' => 6,
+                'order' => 8,
             ),
             60 => 
             array (
@@ -1938,6 +1938,38 @@ class DataRowsTableSeeder extends Seeder
                 'delete' => 0,
                 'details' => '{}',
                 'order' => 8,
+            ),
+            120 => 
+            array (
+                'id' => 132,
+                'data_type_id' => 8,
+                'field' => 'options_type',
+                'type' => 'text',
+                'display_name' => 'Type d\'options',
+                'required' => 1,
+                'browse' => 0,
+                'read' => 0,
+                'edit' => 0,
+                'add' => 0,
+                'delete' => 0,
+                'details' => '{}',
+                'order' => 5,
+            ),
+            121 => 
+            array (
+                'id' => 133,
+                'data_type_id' => 8,
+                'field' => 'groups',
+                'type' => 'text',
+                'display_name' => 'Groupes',
+                'required' => 0,
+                'browse' => 0,
+                'read' => 0,
+                'edit' => 0,
+                'add' => 0,
+                'delete' => 0,
+                'details' => '{}',
+                'order' => 6,
             ),
         ));
         

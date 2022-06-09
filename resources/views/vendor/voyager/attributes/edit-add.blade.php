@@ -99,8 +99,10 @@ $add = is_null($dataTypeContent->getKey());
 
                     </div><!-- panel-body -->
                     <div id="attribute-options">
-                        <options-form :attribute-options="{{json_encode($attributeOptions) }}"
-                            form-title="Vous souhaitez définir des options à utiliser dans la fiche produit ?">
+                        <options-form :attribute-options="{{json_encode($dataTypeContent?->options) }}"
+                            :attribute-options-type="'{{$dataTypeContent?->options_type}}'"
+                            :attribute-groups="{{json_encode($dataTypeContent?->groups) }}"
+                            form-title="Configuration des groupes et options prédéfinies">
                         </options-form>
                     </div>
                     <div class="panel-footer">
