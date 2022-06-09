@@ -6,13 +6,11 @@
          <h5>
             <span
                class="badge
-               @if (in_array($order->status, ['pending', 'failed']))
-               bg-danger
+               @if (in_array($order->status, ['pending', 'failed'])) bg-danger
                @elseif(in_array($order->status, ['shipped', 'delivered']))
                bg-success
                @else
-               bg-info
-               @endif
+               bg-info @endif
                m-0">
                {{ __($order->status) }}
             </span>
@@ -37,12 +35,26 @@
                      </h3>
                      <div class="fs-sm">
                         @if ($orderItem->product->id)
-                           @foreach ($orderItem->selected_options as $attributeName => $optionRef)
+                           @foreach ($orderItem->selected_options as $attributeName => $selectedOption)
                               <div class="fs-sm">
                                  <span
                                     class="text-muted me-2">{{ $orderItem->product->getAttributeByName($attributeName)?->label }}:
                                  </span>
-                                 {{ $orderItem->product->getOptionByRef($attributeName, $optionRef)['name'] }}
+                                 @if (isset($selectedOption['ref']))
+                                    {{ $orderItem->product->getOptionByRef($attributeName, $selectedOption['ref'])['name'] }}
+                                 @else
+                                    @if (is_array($selectedOption['value']) && count($selectedOption['value']))
+                                       @foreach ($selectedOption['value'] as $groupName => $selectedValue)
+                                          <span>{{ $groupName }} :
+                                             {{ $selectedValue }}</span>
+                                          @if (!$loop->last)
+                                             &#xd7;
+                                          @endif
+                                       @endforeach
+                                    @else
+                                       {{ $selectedOption['value'] }}
+                                    @endif
+                                 @endif
                               </div>
                            @endforeach
                         @endif

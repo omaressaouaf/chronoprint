@@ -113,12 +113,26 @@
                               </a>
                            </h4>
                            @if ($orderItem->product->id)
-                              @foreach ($orderItem->selected_options as $attributeName => $optionRef)
+                              @foreach ($orderItem->selected_options as $attributeName => $selectedOption)
                                  <div>
                                     <span
                                        class="font-weight-bold">{{ $orderItem->product->getAttributeByName($attributeName)->label }}:
                                     </span>
-                                    {{ $orderItem->product->getOptionByRef($attributeName, $optionRef)['name'] }}
+                                    @if (isset($selectedOption['ref']))
+                                       {{ $orderItem->product->getOptionByRef($attributeName, $selectedOption['ref'])['name'] }}
+                                    @else
+                                       @if (is_array($selectedOption['value']) && count($selectedOption['value']))
+                                          @foreach ($selectedOption['value'] as $groupName => $selectedValue)
+                                             <span>{{ $groupName }} :
+                                                {{ $selectedValue }}</span>
+                                             @if (!$loop->last)
+                                                &#xd7;
+                                             @endif
+                                          @endforeach
+                                       @else
+                                          {{ $selectedOption['value'] }}
+                                       @endif
+                                    @endif
                                  </div>
                               @endforeach
                            @endif

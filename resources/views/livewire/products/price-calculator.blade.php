@@ -42,10 +42,9 @@
                         @if ($attribute->options_type === 'fixed')
                            <div class="col-md-6 mb-4">
                               <div class="d-flex justify-content-between align-items-center pb-1">
-                                 <label
-                                    class="form-label">{{ $attribute->label }}:</label>
+                                 <label class="form-label">{{ $attribute->label }}:</label>
                               </div>
-                              <select wire:model="selectedOptions.{{ $attribute->name }}"
+                              <select wire:model="selectedOptions.{{ $attribute->name }}.ref"
                                  class="form-select"
                                  required>
                                  @foreach ($attribute->pivot->options as $option)
@@ -59,8 +58,7 @@
                            <div class="row col-md-12 mb-4 pe-0">
                               <div
                                  class="col-md-12 d-flex justify-content-between align-items-center pb-1 mb-2">
-                                 <label
-                                    class="form-label">{{ $attribute->label }}:</label>
+                                 <label class="form-label">{{ $attribute->label }}:</label>
                               </div>
                               @if (is_array($attribute->groups) && count($attribute->groups))
                                  @foreach ($attribute->groups as $group)
@@ -71,10 +69,13 @@
                                              class="form-label text-capitalize fs-sm">{{ $group['name'] }}:</label>
                                        </div>
                                        <input
-                                          wire:model.lazy="selectedOptions.{{ $attribute->name }}"
+                                          wire:model.lazy="selectedOptions.{{ $attribute->name }}.value.{{ $group['name'] }}"
                                           type="number"
                                           class="form-control text-capitalize"
                                           placeholder="{{ $group['name'] }}">
+                                       @error($attribute->name . '.' . $group['name'])
+                                          <div class="form-text text-danger">{{ $message }}</div>
+                                       @enderror
                                     </div>
                                     @if (!$loop->last)
                                        <i
@@ -84,7 +85,7 @@
                               @else
                                  <div class="col-md-12 pe-0">
                                     <input
-                                       wire:model.lazy="selectedOptions.{{ $attribute->name }}"
+                                       wire:model.lazy="selectedOptions.{{ $attribute->name }}.value"
                                        type="number"
                                        class="form-control text-capitalize"
                                        placeholder="{{ $attribute->label }}">

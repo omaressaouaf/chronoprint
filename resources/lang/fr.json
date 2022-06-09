@@ -828,5 +828,7 @@
     "Company": "Entreprise",
     "Send the request": "Envoyez la demande",
     "Your request was sent successfully": "Votre demande a été envoyée avec succès",
-    "Quantity is not allowed. call customer service :number": "La quantité n'est pas autorisée. appeler le service client :number"
+    "Quantity is not allowed. call customer service :number": "La quantité n'est pas autorisée. appeler le service client :number",
+    "Option not allowed": "Option non autorisée",
+    ":group is limited to :min < :max": ":group est limité à :min < :max"
 }

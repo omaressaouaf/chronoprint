@@ -13,12 +13,25 @@
                href="{{ route('products.show', ['product' => $cartItem->product->slug]) }}">{{ $cartItem->product->title }}</a>
          </h3>
          @if ($cartItem->product->id)
-            @foreach ($cartItem->selected_options as $attributeName => $optionRef)
+            @foreach ($cartItem->selected_options as $attributeName => $selectedOption)
                <div class="fs-sm">
                   <span
                      class="text-muted me-2">{{ $cartItem->product->getAttributeByName($attributeName)->label }}:
                   </span>
-                  {{ $cartItem->product->getOptionByRef($attributeName, $optionRef)['name'] }}
+                  @if (isset($selectedOption['ref']))
+                     {{ $cartItem->product->getOptionByRef($attributeName, $selectedOption['ref'])['name'] }}
+                  @else
+                     @if (is_array($selectedOption['value']) && count($selectedOption['value']))
+                        @foreach ($selectedOption['value'] as $groupName => $selectedValue)
+                           <span>{{ $groupName }} : {{ $selectedValue }}</span>
+                           @if (!$loop->last)
+                              &#xd7;
+                           @endif
+                        @endforeach
+                     @else
+                        {{ $selectedOption['value'] }}
+                     @endif
+                  @endif
                </div>
             @endforeach
          @endif

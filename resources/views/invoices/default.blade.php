@@ -161,7 +161,7 @@
          <tr>
             <td class="border-0 pl-0"
                width="69%">
-               <img src="{{asset("/theme-images/logo.png")}}"
+               <img src="{{ asset('/theme-images/logo.png') }}"
                   alt="{{ config('app.name') }} Logo"
                   height="50">
             </td>
@@ -271,12 +271,26 @@
                </td>
                <td class="text-center">
                   @if ($orderItem->product->id)
-                     @foreach ($orderItem->selected_options as $attributeName => $optionRef)
+                     @foreach ($orderItem->selected_options as $attributeName => $selectedOption)
                         <div class="fs-sm">
                            <span
                               class="text-muted me-2">{{ $orderItem->product->getAttributeByName($attributeName)->label }}:
                            </span>
-                           {{ $orderItem->product->getOptionByRef($attributeName, $optionRef)['name'] }}
+                           @if (isset($selectedOption['ref']))
+                              {{ $orderItem->product->getOptionByRef($attributeName, $selectedOption['ref'])['name']
+                           }}
+                           @else
+                              @if (is_array($selectedOption['value']) && count($selectedOption['value']))
+                                 @foreach ($selectedOption['value'] as $groupName => $selectedValue)
+                                    <span>{{ $groupName }} : {{ $selectedValue }}</span>
+                                    @if (!$loop->last)
+                                       &#xd7;
+                                    @endif
+                                 @endforeach
+                              @else
+                                 {{ $selectedOption['value'] }}
+                              @endif
+                           @endif
                         </div>
                      @endforeach
                   @endif

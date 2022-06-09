@@ -69,10 +69,42 @@ class Product extends Model
         return $this->attributs->where("name", $attributeName)->first();
     }
 
-    public function getOptionByRef(string $attributeName, string $optionRef): array
+    public function getOptionByRef(string $attributeName, string $optionRef): array|null
     {
         $attribute = $this->getAttributeByName($attributeName);
         return collect($attribute->pivot->options)->where("ref", $optionRef)->first();
+    }
+
+    public function getOptionByInterval(string $attributeName, int $optionInterval): array|null
+    {
+        $attribute = $this->getAttributeByName($attributeName);
+        return collect($attribute->pivot->options)
+            ->where("minValue", "<=", $optionInterval)
+            ->where("maxValue", ">=", $optionInterval)
+            ->first();
+    }
+
+    public function getOptionBySelectedOptionData(string $attributeName, array $selectedOptionData): array|null
+    {
+        $attribute = $this->getAttributeByName($attributeName);
+
+        if ($attribute->options_type === "fixed") {
+            return $this->getOptionByRef($attributeName, $selectedOptionData['ref']);
+        }
+
+        $interval = 1;
+
+        if (is_array($attribute->groups) && count($attribute->groups)) {
+            foreach ($selectedOptionData["value"] as $selectedValue) {
+                if (!is_numeric($selectedValue) || empty($selectedValue)) return null;
+
+                $interval *= $selectedValue;
+            }
+        } else {
+            $interval = $selectedOptionData["value"];
+        }
+
+        return $this->getOptionByInterval($attributeName, $interval);
     }
 
     public function scopeFilterProductsForShop($query, $search, $sort)

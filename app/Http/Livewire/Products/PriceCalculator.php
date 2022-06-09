@@ -20,8 +20,13 @@ class PriceCalculator extends Component
     /**
      * the user selected options
      * ex : [
-     *  "size" => "optionRef",
-     *  "material" => "optionRef"
+     *  "size" => [
+     *      'width' => 2,
+     *      'height' => 2
+     *  ],
+     *  "material" => [
+     *      'ref' => "optionRef"
+     *   ]
      * ]
      * @var Collection
      */
@@ -99,7 +104,23 @@ class PriceCalculator extends Component
             $this->oldMedia = collect([]);
             $this->selectedOptions = collect([]);
             $this->product->attributs->each(function ($attribute) {
-                $this->selectedOptions->put($attribute->name, $attribute->pivot->options[0]["ref"]);
+                $option = [];
+
+                if ($attribute->options_type === 'fixed') {
+                    $option["ref"] = $attribute->pivot->options[0]["ref"];
+                } else {
+                    if (is_array($attribute->groups) && count($attribute->groups)) {
+                        foreach ($attribute->groups as $group) {
+                            $option["value"][$group['name']] = is_numeric($group['maxLimit'])
+                                ? $group['maxLimit']
+                                : $attribute->pivot->options[0]["maxValue"];
+                        }
+                    } else {
+                        $option["value"] = $attribute->pivot->options[0]["maxValue"];
+                    }
+                }
+
+                $this->selectedOptions->put($attribute->name, $option);
             });
             $this->resetSelectedQuantityValue();
             $this->designByCompany = $this->product->category?->is_graphic_service ?? false;
@@ -147,7 +168,7 @@ class PriceCalculator extends Component
     {
         $this->selectedQuantityValue = $this->product->allowed_quantities[0][$this->product->allowed_quantities_type === 'fixed'
             ? 'value'
-            : 'minValue'];
+            : 'maxValue'];
     }
 
     /**
@@ -166,14 +187,63 @@ class PriceCalculator extends Component
     }
 
     /**
+     * Validate selected option interval
+     *
+     * @param string $attributeName
+     * @param array $selectedOptionData
+     * @param Illuminate\Validation\Validator|null $validator
+     * @return bool
+     */
+    private function validatedSelectedOptionInterval(
+        string $attributeName,
+        array $selectedOptionData,
+        Validator|null $validator = null
+    ): bool {
+        $attribute = $this->product->getAttributeByName($attributeName);
+
+        if ($attribute->options_type === 'interval' && is_array($attribute->groups) && count($attribute->groups)) {
+            foreach ($attribute->groups as $group) {
+                // Check if interval is between the group limits
+                if ((isset($group["minLimit"])
+                        && is_numeric($group["minLimit"])
+                        && $group["minLimit"] > $selectedOptionData["value"][$group['name']])
+                    || (isset($group["maxLimit"])
+                        && is_numeric($group["maxLimit"])
+                        && $group["maxLimit"] < $selectedOptionData["value"][$group['name']])
+                ) {
+                    // if not add validation errors
+                    call_user_func(
+                        $validator
+                            ? array($validator->errors(), 'add')
+                            : array($this, "addError"),
+                        sprintf("%s.%s", $attributeName, $group['name']),
+                        __(":group is limited to :min < :max", [
+                            "group" => $group['name'],
+                            "min" => isset($group["minLimit"]) ? $group["minLimit"] : "",
+                            "max" => isset($group["maxLimit"]) ? $group["maxLimit"] : "",
+                        ])
+                    );
+
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * Calculates the total and unit price
      *
      * @return void
      */
     private function calculatePrices(): void
     {
+        $this->resetValidation('quantity');
+        $this->resetValidation('selectedOption');
+
         $this->quantity = $this->getQuantityBySelectedQuantityValue();
-        
+
         /** in case the entered quantity is not allowed */
         if (!$this->quantity) {
             $this->resetSelectedQuantityValue();
@@ -185,21 +255,31 @@ class PriceCalculator extends Component
             return;
         }
 
-        $this->resetValidation('quantity');
+        $selectedOptionsTotalPrice = $this->selectedOptions->reduce(function (
+            $carry,
+            $selectedOption,
+            $attributeName
+        ) {
+            if (!$this->validatedSelectedOptionInterval($attributeName, $selectedOption)) return;
 
-        $selectedOptionsTotalPrice = $this->selectedOptions->reduce(function ($carry, $optionRef, $attributeName) {
-            $option = $this->product->getOptionByRef($attributeName, $optionRef);
+            $option = $this->product->getOptionBySelectedOptionData($attributeName, $selectedOption);
 
-            /** in case a millisious user tries to tamper with the option */
             if (!$option) {
-                $this->mount();
+                $this->addError(
+                    'selectedOption' . $attributeName,
+                    __("Option not allowed")
+                );
                 return;
             }
 
             $optionPrices =  (array)$option["prices"];
             $optionPriceBasedOnQuantity = 0;
 
-            if (is_array($optionPrices) && isset($optionPrices[$this->quantity['ref']]) && is_numeric($optionPrices[$this->quantity['ref']])) {
+            if (
+                is_array($optionPrices)
+                && isset($optionPrices[$this->quantity['ref']])
+                && is_numeric($optionPrices[$this->quantity['ref']])
+            ) {
                 $optionPriceBasedOnQuantity = $optionPrices[$this->quantity['ref']];
             }
 
@@ -224,10 +304,10 @@ class PriceCalculator extends Component
     {
         $this->requiredFiles = [];
 
-        $this->selectedOptions->each(function ($optionRef, $attributeName) {
-            $option = $this->product->getOptionByRef($attributeName, $optionRef);
+        $this->selectedOptions->each(function ($selectedOption, $attributeName) {
+            $option = $this->product->getOptionBySelectedOptionData($attributeName, $selectedOption);
 
-            if (isset($option['requiredFilesProperties'])) {
+            if ($option && isset($option['requiredFilesProperties'])) {
                 foreach ($option['requiredFilesProperties'] as $requiredFileProperties) {
                     $this->requiredFiles[$requiredFileProperties["name"]] = "";
                 }
@@ -265,6 +345,16 @@ class PriceCalculator extends Component
     public function withValidatorClosure(Validator $validator): void
     {
         $validator->after(function ($validator) {
+            // Validate options intervals and existence
+            $this->selectedOptions->each(function ($selectedOption, $attributeName) use ($validator) {
+                $this->validatedSelectedOptionInterval($attributeName, $selectedOption, $validator);
+
+                if (!$this->product->getOptionBySelectedOptionData($attributeName, $selectedOption)) {
+                    $validator->errors()->add('selectedOption', __("Option not allowed"));
+                }
+            });
+
+            // validate options files
             if ($this->designByCompany) {
                 if (count($this->designFiles) + count($this->oldMedia)  > 5) {
                     $validator->errors()->add("designFiles", __("5 files is the maximum allowed"));
