@@ -11,7 +11,7 @@ class NavbarBottom extends Component
     {
         return view('components.layout.navbar-bottom', [
             "categoryGroups" => CategoryGroup::orderBy("position")
-                ->with(["categories", "categories" => fn ($query) => $query->active()])
+                ->with(["categories"])
                 ->get()
         ]);
     }
