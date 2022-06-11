@@ -18,21 +18,18 @@
                 </div>
                 <div class="modal-body">
                     <div class="attributes-container">
-                        <div
-                            v-for="attribute in allAttributes"
-                            :key="attribute.id"
-                            class="form-group"
-                        >
-                            <input
-                                v-model="selectedAttributes"
-                                :value="attribute"
-                                :id="attribute.name"
-                                type="checkbox"
-                            />
-                            <label :for="attribute.name">{{
-                                attribute.name
-                            }}</label>
-                        </div>
+                        <multiselect
+                            v-model="selectedAttributes"
+                            :options="allAttributes"
+                            :multiple="true"
+                            :preserve-search="true"
+                            :close-on-select="false"
+                            placeholder="Sélectionnez les attributs"
+                            :show-no-results="false"
+                            label="name"
+                            track-by="id"
+                            :show-labels="false"
+                        />
                     </div>
                     <div
                         v-for="(selectedAttribute, index) in selectedAttributes"
@@ -99,7 +96,10 @@
 </template>
 
 <script>
+import Multiselect from "vue-multiselect";
+
 export default {
+    components: { Multiselect },
     data() {
         return {
             product: {},
