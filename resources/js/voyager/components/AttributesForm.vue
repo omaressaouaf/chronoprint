@@ -152,7 +152,9 @@ export default {
                     .map((attribute) => {
                         return {
                             ...attribute,
-                            pivot: {},
+                            pivot: {
+                                options: [],
+                            },
                         };
                     }),
             ];

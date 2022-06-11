@@ -329,12 +329,11 @@
                                        <button
                                           onclick="window.product = {{ $data->load('attributs') }}"
                                           type="button"
-                                          class="btn btn-sm btn-success float-right"
+                                          class="btn btn-sm btn-success float-right mr-2"
                                           id="product-attributes-btn"
                                           style="display: none"
                                           data-toggle="modal"
-                                          data-target="#attributes-form-modal"
-                                          style="margin-right: 5px">
+                                          data-target="#attributes-form-modal">
                                           <i class="voyager-params"></i> Attributs
                                        </button>
                                     @endcan

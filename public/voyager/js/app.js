@@ -19291,7 +19291,9 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         }).includes(attribute.id);
       }).map(function (attribute) {
         return _objectSpread(_objectSpread({}, attribute), {}, {
-          pivot: {}
+          pivot: {
+            options: []
+          }
         });
       })));
     },

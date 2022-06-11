@@ -17,9 +17,10 @@ class CreateAttributesTable extends Migration
             $table->id();
             $table->string("name")->unique();
             $table->string("label");
+            $table->text("help")->nullable();
             $table->enum("options_type", ["fixed", "interval"])->default("fixed");
-            $table->json("options")->nullable();
             $table->json("groups")->nullable();
+            $table->json("options")->nullable();
             $table->timestamps();
         });
     }

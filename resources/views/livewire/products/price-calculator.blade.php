@@ -20,7 +20,7 @@
                   <div class="row">
                      <div class="col-md-12 mb-4">
                         <div class="d-flex justify-content-between align-items-center pb-1">
-                           <label class="form-label">{{ __('Quantity') }}:</label>
+                           <label class="form-label">{{ __('Quantity') }} :</label>
                         </div>
                         @if ($product->allowed_quantities_type === 'fixed')
                            <select wire:model="selectedQuantityValue"
@@ -44,7 +44,17 @@
                               <div class="col-md-6 mb-4">
                                  <div
                                     class="d-flex justify-content-between align-items-center pb-1">
-                                    <label class="form-label">{{ $attribute->label }}:</label>
+                                    <label class="form-label">
+                                       {{ $attribute->label }} :
+                                       @if ($attribute->help)
+                                          <i class="ci-announcement ms-1 fw-bold text-info"
+                                             data-bs-toggle="popover"
+                                             data-bs-placement="top"
+                                             data-bs-trigger="hover"
+                                             title="{{ __('Help') }}"
+                                             data-bs-content="{{ $attribute->help }}"></i>
+                                       @endif
+                                    </label>
                                  </div>
                                  <select wire:model="selectedOptions.{{ $attribute->name }}.ref"
                                     class="form-select"
@@ -63,7 +73,16 @@
                            <div class="row col-md-12 mb-4 pe-0">
                               <div
                                  class="col-md-12 d-flex justify-content-between align-items-center pb-1 mb-2">
-                                 <label class="form-label">{{ $attribute->label }}:</label>
+                                 <label class="form-label">{{ $attribute->label }} :
+                                    @if ($attribute->help)
+                                       <i class="ci-announcement ms-1 fw-bold text-info"
+                                          data-bs-toggle="popover"
+                                          data-bs-placement="top"
+                                          data-bs-trigger="hover"
+                                          title="{{ __('Help') }}"
+                                          data-bs-content="{{ $attribute->help }}"></i>
+                                    @endif
+                                 </label>
                               </div>
                               @if (is_array($attribute->groups) && count($attribute->groups))
                                  @foreach ($attribute->groups as $group)
