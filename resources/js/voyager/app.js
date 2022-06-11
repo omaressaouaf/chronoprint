@@ -63,5 +63,11 @@ if (document.querySelector("#notifications-dropdown")) {
 }
 
 window.onload = () => {
-    document.querySelector("#product-attributes-btn").style.display = "block";
+    const productAttributesBtn = document.querySelector(
+        "#product-attributes-btn"
+    );
+
+    if (productAttributesBtn) {
+        productAttributesBtn.style.display = "block";
+    }
 };

@@ -48593,7 +48593,11 @@ if (document.querySelector("#notifications-dropdown")) {
 }
 
 window.onload = function () {
-  document.querySelector("#product-attributes-btn").style.display = "block";
+  var productAttributesBtn = document.querySelector("#product-attributes-btn");
+
+  if (productAttributesBtn) {
+    productAttributesBtn.style.display = "block";
+  }
 };
 })();
 

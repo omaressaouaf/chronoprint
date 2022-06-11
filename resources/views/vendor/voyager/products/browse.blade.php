@@ -333,7 +333,8 @@
                                           id="product-attributes-btn"
                                           style="display: none"
                                           data-toggle="modal"
-                                          data-target="#attributes-form-modal">
+                                          data-target="#attributes-form-modal"
+                                          >
                                           <i class="voyager-params"></i> Attributs
                                        </button>
                                     @endcan
