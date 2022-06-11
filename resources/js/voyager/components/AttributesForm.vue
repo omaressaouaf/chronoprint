@@ -1,6 +1,11 @@
 <template>
-    <div id="attributes-form-modal" class="modal fade" role="dialog">
-        <div class="modal-dialog modal-lg">
+    <div
+        id="attributes-form-modal"
+        class="modal fade"
+        role="dialog"
+        data-backdrop="static"
+    >
+        <div class="modal-dialog modal-lg" style="min-width: 75%">
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
@@ -46,6 +51,7 @@
                             :product-allowed-quantities-type="
                                 product.allowed_quantities_type
                             "
+                            :selected-attributes="selectedAttributes"
                             emit-options
                             @options-changed="
                                 setAttributeOptions($event, index)
@@ -60,7 +66,7 @@
                             "
                             v-if="selectedAttribute.options?.length"
                             class="btn btn-success btn-xs"
-                            style="margin-left: 40px"
+                            style="margin-left: 40px; white-space: pre-wrap"
                         >
                             <i class="voyager-download mr-2"></i> Importer des
                             options prédéfinies à partir de l'attribut

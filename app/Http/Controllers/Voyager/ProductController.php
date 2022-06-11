@@ -231,6 +231,8 @@ class ProductController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControl
             "selectedAttributes.*.pivot.options.*.prices.*" => "required|numeric|min:0",
             "selectedAttributes.*.pivot.options.*.requiredFilesProperties" => "nullable|array",
             "selectedAttributes.*.pivot.options.*.requiredFilesProperties.*.name" => "required|string",
+            "selectedAttributes.*.pivot.options.*.disabledOptions" => "nullable|array",
+            "selectedAttributes.*.pivot.options.*.disabledOptions.*" => "required|string",
         ]);
 
         $product->attributs()->detach();

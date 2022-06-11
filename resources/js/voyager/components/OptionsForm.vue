@@ -200,6 +200,49 @@
                 </div>
             </div>
         </div>
+        <div
+            v-if="selectedAttributes && validSelectedAttributes.length"
+            class="disabled-options row col-md-12"
+            style="padding: 0px 40px"
+        >
+            <h5
+                style="margin-bottom: 30px"
+                data-toggle="collapse"
+                :data-target="`#disabled-options-container-${componentId}`"
+            >
+                <i class="voyager-angle-down"></i> Les options désactivées
+            </h5>
+            <div
+                :id="`disabled-options-container-${componentId}`"
+                class="collapse"
+            >
+                <div class="disabled-options-form row pl-4 mb-0 pb-0">
+                    <div class="form-group col-md-12">
+                        <multiselect
+                            v-model="form.disabledOptions"
+                            :options="validSelectedAttributes"
+                            :multiple="true"
+                            :preserve-search="true"
+                            :close-on-select="false"
+                            placeholder="Sélectionnez les options à désactiver lorsque le courant est sélectionné par l'utilisateur"
+                            :show-no-results="false"
+                            group-values="pivotOptionsRefs"
+                            group-label="name"
+                            :group-select="true"
+                            :custom-label="getOptionNameByRef"
+                            select-label="Sélectionner l'option"
+                            select-group-label="Sélectionner toutes les options d'attribut"
+                            deselect-label="Désélectionner l'option"
+                            deselect-group-label="Désélectionner toutes les options d'attribut"
+                        />
+                        <p class="ml-2 mt-2 font-weight-bold">
+                            si vous ne voyez pas l'option souhaitée. essayez
+                            d'enregistrer le formulaire
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row col-md-12">
             <div class="form-group col-md-3">
                 <div class="actions" v-if="editMode">
@@ -337,6 +380,43 @@
                                 </h6>
                             </div>
                         </div>
+                        <div class="option-disabled-options">
+                            <h6
+                                data-toggle="collapse"
+                                :data-target="`#option-disabled-options-container-${
+                                    componentId + index
+                                }`"
+                                class="text-capitalize font-weight-bold"
+                            >
+                                <i class="voyager-angle-down"></i> Les options
+                                désactivées
+                                <span
+                                    v-if="
+                                        option.disabledOptions &&
+                                        option.disabledOptions.length
+                                    "
+                                    class="text-success"
+                                >
+                                    <i class="voyager-check ml-2"></i>
+                                </span>
+                            </h6>
+                            <div
+                                class="ml-3 collapse"
+                                :id="`option-disabled-options-container-${
+                                    componentId + index
+                                }`"
+                            >
+                                <h6
+                                    v-for="(
+                                        optionRef, index
+                                    ) in option.disabledOptions"
+                                    :key="index"
+                                    class="text-capitalize"
+                                >
+                                    {{ getOptionNameByRef(optionRef) }}
+                                </h6>
+                            </div>
+                        </div>
                     </div>
                     <div class="actions">
                         <a href="#" @click.prevent="deleteOption(index)"
@@ -359,10 +439,14 @@
 <script>
 import { uniqueId, cloneDeep } from "lodash";
 import GroupsForm from "./GroupsForm.vue";
+import Multiselect from "vue-multiselect";
 
 export default {
-    components: { GroupsForm },
+    components: { GroupsForm, Multiselect },
     props: {
+        selectedAttributes: {
+            type: Array,
+        },
         attributeOptions: {
             type: Array,
         },
@@ -394,6 +478,7 @@ export default {
                 name: "",
                 prices: {},
                 requiredFilesProperties: [],
+                disabledOptions: [],
             },
             formError: null,
             requiredFilesPropertiesFormError: null,
@@ -406,6 +491,24 @@ export default {
     computed: {
         options() {
             return JSON.stringify(this.optionsList);
+        },
+        validSelectedAttributes() {
+            return this.selectedAttributes
+                .map((attribute) => ({
+                    ...attribute,
+                    pivotOptionsRefs: attribute.pivot.options
+                        .filter(
+                            (option) =>
+                                option.ref !== null &&
+                                typeof option.ref !== "undefined"
+                        )
+                        .map((option) => option.ref),
+                }))
+                .filter(
+                    (attribute) =>
+                        attribute.options_type === "fixed" &&
+                        attribute.pivotOptionsRefs.length
+                );
         },
     },
     emits: ["optionsChanged"],
@@ -447,6 +550,15 @@ export default {
         },
     },
     methods: {
+        getOptionNameByRef(optionRef) {
+            for (let attribute of this.validSelectedAttributes) {
+                const option = attribute.pivot.options.find(
+                    (option) => option.ref === optionRef
+                );
+
+                if (option) return option.name;
+            }
+        },
         validateForm() {
             this.formError = null;
 
