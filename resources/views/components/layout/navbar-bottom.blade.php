@@ -70,34 +70,17 @@
                         <ul class="dropdown-menu">
                            @foreach ($group->categories as $category)
                               <li class="dropdown">
-                                 <a class="dropdown-item dropdown-toggle d-flex align-items-start justify-content-between gap-3"
+                                 <a class="dropdown-item d-flex align-items-start justify-content-between gap-3"
                                     href="{{ route('categories.show', ['slug' => $category->slug]) }}">
                                     <span>
                                        {{ $category->name }}
                                     </span>
                                     @if ($category->promotion_label)
-                                       <span
-                                          class="badge bg-success">{{ $category->promotion_label }}</span>
+                                       <span class="badge bg-success">
+                                          {{ $category->promotion_label }}
+                                       </span>
                                     @endif
                                  </a>
-                                 @if ($category->products->count())
-                                    <ul class="dropdown-menu">
-                                       @foreach ($category->products as $product)
-                                          <li>
-                                             <a class="dropdown-item d-flex align-items-start justify-content-between gap-3"
-                                                href="{{ route('products.show', ['product' => $product->slug]) }}">
-                                                {{ $product->title }}
-
-                                                @if ($product->promotion_label)
-                                                   <span class="badge bg-success">
-                                                      {{ $product->promotion_label }}
-                                                   </span>
-                                                @endif
-                                             </a>
-                                          </li>
-                                       @endforeach
-                                    </ul>
-                                 @endif
                               </li>
                            @endforeach
                         </ul>
