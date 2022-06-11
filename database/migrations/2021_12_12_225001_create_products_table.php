@@ -20,7 +20,6 @@ class CreateProductsTable extends Migration
             $table->text("details");
             $table->longText("description")->nullable();
             $table->float("design_price")->nullable();
-            $table->enum("allowed_quantities_type", ["fixed", "interval"])->default("fixed");
             $table->json("allowed_quantities");
             $table->boolean("popular")->default(0);
             $table->boolean("active")->default(1);
