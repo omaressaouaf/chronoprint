@@ -20063,11 +20063,14 @@ var _hoisted_14 = {
 };
 var _hoisted_15 = ["disabled"];
 var _hoisted_16 = {
+  "class": "d-flex align-items-center"
+};
+var _hoisted_17 = {
   key: 0,
-  "class": "fas fa-spinner fa-spin"
+  "class": "spinner mr-2"
 };
 
-var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Sauvgarder ");
+var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Sauvgarder ");
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_options_form = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("options-form");
@@ -20138,7 +20141,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     disabled: $data.loading,
     type: "button",
     "class": "btn btn-primary"
-  }, [$data.loading ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("i", _hoisted_16)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _hoisted_17], 8
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_16, [$data.loading ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("i", _hoisted_17)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _hoisted_18])], 8
   /* PROPS */
   , _hoisted_15)])])])]);
 }
@@ -48586,6 +48589,10 @@ if (document.querySelector("#notifications-dropdown")) {
   notificationsDropdown.component("notifications-list", (__webpack_require__(/*! ./components/NotificationsList.vue */ "./resources/js/voyager/components/NotificationsList.vue")["default"]));
   notificationsDropdown.mount("#notifications-dropdown");
 }
+
+window.onload = function () {
+  document.querySelector("#product-attributes-btn").style.display = "block";
+};
 })();
 
 /******/ })()

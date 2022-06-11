@@ -60,6 +60,8 @@ if (document.querySelector("#notifications-dropdown")) {
     );
 
     notificationsDropdown.mount("#notifications-dropdown");
-
 }
 
+window.onload = () => {
+    document.querySelector("#product-attributes-btn").style.display = "block";
+};

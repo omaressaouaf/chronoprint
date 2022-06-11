@@ -87,8 +87,10 @@
                         type="button"
                         class="btn btn-primary"
                     >
-                        <i v-if="loading" class="fas fa-spinner fa-spin"></i>
-                        Sauvgarder
+                        <span class="d-flex align-items-center">
+                            <i v-if="loading" class="spinner mr-2"></i>
+                            Sauvgarder
+                        </span>
                     </button>
                 </div>
             </div>

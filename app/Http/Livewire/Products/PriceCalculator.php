@@ -5,10 +5,11 @@ namespace App\Http\Livewire\Products;
 use App\Models\Product;
 use Livewire\Component;
 use App\Models\CartItem;
+use App\Models\Attribute;
 use App\Services\CartService;
-use App\Traits\WithLivewireFileUploads;
 use Illuminate\Support\Collection;
 use Illuminate\Validation\Validator;
+use App\Traits\WithLivewireFileUploads;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class PriceCalculator extends Component
@@ -103,28 +104,11 @@ class PriceCalculator extends Component
         } else {
             $this->oldMedia = collect([]);
             $this->selectedOptions = collect([]);
-            $this->product->attributs->each(function ($attribute) {
-                $option = [];
-
-                if ($attribute->options_type === 'fixed') {
-                    $option["ref"] = $attribute->pivot->options[0]["ref"];
-                } else {
-                    if (is_array($attribute->groups) && count($attribute->groups)) {
-                        foreach ($attribute->groups as $group) {
-                            $option["value"][$group['name']] = is_numeric($group['maxLimit'])
-                                ? $group['maxLimit']
-                                : $attribute->pivot->options[0]["maxValue"];
-                        }
-                    } else {
-                        $option["value"] = $attribute->pivot->options[0]["maxValue"];
-                    }
-                }
-
-                $this->selectedOptions->put($attribute->name, $option);
-            });
             $this->resetSelectedQuantityValue();
             $this->designByCompany = $this->product->category?->is_graphic_service ?? false;
         }
+
+        $this->setAndSanitizeSelectedOptions();
 
         $this->calculatePrices();
 
@@ -133,6 +117,8 @@ class PriceCalculator extends Component
 
     public function updatedSelectedOptions()
     {
+        $this->setAndSanitizeSelectedOptions();
+
         $this->calculatePrices();
 
         $this->findAndSetRequiredFiles();
@@ -169,6 +155,53 @@ class PriceCalculator extends Component
         $this->selectedQuantityValue = $this->product->allowed_quantities[0][$this->product->allowed_quantities_type === 'fixed'
             ? 'value'
             : 'maxValue'];
+    }
+
+    /**
+     * Set valid selected options and removes the ones that should be disabled
+     *
+     * @return void
+     */
+    private function setAndSanitizeSelectedOptions()
+    {
+        $this->product->attributs->each(function ($attribute) {
+            $selectedOption = isset($this->selectedOptions[$attribute->name])
+                ? $this->selectedOptions[$attribute->name]
+                : [];
+
+            if (
+                (!isset($selectedOption["ref"]) && !isset($selectedOption["ref"]))
+                || (isset($selectedOption["ref"]) && $this->optionShouldBeDisabled($selectedOption['ref']))
+            ) {
+                $firstValidOption = collect($attribute->pivot->options)
+                    ->reject(function ($option) {
+                        return $this->optionShouldBeDisabled($option['ref']);
+                    })
+                    ->first();
+
+                // If there is no valid selected option (entire attribute should be disabled) then we forget and skip the current attribute
+                if (!$firstValidOption) {
+                    $this->selectedOptions->forget($attribute->name);
+                    return true;
+                }
+
+                if ($attribute->options_type === 'fixed') {
+                    $selectedOption["ref"] = $firstValidOption["ref"];
+                } else {
+                    if (is_array($attribute->groups) && count($attribute->groups)) {
+                        foreach ($attribute->groups as $group) {
+                            $selectedOption["value"][$group['name']] = is_numeric($group['maxLimit'])
+                                ? $group['maxLimit']
+                                : $firstValidOption["maxValue"];
+                        }
+                    } else {
+                        $selectedOption["value"] = $firstValidOption["maxValue"];
+                    }
+                }
+
+                $this->selectedOptions->put($attribute->name, $selectedOption);
+            }
+        });
     }
 
     /**
@@ -334,6 +367,33 @@ class PriceCalculator extends Component
                 return $mediaItem->id != $mediaItemId;
             });
         }
+    }
+
+    /**
+     * Checks if the given option should be disabled
+     *
+     * @param string $optionRef
+     * @return bool
+     */
+    public function optionShouldBeDisabled(string $optionRef)
+    {
+        return $this->selectedOptions->contains(function ($selectedOption, $attributeName) use ($optionRef) {
+            $option = $this->product->getOptionBySelectedOptionData($attributeName, $selectedOption);
+
+            return isset($option['disabledOptions']) && in_array($optionRef, $option['disabledOptions']);
+        });
+    }
+
+    /**
+     * Checks if given attribute should be disabled
+     *
+     * @param App\Models\Attribute $attribute
+     * @return bool
+     */
+    public function attributeShouldBeDisabled(Attribute $attribute)
+    {
+        return collect($attribute->pivot->options)
+            ->every(fn ($option) => $this->optionShouldBeDisabled($option['ref']));
     }
 
     /**

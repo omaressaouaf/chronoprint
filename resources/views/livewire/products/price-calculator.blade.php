@@ -20,7 +20,7 @@
                   <div class="row">
                      <div class="col-md-12 mb-4">
                         <div class="d-flex justify-content-between align-items-center pb-1">
-                           <label class="form-label">{{ __('Quantity') }}</label>
+                           <label class="form-label">{{ __('Quantity') }}:</label>
                         </div>
                         @if ($product->allowed_quantities_type === 'fixed')
                            <select wire:model="selectedQuantityValue"
@@ -40,20 +40,25 @@
                      </div>
                      @foreach ($product->attributs as $attribute)
                         @if ($attribute->options_type === 'fixed')
-                           <div class="col-md-6 mb-4">
-                              <div class="d-flex justify-content-between align-items-center pb-1">
-                                 <label class="form-label">{{ $attribute->label }}:</label>
+                           @if (!$this->attributeShouldBeDisabled($attribute))
+                              <div class="col-md-6 mb-4">
+                                 <div
+                                    class="d-flex justify-content-between align-items-center pb-1">
+                                    <label class="form-label">{{ $attribute->label }}:</label>
+                                 </div>
+                                 <select wire:model="selectedOptions.{{ $attribute->name }}.ref"
+                                    class="form-select"
+                                    required>
+                                    @foreach ($attribute->pivot->options as $option)
+                                       @if (!$this->optionShouldBeDisabled($option['ref']))
+                                          <option value="{{ $option['ref'] }}">
+                                             {{ $option['name'] }}
+                                          </option>
+                                       @endif
+                                    @endforeach
+                                 </select>
                               </div>
-                              <select wire:model="selectedOptions.{{ $attribute->name }}.ref"
-                                 class="form-select"
-                                 required>
-                                 @foreach ($attribute->pivot->options as $option)
-                                    <option value="{{ $option['ref'] }}">
-                                       {{ $option['name'] }}
-                                    </option>
-                                 @endforeach
-                              </select>
-                           </div>
+                           @endif
                         @else
                            <div class="row col-md-12 mb-4 pe-0">
                               <div
