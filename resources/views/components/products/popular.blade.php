@@ -12,9 +12,9 @@
          </ul>
       </div>
    </div>
-   <div class="row products-sliders-container">
+   <div class="row products-sliders-container" style="min-height: 400px">
       @foreach ($categories as $category)
-         <div class="row pt-4 mx-n2 category-{{ $loop->index }} products-slider">
+         <div class="col-md-12 pt-4 mx-n2 category-{{ $loop->index }} products-slider">
             <div class="tns-carousel tns-controls-static tns-controls-outside pt-2">
                <div class="tns-carousel-inner pb-3"
                   data-carousel-options='{"items": 8, "gutter": 16, "controls": true,"nav" : false, "responsive": {"0":{"items":1}, "480":{"items":2}, "720":{"items":3}, "991":{"items":2}, "1140":{"items":3}, "1300":{"items":4}, "1500":{"items":5}}}'>
@@ -27,7 +27,7 @@
       @endforeach
    </div>
 
-   <div class="text-center pt-3 mt-2">
+   <div class="text-center">
       <a class="btn btn-outline-accent"
          href="{{ route('categories.show', ['slug' => 'all']) }}">
          {{ __('More products') }} <i class="ci-arrow-right ms-1"></i>
