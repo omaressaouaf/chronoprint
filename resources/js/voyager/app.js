@@ -63,11 +63,13 @@ if (document.querySelector("#notifications-dropdown")) {
 }
 
 window.onload = () => {
-    const productAttributesBtn = document.querySelector(
-        "#product-attributes-btn"
+    const productAttributesBtns = document.querySelectorAll(
+        ".product-attributes-btn"
     );
 
-    if (productAttributesBtn) {
-        productAttributesBtn.style.display = "block";
+    if (productAttributesBtns.length) {
+        productAttributesBtns.forEach((productAttributesBtn) => {
+            productAttributesBtn.style.display = "block";
+        });
     }
 };

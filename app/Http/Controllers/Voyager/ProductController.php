@@ -229,6 +229,8 @@ class ProductController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControl
             "selectedAttributes.*.pivot.options.*.maxValue" => "exclude_unless:selectedAttributes.*.options_type,interval|required|numeric|min:1|gte:selectedAttributes.*.pivot.options.*.minValue",
             "selectedAttributes.*.pivot.options.*.prices" => "nullable",
             "selectedAttributes.*.pivot.options.*.prices.*" => "required|numeric|min:0",
+            "selectedAttributes.*.pivot.options.*.pricesPerOption" => "nullable",
+            "selectedAttributes.*.pivot.options.*.pricesPerOption.*.*" => "required|numeric|min:0",
             "selectedAttributes.*.pivot.options.*.requiredFilesProperties" => "nullable|array",
             "selectedAttributes.*.pivot.options.*.requiredFilesProperties.*.name" => "required|string",
             "selectedAttributes.*.pivot.options.*.disabledOptions" => "nullable|array",

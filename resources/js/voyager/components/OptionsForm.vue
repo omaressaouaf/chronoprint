@@ -124,6 +124,108 @@
             </div>
         </div>
         <div
+            v-if="productAllowedQuantities && productAllowedQuantities.length"
+            class="prices-per-option row col-md-12"
+            style="padding: 0px 40px"
+        >
+            <h5
+                style="margin-bottom: 30px"
+                data-toggle="collapse"
+                :data-target="`#prices-per-option-container-${componentId}`"
+            >
+                <i class="voyager-angle-down"></i> Les tarifs additionnels
+                selons options
+            </h5>
+            <div
+                class="collapse"
+                :id="`prices-per-option-container-${componentId}`"
+            >
+                <div class="form-group col-md-12 ml-2">
+                    <multiselect
+                        v-model="formPricesOptions"
+                        :options="validSelectedAttributes"
+                        :multiple="true"
+                        :preserve-search="true"
+                        :close-on-select="false"
+                        placeholder="Sélectionnez les
+                    options dont dépendent les prix"
+                        :show-no-results="false"
+                        group-values="pivotOptionsRefs"
+                        group-label="name"
+                        :group-select="true"
+                        :custom-label="getOptionNameByRef"
+                        select-label="Sélectionner l'option"
+                        select-group-label="Sélectionner toutes les options
+                    d'attribut"
+                        deselect-label="Désélectionner l'option"
+                        deselect-group-label="Désélectionner toutes les options
+                    d'attribut"
+                    />
+                    <p class="ml-2 mt-2 font-weight-bold">
+                        <i class="voyager-info-circled text-info mr-1"></i>
+                        si vous ne voyez pas l'option souhaitée. essayez
+                        d'enregistrer le formulaire
+                    </p>
+                </div>
+                <div class="row px-5">
+                    <p
+                        v-if="Object.keys(this.form.pricesPerOption).length"
+                        class="ml-1 font-weight-bold"
+                    >
+                        <i class="voyager-info-circled text-info mr-1"></i>
+                        Laisser vide pour revenir à la valeur par défaut
+                    </p>
+                    <div
+                        v-for="(prices, optionRef) in this.form.pricesPerOption"
+                        :key="optionRef"
+                        class="col-md-12 px-5 py-4 mb-3 ml-2 mr-2"
+                        style="
+                            border: 1px solid rgba(0, 0, 0, 0.096);
+                            border-radius: 10px;
+                            max-width: fit-content;
+                        "
+                    >
+                        <h5>
+                            Si {{ getOptionNameByRef(optionRef) }} est
+                            sélectionné
+                        </h5>
+                        <div
+                            v-for="(
+                                quantity, index
+                            ) in productAllowedQuantities"
+                            :key="index"
+                            class="form-group"
+                        >
+                            <label class="control-label"
+                                >Tarifs additionnel pour qté (
+                                <span
+                                    v-if="
+                                        productAllowedQuantitiesType === 'fixed'
+                                    "
+                                    >{{ quantity.value }}</span
+                                >
+                                <span v-else>
+                                    {{ quantity.minValue }}
+                                    <i class="voyager-dot-2"></i>
+                                    {{ quantity.maxValue }} </span
+                                >)</label
+                            >
+                            <input
+                                v-model="
+                                    form.pricesPerOption[optionRef][
+                                        quantity.ref
+                                    ]
+                                "
+                                type="number"
+                                class="form-control"
+                                placeholder="`Tarifs additionnels"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div
             class="required-files-properties row col-md-12"
             style="padding: 0px 40px"
         >
@@ -236,6 +338,7 @@
                             deselect-group-label="Désélectionner toutes les options d'attribut"
                         />
                         <p class="ml-2 mt-2 font-weight-bold">
+                            <i class="voyager-info-circled text-info mr-1"></i>
                             si vous ne voyez pas l'option souhaitée. essayez
                             d'enregistrer le formulaire
                         </p>
@@ -341,6 +444,50 @@
                                     </span>
                                     Qté :
                                     {{ option.prices[quantity.ref] || 0 }} Dhs
+                                </h6>
+                            </div>
+                        </div>
+                        <div
+                            v-if="
+                                productAllowedQuantities &&
+                                productAllowedQuantities.length
+                            "
+                            class="option-prices-per-option"
+                        >
+                            <h6
+                                data-toggle="collapse"
+                                :data-target="`#option-prices-per-option-container-${
+                                    componentId + index
+                                }`"
+                                class="text-capitalize font-weight-bold"
+                            >
+                                <i class="voyager-angle-down"></i> Les tarifs
+                                additionnels selons options
+                                <span
+                                    v-if="
+                                        option.pricesPerOption &&
+                                        Object.keys(option.pricesPerOption)
+                                            .length
+                                    "
+                                    class="text-success"
+                                >
+                                    <i class="voyager-check ml-2"></i>
+                                </span>
+                            </h6>
+                            <div
+                                class="ml-3 collapse"
+                                :id="`option-prices-per-option-container-${
+                                    componentId + index
+                                }`"
+                            >
+                                <h6
+                                    v-for="(
+                                        prices, optionRef
+                                    ) in option.pricesPerOption"
+                                    :key="optionRef"
+                                >
+                                    <i class="voyager-dot"></i>
+                                    {{ getOptionNameByRef(optionRef) }}
                                 </h6>
                             </div>
                         </div>
@@ -476,7 +623,10 @@ export default {
             componentId: uniqueId(),
             form: {
                 name: "",
+                minValue: "",
+                maxValue: "",
                 prices: {},
+                pricesPerOption: {},
                 requiredFilesProperties: [],
                 disabledOptions: [],
             },
@@ -509,6 +659,23 @@ export default {
                         attribute.options_type === "fixed" &&
                         attribute.pivotOptionsRefs.length
                 );
+        },
+        formPricesOptions: {
+            get() {
+                return Object.keys(this.form.pricesPerOption);
+            },
+            set(selectedOptionsRefs) {
+                for (const optionRef in this.form.pricesPerOption) {
+                    if (!selectedOptionsRefs.includes(optionRef)) {
+                        delete this.form.pricesPerOption[optionRef];
+                    }
+                }
+
+                for (const optionRef of selectedOptionsRefs) {
+                    this.form.pricesPerOption[optionRef] =
+                        this.form.pricesPerOption[optionRef] || {};
+                }
+            },
         },
     },
     emits: ["optionsChanged"],
@@ -582,13 +749,36 @@ export default {
             for (const [quantityRef, price] of Object.entries(
                 this.form.prices
             )) {
+                if (quantityRef === "perOptions") continue;
+
                 if (price.toString().trim() === "") {
                     delete this.form.prices[quantityRef];
+                    continue;
                 }
 
                 if (isNaN(price) || price < 0) {
                     this.formError = "Le prix être supérieur ou égal à 0";
                     return false;
+                }
+            }
+
+            for (const [optionRef, prices] of Object.entries(
+                this.form.pricesPerOption
+            )) {
+                for (const [quantityRef, price] of Object.entries(prices)) {
+                    if (quantityRef === "perOptions") continue;
+
+                    if (price.toString().trim() === "") {
+                        delete this.form.pricesPerOption[optionRef][
+                            quantityRef
+                        ];
+                        continue;
+                    }
+
+                    if (isNaN(price) || price < 0) {
+                        this.formError = "Le prix être supérieur ou égal à 0";
+                        return false;
+                    }
                 }
             }
 
@@ -644,19 +834,12 @@ export default {
             this.resetForm();
         },
         resetForm() {
-            this.form =
-                this.optionsList === "fixed"
-                    ? {
-                          name: "",
-                      }
-                    : {
-                          minValue: "",
-                          maxValue: "",
-                      };
-
             this.form = {
-                ...this.form,
+                name: "",
+                minValue: "",
+                maxValue: "",
                 prices: {},
+                pricesPerOption: {},
                 requiredFilesProperties: [],
             };
         },
