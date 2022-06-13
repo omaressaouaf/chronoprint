@@ -1977,7 +1977,7 @@ class DataRowsTableSeeder extends Seeder
                 'data_type_id' => 8,
                 'field' => 'help',
                 'type' => 'text_area',
-                'display_name' => 'Help',
+                'display_name' => 'Aide',
                 'required' => 0,
                 'browse' => 0,
                 'read' => 1,
