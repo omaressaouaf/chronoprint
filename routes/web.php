@@ -11,6 +11,7 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DealersProgramController;
 use App\Http\Controllers\GraphicServiceController;
+use App\Http\Controllers\Voyager\BackupController;
 use App\Http\Controllers\Voyager\MediaController;
 use App\Http\Controllers\Voyager\InvoiceController;
 use App\Http\Controllers\Voyager\NotificationController;
@@ -35,6 +36,15 @@ Route::prefix("admin")->group(function () {
         // Notifications
         Route::delete('/notifications', [NotificationController::class, 'deleteNotifications']);
         Route::put('/notifications', [NotificationController::class, 'markNotifications']);
+
+        // Backups
+        Route::prefix("backups")->as("backups.")->group(function () {
+            Route::get("/", [BackupController::class, "index"])->name("index");
+            Route::post("/", [BackupController::class, "store"])->name("store");
+            Route::delete("/{filename}", [BackupController::class, "destroy"])->name("destroy");
+            Route::get("/download/{filename}", [BackupController::class, "download"])->name("download");
+            Route::delete("/cleanup", [BackupController::class, "cleanup"])->name("cleanup");
+        });
     });
 });
 

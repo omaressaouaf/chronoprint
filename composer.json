@@ -20,6 +20,7 @@
         "livewire/livewire": "^2.8",
         "orangehill/iseed": "^3.0",
         "pusher/pusher-php-server": "^7.0",
+        "spatie/laravel-backup": "^7.0.0",
         "spatie/laravel-sitemap": "^6.1",
         "tcg/voyager": "^1.5"
     },

@@ -38,3 +38,20 @@ function generate_ref(): string
 {
     return Str::uuid() . Str::random();
 }
+
+/**
+ * Format file size
+ *
+ * @param int|string $sizeInBytes
+ * @return string
+ */
+function formatFileSize(int|string $sizeInBytes): string
+{
+    $units = ['B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB'];
+
+    for ($i = 0; $sizeInBytes > 1024; $i++) {
+        $sizeInBytes /= 1024;
+    }
+
+    return round($sizeInBytes, 2) . ' ' . $units[$i];
+}
