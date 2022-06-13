@@ -3,7 +3,8 @@
 @section('page_title', 'Sauvgardes')
 
 @section('page_header')
-   <div class="container-fluid d-flex align-items-center">
+   <div class="container-fluid d-flex align-items-center"
+      style="flex-wrap: wrap">
       <h1 class="page-title">
          <i class="voyager-file-text"></i>
          Sauvgardes
@@ -21,7 +22,7 @@
          @csrf
          @method('DELETE')
          <button class="btn btn-danger mt-2">
-            <i class="voyager-trash mr-2"></i> <span>Nettoyer les anciennes sauvegardes (avant 1
+            <i class="voyager-trash mr-2"></i> <span>Nettoyer les sauvegardes (avant 1
                semaine)</span>
          </button>
       </form>
@@ -58,7 +59,10 @@
                            @forelse ($backups as $backup)
                               <tr>
                                  <td>
-                                    {{ $backup['filename'] }}
+                                    <a href="{{ route('admin.backups.download', ['filename' => $backup['filename']]) }}
+                                             ">
+                                       {{ $backup['filename'] }}
+                                    </a>
                                  </td>
                                  <td>
                                     {{ $backup['size'] }}
