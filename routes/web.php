@@ -41,9 +41,9 @@ Route::prefix("admin")->group(function () {
         Route::prefix("backups")->as("backups.")->group(function () {
             Route::get("/", [BackupController::class, "index"])->name("index");
             Route::post("/", [BackupController::class, "store"])->name("store");
-            Route::delete("/{filename}", [BackupController::class, "destroy"])->name("destroy");
             Route::get("/download/{filename}", [BackupController::class, "download"])->name("download");
             Route::delete("/cleanup", [BackupController::class, "cleanup"])->name("cleanup");
+            Route::delete("/{filename}", [BackupController::class, "destroy"])->name("destroy");
         });
     });
 });
