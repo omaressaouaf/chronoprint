@@ -36,7 +36,7 @@ function format_price($price): float
  */
 function generate_ref(): string
 {
-    return Str::uuid() . Str::random();
+    return Str::uuid() . Str::random(10);
 }
 
 /**
