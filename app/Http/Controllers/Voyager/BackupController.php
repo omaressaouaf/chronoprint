@@ -31,7 +31,7 @@ class BackupController extends Controller
 
         return back()->with([
             'message'    => __("The backup is being generated. when it's done an email will be sent to :email", [
-                "email" => env("MAIL_FROM_ADDRESS")
+                "email" => env("MAIL_USERNAME")
             ]),
             'alert-type' => 'success',
         ]);
@@ -58,7 +58,7 @@ class BackupController extends Controller
 
         return back()->with([
             'message'    => __("Old backups are being deleted. when it's done an email will be sent to :email", [
-                "email" => env("MAIL_FROM_ADDRESS")
+                "email" => env("MAIL_USERNAME")
             ]),
             'alert-type' => 'success',
         ]);;
