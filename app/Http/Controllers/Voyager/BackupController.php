@@ -31,7 +31,7 @@ class BackupController extends Controller
 
         return back()->with([
             'message'    => __("The backup is being generated. when it's done an email will be sent to :email", [
-                "email" => setting("site.contact_email") || setting("site.main_email")
+                "email" => setting("site.contact_email") ?? setting("site.main_email")
             ]),
             'alert-type' => 'success',
         ]);
@@ -58,7 +58,7 @@ class BackupController extends Controller
 
         return back()->with([
             'message'    => __("Old backups are being deleted. when it's done an email will be sent to :email", [
-                "email" => setting("site.contact_email") || setting("site.main_email")
+                "email" => setting("site.contact_email") ?? setting("site.main_email")
             ]),
             'alert-type' => 'success',
         ]);;
