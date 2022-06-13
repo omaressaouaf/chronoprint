@@ -19258,7 +19258,13 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
       event.target.style.display = "none";
 
-      (_this$selectedAttribu = this.selectedAttributes[attributeIndex].pivot.options).push.apply(_this$selectedAttribu, _toConsumableArray(this.selectedAttributes[attributeIndex].options));
+      (_this$selectedAttribu = this.selectedAttributes[attributeIndex].pivot.options).push.apply(_this$selectedAttribu, _toConsumableArray(this.selectedAttributes[attributeIndex].options.map(function (option) {
+        return _objectSpread(_objectSpread({}, option), {}, {
+          prices: {},
+          pricesPerOption: {},
+          disabledOptions: {}
+        });
+      })));
     },
     setAttributeOptions: function setAttributeOptions(options, attributeIndex) {
       this.selectedAttributes[attributeIndex].pivot.options = options;
@@ -19706,7 +19712,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     formPricesOptions: {
       get: function get() {
-        return Object.keys(this.form.pricesPerOption);
+        return this.form.pricesPerOption ? Object.keys(this.form.pricesPerOption) : [];
       },
       set: function set(selectedOptionsRefs) {
         for (var optionRef in this.form.pricesPerOption) {
@@ -19870,6 +19876,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.form = (0,lodash__WEBPACK_IMPORTED_MODULE_0__.cloneDeep)(this.optionsList.find(function (option, i) {
         return i == index;
       }));
+      this.form = _objectSpread(_objectSpread({}, this.form), {}, {
+        pricesPerOption: this.form.pricesPerOption || {},
+        disabledOptions: this.form.disabledOptions || []
+      });
       this.currentIndex = index;
       this.editMode = true;
     },
@@ -21254,7 +21264,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "deselect-group-label": "Désélectionner toutes les options\r\n                    d'attribut"
   }, null, 8
   /* PROPS */
-  , ["modelValue", "options", "custom-label"]), _hoisted_45]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_46, [Object.keys(this.form.pricesPerOption).length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_47, _hoisted_50)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(this.form.pricesPerOption, function (prices, optionRef) {
+  , ["modelValue", "options", "custom-label"]), _hoisted_45]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_46, [$options.formPricesOptions.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_47, _hoisted_50)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.form.pricesPerOption, function (prices, optionRef) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
       key: optionRef,
       "class": "col-md-12 px-5 py-4 mb-3 ml-2 mr-2",

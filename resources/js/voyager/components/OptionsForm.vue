@@ -169,14 +169,14 @@
                 </div>
                 <div class="row px-5">
                     <p
-                        v-if="Object.keys(this.form.pricesPerOption).length"
+                        v-if="formPricesOptions.length"
                         class="ml-1 font-weight-bold"
                     >
                         <i class="voyager-info-circled text-info mr-1"></i>
                         Laisser vide pour revenir à la valeur par défaut
                     </p>
                     <div
-                        v-for="(prices, optionRef) in this.form.pricesPerOption"
+                        v-for="(prices, optionRef) in form.pricesPerOption"
                         :key="optionRef"
                         class="col-md-12 px-5 py-4 mb-3 ml-2 mr-2"
                         style="
@@ -662,7 +662,9 @@ export default {
         },
         formPricesOptions: {
             get() {
-                return Object.keys(this.form.pricesPerOption);
+                return this.form.pricesPerOption
+                    ? Object.keys(this.form.pricesPerOption)
+                    : [];
             },
             set(selectedOptionsRefs) {
                 for (const optionRef in this.form.pricesPerOption) {
@@ -814,6 +816,12 @@ export default {
             this.form = cloneDeep(
                 this.optionsList.find((option, i) => i == index)
             );
+            this.form = {
+                ...this.form,
+                pricesPerOption: this.form.pricesPerOption || {},
+                disabledOptions: this.form.disabledOptions || [],
+            };
+
             this.currentIndex = index;
             this.editMode = true;
         },

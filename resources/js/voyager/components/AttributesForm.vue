@@ -113,7 +113,14 @@ export default {
         importPredefinedOptionsFromAttribute(event, attributeIndex) {
             event.target.style.display = "none";
             this.selectedAttributes[attributeIndex].pivot.options.push(
-                ...this.selectedAttributes[attributeIndex].options
+                ...this.selectedAttributes[attributeIndex].options.map(
+                    (option) => ({
+                        ...option,
+                        prices: {},
+                        pricesPerOption: {},
+                        disabledOptions: {},
+                    })
+                )
             );
         },
         setAttributeOptions(options, attributeIndex) {

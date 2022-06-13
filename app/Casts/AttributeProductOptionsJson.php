@@ -22,6 +22,10 @@ class AttributeProductOptionsJson implements CastsAttributes
         if (is_array($decodedArray)) {
             foreach ($decodedArray as $key => $item) {
                 $decodedArray[$key]["prices"] = (object)$item["prices"];
+
+                if (isset($decodedArray[$key]["pricesPerOption"])) {
+                    $decodedArray[$key]["pricesPerOption"] = (object)$item["pricesPerOption"];
+                }
             }
         }
 
@@ -42,6 +46,10 @@ class AttributeProductOptionsJson implements CastsAttributes
         if (is_array($value)) {
             foreach ($value as $key => $item) {
                 $value[$key]["prices"] = (object)$item["prices"];
+
+                if (isset($value[$key]["pricesPerOption"])) {
+                    $value[$key]["pricesPerOption"] = (object)$item["pricesPerOption"];
+                }
             }
         }
 

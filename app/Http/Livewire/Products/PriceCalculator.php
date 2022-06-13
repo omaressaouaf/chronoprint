@@ -11,6 +11,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Validation\Validator;
 use App\Traits\WithLivewireFileUploads;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Arr;
 
 class PriceCalculator extends Component
 {
@@ -305,10 +306,23 @@ class PriceCalculator extends Component
                 return;
             }
 
-            $optionPrices =  (array)$option["prices"];
+            $optionPrices =  isset($option["prices"]) ? (array)$option["prices"] : [];
+            $optionPricesPerOption =  isset($option["pricesPerOption"]) ? (array)$option["pricesPerOption"] : [];
             $optionPriceBasedOnQuantity = 0;
 
+            $optionPricesPerSelectedOptions = Arr::only(
+                $optionPricesPerOption,
+                $this->selectedOptions->pluck("ref")->toArray()
+            );
+            $optionPricesPerFirstSelectedOption = Arr::first($optionPricesPerSelectedOptions);
+
             if (
+                is_array($optionPricesPerSelectedOptions)
+                && isset($optionPricesPerFirstSelectedOption[$this->quantity['ref']])
+                && is_numeric($optionPricesPerFirstSelectedOption[$this->quantity['ref']])
+            ) {
+                $optionPriceBasedOnQuantity = $optionPricesPerFirstSelectedOption[$this->quantity['ref']];
+            } else if (
                 is_array($optionPrices)
                 && isset($optionPrices[$this->quantity['ref']])
                 && is_numeric($optionPrices[$this->quantity['ref']])
