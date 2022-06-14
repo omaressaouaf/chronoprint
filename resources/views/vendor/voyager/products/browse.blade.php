@@ -317,23 +317,24 @@
                                     </td>
                                  @endforeach
                                  <td class="no-sort no-click bread-actions">
-
-                                    @foreach ($actions as $action)
-                                       @if (!method_exists($action, 'massAction'))
-                                          @include('voyager::bread.partials.actions', [
-                                              'action' => $action,
-                                          ])
-                                       @endif
-                                    @endforeach
+                                    <div class="ml-2">
+                                       @foreach ($actions as $action)
+                                          @if (!method_exists($action, 'massAction'))
+                                             @include('voyager::bread.partials.actions',
+                                                 [
+                                                     'action' => $action,
+                                                 ])
+                                          @endif
+                                       @endforeach
+                                    </div>
                                     @can('edit', $data)
                                        <button
                                           onclick="window.product = {{ $data->load('attributs') }}"
                                           type="button"
-                                          class="btn btn-sm btn-success float-right mr-2 product-attributes-btn"
+                                          class="btn btn-sm btn-success product-attributes-btn"
                                           style="display: none"
                                           data-toggle="modal"
-                                          data-target="#attributes-form-modal"
-                                          >
+                                          data-target="#attributes-form-modal">
                                           <i class="voyager-params"></i> Attributs
                                        </button>
                                     @endcan

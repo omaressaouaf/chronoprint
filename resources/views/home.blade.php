@@ -8,7 +8,7 @@
    <x-home.brands />
 
    <section class="mb-4 bg-accent">
-      <div class="px-10">
+      <div class="px-5 px-md-10">
          <div class="row pt-5">
             <div class="col-md-3 col-sm-6 mb-4">
                <div class="d-flex"><i class="ci-rocket text-primary"
