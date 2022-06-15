@@ -25,12 +25,14 @@ class CheckoutController extends Controller
 
         $request->validate([
             "address_id" => "required",
+            "billing_address_id" => "nullable",
             "additional_information" => "nullable",
             "payment_mode" => "required|in:cash,credit_card"
         ]);
 
         ["msg_type" => $msgType, "msg_content" => $msgContent]  = $checkoutService->checkout(
             $request->address_id,
+            $request->billing_address_id,
             $request->additional_information,
             $request->payment_mode,
             $cart

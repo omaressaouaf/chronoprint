@@ -148,7 +148,6 @@
       .cool-gray {
          color: #6B7280;
       }
-
    </style>
 </head>
 
@@ -220,27 +219,27 @@
             <td class="border-0"></td>
             <td class="px-0">
                <p class="buyer-name">
-                  <strong>{{ ucwords($order->address_name) }}</strong>
+                  <strong>{{ ucwords($order->billing_address_name) }}</strong>
                </p>
 
                <p class="buyer-address">
-                  Adresse : {{ $order->address_city }}, {{ $order->address_line }},
-                  {{ $order->address_zip }}
+                  Adresse : {{ $order->address_city }}, {{ $order->billing_address_line }},
+                  {{ $order->billing_address_zip }}
                </p>
 
                <p class="buyer-phone">
-                  Téléphone : {{ $order->address_phone }}
+                  Téléphone : {{ $order->billing_address_phone }}
                </p>
 
-               @if ($order->address_email)
+               @if ($order->billing_address_email)
                   <p class="buyer-phone">
-                     Email de livraison : {{ $order->address_email ?? $order->user->email }}
+                     Email : {{ $order->billing_address_email }}
                   </p>
                @endif
 
-               @if ($order->user->email)
+               @if ($order->user)
                   <p class="buyer-phone">
-                     {{ $order->user->email }}
+                     Commande passé par {{ $order->user->name }}
                   </p>
                @endif
             </td>
@@ -277,8 +276,7 @@
                               class="text-muted me-2">{{ $orderItem->product->getAttributeByName($attributeName)->label }}:
                            </span>
                            @if (isset($selectedOption['ref']))
-                              {{ $orderItem->product->getOptionByRef($attributeName, $selectedOption['ref'])['name']
-                           }}
+                              {{ $orderItem->product->getOptionByRef($attributeName, $selectedOption['ref'])['name'] }}
                            @else
                               @if (is_array($selectedOption['value']) && count($selectedOption['value']))
                                  @foreach ($selectedOption['value'] as $groupName => $selectedValue)

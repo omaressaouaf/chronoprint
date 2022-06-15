@@ -13,6 +13,7 @@ class CheckoutService
      * Performs a checkout operation
      *
      * @param int|string $address_id
+     * @param int|string $billing_address_id
      * @param string|null $additional_information
      * @param string $payment_mode
      * @param App\Models\Cart $cart
@@ -20,6 +21,7 @@ class CheckoutService
      */
     public function checkout(
         int|string $address_id,
+        int|string $billing_address_id,
         string|null $additional_information,
         string $payment_mode,
         Cart $cart
@@ -27,6 +29,9 @@ class CheckoutService
         /** @var \App\Models\User */
         $authUser = auth()->user();
         $authUserAddress = $authUser->addresses()->findOrFail($address_id);
+        $authUserBillingAddress = $billing_address_id
+            ? $authUser->addresses()->findOrFail($billing_address_id)
+            : $authUserAddress;
 
         try {
             DB::beginTransaction();
@@ -40,6 +45,12 @@ class CheckoutService
                 "address_city" => $authUserAddress->city,
                 "address_zip" => $authUserAddress->zip,
                 "address_line" => $authUserAddress->line,
+                'billing_address_name' => $authUserBillingAddress->name,
+                "billing_address_phone" => $authUserBillingAddress->phone,
+                'billing_address_email' => $authUserBillingAddress->email,
+                "billing_address_city" => $authUserBillingAddress->city,
+                "billing_address_zip" => $authUserBillingAddress->zip,
+                "billing_address_line" => $authUserBillingAddress->line,
                 "subtotal" => $cart->subtotal,
                 "discount_price" => $cart->discount_price,
                 "dealer_discount_price" => $cart->getDealerDiscountPrice(),

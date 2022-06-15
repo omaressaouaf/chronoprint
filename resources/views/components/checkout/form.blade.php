@@ -73,6 +73,44 @@
             </div>
          </div>
       </div>
+      <h6 class="pt-1 pb-3 mb-3 border-bottom">{{ __('Billing address') }}</h6>
+      <div class="row mb-4">
+         <div class="col-sm-12">
+            <div class="row mb-3">
+               <div class="col-md-12">
+                  <select x-show="authUserAddresses.length"
+                     x-on:change="setBillingSelectedAddress($event.target.value)"
+                     name="billing_address_id"
+                     class="form-select"
+                     id="checkout-billing-country">
+                     <template x-for="address in authUserAddresses">
+                        <option x-text="address.city + ', ' + address.line + ', ' + address.phone"
+                           x-bind:value="address.id"
+                           class="text-capitalize">
+                        </option>
+                     </template>
+                  </select>
+               </div>
+            </div>
+            <div x-show="selectedBillingAddress.id"
+               class="px-4 py-3 border rounded-3 position-relative">
+               <h6 x-text="selectedBillingAddress.name"
+                  class="mb-3">
+               </h6>
+               <p class="fs-sm mb-1"> <i class="ci-location me-2"></i>{{ __('Address') }}:
+                  <span
+                     x-text="selectedBillingAddress.city + ', ' + selectedBillingAddress.line + ', ' + selectedBillingAddress.zip"
+                     class="text-capitalize"></span>
+               </p>
+               <p class="fs-sm mb-1"><i class="ci-phone me-2"></i>{{ __('Phone') }}:
+                  <span x-text="selectedBillingAddress.phone"></span>
+               </p>
+               <p class="fs-sm"><i class="ci-mail me-2"></i>{{ __('Email') }}:
+                  <span x-text="selectedBillingAddress.email"></span>
+               </p>
+            </div>
+         </div>
+      </div>
       <h6 class="pt-1 pb-3 mb-3 border-bottom">{{ __('Additional information') }}</h6>
       <div class="row mb-4">
          <div class="col-sm-12">

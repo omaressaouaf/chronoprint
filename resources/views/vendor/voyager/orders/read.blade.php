@@ -298,6 +298,27 @@
                         {{ $order->address_zip }}
                      </p>
                   </div>
+                  <hr>
+                  <h5 class="mb-4">Adresse de facturation</h5>
+                  <div class="font-weight-bold">
+                     <p>
+                        <i class="voyager-person mr-2"></i>{{ $order->billing_address_name }}
+                     </p>
+                     <p>
+                        <i class="voyager-phone mr-2"></i>{{ $order->billing_address_phone }}
+                     </p>
+                     @if ($order->billing_address_email)
+                        <p>
+                           <i class="voyager-mail mr-2"></i>{{ $order->billing_address_email }}
+                        </p>
+                     @endif
+                     <p>
+                        <i class="voyager-location mr-1"></i>
+                        {{ ucwords($order->billing_address_city) }},
+                        {{ $order->billing_address_line }},
+                        {{ $order->billing_address_zip }}
+                     </p>
+                  </div>
                </div>
             </div>
             @if ($order->additional_information)
