@@ -243,7 +243,10 @@
                      <h5 class="mb-4">{{ __('Old files') }}</h5>
                      @foreach ($oldMedia as $mediaItem)
                         <div class="mb-3">
-                           @if (!is_numeric($mediaItem->name))
+                           @php
+                              $previousMediaItemName = isset($oldMedia[$loop->index - 1]) ? $oldMedia[$loop->index - 1]->name : '';
+                           @endphp
+                           @if (!is_numeric($mediaItem->name) && strtolower($mediaItem->name) !== strtolower($previousMediaItemName))
                               <p class="h6 mb-3 text-capitalize">{{ $mediaItem->name }}</p>
                            @endif
                            <div class="position-relative d-inline-block">
@@ -270,6 +273,7 @@
                                  rel="noopener"
                                  class="text-info text-wrap text-break">
                                  {{ $mediaItem->filename }}
+                                 ({{ format_file_size($mediaItem->size) }})
                               </a>
                            </p>
                         </div>
@@ -324,36 +328,43 @@
                         {{ __('Select your files') }}</button>
                   </div>
                @else
-                  @foreach ($requiredFiles as $requiredFileName => $file)
+                  @foreach ($requiredFiles as $requiredFileName => $requiredFileProperties)
                      <div wire:key="{{ $loop->index }}"
                         class="file-drop-area mt-3">
-                        @if ($file)
-                           @if (file_is_image($file))
-                              <div class="file-drop-preview img-thumbnail rounded">
-                                 <img src="{{ $file->temporaryUrl() }}"
-                                    alt="{{ $file->getClientOriginalName() }}">
-                              </div>
-                           @else
-                              <div class="file-drop-icon ci-document"></div>
-                           @endif
-                        @else
+                        @if (!$requiredFileProperties['files'])
                            <div class="file-drop-icon ci-cloud-upload"></div>
+                           <span class="file-drop-message">
+                              {{ __('upload the needed files for :name (max : :max)', ['name' => $requiredFileName, 'max' => $requiredFileProperties['max']]) }}
+                           </span>
                         @endif
-                        <span class="file-drop-message">
+                        @foreach ($requiredFileProperties['files'] as $file)
                            @if ($file)
-                              {{ $file->getClientOriginalName() }}
+                              @if (file_is_image($file))
+                                 <div class="file-drop-preview img-thumbnail rounded">
+                                    <img src="{{ $file->temporaryUrl() }}"
+                                       alt="{{ $file->getClientOriginalName() }}">
+                                 </div>
+                              @else
+                                 <div class="file-drop-icon ci-document"></div>
+                              @endif
                            @else
-                              {{ __('Drag and drop here to upload') }}
+                              <div class="file-drop-icon ci-cloud-upload"></div>
                            @endif
-                        </span>
+                           <span class="file-drop-message">
+                              @if ($file)
+                                 {{ $file->getClientOriginalName() }}
+                              @endif
+                           </span>
+                        @endforeach
                         <input type="file"
-                           wire:model="requiredFiles.{{ $requiredFileName }}"
+                           @if ($requiredFileProperties['max'] > 1) multiple @endif
+                           wire:model="requiredFiles.{{ $requiredFileName }}.files"
                            class="file-drop-input"
                            id="files-{{ $requiredFileName }}">
                         <button type="button"
                            onclick="document.querySelector('#files-{{ $requiredFileName }}').click()"
                            class="btn btn-accent btn-sm">
-                           {{ __('Select your :filename file', ['filename' => $requiredFileName]) }}</button>
+                           {{ __('Select your :name file(s)', ['name' => $requiredFileName]) }}</button>
                      </div>
                   @endforeach
 

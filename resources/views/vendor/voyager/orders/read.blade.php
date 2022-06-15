@@ -164,7 +164,10 @@
                                  class="collapse mt-3">
                                  @foreach ($orderItem->media as $mediaItem)
                                     <div>
-                                       @if (!is_numeric($mediaItem->name))
+                                       @php
+                                          $previousMediaItemName = isset($orderItem->media[$loop->index - 1]) ? $orderItem->media[$loop->index - 1]->name : '';
+                                       @endphp
+                                       @if (!is_numeric($mediaItem->name) && strtolower($mediaItem->name) !== strtolower($previousMediaItemName))
                                           <p class="h6 mb-3 text-capitalize">{{ $mediaItem->name }}
                                           </p>
                                        @endif
@@ -182,6 +185,7 @@
                                           rel="noopener"
                                           class="text-info text-wrap text-break">
                                           {{ $mediaItem->filename }}
+                                          ({{ format_file_size($mediaItem->size) }})
                                        </a>
                                        <br>
                                        <br>

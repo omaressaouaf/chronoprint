@@ -25,7 +25,7 @@ class CartService
         if (!auth()->check()) {
             throw new Exception("getAuthUserCart needs an authenticated user");
         }
-
+        
         return auth()->user()->cart ?? Cart::create([
             "subtotal" => 0.00,
             "user_id" => auth()->id()
@@ -36,7 +36,7 @@ class CartService
      * Adds item to the auth user's cart
      *
      * @param array $itemData
-     * @param Collection|array $filesToUpload
+     * @param Illuminate\Support\Collection|array $filesToUpload
      * @return bool
      */
     public static function addItemToCart(array $itemData, Collection|array $filesToUpload): bool
@@ -46,9 +46,7 @@ class CartService
 
             $cartItem  = static::getAuthUserCart()->items()->create($itemData);
 
-            foreach ($filesToUpload as $key => $file) {
-                $cartItem->addMediaItem($file, $key);
-            }
+            static::uploadFiles($filesToUpload, $cartItem);
 
             DB::commit();
 
@@ -69,7 +67,7 @@ class CartService
      *
      * @param int|sring $cartItemId
      * @param array $newItemData
-     * @param Collection|array $filesToUpload
+     * @param Illuminate\Support\Collection|array $filesToUpload
      * @param array $oldMediaIdsToDelete
      * @return void
      */
@@ -82,15 +80,10 @@ class CartService
         try {
             DB::beginTransaction();
 
-            $cartItem  = static::getAuthUserCart()->items()->find($cartItemId);
+            $cartItem = static::getAuthUserCart()->items()->find($cartItemId);
             $cartItem->update($newItemData);
 
-            foreach ($filesToUpload as $key => $file) {
-                if ($file) {
-                    $cartItem->addMediaItem($file, $key);
-                }
-            }
-
+            static::uploadFiles($filesToUpload, $cartItem);
             Media::destroy($oldMediaIdsToDelete);
 
             DB::commit();
@@ -104,6 +97,30 @@ class CartService
             ]);
 
             return false;
+        }
+    }
+
+    /**
+     * Upload files
+     *
+     * @param Illuminate\Support\Collection|array $filesToUpload
+     * @param App\Models\CartItem $cartItem
+     * @return void
+     */
+    private static function uploadFiles(Collection|array $filesToUpload, CartItem $cartItem)
+    {
+        foreach ($filesToUpload as $key => $value) {
+            if ($value && is_array($value)) {
+                foreach ($value['files'] as $file) {
+                    if ($file) {
+                        $cartItem->addMediaItem($file, $key);
+                    }
+                }
+            } else {
+                if ($value) {
+                    $cartItem->addMediaItem($value, $key);
+                }
+            }
         }
     }
 

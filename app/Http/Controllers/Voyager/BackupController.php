@@ -17,7 +17,7 @@ class BackupController extends Controller
                     return [
                         "path" => $backupPath,
                         "filename" => basename($backupPath),
-                        "size" => formatFileSize(Storage::size($backupPath)),
+                        "size" => format_file_size(Storage::size($backupPath)),
                         "generated_at" => new Carbon(Storage::lastModified($backupPath))
                     ];
                 })

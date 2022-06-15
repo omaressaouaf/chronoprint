@@ -45,9 +45,9 @@ function generate_ref(): string
  * @param int|string $sizeInBytes
  * @return string
  */
-function formatFileSize(int|string $sizeInBytes): string
+function format_file_size(int|string $sizeInBytes): string
 {
-    $units = ['B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB'];
+    $units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'];
 
     for ($i = 0; $sizeInBytes > 1024; $i++) {
         $sizeInBytes /= 1024;

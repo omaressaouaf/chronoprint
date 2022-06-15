@@ -37,8 +37,10 @@ class PriceCalculator extends Component
     /**
      * The selected options required files
      *  ex : [
-     *   "recto-verso" => ["livewirefile1" ,  "livewirefile2"],
-     *   "verso" => ["livewirefile1"]
+     *   "recto verso" => [
+     *       "recto" => ["files" => ["livewirefile1" ,  "livewirefile2"], "max" => 2]],
+     *       "verso" => ["files" => ["livewirefile1" ,  "livewirefile2"], "max" => 2]]
+     *   ],
      * ]
      * @var array
      */
@@ -79,7 +81,7 @@ class PriceCalculator extends Component
             "quantity" => "required|array",
             'designByCompany' => "required|boolean",
             "totalPrice" => "required|numeric|min:1",
-            "requiredFiles.*" => ["nullable", $fileRules],
+            "requiredFiles.*.files.*" => ["nullable", $fileRules],
             "designFiles.*" => ["nullable", $fileRules]
         ];
     }
@@ -133,17 +135,6 @@ class PriceCalculator extends Component
     public function updatedDesignByCompany()
     {
         $this->calculatePrices();
-    }
-
-    public function updatedRequiredFiles($newFile, $requiredFileName)
-    {
-        if ($this->editMode) {
-            $mediaItem = $this->oldMedia->where("name", $requiredFileName)->first();
-
-            if ($mediaItem) {
-                $this->deleteOldMediaItemLocally($mediaItem->id);
-            }
-        }
     }
 
     /**
@@ -356,13 +347,19 @@ class PriceCalculator extends Component
 
             if ($option && isset($option['requiredFilesProperties'])) {
                 foreach ($option['requiredFilesProperties'] as $requiredFileProperties) {
-                    $this->requiredFiles[$requiredFileProperties["name"]] = "";
+                    $this->requiredFiles[$requiredFileProperties["name"]]["files"] = [];
+                    $this->requiredFiles[$requiredFileProperties["name"]]["max"] = isset($requiredFileProperties["max"])
+                        ? $requiredFileProperties["max"]
+                        : 1;
                 }
             }
         });
 
         if (!count($this->requiredFiles)) {
-            $this->requiredFiles["recto"] = "";
+            $this->requiredFiles["recto"] = [
+                "files" => [],
+                "max" => 1
+            ];
         }
     }
 
@@ -434,10 +431,19 @@ class PriceCalculator extends Component
                     $validator->errors()->add("designFiles", __("5 files is the maximum allowed"));
                 }
             } else {
-                foreach ($this->requiredFiles as $requiredFileName => $file) {
-                    if (!$file && !$this->oldMedia->where("name", $requiredFileName)->first()) {
-                        $validator->errors()->add($requiredFileName, __("The file :file is required", [
-                            "file" => $requiredFileName
+                foreach ($this->requiredFiles as $requiredFileName => $requiredFileProperties) {
+                    $totalRequiredFilesCount = count($requiredFileProperties["files"]) + $this->oldMedia->where("name", $requiredFileName)->count();
+
+                    if ($totalRequiredFilesCount < 1) {
+                        $validator->errors()->add($requiredFileName, __(":name file(s) are required", [
+                            "name" => $requiredFileName
+                        ]));
+                    }
+
+                    if ($totalRequiredFilesCount > $requiredFileProperties["max"]) {
+                        $validator->errors()->add($requiredFileName, __("maximum :name file(s) is :max", [
+                            "name" => $requiredFileName,
+                            "max" => $requiredFileProperties["max"]
                         ]));
                     }
                 }

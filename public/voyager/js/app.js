@@ -21354,6 +21354,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     type: "button",
     "class": "btn btn-primary btn-sm"
   }, " + ")])]), (_this$form$requiredFi = this.form.requiredFilesProperties) !== null && _this$form$requiredFi !== void 0 && _this$form$requiredFi.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_74, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_75, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(this.form.requiredFilesProperties, function (fileProperties, index) {
+    var _fileProperties$max;
+
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("li", {
       style: {
         "display": "flex",
@@ -21368,7 +21370,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }, ["prevent"])
     }, _hoisted_79, 8
     /* PROPS */
-    , _hoisted_77)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h5", _hoisted_80, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(fileProperties.name), 1
+    , _hoisted_77)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h5", _hoisted_80, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(fileProperties.name) + " (maximum : " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)((_fileProperties$max = fileProperties.max) !== null && _fileProperties$max !== void 0 ? _fileProperties$max : 1) + ") ", 1
     /* TEXT */
     )]);
   }), 128
@@ -21492,9 +21494,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       "class": "ml-3 collapse",
       id: "option-required-files-properties-container-".concat($data.componentId + index)
     }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(option.requiredFilesProperties, function (fileProperties, index) {
+      var _fileProperties$max2;
+
       return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("h6", {
         key: index
-      }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(fileProperties.name), 1
+      }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(fileProperties.name) + " (maximum : " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)((_fileProperties$max2 = fileProperties.max) !== null && _fileProperties$max2 !== void 0 ? _fileProperties$max2 : 1) + ") ", 1
       /* TEXT */
       );
     }), 128

@@ -311,7 +311,8 @@
                                 ></a>
                             </div>
                             <h5 class="text-capitalize font-weight-bold">
-                                {{ fileProperties.name }}
+                                {{ fileProperties.name }} (maximum :
+                                {{ fileProperties.max ?? 1 }})
                             </h5>
                         </li>
                     </ul>
@@ -539,7 +540,8 @@
                                     ) in option.requiredFilesProperties"
                                     :key="index"
                                 >
-                                    {{ fileProperties.name }}
+                                    {{ fileProperties.name }} (maximum :
+                                    {{ fileProperties.max ?? 1 }})
                                 </h6>
                             </div>
                         </div>
