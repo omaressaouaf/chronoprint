@@ -228,7 +228,7 @@ class PriceCalculator extends Component
      * @param Illuminate\Validation\Validator|null $validator
      * @return bool
      */
-    private function validatedSelectedOptionInterval(
+    private function validateSelectedOptionInterval(
         string $attributeName,
         array $selectedOptionData,
         Validator|null $validator = null
@@ -294,7 +294,7 @@ class PriceCalculator extends Component
             $selectedOption,
             $attributeName
         ) {
-            if (!$this->validatedSelectedOptionInterval($attributeName, $selectedOption)) return;
+            if (!$this->validateSelectedOptionInterval($attributeName, $selectedOption)) return;
 
             $option = $this->product->getOptionBySelectedOptionData($attributeName, $selectedOption);
 
@@ -421,7 +421,7 @@ class PriceCalculator extends Component
         $validator->after(function ($validator) {
             // Validate options intervals and existence
             $this->selectedOptions->each(function ($selectedOption, $attributeName) use ($validator) {
-                $this->validatedSelectedOptionInterval($attributeName, $selectedOption, $validator);
+                $this->validateSelectedOptionInterval($attributeName, $selectedOption, $validator);
 
                 if (!$this->product->getOptionBySelectedOptionData($attributeName, $selectedOption)) {
                     $validator->errors()->add('selectedOption', __("Option not allowed"));
