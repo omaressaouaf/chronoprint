@@ -248,16 +248,32 @@
                     >
                         {{ requiredFilesPropertiesFormError }}
                     </div>
-                    <div class="form-group col-md-4">
-                        <label class="control-label">Nom de fichier</label>
+                    <div class="form-group col-md-3">
+                        <label class="control-label"
+                            >Nom de fichier<span
+                                v-if="requiredFilesPropertiesForm.max > 1"
+                                >(s)</span
+                            ></label
+                        >
                         <input
-                            ref="requiredFileName"
+                            v-model="requiredFilesPropertiesForm.name"
                             type="text"
                             class="form-control"
-                            placeholder="Nom de fichier"
+                            :placeholder="`Nom de fichier${
+                                requiredFilesPropertiesForm.max > 1 ? '(s)' : ''
+                            }`"
                         />
                     </div>
-                    <div class="form-group col-md-2 mt-4">
+                    <div class="form-group col-md-3">
+                        <label class="control-label">Maximum choisi</label>
+                        <input
+                            v-model="requiredFilesPropertiesForm.max"
+                            type="number"
+                            class="form-control"
+                            placeholder="Maximum choisi"
+                        />
+                    </div>
+                    <div class="form-group col-md-3 mt-4">
                         <button
                             @click="addFilePropertiesToForm"
                             type="button"
@@ -631,11 +647,15 @@ export default {
                 disabledOptions: [],
             },
             formError: null,
-            requiredFilesPropertiesFormError: null,
             editMode: false,
             currentIndex: null,
             optionsList: [],
             optionsType: this.attributeOptionsType || "fixed",
+            requiredFilesPropertiesForm: {
+                name: "",
+                max: 1,
+            },
+            requiredFilesPropertiesFormError: null,
         };
     },
     computed: {
@@ -786,18 +806,6 @@ export default {
 
             return true;
         },
-        validateRequiredFilesPropertiesForm() {
-            this.requiredFilesPropertiesFormError = null;
-
-            if (this.$refs.requiredFileName.value.trim() === "") {
-                this.requiredFilesPropertiesFormError =
-                    "Le nom de fichier est requis";
-
-                return false;
-            }
-
-            return true;
-        },
         addOption() {
             if (!this.validateForm()) {
                 return;
@@ -851,17 +859,42 @@ export default {
                 requiredFilesProperties: [],
             };
         },
-        /**required file properties */
+        // required file properties
+        validateRequiredFilesPropertiesForm() {
+            this.requiredFilesPropertiesFormError = null;
+
+            if (this.requiredFilesPropertiesForm.name.trim() === "") {
+                this.requiredFilesPropertiesFormError =
+                    "Le nom de fichier est requis";
+
+                return false;
+            }
+
+            if (
+                (this.requiredFilesPropertiesForm.max !== "" &&
+                    this.requiredFilesPropertiesForm.max < 1) ||
+                (typeof this.requiredFilesPropertiesForm.max === "string" &&
+                    this.requiredFilesPropertiesForm.max.trim() !== "")
+            ) {
+                this.requiredFilesPropertiesFormError =
+                    "Le maximum doit être supérieur ou égal à 1";
+
+                return false;
+            }
+
+            return true;
+        },
         addFilePropertiesToForm() {
             if (!this.validateRequiredFilesPropertiesForm()) {
                 return;
             }
 
             this.form.requiredFilesProperties.push({
-                name: this.$refs.requiredFileName.value,
+                ...this.requiredFilesPropertiesForm,
             });
 
-            this.$refs.requiredFileName.value = "";
+            this.requiredFilesPropertiesForm.name = "";
+            this.requiredFilesPropertiesForm.max = 1;
         },
         deleteFilePropertiesFromForm(index) {
             this.form.requiredFilesProperties.splice(index, 1);

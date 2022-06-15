@@ -317,22 +317,19 @@
                                     </td>
                                  @endforeach
                                  <td class="no-sort no-click bread-actions">
-                                    <div class="ml-2">
-                                       @foreach ($actions as $action)
-                                          @if (!method_exists($action, 'massAction'))
-                                             @include('voyager::bread.partials.actions',
-                                                 [
-                                                     'action' => $action,
-                                                 ])
-                                          @endif
-                                       @endforeach
-                                    </div>
+                                    @foreach ($actions as $action)
+                                       @if (!method_exists($action, 'massAction'))
+                                          @include('voyager::bread.partials.actions', [
+                                              'action' => $action,
+                                          ])
+                                       @endif
+                                    @endforeach
                                     @can('edit', $data)
                                        <button
                                           onclick="window.product = {{ $data->load('attributs') }}"
                                           type="button"
-                                          class="btn btn-sm btn-success product-attributes-btn"
-                                          style="display: none"
+                                          class="btn btn-sm btn-success float-right product-attributes-btn"
+                                          style="display: none; margin-right : 5px"
                                           data-toggle="modal"
                                           data-target="#attributes-form-modal">
                                           <i class="voyager-params"></i> Attributs

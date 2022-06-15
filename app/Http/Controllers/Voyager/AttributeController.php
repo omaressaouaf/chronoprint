@@ -397,6 +397,7 @@ class AttributeController extends \TCG\Voyager\Http\Controllers\VoyagerBaseContr
             "options.*.maxValue" => "exclude_unless:options_type,interval|required|numeric|min:1|gte:options.*.minValue",
             "options.*.requiredFilesProperties" => "nullable|array",
             "options.*.requiredFilesProperties.*.name" => "required|string",
+            "options.*.requiredFilesProperties.*.max" => "nullable|numeric|min:1",
             "groups" => "nullable|array",
             "groups.*.name" => "required",
             "groups.*.minLimit" => "nullable|numeric|min:0",
