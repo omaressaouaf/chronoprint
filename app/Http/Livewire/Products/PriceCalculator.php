@@ -348,9 +348,10 @@ class PriceCalculator extends Component
             if ($option && isset($option['requiredFilesProperties'])) {
                 foreach ($option['requiredFilesProperties'] as $requiredFileProperties) {
                     $this->requiredFiles[$requiredFileProperties["name"]]["files"] = [];
-                    $this->requiredFiles[$requiredFileProperties["name"]]["max"] = isset($requiredFileProperties["max"])
+                    $this->requiredFiles[$requiredFileProperties["name"]]["max"] =
+                        isset($requiredFileProperties["max"]) && is_numeric($requiredFileProperties["max"])
                         ? $requiredFileProperties["max"]
-                        : 1;
+                        : null;
                 }
             }
         });
@@ -440,7 +441,7 @@ class PriceCalculator extends Component
                         ]));
                     }
 
-                    if ($totalRequiredFilesCount > $requiredFileProperties["max"]) {
+                    if ($requiredFileProperties["max"] && $totalRequiredFilesCount > $requiredFileProperties["max"]) {
                         $validator->errors()->add($requiredFileName, __("maximum :name file(s) is :max", [
                             "name" => $requiredFileName,
                             "max" => $requiredFileProperties["max"]

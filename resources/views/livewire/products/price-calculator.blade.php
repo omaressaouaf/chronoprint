@@ -334,7 +334,10 @@
                         @if (!$requiredFileProperties['files'])
                            <div class="file-drop-icon ci-cloud-upload"></div>
                            <span class="file-drop-message">
-                              {{ __('upload the needed files for :name (max : :max)', ['name' => $requiredFileName, 'max' => $requiredFileProperties['max']]) }}
+                              {{ __('upload the needed files for :name', ['name' => $requiredFileName]) }}
+                              @if ($requiredFileProperties['max'])
+                                 (max : {{ $requiredFileProperties['max'] }})
+                              @endif
                            </span>
                         @endif
                         @foreach ($requiredFileProperties['files'] as $file)
@@ -357,7 +360,7 @@
                            </span>
                         @endforeach
                         <input type="file"
-                           @if ($requiredFileProperties['max'] > 1) multiple @endif
+                           @if ($requiredFileProperties['max'] > 1 || !$requiredFileProperties['max']) multiple @endif
                            wire:model="requiredFiles.{{ $requiredFileName }}.files"
                            class="file-drop-input"
                            id="files-{{ $requiredFileName }}">

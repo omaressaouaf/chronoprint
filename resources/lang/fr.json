@@ -834,7 +834,7 @@
     "The backup is being generated. when it's done an email will be sent to :email": "La sauvegarde est en cours de génération. quand ce sera fait, un e-mail sera envoyé à :email",
     "Old backups are being deleted. when it's done an email will be sent to :email": "Les anciennes sauvegardes sont supprimées. quand c'est fait un email sera envoyé à :email",
     "File deleted successfully": "Fichier supprimé avec succès",
-    "upload the needed files for :name (max : :max)": "télécharger les fichiers nécessaires pour :name (max : :max)",
+    "upload the needed files for :name": "télécharger les fichiers nécessaires pour :name",
     ":name file(s) are required": ":name fichier(s) sont requis",
     "Select your :name file(s)": "Sélectionnez votre :name fichier(s)",
     "maximum :name file(s) is :max": "maximum fichier(s) de :name est :max"

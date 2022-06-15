@@ -251,7 +251,10 @@
                     <div class="form-group col-md-3">
                         <label class="control-label"
                             >Nom de fichier<span
-                                v-if="requiredFilesPropertiesForm.max > 1"
+                                v-if="
+                                    requiredFilesPropertiesForm.max > 1 ||
+                                    requiredFilesPropertiesForm.max === ''
+                                "
                                 >(s)</span
                             ></label
                         >
@@ -260,7 +263,10 @@
                             type="text"
                             class="form-control"
                             :placeholder="`Nom de fichier${
-                                requiredFilesPropertiesForm.max > 1 ? '(s)' : ''
+                                requiredFilesPropertiesForm.max > 1 ||
+                                requiredFilesPropertiesForm.max === ''
+                                    ? '(s)'
+                                    : ''
                             }`"
                         />
                     </div>
@@ -311,8 +317,13 @@
                                 ></a>
                             </div>
                             <h5 class="text-capitalize font-weight-bold">
-                                {{ fileProperties.name }} (maximum :
-                                {{ fileProperties.max ?? 1 }})
+                                {{ fileProperties.name }}
+                                {{
+                                    fileProperties?.max &&
+                                    !isNaN(fileProperties?.max)
+                                        ? `(maximum : ${fileProperties.max})`
+                                        : ""
+                                }}
                             </h5>
                         </li>
                     </ul>
@@ -540,8 +551,13 @@
                                     ) in option.requiredFilesProperties"
                                     :key="index"
                                 >
-                                    {{ fileProperties.name }} (maximum :
-                                    {{ fileProperties.max ?? 1 }})
+                                    {{ fileProperties.name }}
+                                    {{
+                                        fileProperties?.max &&
+                                        !isNaN(fileProperties?.max)
+                                            ? `(maximum : ${fileProperties.max})`
+                                            : ""
+                                    }}
                                 </h6>
                             </div>
                         </div>

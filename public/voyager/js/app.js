@@ -21329,13 +21329,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "collapse"
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_64, [$data.requiredFilesPropertiesFormError ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_65, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.requiredFilesPropertiesFormError), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_66, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", _hoisted_67, [_hoisted_68, $data.requiredFilesPropertiesForm.max > 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_69, "(s)")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_66, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", _hoisted_67, [_hoisted_68, $data.requiredFilesPropertiesForm.max > 1 || $data.requiredFilesPropertiesForm.max === '' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_69, "(s)")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
       return $data.requiredFilesPropertiesForm.name = $event;
     }),
     type: "text",
     "class": "form-control",
-    placeholder: "Nom de fichier".concat($data.requiredFilesPropertiesForm.max > 1 ? '(s)' : '')
+    placeholder: "Nom de fichier".concat($data.requiredFilesPropertiesForm.max > 1 || $data.requiredFilesPropertiesForm.max === '' ? '(s)' : '')
   }, null, 8
   /* PROPS */
   , _hoisted_70), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.requiredFilesPropertiesForm.name]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_71, [_hoisted_72, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
@@ -21354,8 +21354,6 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     type: "button",
     "class": "btn btn-primary btn-sm"
   }, " + ")])]), (_this$form$requiredFi = this.form.requiredFilesProperties) !== null && _this$form$requiredFi !== void 0 && _this$form$requiredFi.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_74, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_75, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(this.form.requiredFilesProperties, function (fileProperties, index) {
-    var _fileProperties$max;
-
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("li", {
       style: {
         "display": "flex",
@@ -21370,7 +21368,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }, ["prevent"])
     }, _hoisted_79, 8
     /* PROPS */
-    , _hoisted_77)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h5", _hoisted_80, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(fileProperties.name) + " (maximum : " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)((_fileProperties$max = fileProperties.max) !== null && _fileProperties$max !== void 0 ? _fileProperties$max : 1) + ") ", 1
+    , _hoisted_77)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h5", _hoisted_80, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(fileProperties.name) + " " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(fileProperties !== null && fileProperties !== void 0 && fileProperties.max && !isNaN(fileProperties === null || fileProperties === void 0 ? void 0 : fileProperties.max) ? "(maximum : ".concat(fileProperties.max, ")") : ""), 1
     /* TEXT */
     )]);
   }), 128
@@ -21494,11 +21492,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       "class": "ml-3 collapse",
       id: "option-required-files-properties-container-".concat($data.componentId + index)
     }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(option.requiredFilesProperties, function (fileProperties, index) {
-      var _fileProperties$max2;
-
       return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("h6", {
         key: index
-      }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(fileProperties.name) + " (maximum : " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)((_fileProperties$max2 = fileProperties.max) !== null && _fileProperties$max2 !== void 0 ? _fileProperties$max2 : 1) + ") ", 1
+      }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(fileProperties.name) + " " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(fileProperties !== null && fileProperties !== void 0 && fileProperties.max && !isNaN(fileProperties === null || fileProperties === void 0 ? void 0 : fileProperties.max) ? "(maximum : ".concat(fileProperties.max, ")") : ""), 1
       /* TEXT */
       );
     }), 128
