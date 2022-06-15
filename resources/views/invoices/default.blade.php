@@ -223,7 +223,7 @@
                </p>
 
                <p class="buyer-address">
-                  Adresse : {{ $order->address_city }}, {{ $order->billing_address_line }},
+                  Adresse : {{ $order->billing_address_city }}, {{ $order->billing_address_line }},
                   {{ $order->billing_address_zip }}
                </p>
 
