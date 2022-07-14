@@ -78,6 +78,7 @@ class Product extends Model
     public function getOptionByInterval(string $attributeName, int $optionInterval): array|null
     {
         $attribute = $this->getAttributeByName($attributeName);
+      
         return collect($attribute->pivot->options)
             ->where("minValue", "<=", $optionInterval)
             ->where("maxValue", ">=", $optionInterval)

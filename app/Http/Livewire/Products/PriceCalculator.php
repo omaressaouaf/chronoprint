@@ -160,9 +160,9 @@ class PriceCalculator extends Component
             $selectedOption = isset($this->selectedOptions[$attribute->name])
                 ? $this->selectedOptions[$attribute->name]
                 : [];
-
+            
             if (
-                (!isset($selectedOption["ref"]) && !isset($selectedOption["ref"]))
+                (!isset($selectedOption["ref"]) && !isset($selectedOption["value"]))
                 || (isset($selectedOption["ref"]) && $this->optionShouldBeDisabled($selectedOption['ref']))
             ) {
                 $firstValidOption = collect($attribute->pivot->options)
@@ -182,12 +182,12 @@ class PriceCalculator extends Component
                 } else {
                     if (is_array($attribute->groups) && count($attribute->groups)) {
                         foreach ($attribute->groups as $group) {
-                            $selectedOption["value"][$group['name']] = is_numeric($group['maxLimit'])
-                                ? $group['maxLimit']
-                                : $firstValidOption["maxValue"];
+                            $selectedOption["value"][$group['name']] = is_numeric($group['minLimit'])
+                                ? $group['minLimit']
+                                : $firstValidOption["minValue"];
                         }
                     } else {
-                        $selectedOption["value"] = $firstValidOption["maxValue"];
+                        $selectedOption["value"] = $firstValidOption["minValue"];
                     }
                 }
 
@@ -303,7 +303,7 @@ class PriceCalculator extends Component
 
             $optionPricesPerSelectedOptions = Arr::only(
                 $optionPricesPerOption,
-                $this->selectedOptions->pluck("ref")->toArray()
+                $this->selectedOptions->where("ref")->pluck("ref")->toArray()
             );
             $optionPricesPerFirstSelectedOption = Arr::first($optionPricesPerSelectedOptions);
 
