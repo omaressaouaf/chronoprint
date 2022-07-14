@@ -160,7 +160,7 @@ class PriceCalculator extends Component
             $selectedOption = isset($this->selectedOptions[$attribute->name])
                 ? $this->selectedOptions[$attribute->name]
                 : [];
-            
+
             if (
                 (!isset($selectedOption["ref"]) && !isset($selectedOption["value"]))
                 || (isset($selectedOption["ref"]) && $this->optionShouldBeDisabled($selectedOption['ref']))
